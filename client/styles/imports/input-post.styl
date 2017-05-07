@@ -1,0 +1,94 @@
+.container\\:input-post
+  position absolute
+  top 0
+  right 0
+  width 100%
+  height auto
+  overflow-x hidden
+  background-color ui-color(base)
+  z-index 140
+
+  &.one-column
+    top 0
+    right 0
+    padding 10px 10px 0 10px
+    width 50%
+
+  &.two-column
+    top 0
+    right 0
+    width calc(100% - 250px)
+    padding 20px 10px 0 0
+
+  .block\\:timeline-name
+    height 25px
+    overflow hidden
+    text-align right
+
+    .input\\:timeline-name.true
+      ui-input-button-on({minimal: true})
+      display inline-block
+      width auto
+
+    .input\\:timeline-name.false
+      ui-input-button-off({minimal: true})
+      display inline-block
+      width auto
+
+  .block\\:message
+    position relative
+    padding-top 5px
+
+  .input\\:post-content
+    width 100%
+    height auto
+    padding 0
+    line-height 20px
+    vertical-align top
+
+  .input\\:open-image
+  .input\\:close-image
+    ui-input-button-off({minimal: true})
+    display inline-block
+    margin 0 10px 0 auto
+    width auto
+
+  .block\\:image-preview
+    padding 0 10px 10px 10px
+    height 200px
+
+    img
+      height 100%
+      width auto
+
+  // パブリック
+
+  .block\\:post-public
+    width auto
+    display block
+    padding-top 5px
+    padding-bottom 10px
+    margin-right 0
+    text-align right
+
+    .text\\:input-name
+      ui-label({minimal: true})
+      display inline-block
+      vertical-align top
+
+    .input\\:public.false
+      ui-input-button-off({minimal: true})
+      display inline-block
+      margin 0 auto
+      width auto
+
+    .input\\:public.true
+      ui-input-button-on({minimal: true})
+      display inline-block
+      width auto
+
+    .input\\:post-submit
+      ui-input-button({minimal: true})
+      display inline-block
+      margin 0 auto 0 10px
+      width auto

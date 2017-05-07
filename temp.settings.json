@@ -1,0 +1,57 @@
+{
+  "public": {
+    "version": "1.0.0",
+    "api": {},
+    "assets": {
+      "network": {
+        "header": "https://",
+        "root": "https://"
+      },
+      "post": {
+        "image": "https://"
+      },
+      "thread": {
+        "image": "https://"
+      },
+      "work": {
+        "root": "https://",
+        "illust": "https://",
+        "photo": "https://"
+      }
+    },
+    "color": {
+      "base": "#f3f3f3",
+      "primary": "#00afcc",
+      "secondary": "#4496d3"
+    },
+    "reservedWord": [
+      "swimmy",
+      "default",
+      "self",
+      "follows",
+      "timemachine",
+      "thread",
+      "artwork",
+      "uuid",
+      "network",
+      "room",
+      "verify",
+      "verify-email",
+      "admin",
+      "config",
+      "release",
+      "report"
+    ]
+  },
+  "private": {
+    "MAIL_URL": "smtp://"
+  },
+  "galaxy.meteor.com": {
+    "env": {
+      "ROOT_URL": "https://swimmy.io",
+      "MONGO_URL": "mongodb://",
+      "MONGO_OPLOG_URL": "mongodb://",
+      "MAIL_URL": "smtp://"
+    }
+  }
+}

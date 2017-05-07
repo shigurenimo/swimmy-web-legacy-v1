@@ -1,0 +1,145 @@
+.container\\:network-info
+  position relative
+  padding-bottom 10px
+
+  .block\\:layout
+    padding 0 10px
+
+  // リストの名前
+
+  .block\\:network-header
+
+    .image\\:network-header
+      position relative
+      width 100%
+      height 200px
+      background-color skyblue
+      background-position center center
+      background-size cover
+      border-radius 4px
+      +responsive(portrait)
+        height 180px
+
+  // リスト名
+
+  .block\\:network-name
+
+    .text\\:univ
+      font-weight bold
+      color ui-color(secondary)
+
+    .text\\:network-name
+      width 100%
+      line-height 30px
+      font-weight bold
+      font-size 1.2rem
+      color ui-color(primary)
+      overflow hidden
+
+    .text\\:network-title
+      width 100%
+      line-height 30px
+      text-align center
+      font-weight normal
+      font-size 1rem
+      letter-spacing 4px
+      color ui-color(primary)
+      overflow hidden
+
+  .block\\:network-description
+
+    .text\\:network-description
+      color ui-text-color(secondary)
+
+  // リストの場所
+
+  .block\\:network-place
+    padding-top 10px
+
+    .text\\:place
+      font-weight bold
+
+  // 地域
+
+  .block\\:network-region
+    padding-top 10px
+
+    .text\\:region
+      font-weight bold
+
+  // メールアドレス
+
+  .block\\:network-email
+    padding-top 10px
+
+    .image\\:icon
+      display inline-block
+      vertical-align top
+      margin-right 10px
+      height 30px
+      line-height 30px
+      overflow hidden
+
+    .text\\:text
+      display inline-block
+      vertical-align top
+      line-height 30px
+      font-size 1rem
+      border none
+
+  // ソーシャル
+
+  .block\\:network-social
+    padding-top 10px
+
+    .text\\:item-title
+      font-size 1.2rem
+
+    .image\\:icon
+      display inline-block
+      vertical-align top
+      width 30px
+      height 30px
+      line-height 30px
+      font-size 30px
+      overflow hidden
+
+    .text\\:social
+      display inline-block
+      vertical-align top
+      margin-left 10px
+      width auto
+      height 30px
+      font-size 1rem
+      line-height 30px
+      border-bottom none
+
+  .block\\:network-tags
+    padding-top 10px
+
+    .image\\:icon
+      display inline-block
+      vertical-align top
+      margin-right 10px
+      height 30px
+      line-height 30px
+      overflow hidden
+
+    .text\\:tag
+      ui-label()
+      display inline-block
+      vertical-align top
+
+  // 編集
+
+  .block\\:edit
+    padding-top 10px
+
+    .input\\:edit
+      ui-input-button()
+      display inline-block
+      margin-right 10px
+      width auto
+
+  .text\\:page-description
+    ui-block()

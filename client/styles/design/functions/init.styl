@@ -1,0 +1,43 @@
+init-color(res)
+
+  $base = res['base'] || $config['color']['base']
+
+  $config['color']['base'] = $base
+  $config['color']['base-select'] = darken($base, 5%)
+  $config['color']['base-dark'] = darken($base, 15%)
+  $config['color']['base-light'] = lighten($base, 15%)
+
+  $primary = res['primary'] || $config['color']['primary']
+
+  $config['color']['primary'] = $primary
+  $config['color']['primary-dark'] = darken($primary, 10%)
+  $config['color']['primary-light'] = lighten($primary, 15%)
+
+  $secondary = res['secondary'] || $config['color']['secondary']
+
+  $config['color']['secondary'] = $secondary
+  $config['color']['secondary-dark'] = darken($secondary, 15%)
+  $config['color']['secondary-light'] = lighten($secondary, 15%)
+
+  $attention = res['attention'] || $config['color']['attention']
+  $warning = res['warning'] || $config['color']['warning']
+  $error = res['error'] || $config['color']['error']
+
+  $config['color']['attention'] = $attention
+  $config['color']['warning'] = $warning
+  $config['color']['error'] = $error
+
+  $red = res['red'] || $config['color']['red']
+  $blue = res['blue'] || $config['color']['blue']
+
+  $config['color']['red'] = $red
+  $config['color']['blue'] = $blue
+
+init-color-text(res)
+
+  $config['color-text']['primary'] = res['primary'] || $config['color-text']['primary']
+  $config['color-text']['secondary'] = res['secondary'] || $config['color-text']['secondary']
+  $config['color-text']['disabled'] = res['disabled'] || $config['color-text']['disabled']
+  $config['color-text']['link'] = res['link'] || $config['color-text']['link']
+  $config['color-text']['link-hover'] = res['link-hover'] || $config['color-text']['link-hover']
+

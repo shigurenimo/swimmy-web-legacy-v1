@@ -1,0 +1,117 @@
+.container\\:admin-config
+  position relative
+  padding-bottom 50px
+
+  .block\\:description
+    ui-block()
+
+  // リンク
+
+  .block\\:link
+    ui-block()
+
+    .text\\:home
+      ui-input-button()
+      display inline-block
+      margin 0 auto
+
+  // ユーザネーム
+
+  .block\\:username
+  .block\\:name
+    ui-block()
+
+    .text\\:username-title
+      font-weight bold
+
+    .input\\:username
+    .input\\:name
+      ui-input-text()
+      margin-top 10px
+      width 100%
+
+    .text\\:input-description
+      margin-top 10px
+      opacity 0.8
+      color ui-color()
+
+    .text\\:input-error
+      margin-top 5px
+      color ui-color(error)
+
+    .input\\:submit-username
+      ui-input-button()
+
+  // チャンネル
+
+  .block\\:region
+    ui-block()
+
+    .text\\:region-title
+      font-weight bold
+
+    .input\\:select
+      margin-top 5px
+      ui-input-select()
+
+  // メールアドレス
+
+  .block\\:email
+    ui-block()
+
+    .text\\:input-title
+      font-weight bold
+
+    .block\\:exist-email
+      position relative
+
+    .text\\:email
+      ui-input-button()
+      margin-top 10px
+      width 100%
+      text-align left
+      cursor default
+
+    .input\\:remove-email
+      position absolute
+      right 0
+      bottom 0
+      margin auto
+      height 30px
+      text-align center
+      line-height 30px
+      font-size 30px
+      cursor pointer
+
+    .input\\:new-email
+      ui-input-text()
+      display block
+      margin-top 10px
+      text-align left
+
+    .input\\:submit-new-email
+      ui-input-button()
+      display block
+      margin-top 10px
+
+    .text\\:error-email
+      ui-text()
+      color ui-color(red)
+
+  // パスワード
+
+  .block\\:password
+    ui-block()
+
+    .text\\:password-name
+      font-weight bold
+
+    .input\\:password
+      ui-input-text()
+      display block
+      margin-top 10px
+      width 100%
+
+    .input\\:submit-password
+      ui-input-button()
+      margin-top 10px

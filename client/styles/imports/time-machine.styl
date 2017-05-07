@@ -1,0 +1,94 @@
+.container\\:time-machine
+  padding-bottom 50px
+
+  .block\\:form-title
+  .block\\:form-day
+    ui-block({reaction: true})
+
+  .block\\:form-title
+    position relative
+
+  .text\\:year
+  .text\\:slash
+  .text\\:month
+  .text\\:day
+    display inline-block
+    vertical-align top
+    line-height 30px
+
+  .text\\:month
+    font-size 2rem
+
+  .text\\:slash
+    padding 0 10px
+
+  .text\\:day
+    font-size 4rem
+
+  .block\\:form-day
+    width 100%
+
+  .block\\:center
+    position relative
+    margin 0 auto
+    width 100%
+    max-width 600px
+
+  .block\\:form-title
+
+    .block\\:center-text
+      width 140px
+      margin 0 auto
+      text-align: center
+
+  .block\\:form-day
+
+    .block\\:center-text
+      width 100px
+      margin 0 auto
+      text-align: center
+
+  .block\\:month-item
+    display inline-block
+    vertical-align top
+    width calc(100% / 5)
+    height 60px
+    line-height 60px
+    text-align center
+
+  .icon\\:before
+    position absolute
+    top 0
+    bottom 0
+    left 10px
+    margin auto
+    width 30px
+    height 30px
+    cursor pointer
+
+  .icon\\:next
+    position absolute
+    top 0
+    bottom 0
+    right 10px
+    margin auto
+    width 30px
+    height 30px
+    cursor pointer
+
+  .block\\:form-submit
+    ui-block()
+
+    .input\\:submit
+      ui-input-button()
+      display block
+      max-width 600px
+      margin 0 auto
+
+  // データなし
+
+  .block\\:no-post
+    ui-block()
+
+    .text\\:no-post
+      text-align center

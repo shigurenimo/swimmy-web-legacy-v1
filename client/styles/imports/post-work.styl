@@ -1,0 +1,73 @@
+.container\\:post-work
+  ui-block({reaction:false})
+  padding 20px 10px
+  width 100%
+  max-width none
+
+  // ユーザネーム
+
+  .block\\:post-username
+    padding-top 0
+
+    .text\\:public-name
+      display inline
+      font-weight bold
+      line-height 30px
+      color ui-color(secondary)
+      &:hover
+        color ui-color(red)
+
+    .text\\:public-username
+      display inline
+      font-weight bold
+      line-height 30px
+      color ui-color(secondary)
+      padding-left 5px
+      &:hover
+        color ui-color(red)
+
+  // イメージ
+
+  .block\\:artwork-image
+    display inline-block
+    border none
+
+  img
+    display block
+    width 100%
+    max-width 600px
+    min-height 100px
+    border-radius 1px
+    &:hover
+      opacity 0.8
+
+  // タイトル
+
+  .block\\:post-title
+    height 20px
+    line-height 20px
+    margin-top 10px
+    font-weight bold
+
+  // ノート
+
+  .block\\:post-note
+    padding-top 5px
+    word-wrap break-word
+    white-space pre-wrap
+
+  // リアクション ボタン
+
+  .block\\:reaction-list
+    padding-top 10px
+    padding-bottom 5px
+
+    .input\\:reaction.true
+      ui-input-button-on({minimal: true})
+      margin-right 5px
+      margin-bottom 5px
+
+    .input\\:reaction.false
+      ui-input-button-off({minimal: true})
+      margin-right 5px
+      margin-bottom 5px

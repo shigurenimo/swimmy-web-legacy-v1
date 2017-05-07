@@ -1,0 +1,319 @@
+.container\\:artwork-detail
+  padding-bottom 50px
+
+  // 投稿
+
+  .block\\:post-layout
+    ui-block()
+    padding-top 0
+    max-width none
+
+    // イメージ
+
+    .block\\:post-image
+
+      img
+        max-width 800px
+        border-radius 1px
+
+    // ユーザネーム
+
+    .block\\:post-username
+
+      .text\\:public-name
+        display inline
+        font-weight bold
+        line-height 30px
+        color ui-color(secondary)
+        &:hover
+          color ui-color(red)
+
+      .text\\:public-username
+        display inline
+        font-weight bold
+        line-height 30px
+        color ui-color(secondary)
+        padding-left 5px
+        &:hover
+          color ui-color(red)
+
+    // カラーコード
+
+    .block\\:post-color
+      margin-top 10px
+
+      .block\\:selected-color
+        display inline-block
+        vertical-align top
+        margin-right 5px
+        width 25px
+        height 25px
+        border-radius 50%
+
+      .block\\:color
+        ui-input-button-circle()
+        display inline-block
+        vertical-align top
+        position relative
+        width 40px
+        height 40px
+        margin 5px
+
+      .block\\:color.true
+        border 2px dashed ui-color()
+
+      .image\\:color
+        display block
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        left 0
+        margin auto
+        width 25px
+        height 25px
+        border-radius 50%
+
+    // タイトル
+
+    .block\\:post-title
+
+      .input\\:post-title
+        ui-input-text()
+        width 100%
+
+    // ノート
+
+    .block\\:post-note
+      margin-top 10px
+      word-wrap break-word
+      white-space pre-wrap
+
+      .input\\:post-note
+        ui-input-textarea({ raw: 8 })
+
+    // タイムラインの表示
+
+    .block\\:post-public
+
+      .text\\:select-name
+        ui-label()
+        display inline-block
+        vertical-align top
+
+      .input\\:public.false
+        ui-input-button-off()
+        display inline-block
+        margin 0 auto
+        font-weight bold
+        width 100px
+
+      .input\\:public.true
+        ui-input-button-on()
+        display inline-block
+        font-weight bold
+        width 100px
+
+    .text\\:public-info
+      line-height 30px
+      color ui-color()
+
+    // 削除
+
+    .block\\:post-remove
+      margin-top 10px
+
+      .input\\:post-remove
+        ui-input-button()
+        display inline-block
+        margin-right 10px
+
+    // リプライ
+
+    .block\\:reply
+      margin-top 10px
+      position relative
+      max-width 600px
+
+      .block\\:input-reply
+        ui-block()
+
+      .input\\:reply-message
+        ui-input-textarea({ raw: 2 })
+
+    // パブリック
+
+    .block\\:post-public
+      margin-top 10px
+      display block
+
+      .text\\:select-name
+        ui-label()
+        display inline-block
+        vertical-align top
+
+      .input\\:public.false
+        ui-input-button-off()
+        display inline-block
+        margin 0 auto
+        font-weight bold
+        width 100px
+
+      .input\\:public.true
+        ui-input-button-on()
+        display inline-block
+        font-weight bold
+        width 100px
+
+    .text\\:public-info
+      line-height 30px
+      color ui-color()
+
+    // リアクション ボタン
+
+    .block\\:reaction-list
+      margin-top 10px
+
+      .input\\:reaction.true
+        ui-input-button-on()
+        margin-right 10px
+        margin-bottom 10px
+        width auto
+
+      .input\\:reaction.false
+        ui-input-button-off()
+        margin-right 10px
+        margin-bottom 10px
+        width auto
+
+      .input\\:add-reaction
+        ui-input-button()
+        display inline-block
+        vertical-align top
+        margin-bottom 10px
+        padding 0
+        text-align center
+
+    // 新しいリアクションの入力
+
+    .block\\:new-reaction
+      display block
+
+      .input\\:new-reaction
+        ui-input-text()
+        display inline-block
+        vertical-align top
+        max-width 120px
+
+      .input\\:submit-reaction
+        ui-input-button()
+        width 60px
+
+      .input\\:delete
+        ui-input-button()
+        display inline-block
+        vertical-align top
+        margin-left 10px
+
+    // リプライの送信
+
+    .block\\:post-submit-reply
+      margin-top 10px
+
+      .input\\:submit-reply
+        ui-input-button()
+        display block
+        margin 0 auto 0 0
+
+  // リプライ
+
+  .block\\:reply-list
+    margin-top 10px
+
+  .block\\:reply-item
+
+    .block\\:layout
+      ui-block()
+      margin-left 0
+      padding 20px 10px 10px 10px
+      max-width 100%
+      position relative
+      &:hover
+        background-color ui-color(base-select)
+
+    // ユーザネーム
+
+    .block\\:public-name
+      display inline-block
+      width auto
+      border none
+
+      .text\\:public-name
+        display inline
+        font-weight bold
+        line-height 20px
+        color ui-color(secondary)
+        &:hover
+          color ui-color(red)
+
+      .text\\:public-username
+        display inline
+        font-size 0.7rem
+        font-weight bold
+        line-height 20px
+        color ui-color(secondary)
+        padding-left 5px
+        &:hover
+          color ui-color(red)
+
+    .text\\:reply-message
+      word-wrap break-word
+      white-space pre-wrap
+      color ui-text-color(secondary)
+
+    .text\\:reply-item-date
+      display block
+      width 200px
+      font-size 0.7rem
+      opacity 0.5
+
+    // 削除
+
+    .input\\:remove-reply
+      position absolute
+      right 0
+      top 0
+      width 30px
+      height 30px
+      text-align center
+      line-height 30px
+      font-size 30px
+      color ui-color(red)
+      cursor pointer
+      &:hover
+        opacity 0.8
+
+    // リアクション ボタン
+
+    .block\\:reaction-list
+      margin-top 10px
+
+      .input\\:reaction.true
+        ui-input-button-on({minimal: true})
+        margin-right 10px
+        margin-bottom 10px
+        width auto
+
+      .input\\:reaction.false
+        ui-input-button-off({minimal: true})
+        margin-right 10px
+        margin-bottom 10px
+        width auto
+
+      .input\\:add-reaction
+        ui-input-button()
+        display inline-block
+        vertical-align top
+        margin-bottom 10px
+        padding 0
+        text-align center

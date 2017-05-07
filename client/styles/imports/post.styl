@@ -1,0 +1,218 @@
+.container\\:post
+  overflow hidden
+
+  .block\\:layout
+    ui-block({reaction: true})
+    position relative
+    max-width 100%
+    cursor pointer
+
+  .block\\:content-layout
+    display inline-block
+    vertical-align bottom
+    width 100%
+
+  // 書き込み
+
+  .text\\:content
+    display block
+    line-height 1.25rem
+    word-wrap break-word
+    white-space pre-wrap
+    border none
+
+    p
+      display inline-block
+      color ui-text-color(secondary)
+
+  // oEmbed
+
+  .text\\:service-name
+    text-align right
+    color ui-color(red)
+    font-weight bold
+    max-width 500px
+
+  .block\\:oEmbed
+    margin-bottom 5px
+    max-width 500px
+
+    a
+      border none
+
+  .block\\:oEmbed-echo
+    padding-top 10px
+    margin-bottom 5px
+
+    .input\\:oEmbed-echo
+      ui-input-button()
+      height auto
+      text-align left
+
+   // oEmbed 例外処理
+
+  .block\\:oEmbed-iframe
+    margin-bottom 5px
+    padding-bottom 100%
+    width 100%
+    position relative
+
+    iframe
+      width 100%
+      height 100%
+      border 0
+      margin 0
+      padding 0
+      position absolute
+      top 0
+      left 0
+
+  // 画像
+
+  .image\\:web-image
+    border-radius 4px
+    margin-top 5px
+    &:hover
+      opacity 0.8
+
+  // タイトル
+
+  .text\\:web-title
+    padding-top 5px
+    font-size 1rem
+    font-weight bold
+    &:hover
+      opacity 0.8
+
+  // 説明
+
+  .text\\:web-description
+    padding-top 5px
+    opacity 0.8
+
+  // ユーザネーム
+
+  .block\\:public-name
+    display inline-block
+    width auto
+    border none
+
+    .text\\:public-name
+      display inline
+      font-weight bold
+      line-height 20px
+      color ui-color(secondary)
+      &:hover
+        color ui-color(red)
+
+    .text\\:public-username
+      display inline
+      font-size 0.7rem
+      font-weight bold
+      line-height 20px
+      color ui-color(secondary)
+      padding-left 5px
+      &:hover
+        color ui-color(red)
+
+  // 写真
+
+  .block\\:image
+    display block
+    margin-top 5px
+    margin-bottom 5px
+    height auto
+    max-height 400px
+    max-width 500px
+    border-radius 4px
+    overflow hidden
+    cursor pointer
+    transition-duration 150ms
+    &.true
+      max-height 100%
+    img
+      display block
+
+  // リプライ
+
+  .block\\:reply-post
+    ui-block()
+    margin-left 0
+    margin-top 5px
+    margin-bottom 5px
+    padding-top 5px
+    padding-bottom 5px
+    background-color alpha(black, 0.05)
+    border-radius 2px
+
+  .text\\:reply-number
+    position absolute
+    top 5px
+    right 5px
+    width 30px
+    height 20px
+    line-height 20px
+    text-align center
+    font-weight bold
+    border none
+
+  // リアクション ボタン
+
+  .block\\:reaction-list
+    width calc(100% - 40px)
+
+    .input\\:reaction.true
+      ui-input-button-on({minimal: true})
+      margin-top 5px
+      margin-right 5px
+      width auto
+
+    .input\\:reaction.false
+      ui-input-button-off({minimal: true})
+      margin-top 5px
+      margin-right 5px
+      width auto
+
+  // 新しいリアクションの入力
+
+  .input\\:add-reaction
+    ui-input-button({minimal: true})
+    position absolute
+    bottom 20px
+    right 10px
+    padding 0
+    width auto
+    min-width auto
+    background none
+    &:hover
+      background none
+
+  .block\\:new-reaction
+    ui-block()
+    padding-left 10px
+    display block
+
+    .input\\:new-reaction
+      ui-input-text()
+      display inline-block
+      vertical-align top
+      max-width 180px
+      font-size 0.8rem
+
+    .input\\:submit-reaction
+      ui-input-button()
+
+    .input\\:delete
+      ui-input-button()
+      display inline-block
+      vertical-align top
+      margin-left 10px
+
+  // 日付
+
+  .text\\:date
+    display inline-block
+    vertical-align middle
+    line-height 1rem
+    font-size 0.7rem
+    opacity 0.6

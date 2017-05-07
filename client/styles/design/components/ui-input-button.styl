@@ -1,0 +1,127 @@
+ui-input-button(req = {})
+
+  $color = req['color'] || primary
+  $minimal = req['minimal'] || false
+
+  display inline-block
+  vertical-align top
+  padding 0 10px
+  width auto
+  text-align center
+  color switch-color($color)
+  background-color alpha(black, 0.05)
+  cursor pointer
+  border-radius 1px
+  border-bottom none
+  transition-duration 200ms
+  if ($minimal)
+    height 25px
+    line-height 25px
+    font-size 0.8rem
+  else
+    height 30px
+    line-height 30px
+
+  &:hover
+    background-color alpha(black, 0.2)
+
+  &:active
+    transform scale(1.02)
+
+ui-input-button-on(req = {})
+
+  $color = req['color'] || primary
+  $minimal = req['minimal'] || false
+
+  display inline-block
+  vertical-align top
+  padding 0 10px
+  width auto
+  text-align center
+  color white
+  background-color switch-color($color)
+  cursor pointer
+  border-radius 1px
+  border-bottom none
+  transition-duration 200ms
+  if ($minimal)
+    height 25px
+    line-height 25px
+    font-size 0.8rem
+  else
+    height 30px
+    line-height 30px
+
+  &:hover
+    color alpha(white, 0.8)
+    background-color switch-color($color)
+
+  &:active
+    transform scale(1.02)
+
+ui-input-button-off(req = {})
+
+  $color = req['color'] || primary
+  $minimal = req['minimal'] || false
+
+  display inline-block
+  vertical-align top
+  padding 0 10px
+  width auto
+  text-align center
+  color switch-color($color)
+  background-color alpha(black, 0.05)
+  cursor pointer
+  border-radius 1px
+  border-bottom none
+  transition-duration 200ms
+  if ($minimal)
+    height 25px
+    line-height 25px
+    font-size 0.8rem
+  else
+    height 30px
+    line-height 30px
+
+  &:placeholder-shown
+    color alpha(ui-color(primary), 0.6)
+
+  &:hover:placeholder-shown
+    color alpha(white, 0.8)
+
+  &:focus:placeholder-shown
+    color alpha(white, 0.8)
+
+  &::-webkit-input-placeholder
+    color alpha(ui-color(primary), 0.6)
+
+  &:hover::-webkit-input-placeholder
+    color alpha(white, 0.6)
+
+  &:focus::-webkit-input-placeholder
+    color alpha(white, 0.8)
+
+  &::-moz-placeholder
+    color alpha(ui-color(primary), 0.6)
+
+  &:hover::-moz-placeholder
+    color alpha(white, 0.6)
+
+  &:focus::-moz-placeholder
+    color alpha(white, 0.8)
+
+  &:-ms-input-placeholder
+    color alpha(ui-color(primary), 0.6)
+
+  &:hover:-ms-input-placeholder
+    color alpha(white, 0.6)
+
+  &:focus:-ms-input-placeholder
+    color alpha(white, 0.8)
+
+  &:hover
+    color switch-color($color)
+    background-color alpha(black, 0.2)
+
+  &:active
+    transform scale(1.02)

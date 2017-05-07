@@ -1,0 +1,48 @@
+.container\\:left-menu
+  position absolute
+  top 0
+  right -5%
+  padding-top 20px
+  padding-left 10px
+  padding-right calc(105% - 240px)
+  width calc(105%)
+  height 100%
+  transition width 300ms
+  overflow-y scroll
+  overflow-x hidden
+
+  &.one-column
+    width 105%
+    padding-right 55%
+    padding-left 0
+
+// トランジション
+
+  .transition-side-enter
+    opacity 0
+    transform translateX(-40px)
+    &.transition-side-enter-active
+      opacity 1
+      transform translateX(0)
+      transition-delay 150ms
+      transition-duration 300ms
+
+  .transition-side-leave
+    position absolute
+    top 0
+    right 0
+    padding-right 11%
+    padding-top 45px
+    width 100%
+    height 100%
+    opacity 1
+    &.transition-side-leave-active
+      opacity 0
+      transition-duration 150ms
+
+  .transition-side-appear
+    opacity 0
+    &.transition-side-appear-active
+      opacity 1
+      transition-duration 150ms
+

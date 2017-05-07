@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties"
+  ],
+  "presets": [
+    "latest",
+    "stage-0",
+    "react"
+  ]
+}

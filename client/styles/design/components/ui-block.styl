@@ -1,0 +1,41 @@
+ui-block(req = {})
+
+  $reaction = req['reaction']
+  $reaction ?= false
+
+  display block
+  padding 20px 10px 20px 10px
+  width 100%
+  border-bottom none
+  transition-duration 200ms
+
+  &:hover
+    if $reaction
+      background-color ui-color(base-select)
+
+ui-block-wordpress(req = {})
+
+  $type = req['type'] || null
+  $color = req['color'] || false
+
+  display block
+  margin 0 auto
+  padding 0
+  width 100%
+  max-width 600px
+  border-bottom none
+  transition-duration 200ms
+
+  p
+  li
+    padding 10px
+    &:hover
+      background-color alpha(ui-color(base), 0.5)
+
+  ul
+    margin 0
+    padding 0
+
+  h3
+    padding 20px
+    text-align center

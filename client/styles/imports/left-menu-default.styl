@@ -1,0 +1,59 @@
+.container\\:left-menu-default
+  padding-bottom 50px
+
+  .block\\:app-logo
+    position relative
+
+    img
+      margin-left 10px
+      height 100px
+      width auto
+
+    .text\\:version
+      position absolute
+      top 10px
+      left 100px
+      width 100px
+      height 30px
+      line-height 30px
+      font-size 1.2rem
+      color ui-color(red)
+
+  // メニュー
+
+  .block\\:menu-artwork
+  .block\\:menu-network
+  .block\\:menu-config
+    ui-block()
+    padding-left 0
+    padding-right 0
+    padding-top 0
+
+    .input\\:list-item
+      ui-block({reaction: true})
+      color ui-color()
+      padding 15px 10px
+      border none
+      text-align left
+      cursor pointer
+      &:first-child
+        margin-top 0
+      &.true
+        background-color ui-color(base-select)
+
+  .block\\:menu-artwork
+    padding-top 0
+
+  .block\\:menu-network
+  .block\\:menu-config
+    padding-top 10px
+
+  // コピーライト
+
+  .block\\:copyright
+    ui-block()
+    padding-top 20px
+
+    .text\\:copyright
+      text-align center
+      font-size 0.8rem

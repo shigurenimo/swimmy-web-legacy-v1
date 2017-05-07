@@ -1,0 +1,94 @@
+.container\\:admin
+  position relative
+  padding-bottom 50px
+
+  .block\\:user-icon
+    ui-block()
+
+    .block\\:squares
+      margin 0 auto
+      width 140px
+      height 140px
+      border-radius 2px
+
+    .block\\:square
+      display inline-block
+      vertical-align top
+      width 20%
+      height 20%
+
+  // 地区
+
+  .block\\:region
+
+    .text\\:region
+      text-align center
+      font-weight bold
+
+  // 名前
+
+  .block\\:name
+    margin-top 20px
+
+    .text\\:username
+      font-size 1rem
+      line-height 30px
+      text-align center
+
+    .text\\:name
+      font-size 2rem
+      font-weight bold
+      text-align center
+      line-height 50px
+
+  // 投稿
+
+  .block\\:post-list
+    margin-top 0
+
+  // フォロ
+
+  .block\\:follow-list
+    margin-top 10px
+
+    .block\\:follow-user
+      ui-block({reaction: true})
+
+    .text\\:name
+      display inline-block
+      vertical-align top
+      line-height 30px
+      font-size 1rem
+      font-weight bold
+      border none
+
+    .text\\:username
+      display inline-block
+      vertical-align top
+      padding-left 10px
+      line-height 30px
+      opacity 0.8
+      border none
+
+  // 新しい投稿
+
+  .block\\:link
+    ui-input-button()
+    margin-top 10px
+    padding 0
+    width 100%
+    max-width none
+    height 40px
+    line-height 40px
+    text-align center
+    color ui-color()
+    background-color alpha(white, 0.4)
+    font-weight bold
+
+  // メッセージなし
+
+  .block\\:no-post
+    ui-block()
+
+    .text\\:no-post
+      text-align center
