@@ -35,7 +35,10 @@ class Login extends Component {
             <div className='text:inline'>オープンソース</div>
           </div>
           <div className='text:description'>
-            Meteor・Reactで開発しているオープンソースのプロジェクトです。
+            Meteor・Reactで開発しているオープンソースのプロジェクトです。<br/>
+            <a href='https://github.com/uu-fish/swimmy.io' target='new'>GitHub</a>
+            {' or '}
+            <a href='https://bitbucket.org/swimmy-io/swimmy.io' target='new'>Bitbucket</a>
           </div>
         </div>
         <div className='block:form-description'>
