@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor'
+import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import IconLanguage from 'material-ui/svg-icons/action/language'
@@ -109,6 +110,13 @@ class NetworkInfo extends Component {
           {this.data.member.includes(this.props.user._id) &&
           <a className='input:edit' href={'/network/' + this.data._id + '/edit'}>アップデート</a>}
         </div>}
+        {this.props.user.isLogged &&
+        this.props.user._id === this.data.owner &&
+        <div className='block:edit'>
+          <button className='input:edit' onTouchTap={this.onRemoveList.bind(this)}>
+            このリストを削除する
+          </button>
+        </div>}
       </div>
     </div>
   }
@@ -138,6 +146,23 @@ class NetworkInfo extends Component {
       this.props.networks.updateIndex(data._id, data)
       this.props.posts.resetTimelines()
       this.props.snackbar.show('リストを外しました')
+    })
+  }
+
+  onRemoveList () {
+    const confirm = window.confirm('削除してもいいですか？')
+    if (!confirm) return
+    const networkId = this.props.networks.one._id
+    this.props.networks.remove(networkId)
+    .then(data => {
+      this.props.networks.removeIndex(networkId)
+      FlowRouter.go('/network')
+      this.props.posts.resetTempTimelines()
+      this.props.posts.resetTimelines()
+      this.props.snackbar.show('リストを削除しました')
+    })
+    .catch(err => {
+      this.props.snackbar.error(err)
     })
   }
 

@@ -216,24 +216,6 @@ class Posts {
     return toJS(this.timeline)
   }
 
-  updatetTempTimeline (timeline) {
-    this.tempTimeline = timeline
-    return timeline
-  }
-
-  updatetTempTimelineFromNetwork (network) {
-    const timeline = {
-      name: network.name,
-      unique: network._id,
-      network: network._id,
-      isStatic: false,
-      selector: {network: network._id},
-      options: {limit: 25}
-    }
-    this.tempTimeline = timeline
-    return timeline
-  }
-
   @action
   resetTimelines () {
     const user = Meteor.user()
@@ -301,6 +283,28 @@ class Posts {
       }
     }
     return this.timelines
+  }
+
+  updatetTempTimeline (timeline) {
+    this.tempTimeline = timeline
+    return timeline
+  }
+
+  updatetTempTimelineFromNetwork (network) {
+    const timeline = {
+      name: network.name,
+      unique: network._id,
+      network: network._id,
+      isStatic: false,
+      selector: {network: network._id},
+      options: {limit: 25}
+    }
+    this.tempTimeline = timeline
+    return timeline
+  }
+
+  resetTempTimelines () {
+    this.tempTimeline = null
   }
 
   onLogin () {

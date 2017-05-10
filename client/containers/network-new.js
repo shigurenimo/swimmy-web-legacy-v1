@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { isNumeric } from 'validator'
 import { utils } from '../../imports/utils'
 
-@inject('networks', 'snackbar')
+@inject('networks', 'posts', 'snackbar')
 @observer
 class NetworkNew extends Component {
   render () {
@@ -36,7 +36,8 @@ class NetworkNew extends Component {
       {/* もっと詳しく */}
       {!this.state.isDetail &&
       <div className='block:open-detail'>
-        <input className='input:open-detail' type='button' value='もっと詳しく設定する' onTouchTap={this.onOpenDetail.bind(this)}/>
+        <input className='input:open-detail' type='button' value='もっと詳しく設定する'
+          onTouchTap={this.onOpenDetail.bind(this)}/>
       </div>}
 
       {this.state.isDetail &&
@@ -241,6 +242,7 @@ class NetworkNew extends Component {
     .then(data => {
       this.props.networks.insertIndex(data)
       FlowRouter.go('/network')
+      this.props.posts.resetTimelines()
       this.props.snackbar.show('新しいリストを作成しました')
       this.process = false
     })

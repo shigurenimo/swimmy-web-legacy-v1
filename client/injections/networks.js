@@ -37,9 +37,19 @@ class Networks {
     if (!this.ids[dataId]) return
     for (let i = 0, len = this.index.length; i < len; ++i) {
       if (dataId !== this.index[i]._id) continue
-      data.reply = this.ids[dataId].reply
       this.ids[dataId] = data
       this.index[i] = data
+      break
+    }
+  }
+
+  @action
+  removeIndex (dataId) {
+    if (!this.ids[dataId]) return
+    for (let i = 0, len = this.index.length; i < len; ++i) {
+      if (dataId !== this.index[i]._id) continue
+      this.ids[dataId] = null
+      this.index.splice(i, 1)
       break
     }
   }
@@ -90,6 +100,18 @@ class Networks {
   insert (next) {
     return new Promise((resolve, reject) => {
       Meteor.call('networks:insert', next, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
+  remove (networkId) {
+    return new Promise((resolve, reject) => {
+      Meteor.call('networks:remove', {networkId}, (err, res) => {
         if (err) {
           reject(err)
         } else {
