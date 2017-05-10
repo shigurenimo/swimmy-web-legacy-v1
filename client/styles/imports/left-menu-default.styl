@@ -27,7 +27,7 @@
     ui-block()
     padding-left 0
     padding-right 0
-    padding-top 0
+    padding-bottom 0
 
     .input\\:list-item
       ui-block({reaction: true})
@@ -41,19 +41,14 @@
       &.true
         background-color ui-color(base-select)
 
-  .block\\:menu-artwork
-    padding-top 0
-
-  .block\\:menu-network
-  .block\\:menu-config
-    padding-top 10px
-
   // コピーライト
 
   .block\\:copyright
     ui-block()
-    padding-top 20px
+    padding-top 40px
 
     .text\\:copyright
-      text-align center
       font-size 0.8rem
+
+      +responsive(portrait)
+        text-align center

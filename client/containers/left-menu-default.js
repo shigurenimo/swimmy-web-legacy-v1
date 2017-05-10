@@ -11,18 +11,6 @@ class LeftMenuDefault extends Component {
         <img src='/images/logo.png'/>
         <div className='text:version'>{Meteor.settings.public.version}</div>
       </div>
-      {/* アートワーク */}
-      <div className='block:menu-artwork'>
-        {this.props.artworks.timelines.map(item =>
-          <a className={`input:list-item ${
-          this.props.router.page === 'artwork' &&
-          this.props.artworks.timeline.unique === item.unique}`}
-            key={item.unique} href={'/artwork/' + item.unique}>{item.name}</a>)}
-        {this.props.user.isLogged &&
-        <a
-          className={`input:list-item ${this.props.router.page.includes('artwork-new')}`}
-          href='/artwork/new'>+ 新しいアートワーク</a>}
-      </div>
       {/* 既存のネットワーク */}
       <div className='block:menu-network'>
         <a className={`input:list-item ${this.props.router.page.includes('thread')}`}
@@ -39,6 +27,18 @@ class LeftMenuDefault extends Component {
           this.props.router.page === 'timeline' &&
           this.props.posts.timeline.unique === item.unique}`}
             key={item.unique} href={'/room/' + item.network}>{item.name}</a>)}
+      </div>
+      {/* アートワーク */}
+      <div className='block:menu-artwork'>
+        {this.props.artworks.timelines.map(item =>
+          <a className={`input:list-item ${
+          this.props.router.page === 'artwork' &&
+          this.props.artworks.timeline.unique === item.unique}`}
+            key={item.unique} href={'/artwork/' + item.unique}>{item.name}</a>)}
+        {this.props.user.isLogged &&
+        <a
+          className={`input:list-item ${this.props.router.page.includes('artwork-new')}`}
+          href='/artwork/new'>+ 新しいアートワーク</a>}
       </div>
       {/* リスト */}
       <div className='block:menu-network'>
@@ -64,7 +64,7 @@ class LeftMenuDefault extends Component {
           リリースノート
         </a>
         <a className={`input:list-item ${this.props.router.page.includes('report')}`} href='/report'>
-          レポート
+          統計データ
         </a>
         {this.props.user.isLogged &&
         <div className='input:list-item' onTouchTap={this.onLogout.bind(this)}>
