@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { HTTP } from 'meteor/http'
-import { Random } from 'meteor/random'
 import { collections } from '../imports/collections'
 import { utils } from '../imports/utils'
 
@@ -139,6 +138,9 @@ Meteor.methods({
     if (req.images) {
       check(req.images, Array)
       check(req.imagesDate, String)
+    }
+    if (!req.images && req.content.length < 1) {
+      throw new Meteor.Error('ignore', '入力がありません')
     }
     const url = utils.match.url(req.content)
     // ↓ oEmbed

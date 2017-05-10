@@ -18,11 +18,12 @@ class Snackbar {
   }
 
   @action
-  error (message = {}) {
-    if (message) {
-      console.error(message.message || message)
+  error (error = {}) {
+    if (error.error === 'ignore') return
+    if (error) {
+      console.error(error.message || error)
     }
-    this.message = message.reason || 'エラーが発生しました'
+    this.message = error.reason || 'エラーが発生しました'
     this.isShow = true
     setTimeout(() => {
       this.isShow = false

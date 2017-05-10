@@ -131,7 +131,6 @@ class Posts {
   // 投稿を追加する
   insert (next) {
     return new Promise((resolve, reject) => {
-      if (!next.images && next.content.length < 1) return
       const req = {
         isPublic: next.isPublic,
         content: next.content
