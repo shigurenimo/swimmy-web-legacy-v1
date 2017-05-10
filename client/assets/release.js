@@ -1,4 +1,11 @@
 const releases = [{
+  version: '1.0.2',
+  date: '2017.5.10',
+  content: [
+    'メニューのレイアウトの変更',
+    '空の入力を送信に関するバグの回収'
+  ]
+}, {
   version: '1.0.1',
   date: '2017.5.8',
   content: [
@@ -9,7 +16,7 @@ const releases = [{
   date: '2017.5.6',
   content: [
     'UIデザインの更新',
-    'タイムマシーン機能の追加'
+    '過去ログ機能の追加'
   ]
 }, {
   version: '0.9.8',
