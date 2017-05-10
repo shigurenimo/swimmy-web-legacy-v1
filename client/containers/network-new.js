@@ -19,7 +19,7 @@ class NetworkNew extends Component {
           className='input:text'
           type='text'
           value={this.state.networkName}
-          placeholder='リクガメ同好会'
+          placeholder='ソーシャルゲーム'
           maxLength='100'
           onChange={this.onInputNetworkName.bind(this)}/>
       </div>
@@ -235,12 +235,13 @@ class NetworkNew extends Component {
     }
     this.props.networks.insert(next)
     .then(() => {
-      const {selector, options} = this.props.network.timeline
+      const {selector, options} = this.props.networks.timeline
       return this.props.networks.fetch(selector, options)
     })
     .then(data => {
       this.props.networks.insertIndex(data)
       FlowRouter.go('/network')
+      this.props.snackbar.show('新しいリストを作成しました')
       this.process = false
     })
     .catch(err => {
