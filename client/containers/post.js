@@ -79,15 +79,15 @@ class Post extends Component {
               type='button'
               value={name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}/>)}
         </div>
+        {this.props.user.isLogged &&
         <button className='input:add-reaction' onTouchTap={this.onOpenReply.bind(this)}>
           {this.state.isReply
             ? <IconKeyboardArrowUp {...this.iconStyle}/>
             : <IconKeyboardArrowDown {...this.iconStyle}/>}
-        </button>
+        </button>}
       </div>
       {/* リアクションボタンの編集 */}
-      {this.props.user.isLogged &&
-      this.state.isReply &&
+      {this.state.isReply &&
       <div className='block:new-reaction'>
         <input
           className='input:new-reaction'
