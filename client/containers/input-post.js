@@ -23,7 +23,7 @@ class InputPost extends Component {
           <textarea
             className='input:post-content'
             value={this.props.inputPost.postContent}
-            placeholder='Hi,'
+            placeholder='ここタップすると入力できます'
             ref='textarea'
             onKeyDown={this.onSubmitKeyDown.bind(this)}
             onChange={this.onInputContent.bind(this)}/>
