@@ -27,13 +27,13 @@ class LeftMenuDefault extends Component {
       <div className='block:menu-network'>
         <a className={`input:list-item ${this.props.router.page.includes('thread')}`}
           href='/thread'>スレッド</a>
-        <a className={`input:list-item ${this.props.router.page === 'timemachine'}`}
-          href={'/timemachine'}>タイムマシーン</a>
         {this.props.posts.timelines.map(item =>
           <a className={`input:list-item ${
           this.props.router.page === 'timeline' &&
           this.props.posts.timeline.unique === item.unique}`}
             key={item.unique} href={'/' + item.unique}>{item.name}</a>)}
+        <a className={`input:list-item ${this.props.router.page === 'timemachine'}`}
+          href={'/timemachine'}>過去ログ</a>
         {this.props.posts.networkTimelines.map(item =>
           <a className={`input:list-item ${
           this.props.router.page === 'timeline' &&
