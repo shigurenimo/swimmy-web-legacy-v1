@@ -1,4 +1,11 @@
 const releases = [{
+  version: '1.0.3',
+  date: '2017.5.10',
+  content: [
+    'リストの削除機能の追加',
+    'リストの作成に失敗するバグの回収'
+  ]
+}, {
   version: '1.0.2',
   date: '2017.5.10',
   content: [
