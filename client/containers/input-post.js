@@ -4,7 +4,7 @@ import { Random } from 'meteor/random'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
-import IconAdd from 'material-ui/svg-icons/content/add'
+import IconAdd from 'material-ui-icons/Add'
 
 @inject('inputPost', 'layout', 'networks', 'posts', 'snackbar', 'router', 'user')
 @observer

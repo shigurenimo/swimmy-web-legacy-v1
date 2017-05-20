@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import { utils } from '../../imports/utils'
 
 @inject('networks', 'user')
@@ -63,7 +64,7 @@ class NetworkList extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

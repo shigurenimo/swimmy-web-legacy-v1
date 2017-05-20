@@ -4,7 +4,7 @@ import { Random } from 'meteor/random'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
-import IconClear from 'material-ui/svg-icons/content/clear'
+import IconClear from 'material-ui-icons/Clear'
 import { utils } from '../../imports/utils'
 
 @inject('artworks', 'snackbar', 'user')

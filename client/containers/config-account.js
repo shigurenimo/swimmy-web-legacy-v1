@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import IconClear from 'material-ui/svg-icons/content/clear'
+import propTypes from 'prop-types'
+import IconClear from 'material-ui-icons/Clear'
 
 @inject('snackbar', 'user')
 @observer
@@ -326,7 +327,7 @@ class ConfigAccount extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

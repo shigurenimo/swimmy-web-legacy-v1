@@ -1,6 +1,7 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import propTypes from 'prop-types'
 import { Admin } from './admin'
 import { ArtworkList } from './artwork-list'
 import { ArtworkDetail } from './artwork-detail'
@@ -152,7 +153,7 @@ class Content extends Component {
 
   static get childContextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import { NetworkInfo } from './network-info'
 import { Post } from '../containers/post'
 import { PostRes } from './post-res'
@@ -73,7 +74,7 @@ class Thread extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

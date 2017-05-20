@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
-import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
+import React, { Component } from 'react'
+import propTypes from 'prop-types'
 
 @inject('posts', 'user')
 @observer
@@ -58,7 +59,7 @@ class Admin extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

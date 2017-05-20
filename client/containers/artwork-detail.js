@@ -2,7 +2,8 @@ import { Meteor } from 'meteor/meteor'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import IconClear from 'material-ui/svg-icons/content/clear'
+import propTypes from 'prop-types'
+import IconClear from 'material-ui-icons/Clear'
 import { utils } from '../../imports/utils'
 
 @inject('artworks', 'user', 'snackbar')
@@ -442,7 +443,7 @@ class ArtworkDetail extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

@@ -1,5 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 
 @inject('reports')
 @observer
@@ -35,7 +36,7 @@ class Report extends Component {
   }
 
   static get contextTypes () {
-    return {onScrollTop: React.PropTypes.any}
+    return {onScrollTop: propTypes.any}
   }
 
   componentDidMount () {

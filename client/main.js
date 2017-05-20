@@ -18,20 +18,3 @@ render(
   </Provider>,
   document.querySelector('.root\\:app')
 )
-
-// ↓ ダブルタップの禁止
-
-let tapFlag = false
-let timer = false
-
-document.body.addEventListener('touchstart', function (event) {
-  if (tapFlag) event.preventDefault()
-}, true)
-
-document.body.addEventListener('touchend', function () {
-  tapFlag = true
-  clearTimeout(timer)
-  timer = setTimeout(function () {
-    tapFlag = false
-  }, 150)
-}, true)

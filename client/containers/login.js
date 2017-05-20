@@ -2,9 +2,9 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { isAlpha, isEmail } from 'validator'
-import IconNotInterested from 'material-ui/svg-icons/av/not-interested'
-import IconWhatshot from 'material-ui/svg-icons/social/whatshot'
-import IconGesture from 'material-ui/svg-icons/content/gesture'
+import IconNotInterested from 'material-ui-icons/NotInterested'
+import IconWhatshot from 'material-ui-icons/Whatshot'
+import IconGesture from 'material-ui-icons/Gesture'
 
 @inject('user', 'snackbar')
 @observer

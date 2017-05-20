@@ -2,10 +2,11 @@ import { Meteor } from 'meteor/meteor'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import IconLanguage from 'material-ui/svg-icons/action/language'
-import IconChat from 'material-ui/svg-icons/communication/chat'
-import IconStyle from 'material-ui/svg-icons/image/style'
-import IconEmail from 'material-ui/svg-icons/communication/email'
+import propTypes from 'prop-types'
+import IconLanguage from 'material-ui-icons/Language'
+import IconChat from 'material-ui-icons/Chat'
+import IconStyle from 'material-ui-icons/Style'
+import IconEmail from 'material-ui-icons/Email'
 import { utils } from '../../imports/utils'
 
 @inject('networks', 'posts', 'snackbar', 'user')
@@ -172,7 +173,7 @@ class NetworkInfo extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

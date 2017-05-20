@@ -1,6 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import IconTouchApp from 'material-ui/svg-icons/action/touch-app'
+import IconTouchApp from 'material-ui-icons/TouchApp'
 
 @inject('layout', 'navigation', 'router', 'user')
 @observer

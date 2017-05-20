@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import IconNext from 'material-ui/svg-icons/image/navigate-next'
-import IconBefore from 'material-ui/svg-icons/image/navigate-before'
+import propTypes from 'prop-types'
+import IconNext from 'material-ui-icons/NavigateNext'
+import IconBefore from 'material-ui-icons/NavigateBefore'
 import { Post } from './post'
 
 @inject('networks', 'posts', 'postsSocket')
@@ -130,7 +131,7 @@ class TimeMachine extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

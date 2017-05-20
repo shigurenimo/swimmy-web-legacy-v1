@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { HTTP } from 'meteor/http'
 import { Random } from 'meteor/random'
+import propTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
@@ -462,7 +463,7 @@ class NetworkEdit extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

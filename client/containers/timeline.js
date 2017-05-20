@@ -1,5 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import { NetworkInfo } from './network-info'
 import { Post } from './post'
 
@@ -40,7 +41,7 @@ class Timeline extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

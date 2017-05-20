@@ -1,5 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import { utils } from '../../imports/utils'
 
 @inject('threads')
@@ -43,7 +44,7 @@ class ThreadList extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

@@ -1,6 +1,7 @@
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import { isNumeric } from 'validator'
 import { utils } from '../../imports/utils'
 
@@ -258,7 +259,7 @@ class NetworkNew extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

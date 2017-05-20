@@ -1,5 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import { PostArtwork } from './post-artwork'
 
 @inject('artworks', 'user')
@@ -32,7 +33,7 @@ class ArtworkList extends Component {
 
   static get contextTypes () {
     return {
-      onScrollTop: React.PropTypes.any
+      onScrollTop: propTypes.any
     }
   }
 }

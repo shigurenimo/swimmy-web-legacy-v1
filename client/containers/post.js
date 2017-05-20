@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import IconKeyboardArrowDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down'
-import IconKeyboardArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up'
+import IconKeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
+import IconKeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
 import { utils } from '../../imports/utils'
 
 @inject('router', 'user', 'posts', 'snackbar')

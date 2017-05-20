@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react'
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import { releases } from '../assets/release.js'
 
 @observer
@@ -19,7 +20,7 @@ class Release extends Component {
   }
 
   static get contextTypes () {
-    return {onScrollTop: React.PropTypes.any}
+    return {onScrollTop: propTypes.any}
   }
 
   componentDidMount () {
