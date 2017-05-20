@@ -3,7 +3,7 @@ import { action, observable, toJS } from 'mobx'
 import { collections } from '../../imports/collections'
 
 // 書き込みデータ（socket.io）
-class PostsSocket {
+export default class PostsSocket {
   @observable
   index = []
 
@@ -92,5 +92,3 @@ class PostsSocket {
     })
   }
 }
-
-export { PostsSocket }

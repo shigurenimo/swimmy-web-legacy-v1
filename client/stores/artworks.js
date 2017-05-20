@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { action, observable, toJS } from 'mobx'
 
 // アートワークデータ
-class Artworks {
+export default class Artworks {
   @observable
   index = [] // 全てのデータ
 
@@ -281,5 +281,3 @@ class Artworks {
     Accounts.onLogout(this.onLogout.bind(this))
   }
 }
-
-export { Artworks }

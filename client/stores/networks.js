@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { action, observable, toJS } from 'mobx'
 
 // リストデータ
-class Networks {
+export default class Networks {
   @observable
   index = []
 
@@ -223,5 +223,3 @@ class Networks {
     Accounts.onLogout(this.onLogout.bind(this))
   }
 }
-
-export { Networks }

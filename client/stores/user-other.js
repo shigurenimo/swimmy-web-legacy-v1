@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { observable } from 'mobx'
 
 // その他ユーザデータ
-class UserOther {
+export default class UserOther {
   @observable
   one = {}
 
@@ -27,5 +27,3 @@ class UserOther {
     return this.fetchOne({username}, {})
   }
 }
-
-export { UserOther }

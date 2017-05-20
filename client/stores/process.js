@@ -1,7 +1,7 @@
 import { Random } from 'meteor/random'
 
 // プロセスデータ
-class Process {
+export default class Process {
   index = []
 
   get wait () {
@@ -22,5 +22,3 @@ class Process {
     }
   }
 }
-
-export { Process }

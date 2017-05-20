@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx'
 
 // クライアントサイドルーティングデータ
-class Router {
+export default class Router {
   @observable
   page = null // 表示しているページ
 
@@ -32,5 +32,3 @@ class Router {
     this.page = page
   }
 }
-
-export { Router }

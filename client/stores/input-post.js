@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx'
 
 // 入力データ
-class InputPost {
+export default class InputPost {
   @observable
   postContent = ''
 
@@ -35,5 +35,3 @@ class InputPost {
     this.postImage = false
   }
 }
-
-export { InputPost }

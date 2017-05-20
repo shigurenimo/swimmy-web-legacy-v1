@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { observable } from 'mobx'
 
 // レポートデータ
-class Reports {
+export default class Reports {
   @observable
   index = null
 
@@ -22,5 +22,3 @@ class Reports {
     })
   }
 }
-
-export { Reports }

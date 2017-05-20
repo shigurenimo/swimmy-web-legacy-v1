@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx'
 
 // スナックバーデータ
-class Snackbar {
+export default class Snackbar {
   @observable
   message = '' // レポートに表示するメッセージ
 
@@ -38,5 +38,3 @@ class Snackbar {
     this.show('ログインが必要です')
   }
 }
-
-export { Snackbar }

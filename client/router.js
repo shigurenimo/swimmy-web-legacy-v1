@@ -1,35 +1,35 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import { FlowRouter } from 'meteor/kadira:flow-router'
-import { injections } from './injections'
+import stores from './stores'
 
 const documentTitle = document.title
 const documentTitleShort = 'swimmy'
 
 FlowRouter.route('/(default|self|follows)?', {
   action (params) {
-    injections.posts.closeNetworkInfo()
-    injections.router.setRoute('timeline')
-    injections.layout.toMain()
+    stores.posts.closeNetworkInfo()
+    stores.router.setRoute('timeline')
+    stores.layout.toMain()
     if (params[0]) {
-      injections.posts.updateTimelineFromUnique(params[0])
+      stores.posts.updateTimelineFromUnique(params[0])
     } else {
-      injections.posts.updateTimelineFromUnique('default')
+      stores.posts.updateTimelineFromUnique('default')
     }
-    const timeline = injections.posts.timeline
+    const timeline = stores.posts.timeline
     if (timeline.isStatic) {
-      injections.process.checkin()
+      stores.process.checkin()
       const {selector, options} = timeline
-      injections.posts.fetch(selector, options)
+      stores.posts.fetch(selector, options)
       .then(posts => {
         if (posts) {
-          injections.posts.insertIndex(posts)
+          stores.posts.insertIndex(posts)
         }
-        injections.process.checkout()
+        stores.process.checkout()
       })
-      .catch(err => { injections.snackbar.error(err) })
+      .catch(err => { stores.snackbar.error(err) })
     } else {
-      injections.postsSocket.subscribe(timeline)
+      stores.postsSocket.subscribe(timeline)
     }
     document.title = documentTitle
     if (Meteor.isProduction) {
@@ -53,20 +53,20 @@ FlowRouter.route('/timemachine/:y?/:m?/:d?', {
       params.m = parseInt(params.m)
       params.d = parseInt(params.d)
     }
-    injections.posts.updateTimelineFromDate(params.y, params.m, params.d)
-    const timeline = injections.posts.timeline
-    injections.router.setRoute('timemachine')
-    injections.layout.toMain()
-    injections.process.checkin()
+    stores.posts.updateTimelineFromDate(params.y, params.m, params.d)
+    const timeline = stores.posts.timeline
+    stores.router.setRoute('timemachine')
+    stores.layout.toMain()
+    stores.process.checkin()
     const {selector, options} = timeline
-    injections.posts.fetch(selector, options)
+    stores.posts.fetch(selector, options)
     .then(posts => {
       if (posts) {
-        injections.posts.insertIndex(posts)
+        stores.posts.insertIndex(posts)
       }
-      injections.process.checkout()
+      stores.process.checkout()
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
     document.title = documentTitle
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
@@ -79,14 +79,14 @@ FlowRouter.route('/timemachine/:y?/:m?/:d?', {
 
 FlowRouter.route('/thread', {
   action () {
-    injections.router.setRoute('thread-list')
-    injections.layout.toMain()
-    injections.threads.fetch()
+    stores.router.setRoute('thread-list')
+    stores.layout.toMain()
+    stores.threads.fetch()
     .then(posts => {
-      injections.threads.insertIndex(posts)
+      stores.threads.insertIndex(posts)
       document.title = '最近のスレッド | ' + documentTitle
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
         page: '/thread',
@@ -98,18 +98,18 @@ FlowRouter.route('/thread', {
 
 FlowRouter.route('/thread/:_id', {
   action (params) {
-    injections.posts.fetchOneFromId(params._id)
+    stores.posts.fetchOneFromId(params._id)
     .then(post => {
       if (!post) {
         return notFound()
       }
-      injections.posts.updateOne(post)
+      stores.posts.updateOne(post)
       let content = post.content
       if (content.length > 20) {
         content = content.substr(0, 20) + '..'
       }
-      injections.router.setRoute('thread')
-      injections.layout.toMain()
+      stores.router.setRoute('thread')
+      stores.layout.toMain()
       document.title = content + ' | ' + documentTitleShort
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -118,24 +118,24 @@ FlowRouter.route('/thread/:_id', {
         })
       }
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
   }
 })
 
 FlowRouter.route('/artwork/(default|self|follows)?', {
   action (params) {
-    injections.router.setRoute('artwork')
-    injections.layout.toMain()
+    stores.router.setRoute('artwork')
+    stores.layout.toMain()
     if (params[0]) {
-      injections.artworks.updateTimelineFromUnique(params[0])
+      stores.artworks.updateTimelineFromUnique(params[0])
     } else {
-      injections.artworks.updateTimelineFromUnique('default')
+      stores.artworks.updateTimelineFromUnique('default')
     }
-    const {selector, options} = injections.artworks.timeline
-    injections.artworks.fetch(selector, options)
+    const {selector, options} = stores.artworks.timeline
+    stores.artworks.fetch(selector, options)
     .then(posts => {
       if (posts) {
-        injections.artworks.insertIndex(posts)
+        stores.artworks.insertIndex(posts)
       }
       document.title = 'アートワーク | ' + documentTitle
       if (Meteor.isProduction) {
@@ -145,14 +145,14 @@ FlowRouter.route('/artwork/(default|self|follows)?', {
         })
       }
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
   }
 })
 
 FlowRouter.route('/artwork/new', {
   action () {
-    injections.router.setRoute('artwork-new')
-    injections.layout.toMain()
+    stores.router.setRoute('artwork-new')
+    stores.layout.toMain()
     document.title = '新しいアートワーク | ' + documentTitle
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
@@ -165,13 +165,13 @@ FlowRouter.route('/artwork/new', {
 
 FlowRouter.route('/uuid/:_id', {
   action (params) {
-    injections.artworks.fetchOneFromId(params._id)
+    stores.artworks.fetchOneFromId(params._id)
     .then(artwork => {
       if (!artwork) {
         return notFound()
       }
-      injections.artworks.updateOne(artwork)
-      injections.router.setRoute('artwork-detail')
+      stores.artworks.updateOne(artwork)
+      stores.router.setRoute('artwork-detail')
       const title = artwork.title ? artwork.title : artwork._id
       document.title = title + ' | ' + documentTitleShort
       if (Meteor.isProduction) {
@@ -181,23 +181,23 @@ FlowRouter.route('/uuid/:_id', {
         })
       }
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
   }
 })
 
 FlowRouter.route('/network/(default|net|univ|channel)?', {
   action (params) {
-    injections.router.setRoute('network-list')
-    injections.layout.toMain()
+    stores.router.setRoute('network-list')
+    stores.layout.toMain()
     if (params[0]) {
-      injections.networks.updateTimelineFromUnique(params[0])
+      stores.networks.updateTimelineFromUnique(params[0])
     } else {
-      injections.networks.updateTimelineFromUnique('default')
+      stores.networks.updateTimelineFromUnique('default')
     }
-    const {selector, options} = injections.networks.timeline
-    injections.networks.fetch(selector, options)
+    const {selector, options} = stores.networks.timeline
+    stores.networks.fetch(selector, options)
     .then(data => {
-      injections.networks.insertIndex(data)
+      stores.networks.insertIndex(data)
       document.title = 'リスト | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -206,14 +206,14 @@ FlowRouter.route('/network/(default|net|univ|channel)?', {
         })
       }
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
   }
 })
 
 FlowRouter.route('/network/new', {
   action () {
-    injections.router.setRoute('network-new')
-    injections.layout.toMain()
+    stores.router.setRoute('network-new')
+    stores.layout.toMain()
     document.title = '新しいリスト | ' + documentTitle
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
@@ -227,23 +227,23 @@ FlowRouter.route('/network/new', {
 FlowRouter.route('/room/:networkId', {
   action (params, query) {
     const networkId = params.networkId
-    injections.networks.fetchOne({_id: networkId}, {})
+    stores.networks.fetchOne({_id: networkId}, {})
     .then(network => {
       if (!network) {
         return notFound()
       }
-      injections.networks.updateOne(network)
-      const timeline = injections.posts.updatetTempTimelineFromNetwork(network)
-      injections.posts.updateTimeline(timeline)
-      injections.posts.resetTimelines()
-      injections.postsSocket.subscribe(timeline)
+      stores.networks.updateOne(network)
+      const timeline = stores.posts.updatetTempTimelineFromNetwork(network)
+      stores.posts.updateTimeline(timeline)
+      stores.posts.resetTimelines()
+      stores.postsSocket.subscribe(timeline)
       if (query.preview === 'true') {
-        injections.posts.openNetworkInfo()
+        stores.posts.openNetworkInfo()
       } else {
-        injections.posts.closeNetworkInfo()
+        stores.posts.closeNetworkInfo()
       }
-      injections.router.setRoute('timeline')
-      injections.layout.toMain()
+      stores.router.setRoute('timeline')
+      stores.layout.toMain()
       document.title = network.name + ' | ' + documentTitleShort
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -252,20 +252,20 @@ FlowRouter.route('/room/:networkId', {
         })
       }
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
   }
 })
 
 FlowRouter.route('/network/:networkId/edit', {
   action (params) {
     const networkId = params.networkId
-    injections.networks.fetchOne({_id: networkId}, {})
+    stores.networks.fetchOne({_id: networkId}, {})
     .then(data => {
       if (!data) {
         return notFound()
       }
-      injections.networks.updateOne(data)
-      injections.router.setRoute('network-edit')
+      stores.networks.updateOne(data)
+      stores.router.setRoute('network-edit')
       document.title = '編集中 - ' + data.name + ' | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -274,19 +274,19 @@ FlowRouter.route('/network/:networkId/edit', {
         })
       }
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
   }
 })
 
 FlowRouter.route('/verify-email/:token', {
   action (params) {
     const token = params.token
-    injections.router.setRoute('verify')
+    stores.router.setRoute('verify')
     Accounts.verifyEmail(token, error => {
       if (error) {
-        injections.router.verifyError = true
+        stores.router.verifyError = true
       } else {
-        injections.router.verifyError = false
+        stores.router.verifyError = false
       }
     })
   }
@@ -294,8 +294,8 @@ FlowRouter.route('/verify-email/:token', {
 
 FlowRouter.route('/admin', {
   action () {
-    injections.router.setRoute('admin')
-    injections.layout.toMain()
+    stores.router.setRoute('admin')
+    stores.layout.toMain()
     document.title = 'マイページ | ' + documentTitle
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
@@ -308,8 +308,8 @@ FlowRouter.route('/admin', {
 
 FlowRouter.route('/config', {
   action () {
-    injections.router.setRoute('config')
-    injections.layout.toMain()
+    stores.router.setRoute('config')
+    stores.layout.toMain()
     document.title = '各種設定 | ' + documentTitle
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
@@ -322,8 +322,8 @@ FlowRouter.route('/config', {
 
 FlowRouter.route('/release', {
   action () {
-    injections.router.setRoute('release')
-    injections.layout.toMain()
+    stores.router.setRoute('release')
+    stores.layout.toMain()
     document.title = 'リリースノート | ' + documentTitle
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
@@ -336,11 +336,11 @@ FlowRouter.route('/release', {
 
 FlowRouter.route('/report', {
   action () {
-    injections.reports.fetch()
+    stores.reports.fetch()
     .then(report => {
-      injections.reports.updateIndex(report)
-      injections.router.setRoute('report')
-      injections.layout.toMain()
+      stores.reports.updateIndex(report)
+      stores.router.setRoute('report')
+      stores.layout.toMain()
       document.title = 'レポート | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -349,29 +349,29 @@ FlowRouter.route('/report', {
         })
       }
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
   }
 })
 
 FlowRouter.route('/:username', {
   action (params) {
     const username = params.username
-    injections.userOther.fetchOneFromUsername(username)
+    stores.userOther.fetchOneFromUsername(username)
     .then(user => {
       if (!user) return notFound()
-      injections.userOther.updateOne(user)
-      injections.router.setRoute('profile')
-      return injections.posts.fetchFromUserId(user._id)
+      stores.userOther.updateOne(user)
+      stores.router.setRoute('profile')
+      return stores.posts.fetchFromUserId(user._id)
     })
     .then(posts => {
-      injections.posts.insertIndex(posts)
+      stores.posts.insertIndex(posts)
     })
-    .catch(err => { injections.snackbar.error(err) })
+    .catch(err => { stores.snackbar.error(err) })
   }
 })
 
 function notFound () {
-  injections.router.setRoute('not-found')
+  stores.router.setRoute('not-found')
   document.title = '404 | ' + documentTitle
   if (Meteor.isProduction) {
     window.ga('send', 'pageview', {

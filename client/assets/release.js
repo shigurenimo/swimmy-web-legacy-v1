@@ -1,4 +1,4 @@
-const releases = [{
+export default [{
   version: '1.0.3',
   date: '2017.5.10',
   content: [
@@ -200,5 +200,3 @@ const releases = [{
     'サークルを作成しなくてもユーザー登録ができるように変更'
   ]
 }]
-
-export { releases }

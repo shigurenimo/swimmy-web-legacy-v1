@@ -1,7 +1,7 @@
 import { observable } from 'mobx'
 
 // レイアウトデータ
-class Layout {
+export default class Layout {
   @observable
   scrollOver = false
 
@@ -53,5 +53,3 @@ class Layout {
     }, false)
   }
 }
-
-export { Layout }

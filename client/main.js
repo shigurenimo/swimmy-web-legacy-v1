@@ -4,14 +4,14 @@ import { render } from 'react-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import { App } from './containers/app'
-import { injections } from './injections'
+import stores from './stores'
 import './router'
 import './styles/main'
 
 injectTapEventPlugin()
 
 render(
-  <Provider {...injections}>
+  <Provider {...stores}>
     <MuiThemeProvider>
       <App/>
     </MuiThemeProvider>

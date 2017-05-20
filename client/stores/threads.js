@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { action, observable } from 'mobx'
 
 // スレッドデータ
-class Threads {
+export default class Threads {
   tabs = []
 
   @observable
@@ -45,5 +45,3 @@ class Threads {
     })
   }
 }
-
-export { Threads }

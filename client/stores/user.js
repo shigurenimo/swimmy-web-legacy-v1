@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base'
 import { action, computed, observable } from 'mobx'
 
 // ユーザデータ
-class User {
+export default class User {
   @observable
   info = {} // ユーザのデータ
 
@@ -229,5 +229,3 @@ class User {
     Accounts.onLogout(this.onLogout.bind(this))
   }
 }
-
-export { User }

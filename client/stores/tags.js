@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { action, observable } from 'mobx'
 
 // タグデータ
-class Tags {
+export default class Tags {
   @observable
   index = []
 
@@ -48,5 +48,3 @@ class Tags {
     })
   }
 }
-
-export { Tags }
