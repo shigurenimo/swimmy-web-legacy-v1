@@ -1,4 +1,10 @@
 export default [{
+  version: '1.0.4',
+  date: '2017.5.25',
+  content: [
+    '操作性の改善'
+  ]
+}, {
   version: '1.0.3',
   date: '2017.5.10',
   content: [
