@@ -8,7 +8,7 @@ import { utils } from '../../imports/utils'
 
 @inject('artworks', 'user', 'snackbar')
 @observer
-class ArtworkDetail extends Component {
+export default class ArtworkDetail extends Component {
   render () {
     return <div className='container:artwork-detail'>
       <div className='block:post-layout'>
@@ -20,7 +20,7 @@ class ArtworkDetail extends Component {
         </div>}
         {/* イメージ */}
         <div className='block:post-image'>
-          <img src={this.src}/>
+          <img src={this.src} />
         </div>
         {/* カラー */}
         {!this.state.isEdit &&
@@ -38,7 +38,7 @@ class ArtworkDetail extends Component {
               onTouchTap={this.onSelectColor.bind(this, code)}>
               <div
                 className='image:color'
-                style={{backgroundColor: '#' + code}}/>
+                style={{backgroundColor: '#' + code}} />
             </div>)}
         </div>}
         {/* タイトル */}
@@ -50,11 +50,11 @@ class ArtworkDetail extends Component {
             type='text'
             value={this.state.inputTitle}
             maxLength='100'
-            onChange={this.onInputTitle.bind(this)}/>
+            onChange={this.onInputTitle.bind(this)} />
         </div>}
         {/* ノート */}
         {!this.state.isEdit && this.state.inputNote &&
-        <div className='block:post-note' dangerouslySetInnerHTML={{__html: this.data.note}}/>}
+        <div className='block:post-note' dangerouslySetInnerHTML={{__html: this.data.note}} />}
         {this.state.isEdit &&
         <div className='block:post-note'>
           <textarea
@@ -63,7 +63,7 @@ class ArtworkDetail extends Component {
             onChange={this.onInputNote.bind(this)}
             rows={8}
             maxLength='1000'
-            value={this.state.inputNote}/>
+            value={this.state.inputNote} />
         </div>}
         {/* 匿名 */}
         {this.state.isEdit &&
@@ -72,11 +72,11 @@ class ArtworkDetail extends Component {
           <input className={'input:public ' + !this.state.inputIsPublic}
             type='button'
             value='オン'
-            onTouchTap={this.onChangePublic.bind(this, false)}/>
+            onTouchTap={this.onChangePublic.bind(this, false)} />
           <input className={'input:public ' + this.state.inputIsPublic}
             type='button'
             value='オフ'
-            onTouchTap={this.onChangePublic.bind(this, true)}/>
+            onTouchTap={this.onChangePublic.bind(this, true)} />
           {this.state.inputIsPublic &&
           <div className='text:public-info'>
             ユーザネームが公開されます
@@ -89,11 +89,11 @@ class ArtworkDetail extends Component {
           <input className={'input:public ' + this.state.inputIsSecret}
             type='button'
             value='オン'
-            onTouchTap={this.onChangeSecret.bind(this, true)}/>
+            onTouchTap={this.onChangeSecret.bind(this, true)} />
           <input className={'input:public ' + !this.state.inputIsSecret}
             type='button'
             value='オフ'
-            onTouchTap={this.onChangeSecret.bind(this, false)}/>
+            onTouchTap={this.onChangeSecret.bind(this, false)} />
           {this.state.inputIsSecret &&
           <div className='text:public-info'>
             タイムラインに表示されなくなります
@@ -108,19 +108,19 @@ class ArtworkDetail extends Component {
             className='input:post-remove'
             type='button'
             value='投稿を削除する'
-            onTouchTap={this.onRemove.bind(this)}/>}
+            onTouchTap={this.onRemove.bind(this)} />}
           {!this.state.isEdit &&
           <input
             className='input:post-remove'
             type='button'
             value='内容を編集する'
-            onTouchTap={this.onChangeEdit.bind(this)}/>}
+            onTouchTap={this.onChangeEdit.bind(this)} />}
           {this.state.isEdit &&
           <input
             className='input:post-remove'
             type='button'
             value='編集を完了する'
-            onTouchTap={this.onChangeEdit.bind(this)}/>}
+            onTouchTap={this.onChangeEdit.bind(this)} />}
         </div>}
         {/* リアクションボタン */}
         {!this.state.isEdit &&
@@ -132,7 +132,7 @@ class ArtworkDetail extends Component {
               key={name}
               onTouchTap={this.onUpdateReaction.bind(this, this.data._id, name)}
               type='button'
-              value={name + (this.data.reactions[name].length > 0 ? ' ' + this.data.reactions[name].length : '')}/>)}
+              value={name + (this.data.reactions[name].length > 0 ? ' ' + this.data.reactions[name].length : '')} />)}
         </div>}
         {/* リアクションボタンの編集 */}
         {this.props.user.isLogged && !this.state.isEdit &&
@@ -143,11 +143,11 @@ class ArtworkDetail extends Component {
             value={this.state.inputNewReaction}
             placeholder={this.reactionPlaceholder}
             maxLength='10'
-            onChange={this.onInputNewReaction.bind(this)}/>
+            onChange={this.onInputNewReaction.bind(this)} />
           <input className='input:submit-reaction'
             type='button'
             value='追加'
-            onTouchTap={this.onSubmitNewReaction.bind(this)}/>
+            onTouchTap={this.onSubmitNewReaction.bind(this)} />
         </div>}
         {/* リプライ */}
         {this.props.user.isLogged && !this.state.isEdit &&
@@ -157,7 +157,7 @@ class ArtworkDetail extends Component {
             value={this.state.inputReply}
             placeholder='タップしてコメントを入力'
             onChange={this.onInputReply.bind(this)}
-            rows={1}/>
+            rows={1} />
         </div>}
         {/* 匿名 */}
         {this.props.user.isLogged && !this.state.isEdit &&
@@ -167,11 +167,11 @@ class ArtworkDetail extends Component {
           <input className={'input:public ' + !this.state.isPublic}
             type='button'
             value='オン'
-            onTouchTap={this.onChangeReplyPublic.bind(this, false)}/>
+            onTouchTap={this.onChangeReplyPublic.bind(this, false)} />
           <input className={'input:public ' + this.state.isPublic}
             type='button'
             value='オフ'
-            onTouchTap={this.onChangeReplyPublic.bind(this, true)}/>
+            onTouchTap={this.onChangeReplyPublic.bind(this, true)} />
         </div>}
         {/* リプライの送信 */}
         {this.state.inputReply.length > 0 && !this.state.isEdit &&
@@ -180,7 +180,7 @@ class ArtworkDetail extends Component {
             className='input:submit-reply'
             type='button'
             value='リプライ'
-            onTouchTap={this.onSubmitReply.bind(this, this.data._id)}/>
+            onTouchTap={this.onSubmitReply.bind(this, this.data._id)} />
         </div>}
       </div>
       {/* リプライ メッセージ */}
@@ -205,7 +205,7 @@ class ArtworkDetail extends Component {
               <div
                 className='input:remove-reply'
                 onTouchTap={this.onRemoveReply.bind(this, this.data._id, reply._id)}>
-                <IconClear style={{width: 30, height: 30}} color='tomato'/>
+                <IconClear style={{width: 30, height: 30}} color='tomato' />
               </div>}
               {/* リアクションボタン */}
               <div className='block:reaction-list'>
@@ -216,7 +216,7 @@ class ArtworkDetail extends Component {
                     key={name}
                     onTouchTap={this.onUpdateReplyReaction.bind(this, this.data._id, reply._id, name)}
                     type='button'
-                    value={name + (reply.reactions[name].length > 0 ? ' ' + reply.reactions[name].length : '')}/>)}
+                    value={name + (reply.reactions[name].length > 0 ? ' ' + reply.reactions[name].length : '')} />)}
               </div>
             </div>
           </div>)}
@@ -447,5 +447,3 @@ class ArtworkDetail extends Component {
     }
   }
 }
-
-export { ArtworkDetail }

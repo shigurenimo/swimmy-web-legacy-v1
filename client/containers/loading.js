@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import React, { Component } from 'react'
 
 @observer
-class Loading extends Component {
+export default class Loading extends Component {
   animation = null
 
   render () {
@@ -38,5 +38,3 @@ class Loading extends Component {
     clearInterval(this.animation)
   }
 }
-
-export { Loading }

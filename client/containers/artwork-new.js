@@ -9,7 +9,7 @@ import { utils } from '../../imports/utils'
 
 @inject('artworks', 'snackbar', 'user')
 @observer
-class ArtworkNew extends Component {
+export default class ArtworkNew extends Component {
   render () {
     return <div className='container:artwork-new'>
       <div className='block:container-layout'>
@@ -20,7 +20,7 @@ class ArtworkNew extends Component {
             onDrop={this.onDropImage.bind(this)}>
             <div className='block:frame'>
               {this.state.inputImage &&
-              <img src={this.state.inputImage.preview}/>}
+              <img src={this.state.inputImage.preview} />}
               {!this.state.inputImage &&
               <div className='text:dropzone-name'>画像をドロップ or タップ</div>}
             </div>
@@ -28,7 +28,7 @@ class ArtworkNew extends Component {
           {this.state.inputImage &&
           <div className='input:close-message'
             onTouchTap={this.onCloseImage.bind(this)}>
-            <IconClear style={{width: 35, height: 35}} color='tomato' hoverColor='white'/>
+            <IconClear style={{width: 35, height: 35}} color='tomato' hoverColor='white' />
           </div>}
         </div>
         {/* エラーメッセージ */}
@@ -44,7 +44,7 @@ class ArtworkNew extends Component {
             type='text'
             value={this.state.inputTitle}
             maxLength='100'
-            onChange={this.onInputTitle.bind(this)}/>
+            onChange={this.onInputTitle.bind(this)} />
         </div>
         {/* ノート */}
         <div className='block:post-note'>
@@ -54,7 +54,7 @@ class ArtworkNew extends Component {
           onChange={this.onInputNote.bind(this)}
           rows={4}
           maxLength='1000'
-          value={this.state.inputNote}/>
+          value={this.state.inputNote} />
         </div>
         {/* カラー */}
         <div className='block:post-color'>
@@ -65,7 +65,7 @@ class ArtworkNew extends Component {
               onTouchTap={this.onSelectColor.bind(this, code)}>
               <div
                 className='image:color'
-                style={{backgroundColor: '#' + code}}/>
+                style={{backgroundColor: '#' + code}} />
             </div>)}
         </div>
         {/* レーティング */}
@@ -95,11 +95,11 @@ class ArtworkNew extends Component {
           <input className={'input:public ' + !this.state.isPublic}
             type='button'
             value='オン'
-            onTouchTap={this.onChangePublic.bind(this, false)}/>
+            onTouchTap={this.onChangePublic.bind(this, false)} />
           <input className={'input:public ' + this.state.isPublic}
             type='button'
             value='オフ'
-            onTouchTap={this.onChangePublic.bind(this, true)}/>
+            onTouchTap={this.onChangePublic.bind(this, true)} />
           {this.state.isPublic &&
           <div className='text:public-info'>
             ユーザネームが公開されます
@@ -111,11 +111,11 @@ class ArtworkNew extends Component {
           <input className={'input:public ' + this.state.isSecret}
             type='button'
             value='オン'
-            onTouchTap={this.onChangeSecret.bind(this, true)}/>
+            onTouchTap={this.onChangeSecret.bind(this, true)} />
           <input className={'input:public ' + !this.state.isSecret}
             type='button'
             value='オフ'
-            onTouchTap={this.onChangeSecret.bind(this, false)}/>
+            onTouchTap={this.onChangeSecret.bind(this, false)} />
           {/*
           this.state.isSecret &&
           <div className='text:public-info'>
@@ -129,7 +129,7 @@ class ArtworkNew extends Component {
           <input className='input:submit-message'
             type='button'
             value='送信する'
-            onTouchTap={this.onSubmit.bind(this)}/>
+            onTouchTap={this.onSubmit.bind(this)} />
         </div>}
       </div>
     </div>
@@ -321,5 +321,3 @@ class ArtworkNew extends Component {
     })
   }
 }
-
-export { ArtworkNew }

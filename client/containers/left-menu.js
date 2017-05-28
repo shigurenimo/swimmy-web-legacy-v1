@@ -1,11 +1,11 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
-import { LeftMenuDefault } from './left-menu-default'
+import LeftMenuDefault from './left-menu-default'
 
 @inject('layout', 'router', 'user')
 @observer
-class LeftMenu extends Component {
+export default class LeftMenu extends Component {
   render () {
     return <CSSTransitionGroup
       className={this.className}
@@ -33,5 +33,3 @@ class LeftMenu extends Component {
     return <LeftMenuDefault key='default'/>
   }
 }
-
-export { LeftMenu }

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 @inject('layout', 'snackbar', 'router')
 @observer
-class Snackbar extends Component {
+export default class Snackbar extends Component {
   render () {
     return <div className={this.className}>
       {this.props.snackbar.message}
@@ -29,4 +29,3 @@ class Snackbar extends Component {
     }
   }
 }
-export { Snackbar }

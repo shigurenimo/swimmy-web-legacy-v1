@@ -8,7 +8,7 @@ import IconGesture from 'material-ui-icons/Gesture'
 
 @inject('user', 'snackbar')
 @observer
-class Login extends Component {
+export default class Login extends Component {
   render () {
     return <div className='container:login'>
       <div className='block:form-title' key='title'>
@@ -324,5 +324,3 @@ class Login extends Component {
     }
   }
 }
-
-export { Login }

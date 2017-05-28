@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 import releases from '../assets/release'
 
 @observer
-class Release extends Component {
+export default class Release extends Component {
   render () {
     return (
       <div className='container:release'>
@@ -26,5 +26,3 @@ class Release extends Component {
     this.context.onScrollTop()
   }
 }
-
-export { Release }

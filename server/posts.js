@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { HTTP } from 'meteor/http'
-import { collections } from '../imports/collections'
-import { utils } from '../imports/utils'
+import collections from '../imports/collections'
+import utils from '../imports/utils'
 
 // 全ての情報を公開する
 Meteor.publish('posts', function (selector, options) {

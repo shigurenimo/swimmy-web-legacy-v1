@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 
 @inject('artworks', 'snackbar', 'user')
 @observer
-class PostArtwork extends Component {
+export default class PostArtwork extends Component {
   render () {
     return <div className='container:post-work'>
       <div className='block:container-layout'>
@@ -61,5 +61,3 @@ class PostArtwork extends Component {
     })
   }
 }
-
-export { PostArtwork }

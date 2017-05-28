@@ -1,11 +1,11 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
-import { InputPost } from './input-post'
+import InputPost from './input-post'
 
 @inject('router', 'user')
 @observer
-class InputAction extends Component {
+export default class InputAction extends Component {
   render () {
     return <CSSTransitionGroup
       component='div'
@@ -13,7 +13,7 @@ class InputAction extends Component {
       transitionName='transition'
       transitionEnterTimeout={450}
       transitionLeaveTimeout={150}
-      transitionAppear={true}
+      transitionAppear
       transitionAppearTimeout={150}>
       {this.router()}
     </CSSTransitionGroup>
@@ -31,11 +31,9 @@ class InputAction extends Component {
       case 'timemachine':
       case 'thread':
       case 'network-info':
-        return <InputPost key='input-post'/>
+        return <InputPost key='input-post' />
       default:
-        return <div className='block:input-line' key='default'/>
+        return <div className='block:input-line' key='default' />
     }
   }
 }
-
-export { InputAction }

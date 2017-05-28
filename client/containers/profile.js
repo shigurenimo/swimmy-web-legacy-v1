@@ -2,11 +2,11 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import { Post } from '../containers/post'
+import Post from '../containers/post'
 
 @inject('posts', 'snackbar', 'user', 'userOther')
 @observer
-class Profile extends Component {
+export default class Profile extends Component {
   render () {
     return <div className='container:profile'>
       {/* アイコン */}
@@ -20,7 +20,7 @@ class Profile extends Component {
                 backgroundColor: i === '1'
                   ? Meteor.settings.public.color.primary
                   : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
-              }}/>)}
+              }} />)}
         </div>
       </div>
       {/* ネーム */}
@@ -43,7 +43,7 @@ class Profile extends Component {
       </div>}
       {/* 投稿 */}
       <div className='block:post-list'>
-        {this.posts.map(item => <Post key={item._id} {...item}/>)}
+        {this.posts.map(item => <Post key={item._id} {...item} />)}
       </div>
     </div>
   }
@@ -82,5 +82,3 @@ class Profile extends Component {
     }
   }
 }
-
-export { Profile }

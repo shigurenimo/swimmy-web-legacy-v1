@@ -6,9 +6,7 @@ export default createStyleSheet('Admin', theme => {
       position: 'relative',
       paddingBottom: 50
     },
-    userIcon: {
-
-    },
+    userIcon: {},
     squares: {
       margin: '0 auto',
       width: '140px',

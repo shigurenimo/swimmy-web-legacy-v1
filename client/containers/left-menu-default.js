@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 
 @inject('artworks', 'layout', 'networks', 'router', 'posts', 'postsSocket', 'snackbar', 'user')
 @observer
-class LeftMenuDefault extends Component {
+export default class LeftMenuDefault extends Component {
   render () {
     return <div className='container:left-menu-default'>
       <div className='block:app-logo'>
@@ -89,5 +89,3 @@ class LeftMenuDefault extends Component {
     })
   }
 }
-
-export { LeftMenuDefault }

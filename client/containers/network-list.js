@@ -2,11 +2,11 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import { utils } from '../../imports/utils'
+import utils from '../../imports/utils'
 
 @inject('networks', 'user')
 @observer
-class NetworkList extends Component {
+export default class NetworkList extends Component {
   render () {
     return <div className='container:network-list'>
       <div className='block:network-list'>
@@ -68,5 +68,3 @@ class NetworkList extends Component {
     }
   }
 }
-
-export { NetworkList }

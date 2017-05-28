@@ -5,11 +5,11 @@ import propTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
-import { utils } from '../../imports/utils'
+import utils from '../../imports/utils'
 
 @inject('networks', 'snackbar')
 @observer
-class NetworkEdit extends Component {
+export default class NetworkEdit extends Component {
   render () {
     return <div className='container:network-edit'>
       {/* リストの名前 */}
@@ -19,7 +19,7 @@ class NetworkEdit extends Component {
           type='text'
           value={this.state.name}
           onChange={this.onChangeName.bind(this)}
-          onBlur={this.onSubmitName.bind(this)}/>
+          onBlur={this.onSubmitName.bind(this)} />
       </div>
       {/* ヘッダー画像 */}
       <div className='block:network-header'>
@@ -58,7 +58,7 @@ class NetworkEdit extends Component {
           placeholder='ソーシャルゲームの情報交換をするリスト'
           maxLength='400'
           onChange={this.onInputDescription.bind(this)}
-          onBlur={this.onSubmitDescription.bind(this)}/>
+          onBlur={this.onSubmitDescription.bind(this)} />
       </div>
       {/* ハッシュタグ */}
       <div className='block:network-tags'>
@@ -71,7 +71,7 @@ class NetworkEdit extends Component {
             placeholder='ハッシュタグ'
             maxLength='20'
             onChange={this.onInputTag.bind(this, 0)}
-            onBlur={this.onSubmitTag.bind(this)}/>
+            onBlur={this.onSubmitTag.bind(this)} />
         </div>
         <div className='block:hashtag'>
           <div className='text:hash'>#</div>
@@ -82,7 +82,7 @@ class NetworkEdit extends Component {
             placeholder='タップして編集'
             maxLength='20'
             onChange={this.onInputTag.bind(this, 1)}
-            onBlur={this.onSubmitTag.bind(this)}/>
+            onBlur={this.onSubmitTag.bind(this)} />
         </div>
         <div className='block:hashtag'>
           <div className='text:hash'>#</div>
@@ -93,7 +93,7 @@ class NetworkEdit extends Component {
             placeholder='タップして編集'
             maxLength='20'
             onChange={this.onInputTag.bind(this, 2)}
-            onBlur={this.onSubmitTag.bind(this)}/>
+            onBlur={this.onSubmitTag.bind(this)} />
         </div>
       </div>
       {/* メールアドレス */}
@@ -106,7 +106,7 @@ class NetworkEdit extends Component {
           placeholder='swimmy@gmail.com'
           maxLength='40'
           onChange={this.onInputEmail.bind(this)}
-          onBlur={this.onSubmitEmail.bind(this)}/>
+          onBlur={this.onSubmitEmail.bind(this)} />
       </div>
       {/* SNS:Webサイト */}
       <div className='block:network-site'>
@@ -118,7 +118,7 @@ class NetworkEdit extends Component {
           placeholder='https://swimmy.io'
           maxLength='20'
           onChange={this.onInputSocial.bind(this, 'site')}
-          onBlur={this.onSubmitSocial.bind(this, 'site')}/>
+          onBlur={this.onSubmitSocial.bind(this, 'site')} />
       </div>
       {/* SNS:Twitter */}
       <div className='block:network-twitter'>
@@ -131,7 +131,7 @@ class NetworkEdit extends Component {
           placeholder='swimmy_io'
           maxLength='20'
           onChange={this.onInputSocial.bind(this, 'twitter')}
-          onBlur={this.onSubmitSocial.bind(this, 'twitter')}/>
+          onBlur={this.onSubmitSocial.bind(this, 'twitter')} />
       </div>
       {/* 活動場所 */}
       <div className='block:network-place'>
@@ -143,7 +143,7 @@ class NetworkEdit extends Component {
           placeholder={'サークル棟'}
           maxLength='20'
           onChange={this.onInputPlace.bind(this)}
-          onBlur={this.onSubmitPlace.bind(this)}/>
+          onBlur={this.onSubmitPlace.bind(this)} />
       </div>
       {/* 地域 */}
       <div className='block:network-region'>
@@ -168,7 +168,7 @@ class NetworkEdit extends Component {
           placeholder={'名桜大学'}
           maxLength='40'
           onChange={this.onInputUniv.bind(this)}
-          onBlur={this.onSubmitUniv.bind(this)}/>
+          onBlur={this.onSubmitUniv.bind(this)} />
       </div>
     </div>
   }
@@ -467,5 +467,3 @@ class NetworkEdit extends Component {
     }
   }
 }
-
-export { NetworkEdit }

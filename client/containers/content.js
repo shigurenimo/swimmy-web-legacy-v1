@@ -2,29 +2,29 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import propTypes from 'prop-types'
-import { Admin } from './admin'
-import { ArtworkList } from './artwork-list'
-import { ArtworkDetail } from './artwork-detail'
-import { ArtworkNew } from './artwork-new'
-import { ConfigAccount } from './config-account'
-import { NetworkEdit } from './network-edit'
-import { NetworkList } from './network-list'
-import { NetworkNew } from './network-new'
-import { Loading } from './loading'
-import { Login } from './login'
-import { NotFound } from './not-found'
-import { Profile } from './profile'
-import { Release } from './release'
-import { Report } from './report'
-import { Thread } from './thread'
-import { ThreadList } from './thread-list'
-import { TimeMachine } from './time-machine'
-import { Timeline } from './timeline'
-import { utils } from '../../imports/utils'
+import Admin from './admin'
+import ArtworkList from './artwork-list'
+import ArtworkDetail from './artwork-detail'
+import ArtworkNew from './artwork-new'
+import ConfigAccount from './config-account'
+import NetworkEdit from './network-edit'
+import NetworkList from './network-list'
+import NetworkNew from './network-new'
+import Loading from './loading'
+import Login from './login'
+import NotFound from './not-found'
+import Profile from './profile'
+import Release from './release'
+import Report from './report'
+import Thread from './thread'
+import ThreadList from './thread-list'
+import TimeMachine from './time-machine'
+import Timeline from './timeline'
+import utils from '../../imports/utils'
 
 @inject('layout', 'inputPost', 'router', 'user')
 @observer
-class Content extends Component {
+export default class Content extends Component {
   render () {
     return <div className={this.className} style={{paddingTop: this.paddingTop}} ref='content'>
       <CSSTransitionGroup
@@ -63,51 +63,51 @@ class Content extends Component {
 
   router () {
     if (this.props.router.page === null) {
-      return <Loading key='loading'/>
+      return <Loading key='loading' />
     }
     switch (this.props.router.page) {
       case 'network-list':
-        return <NetworkList key='network-list'/>
+        return <NetworkList key='network-list' />
       case 'release':
-        return <Release key='release'/>
+        return <Release key='release' />
       case 'not-found':
-        return <NotFound key='not-found'/>
+        return <NotFound key='not-found' />
       case 'artwork':
-        return <ArtworkList key='artwork'/>
+        return <ArtworkList key='artwork' />
       case 'report':
-        return <Report key='report'/>
+        return <Report key='report' />
     }
     if (this.props.user.isLoggingIn) {
-      return <Loading key='loading'/>
+      return <Loading key='loading' />
     }
     switch (this.props.router.page) {
       case 'profile':
-        return <Profile key='profile'/>
+        return <Profile key='profile' />
       case 'artwork-detail':
-        return <ArtworkDetail key='artwork-detail'/>
+        return <ArtworkDetail key='artwork-detail' />
       case 'artwork-new':
-        return <ArtworkNew key='artwork-new'/>
+        return <ArtworkNew key='artwork-new' />
       case 'timeline':
-        return <Timeline key='timeline'/>
+        return <Timeline key='timeline' />
       case 'timemachine':
-        return <TimeMachine key='time-machine'/>
+        return <TimeMachine key='time-machine' />
       case 'thread':
-        return <Thread key='thread'/>
+        return <Thread key='thread' />
       case 'thread-list':
-        return <ThreadList key='thread-list'/>
+        return <ThreadList key='thread-list' />
     }
     if (this.props.user.isNotLoggedIn) {
-      return <Login key='login'/>
+      return <Login key='login' />
     }
     switch (this.props.router.page) {
       case 'admin':
-        return <Admin key='admin'/>
+        return <Admin key='admin' />
       case 'config':
-        return <ConfigAccount key='config-account'/>
+        return <ConfigAccount key='config-account' />
       case 'network-edit':
-        return <NetworkEdit key='network-edit'/>
+        return <NetworkEdit key='network-edit' />
       case 'network-new':
-        return <NetworkNew key='network-new'/>
+        return <NetworkNew key='network-new' />
     }
     return null
   }
@@ -175,5 +175,3 @@ class Content extends Component {
     }
   }
 }
-
-export { Content }

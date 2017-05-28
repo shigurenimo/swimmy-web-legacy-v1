@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
-import { action, computed, observable } from 'mobx'
+import { action, observable } from 'mobx'
 
 // ユーザデータ
 export default class User {
@@ -142,13 +142,13 @@ export default class User {
 
   updatePassword (oldPassword, newPassword) {
     return new Promise((resolve, reject) => {
-      Accounts.changePassword(oldPassword, newPassword, (err => {
+      Accounts.changePassword(oldPassword, newPassword, err => {
         if (err) {
           reject(err)
         } else {
           resolve()
         }
-      }))
+      })
     })
   }
 

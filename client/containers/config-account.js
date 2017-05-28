@@ -6,7 +6,7 @@ import IconClear from 'material-ui-icons/Clear'
 
 @inject('snackbar', 'user')
 @observer
-class ConfigAccount extends Component {
+export default class ConfigAccount extends Component {
   render () {
     return <div className='container:admin-config'>
       {/* ディスプレイネーム */}
@@ -20,7 +20,7 @@ class ConfigAccount extends Component {
           placeholder='ハンドルネーム'
           maxLength='20'
           onChange={this.onInputName.bind(this)}
-          onBlur={this.onCheckName.bind(this)}/>
+          onBlur={this.onCheckName.bind(this)} />
         <div className='text:input-description'>
           本名など個人情報を含む名前は絶対に設定しないでください
         </div>
@@ -31,7 +31,7 @@ class ConfigAccount extends Component {
         <input className='input:submit-username'
           type='button'
           value='変更する'
-          onTouchTap={this.onSubmitName.bind(this)}/>
+          onTouchTap={this.onSubmitName.bind(this)} />
       </div>
       {/* ユーザネーム */}
       <div className='block:username'>
@@ -44,7 +44,7 @@ class ConfigAccount extends Component {
           placeholder='ユーザネーム'
           maxLength='10'
           onChange={this.onInputUsername.bind(this)}
-          onBlur={this.onCheckUsername.bind(this)}/>
+          onBlur={this.onCheckUsername.bind(this)} />
         <div className='text:input-description'>
           ログイン時に使用します
         </div>
@@ -55,7 +55,7 @@ class ConfigAccount extends Component {
         <input className='input:submit-username'
           type='button'
           value='変更する'
-          onTouchTap={this.onSubmitUsername.bind(this)}/>
+          onTouchTap={this.onSubmitUsername.bind(this)} />
       </div>
       {/* 地域 */}
       {/*
@@ -87,7 +87,7 @@ class ConfigAccount extends Component {
               <div
                 className='input:remove-email'
                 onTouchTap={this.onRemoveEmail.bind(this, email.address)}>
-                <IconClear style={{width: 30, height: 30}} color='tomato'/>
+                <IconClear style={{width: 30, height: 30}} color='tomato' />
               </div>
             </div>)}
         </div> : <div className='text:not-email'>登録されていません</div>}
@@ -97,12 +97,12 @@ class ConfigAccount extends Component {
             type='text'
             value={this.state.inputNewEmail}
             onChange={this.onInputNewEmail.bind(this)}
-            placeholder='追加するメールアドレス'/>
+            placeholder='追加するメールアドレス' />
           <input
             className='input:submit-new-email'
             type='button'
             value='追加する'
-            onTouchTap={this.onSubmitNewEmail.bind(this)}/>
+            onTouchTap={this.onSubmitNewEmail.bind(this)} />
           {this.state.inputNewEmailError &&
           <div className='text:error-email'>{this.state.inputNewEmailError}</div>}
         </div>
@@ -116,16 +116,16 @@ class ConfigAccount extends Component {
           type='text'
           value={this.state.oldPassword}
           placeholder='現在のパスワード'
-          onChange={this.onInputOldPassword.bind(this)}/>
+          onChange={this.onInputOldPassword.bind(this)} />
         <input className='input:password'
           type='text'
           value={this.state.newPassword}
           placeholder='新しいパスワード'
-          onChange={this.onInputNewPassword.bind(this)}/>
+          onChange={this.onInputNewPassword.bind(this)} />
         <input className='input:submit-password'
           type='button'
           value='変更する'
-          onTouchTap={this.onSubmitPassword.bind(this)}/>
+          onTouchTap={this.onSubmitPassword.bind(this)} />
       </div>
     </div>
   }
@@ -331,5 +331,3 @@ class ConfigAccount extends Component {
     }
   }
 }
-
-export { ConfigAccount }

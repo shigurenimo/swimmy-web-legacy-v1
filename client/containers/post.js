@@ -4,11 +4,11 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import IconKeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import IconKeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
-import { utils } from '../../imports/utils'
+import utils from '../../imports/utils'
 
 @inject('router', 'user', 'posts', 'snackbar')
 @observer
-class Post extends Component {
+export default class Post extends Component {
   render () {
     return <div className='container:post'>
       <div className='block:layout' onTouchTap={this.onOpenThread.bind(this)}>
@@ -27,7 +27,7 @@ class Post extends Component {
           </a>}
           {/* コンテント */}
           <a className='text:content' href={'/thread/' + (this.props.reply ? this.props.reply._id : this.props._id)}>
-            <p dangerouslySetInnerHTML={{__html: this.props.content}}/>
+            <p dangerouslySetInnerHTML={{__html: this.props.content}} />
             <span className='text:date'> - {utils.date.since(this.props.createdAt)}</span>
           </a>
         </div>
@@ -37,7 +37,7 @@ class Post extends Component {
           onTouchTap={this.onSelectImage.bind(this)}>
           <img
             src={Meteor.settings.public.assets.post.image + this.props.imagesDate + '/' +
-            this.props.images.slice()[0].min}/>
+            this.props.images.slice()[0].min} />
         </button>}
         {/* oEmbed */}
         {this.props.oEmbed && this.state.iframe &&
@@ -46,7 +46,7 @@ class Post extends Component {
         {this.props.web &&
         this.props.web.meta['og:image'] &&
         <a href={this.props.url} target='_blank'>
-          <img className='image:web-image' src={this.props.web.meta['og:image']}/>
+          <img className='image:web-image' src={this.props.web.meta['og:image']} />
         </a>}
         {this.props.web && this.props.web.title &&
         <a href={this.props.url} target='_blank'>
@@ -63,7 +63,7 @@ class Post extends Component {
           </a>}
           {/* コンテント */}
           <a className='text:content' href={'/thread/' + this.props.reply._id}>
-            <p dangerouslySetInnerHTML={{__html: this.props.reply.content}}/>
+            <p dangerouslySetInnerHTML={{__html: this.props.reply.content}} />
             {this.props.reply.createdAt &&
             <span className='text:date'> - {utils.date.since(this.props.reply.createdAt)}</span>}
           </a>
@@ -77,13 +77,13 @@ class Post extends Component {
               key={name}
               onTouchTap={this.onUpdateReaction.bind(this, this.props._id, name)}
               type='button'
-              value={name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}/>)}
+              value={name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')} />)}
         </div>
         {this.props.user.isLogged &&
         <button className='input:add-reaction' onTouchTap={this.onOpenReply.bind(this)}>
           {this.state.isReply
-            ? <IconKeyboardArrowUp {...this.iconStyle}/>
-            : <IconKeyboardArrowDown {...this.iconStyle}/>}
+            ? <IconKeyboardArrowUp {...this.iconStyle} />
+            : <IconKeyboardArrowDown {...this.iconStyle} />}
         </button>}
       </div>
       {/* リアクションボタンの編集 */}
@@ -95,11 +95,11 @@ class Post extends Component {
           value={this.state.inputNewReaction}
           placeholder={this.reactionPlaceholder}
           maxLength='10'
-          onChange={this.onInputNewReaction.bind(this)}/>
+          onChange={this.onInputNewReaction.bind(this)} />
         <input className='input:submit-reaction'
           type='button'
           value='up'
-          onTouchTap={this.onSubmitNewReaction.bind(this)}/>
+          onTouchTap={this.onSubmitNewReaction.bind(this)} />
         {/* 修正 */}
         {this.props.user.isLogged &&
         this.state.isReply &&
@@ -108,7 +108,7 @@ class Post extends Component {
           className='input:delete'
           type='button'
           value='削除する'
-          onTouchTap={this.onRemovePost.bind(this, this.props._id)}/>}
+          onTouchTap={this.onRemovePost.bind(this, this.props._id)} />}
       </div>}
     </div>
   }
@@ -142,7 +142,7 @@ class Post extends Component {
     if (!this.state.iframe) {
       return <div className='block:oEmbed-echo'>
         <button className='input:oEmbed-echo' onTouchTap={this.onOpenIframe.bind(this)}>
-          {data.title}<br/>
+          {data.title}<br />
           タップして{data.provider_name}を読み込む
         </button>
       </div>
@@ -152,11 +152,11 @@ class Post extends Component {
       case 'SoundCloud':
         return <div
           className='block:oEmbed-iframe'
-          dangerouslySetInnerHTML={{__html: data.html}}/>
+          dangerouslySetInnerHTML={{__html: data.html}} />
       default:
         return <div
           className='block:oEmbed'
-          dangerouslySetInnerHTML={{__html: data.html}}/>
+          dangerouslySetInnerHTML={{__html: data.html}} />
     }
   }
 
@@ -246,5 +246,3 @@ class Post extends Component {
     })
   }
 }
-
-export { Post }

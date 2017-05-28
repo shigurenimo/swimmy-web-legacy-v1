@@ -3,7 +3,7 @@ import { check } from 'meteor/check'
 import { Accounts } from 'meteor/accounts-base'
 import { Random } from 'meteor/random'
 import { isAlpha } from 'validator'
-import { collections } from '../imports/collections'
+import collections from '../imports/collections'
 
 Meteor.publish('user', function () {
   if (!this.userId) return null

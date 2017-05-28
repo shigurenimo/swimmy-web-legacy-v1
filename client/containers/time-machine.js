@@ -4,11 +4,11 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import IconNext from 'material-ui-icons/NavigateNext'
 import IconBefore from 'material-ui-icons/NavigateBefore'
-import { Post } from './post'
+import Post from './post'
 
 @inject('networks', 'posts', 'postsSocket')
 @observer
-class TimeMachine extends Component {
+export default class TimeMachine extends Component {
   render () {
     return <div className='container:time-machine'>
       <div className='block:form-title'>
@@ -19,10 +19,10 @@ class TimeMachine extends Component {
             <div className='text:month'>{this.state.currentMonth}</div>
           </div>
           <button className='icon:before' onTouchTap={this.onBeforeMonth.bind(this)}>
-            <IconBefore {...this.iconStyle}/>
+            <IconBefore {...this.iconStyle} />
           </button>
           <button className='icon:next' onTouchTap={this.onNextMonth.bind(this)}>
-            <IconNext {...this.iconStyle}/></button>
+            <IconNext {...this.iconStyle} /></button>
         </div>
       </div>
       <div className='block:form-day'>
@@ -33,10 +33,10 @@ class TimeMachine extends Component {
             </div>
           </div>
           <button className='icon:before' onTouchTap={this.onBeforeDay.bind(this)}>
-            <IconBefore {...this.iconStyle}/>
+            <IconBefore {...this.iconStyle} />
           </button>
           <button className='icon:next' onTouchTap={this.onNextDay.bind(this)}>
-            <IconNext {...this.iconStyle}/></button>
+            <IconNext {...this.iconStyle} /></button>
         </div>
       </div>
       <div className='block:form-submit'>
@@ -122,7 +122,7 @@ class TimeMachine extends Component {
         </div>
       </div>
     }
-    return index.map(item => <Post key={item._id} {...item}/>)
+    return index.map(item => <Post key={item._id} {...item} />)
   }
 
   componentDidMount () {
@@ -135,5 +135,3 @@ class TimeMachine extends Component {
     }
   }
 }
-
-export { TimeMachine }

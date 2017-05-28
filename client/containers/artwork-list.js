@@ -5,7 +5,7 @@ import { PostArtwork } from './post-artwork'
 
 @inject('artworks', 'user')
 @observer
-class ArtworkList extends Component {
+export default class ArtworkList extends Component {
   render () {
     return <div className='container:artwork-list'>
       <div className='block:post-list' ref='focus'>
@@ -37,5 +37,3 @@ class ArtworkList extends Component {
     }
   }
 }
-
-export { ArtworkList }

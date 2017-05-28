@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { action, observable, toJS } from 'mobx'
-import { collections } from '../../imports/collections'
+import collections from '../../imports/collections'
 
 // 書き込みデータ（socket.io）
 export default class PostsSocket {

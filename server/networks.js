@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import { collections } from '../imports/collections'
+import collections from '../imports/collections'
 
 // 全ての情報を公開
 Meteor.publish('networks', function () {

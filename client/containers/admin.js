@@ -8,7 +8,7 @@ import styleSheet from './admin.style'
 @withStyles(styleSheet)
 @inject('posts', 'user')
 @observer
-class Admin extends Component {
+export default class Admin extends Component {
   render () {
     const {classes} = this.props
     return (
@@ -71,5 +71,3 @@ class Admin extends Component {
     }
   }
 }
-
-export { Admin }

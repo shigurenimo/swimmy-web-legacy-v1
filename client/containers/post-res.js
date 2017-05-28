@@ -4,11 +4,11 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import IconKeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import IconKeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
-import { utils } from '../../imports/utils'
+import utils from '../../imports/utils'
 
 @inject('router', 'user', 'posts', 'snackbar')
 @observer
-class PostRes extends Component {
+export default class PostRes extends Component {
   render () {
     return <div className='container:post'>
       <div className='block:layout' onTouchTap={this.onOpenThread.bind(this)}>
@@ -22,7 +22,7 @@ class PostRes extends Component {
           </a>}
           {/* コンテント */}
           <a className='text:content'>
-            <p dangerouslySetInnerHTML={{__html: this.props.content}}/>
+            <p dangerouslySetInnerHTML={{__html: this.props.content}} />
             <span className='text:date'> - {utils.date.since(this.props.createdAt)}</span>
           </a>
         </div>
@@ -32,7 +32,7 @@ class PostRes extends Component {
           onTouchTap={this.onSelectImage.bind(this)}>
           <img
             src={Meteor.settings.public.assets.post.image + this.props.imagesDate + '/' +
-            this.props.images.slice()[0].min}/>
+            this.props.images.slice()[0].min} />
         </div>}
         {/* oEmbed */}
         {this.props.oEmbed && this.state.iframe &&
@@ -40,7 +40,7 @@ class PostRes extends Component {
         {this.props.oEmbed && this.embed(this.props.oEmbed)}
         {this.props.web && this.props.web.meta['og:image'] &&
         <a href={this.props.url} target='_blank'>
-          <img className='image:web-image' src={this.props.web.meta['og:image']}/>
+          <img className='image:web-image' src={this.props.web.meta['og:image']} />
         </a>}
         {this.props.web && this.props.web.title &&
         <a href={this.props.url} target='_blank'>
@@ -55,13 +55,13 @@ class PostRes extends Component {
               key={name}
               onTouchTap={this.onUpdateReaction.bind(this, this.props._id, name)}
               type='button'
-              value={name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}/>)}
+              value={name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')} />)}
         </div>
         {this.props.user.isLogged &&
         <button className='input:add-reaction' onTouchTap={this.onOpenReply.bind(this)}>
           {this.state.isReply
-            ? <IconKeyboardArrowUp {...this.iconStyle}/>
-            : <IconKeyboardArrowDown {...this.iconStyle}/>}
+            ? <IconKeyboardArrowUp {...this.iconStyle} />
+            : <IconKeyboardArrowDown {...this.iconStyle} />}
         </button>}
       </div>
       {/* リアクションボタンの編集 */}
@@ -73,11 +73,11 @@ class PostRes extends Component {
           value={this.state.inputNewReaction}
           placeholder={this.reactionPlaceholder}
           maxLength='10'
-          onChange={this.onInputNewReaction.bind(this)}/>
+          onChange={this.onInputNewReaction.bind(this)} />
         <input className='input:submit-reaction'
           type='button'
           value='up'
-          onTouchTap={this.onSubmitNewReaction.bind(this)}/>
+          onTouchTap={this.onSubmitNewReaction.bind(this)} />
         {/* 修正 */}
         {this.props.user.isLogged &&
         this.state.isReply &&
@@ -86,7 +86,7 @@ class PostRes extends Component {
           className='input:delete'
           type='button'
           value='削除する'
-          onTouchTap={this.onRemovePost.bind(this, this.props._id)}/>}
+          onTouchTap={this.onRemovePost.bind(this, this.props._id)} />}
       </div>}
     </div>
   }
@@ -119,7 +119,7 @@ class PostRes extends Component {
     if (!this.state.iframe) {
       return <div className='block:oEmbed-echo'>
         <button className='input:oEmbed-echo' onTouchTap={this.onOpenIframe.bind(this)}>
-          {data.title}<br/>
+          {data.title}<br />
           タップして{data.provider_name}を読み込む
         </button>
       </div>
@@ -221,5 +221,3 @@ class PostRes extends Component {
     })
   }
 }
-
-export { PostRes }

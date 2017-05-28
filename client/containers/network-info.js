@@ -7,11 +7,11 @@ import IconLanguage from 'material-ui-icons/Language'
 import IconChat from 'material-ui-icons/Chat'
 import IconStyle from 'material-ui-icons/Style'
 import IconEmail from 'material-ui-icons/Email'
-import { utils } from '../../imports/utils'
+import utils from '../../imports/utils'
 
 @inject('networks', 'posts', 'snackbar', 'user')
 @observer
-class NetworkInfo extends Component {
+export default class NetworkInfo extends Component {
   render () {
     return <div className='container:network-info'>
       <div className='block:layout'>
@@ -51,7 +51,7 @@ class NetworkInfo extends Component {
         {this.data.tags.slice()[0] &&
         <div className='block:network-tags'>
           <div className='image:icon'>
-            <IconStyle color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}}/>
+            <IconStyle color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}} />
           </div>
           {this.data.tags.map(item =>
             <div className='text:tag' key={item}>{item}</div>)}
@@ -66,7 +66,7 @@ class NetworkInfo extends Component {
         {this.data.email &&
         <div className='block:network-email'>
           <div className='image:icon'>
-            <IconEmail color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}}/>
+            <IconEmail color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}} />
           </div>
           <a className='text:text'
             target='_blank'
@@ -77,7 +77,7 @@ class NetworkInfo extends Component {
         {this.data.sns.site &&
         <div className='block:network-social'>
           <div className='image:icon'>
-            <IconLanguage color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}}/>
+            <IconLanguage color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}} />
           </div>
           <a className='text:social'
             target='_blank'
@@ -88,7 +88,7 @@ class NetworkInfo extends Component {
         {this.data.sns.twitter &&
         <div className='block:network-social'>
           <div className='image:icon'>
-            <IconChat color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}}/>
+            <IconChat color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}} />
           </div>
           <a className='text:social'
             target='_blank'
@@ -102,12 +102,12 @@ class NetworkInfo extends Component {
               className='input:edit'
               type='button'
               onTouchTap={this.onLeaveNetwork.bind(this)}
-              value='チェックアウト'/>
+              value='チェックアウト' />
             : <input
               className='input:edit'
               type='button'
               onTouchTap={this.onJoinNetwork.bind(this)}
-              value='チェックイン'/>}
+              value='チェックイン' />}
           {this.data.member.includes(this.props.user._id) &&
           <a className='input:edit' href={'/network/' + this.data._id + '/edit'}>アップデート</a>}
         </div>}
@@ -177,5 +177,3 @@ class NetworkInfo extends Component {
     }
   }
 }
-
-export { NetworkInfo }

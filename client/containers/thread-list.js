@@ -1,11 +1,11 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import { utils } from '../../imports/utils'
+import utils from '../../imports/utils'
 
 @inject('threads')
 @observer
-class ThreadList extends Component {
+export default class ThreadList extends Component {
   render () {
     return <div className='container:thread-list'>
       <div className='block:thread-list'>
@@ -48,5 +48,3 @@ class ThreadList extends Component {
     }
   }
 }
-
-export { ThreadList }

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 @inject('router')
 @observer
-class Verify extends Component {
+export default class Verify extends Component {
   render () {
     return <div className='container:verify'>
       <div className='block:layout'>
@@ -39,5 +39,3 @@ class Verify extends Component {
     }
   }
 }
-
-export { Verify }

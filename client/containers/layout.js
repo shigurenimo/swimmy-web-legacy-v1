@@ -1,23 +1,23 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Swipeable from 'react-swipeable'
-import { Content } from './content'
-import { InputAction } from './input-action'
-import { LeftMenu } from './left-menu'
-import { NavigationSwipe } from './navigatoin-swipe'
-import { utils } from '../../imports/utils'
+import Content from './content'
+import InputAction from './input-action'
+import LeftMenu from './left-menu'
+import NavigationSwipe from './navigatoin-swipe'
+import utils from '../../imports/utils'
 
 @inject('layout', 'navigation')
 @observer
-class Layout extends Component {
+export default class Layout extends Component {
   render () {
     return <div className={this.className}>
       <Swipeable onSwiped={this.onSwiped.bind(this)}>
-        <LeftMenu/>
-        <Content/>
+        <LeftMenu />
+        <Content />
       </Swipeable>
-      <InputAction/>
-      <NavigationSwipe/>
+      <InputAction />
+      <NavigationSwipe />
     </div>
   }
 
@@ -38,5 +38,3 @@ class Layout extends Component {
     }
   }
 }
-
-export { Layout }

@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 
 @inject('reports')
 @observer
-class Report extends Component {
+export default class Report extends Component {
   render () {
     return <div className='container:report'>
       <div className='block:report-data'>
@@ -43,5 +43,3 @@ class Report extends Component {
     this.context.onScrollTop()
   }
 }
-
-export { Report }

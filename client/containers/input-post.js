@@ -8,7 +8,7 @@ import IconAdd from 'material-ui-icons/Add'
 
 @inject('inputPost', 'layout', 'networks', 'posts', 'snackbar', 'router', 'user')
 @observer
-class InputPost extends Component {
+export default class InputPost extends Component {
   render () {
     return <div
       className={`container:input-post ${this.props.layout.oneColumnClassName}`}>
@@ -26,10 +26,10 @@ class InputPost extends Component {
             placeholder='ここタップすると入力できます'
             ref='textarea'
             onKeyDown={this.onSubmitKeyDown.bind(this)}
-            onChange={this.onInputContent.bind(this)}/>
+            onChange={this.onInputContent.bind(this)} />
         {this.state.inputImage &&
         <div className='block:image-preview'>
-          <img src={this.state.inputImage.preview} onTouchTap={this.onCloseImage.bind(this)}/>
+          <img src={this.state.inputImage.preview} onTouchTap={this.onCloseImage.bind(this)} />
         </div>}
       </div>
       <div className='block:post-public'>
@@ -37,24 +37,24 @@ class InputPost extends Component {
           className='input:open-image'
           onDrop={this.onDropImage.bind(this)}>
           <IconAdd style={{width: 25, height: 25}}
-            color={Meteor.settings.public.color.primary}/>
+            color={Meteor.settings.public.color.primary} />
         </Dropzone>
         {this.props.user.isLogged &&
         <input className={'input:public ' + this.state.inputIsPublic}
           type='button'
           value={this.props.user.username}
-          onTouchTap={this.onChangePublic.bind(this, true)}/>}
+          onTouchTap={this.onChangePublic.bind(this, true)} />}
         {this.props.user.isLogged &&
         <input className={'input:public ' + !this.state.inputIsPublic}
           type='button'
           value='内緒'
-          onTouchTap={this.onChangePublic.bind(this, false)}/>}
+          onTouchTap={this.onChangePublic.bind(this, false)} />}
         {/* 送信ボタン */}
         {!this.state.errorImage &&
         <input className='input:post-submit'
           type='button'
           value='GOGO!'
-          onTouchTap={this.onSubmit.bind(this)}/>}
+          onTouchTap={this.onSubmit.bind(this)} />}
       </div>
     </div>
   }
@@ -267,5 +267,3 @@ class InputPost extends Component {
     })
   }
 }
-
-export { InputPost }

@@ -1,16 +1,16 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import { NetworkInfo } from './network-info'
-import { Post } from './post'
+import NetworkInfo from './network-info'
+import Post from './post'
 
 @inject('networks', 'posts', 'postsSocket')
 @observer
-class Timeline extends Component {
+export default class Timeline extends Component {
   render () {
     return <div className='container:timeline'>
       {this.props.posts.networkInfo &&
-      <NetworkInfo/>}
+      <NetworkInfo />}
       <div className='block:post-list'>
         {this.forPosts()}
       </div>
@@ -32,7 +32,7 @@ class Timeline extends Component {
         </div>
       </div>
     }
-    return index.map(item => <Post key={item._id} {...item}/>)
+    return index.map(item => <Post key={item._id} {...item} />)
   }
 
   componentDidMount () {
@@ -45,5 +45,3 @@ class Timeline extends Component {
     }
   }
 }
-
-export { Timeline }

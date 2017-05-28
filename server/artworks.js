@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { HTTP } from 'meteor/http'
 import { Random } from 'meteor/random'
-import { collections } from '../imports/collections'
-import { utils } from '../imports/utils'
+import collections from '../imports/collections'
+import utils from '../imports/utils'
 
 Meteor.publish('artworks', function (selector, options) {
   const self = this

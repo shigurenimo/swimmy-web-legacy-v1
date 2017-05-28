@@ -4,7 +4,7 @@ import IconTouchApp from 'material-ui-icons/TouchApp'
 
 @inject('layout', 'navigation', 'router', 'user')
 @observer
-class NavigationSwipe extends Component {
+export default class NavigationSwipe extends Component {
   render () {
     if (!this.props.navigation.swipe) return null
     if (!this.props.layout.oneColumn) return null
@@ -30,5 +30,3 @@ class NavigationSwipe extends Component {
     this.props.layout.toLeft()
   }
 }
-
-export { NavigationSwipe }
