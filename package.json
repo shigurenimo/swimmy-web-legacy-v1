@@ -7,19 +7,10 @@
     "url": "git@bitbucket.org:swimmy-io/swimmy.io.git"
   },
   "scripts": {
-    "start": "meteor --settings settings.json",
     "deploy": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy swimmy.io --owner sankaku --settings settings.json",
     "ncu": "ncu",
-    "ncu:a": "ncu -a"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {
-        "browsers": [
-          "> 0%"
-        ]
-      }
-    }
+    "ncu:a": "ncu -a",
+    "start": "meteor --settings settings.json"
   },
   "dependencies": {
     "babel-runtime": "^6.23.0",
@@ -46,21 +37,34 @@
     "babel": "^6.23.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
-    "babel-plugin-react-transform": "^2.0.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-function-bind": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-latest": "^6.24.1",
+    "babel-preset-meteor": "^6.26.0",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "eslint": "^3.19.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^4.2.2",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^6.10.3",
-    "eslint-plugin-standard": "^3.0.1"
+    "npm-check-updates": "^2.11.1",
+    "sort-package-json": "^1.6.1",
+    "standard": "^10.0.2"
   },
-  "private": true
+  "private": true,
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {
+        "browsers": [
+          "> 0%"
+        ]
+      }
+    }
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "ignore": [
+      ".meteor"
+    ]
+  }
 }
