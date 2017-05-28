@@ -2,39 +2,45 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import styleSheet from './admin.style'
 
+@withStyles(styleSheet)
 @inject('posts', 'user')
 @observer
 class Admin extends Component {
   render () {
-    return <div className='container:admin'>
-      {/* アイコン */}
-      <div className='block:user-icon'>
-        <div className='block:squares'>
-          {this.user.profile.code.map((i, index) =>
-            <div
-              className='block:square'
-              key={index + '-' + i}
-              style={{
-                backgroundColor: i === '1'
-                  ? Meteor.settings.public.color.primary
-                  : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
-              }}/>)}
+    const {classes} = this.props
+    return (
+      <div className={classes.container}>
+        {/* アイコン */}
+        <div className='ui-block'>
+          <div className={classes.squares}>
+            {this.user.profile.code.map((i, index) =>
+              <div
+                className={classes.square}
+                key={index + '-' + i}
+                style={{
+                  backgroundColor: i === '1'
+                    ? Meteor.settings.public.color.primary
+                    : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
+                }} />)}
+          </div>
+        </div>
+        {/* ネーム */}
+        <div className={classes.name}>
+          <div className={classes.usernameText}>
+            {this.user.username}
+          </div>
+          <div className={classes.nameText}>
+            {this.user.profile.name}
+          </div>
+        </div>
+        <div className={classes.followList}>
+          {this.forFollows()}
         </div>
       </div>
-      {/* ネーム */}
-      <div className='block:name'>
-        <div className='text:username'>
-          {this.user.username}
-        </div>
-        <div className='text:name'>
-          {this.user.profile.name}
-        </div>
-      </div>
-      <div className='block:follow-list'>
-        {this.forFollows()}
-      </div>
-    </div>
+    )
   }
 
   get user () {
@@ -42,15 +48,17 @@ class Admin extends Component {
   }
 
   forFollows () {
+    const {classes} = this.props
     const index = this.props.user.follows.slice()
     if (index.length < 1) {
       return null
     }
     return index.map(user =>
-      <a className='block:follow-user' key={user._id} href={'/' + user.username}>
-        <div className='text:name'>{user.name}</div>
-        <div className='text:username'>@{user.username}</div>
-      </a>)
+      <a className='ui-block-reaction' key={user._id} href={'/' + user.username}>
+        <div className={classes.followListName}>{user.name}</div>
+        <div className={classes.followListUsername}>@{user.username}</div>
+      </a>
+    )
   }
 
   componentDidMount () {
