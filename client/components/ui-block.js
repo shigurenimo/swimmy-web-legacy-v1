@@ -9,6 +9,11 @@ const styleSheet = createStyleSheet('Admin', theme => {
       width: '100%',
       borderBottom: 'none',
       transitionDuration: '200ms'
+    },
+    hover: {
+      '&:hover': {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)'
+      }
     }
   }
 })
