@@ -2,131 +2,117 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import IconClear from 'material-ui-icons/Clear'
+import Block from '../components/ui-block'
+import InputButton from '../components/ui-input-button'
+import InputText from '../components/ui-input-text'
+import styleSheet from './config-account.style'
 
+@withStyles(styleSheet)
 @inject('snackbar', 'user')
 @observer
 export default class ConfigAccount extends Component {
   render () {
-    return <div className='container:admin-config'>
+    const {classes} = this.props
+    return <div className={classes.container}>
       {/* ディスプレイネーム */}
-      <div className='block:username'>
-        <div className='text:username-title'>
+      <Block>
+        <div className={classes.usernameTitle}>
           ハンドルネーム
         </div>
-        <input className='input:username'
-          type='text'
+        <InputText
           value={this.state.name}
           placeholder='ハンドルネーム'
-          maxLength='20'
+          maxLength={20}
           onChange={this.onInputName.bind(this)}
           onBlur={this.onCheckName.bind(this)} />
-        <div className='text:input-description'>
+        <div className={classes.textDescription}>
           本名など個人情報を含む名前は絶対に設定しないでください
         </div>
         {this.state.nameError &&
-        <div className='text:input-error'>
+        <div className={classes.textError}>
           {this.state.nameError}
         </div>}
-        <input className='input:submit-username'
-          type='button'
-          value='変更する'
-          onTouchTap={this.onSubmitName.bind(this)} />
-      </div>
+        <InputButton
+          onClick={this.onSubmitName.bind(this)}>
+          変更する
+        </InputButton>
+      </Block>
       {/* ユーザネーム */}
-      <div className='block:username'>
-        <div className='text:username-title'>
+      <Block>
+        <div className={classes.usernameTitle}>
           ユーザネーム（ユーザID）
         </div>
-        <input className='input:username'
-          type='text'
+        <inputText
           value={this.state.username}
           placeholder='ユーザネーム'
           maxLength='10'
           onChange={this.onInputUsername.bind(this)}
           onBlur={this.onCheckUsername.bind(this)} />
-        <div className='text:input-description'>
+        <div className={classes.textDescription}>
           ログイン時に使用します
         </div>
         {this.state.usernameError &&
-        <div className='text:input-error'>
+        <div>
           {this.state.usernameError}
         </div>}
-        <input className='input:submit-username'
-          type='button'
-          value='変更する'
-          onTouchTap={this.onSubmitUsername.bind(this)} />
-      </div>
-      {/* 地域 */}
-      {/*
-       <div className='block:region'>
-        <div className='text:region-title'>
-          チャンネル
-        </div>
-        <select className='input:select'
-          value={this.props.user.info.profile.channel}
-          onChange={this.onInputChannel.bind(this)}>
-          {utils.regions.list.map(item =>
-            <option key={item.value} value={item.value}>
-              {item.name.jp}
-            </option>)}
-        </select>
-      </div>
-      */}
+        <InputButton
+          onClick={this.onSubmitUsername.bind(this)}>
+          変更する
+        </InputButton>
+      </Block>
       {/* メールアドレス */}
-      <div className='block:email'>
-        <div className='text:input-title'>
+      <Block>
+        <div className={classes.textItemTitle}>
           メールアドレス
         </div>
-        {this.props.user.info.emails && this.props.user.info.emails[0] ? <div className='block:email-list'>
-          {this.props.user.info.emails.map(email =>
-            <div className='block:exist-email' key={email.address}>
-              <div className='text:email'>
-                {email.address}
-              </div>
-              <div
-                className='input:remove-email'
-                onTouchTap={this.onRemoveEmail.bind(this, email.address)}>
-                <IconClear style={{width: 30, height: 30}} color='tomato' />
-              </div>
-            </div>)}
-        </div> : <div className='text:not-email'>登録されていません</div>}
-        <div className='block:new-email'>
-          <input
-            className='input:new-email'
-            type='text'
+        {this.props.user.info.emails && this.props.user.info.emails[0]
+          ? <div>
+            {this.props.user.info.emails.map(email =>
+              <div className={classes.blockExistEmail} key={email.address}>
+                <div>
+                  {email.address}
+                </div>
+                <div
+                  className={classes.inputRemoveEmail}
+                  onTouchTap={this.onRemoveEmail.bind(this, email.address)}>
+                  <IconClear style={{width: 30, height: 30}} color='tomato' />
+                </div>
+              </div>)}
+          </div>
+          : <div>登録されていません</div>}
+        <div>
+          <InputText
             value={this.state.inputNewEmail}
             onChange={this.onInputNewEmail.bind(this)}
             placeholder='追加するメールアドレス' />
-          <input
-            className='input:submit-new-email'
-            type='button'
-            value='追加する'
-            onTouchTap={this.onSubmitNewEmail.bind(this)} />
+          <InputButton
+            onTouchTap={this.onSubmitNewEmail.bind(this)}>
+            追加する
+          </InputButton>
           {this.state.inputNewEmailError &&
-          <div className='text:error-email'>{this.state.inputNewEmailError}</div>}
+          <div>{this.state.inputNewEmailError}</div>}
         </div>
-      </div>
+      </Block>
       {/* パスワード */}
-      <div className='block:password'>
-        <div className='text:password-name'>
+      <Block>
+        <div className={classes.textItemTitle}>
           パスワード変更
         </div>
-        <input className='input:password'
-          type='text'
+        <InputText
           value={this.state.oldPassword}
           placeholder='現在のパスワード'
           onChange={this.onInputOldPassword.bind(this)} />
-        <input className='input:password'
-          type='text'
+        <InputText
           value={this.state.newPassword}
           placeholder='新しいパスワード'
           onChange={this.onInputNewPassword.bind(this)} />
-        <input className='input:submit-password'
-          type='button'
-          value='変更する'
-          onTouchTap={this.onSubmitPassword.bind(this)} />
-      </div>
+        <InputButton
+          onClick={this.onSubmitPassword.bind(this)}>
+          変更する
+        </InputButton>
+      </Block>
     </div>
   }
 

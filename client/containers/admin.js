@@ -54,7 +54,7 @@ export default class Admin extends Component {
       return null
     }
     return index.map(user =>
-      <a className='ui-block-reaction' key={user._id} href={'/' + user.username}>
+      <a className='ui-block:reaction' key={user._id} href={'/' + user.username}>
         <div className={classes.followListName}>{user.name}</div>
         <div className={classes.followListUsername}>@{user.username}</div>
       </a>
