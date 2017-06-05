@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('Admin', theme => {
+const styleSheet = createStyleSheet('UIBlock', theme => {
   return {
     container: {
       display: 'block',
