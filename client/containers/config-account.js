@@ -3,8 +3,10 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import IconClear from 'material-ui-icons/Clear'
-import Block from '../components/ui-block'
+import Typography from 'material-ui/Typography'
+import Sheet from '../components/ui-sheet'
+import SheetActions from '../components/ui-sheet-actions'
+import SheetContent from '../components/ui-sheet-content'
 import InputButton from '../components/ui-input-button'
 import InputText from '../components/ui-input-text'
 import styleSheet from './config-account.style'
@@ -17,102 +19,92 @@ export default class ConfigAccount extends Component {
     const {classes} = this.props
     return <div className={classes.container}>
       {/* ディスプレイネーム */}
-      <Block>
-        <div className={classes.usernameTitle}>
-          ハンドルネーム
-        </div>
-        <InputText
-          value={this.state.name}
-          placeholder='ハンドルネーム'
-          maxLength={20}
-          onChange={this.onInputName.bind(this)}
-          onBlur={this.onCheckName.bind(this)} />
-        <div className={classes.textDescription}>
-          本名など個人情報を含む名前は絶対に設定しないでください
-        </div>
-        {this.state.nameError &&
-        <div className={classes.textError}>
-          {this.state.nameError}
-        </div>}
-        <InputButton
-          onClick={this.onSubmitName.bind(this)}>
-          変更する
-        </InputButton>
-      </Block>
-      {/* ユーザネーム */}
-      <Block>
-        <div className={classes.usernameTitle}>
-          ユーザネーム（ユーザID）
-        </div>
-        <inputText
-          value={this.state.username}
-          placeholder='ユーザネーム'
-          maxLength='10'
-          onChange={this.onInputUsername.bind(this)}
-          onBlur={this.onCheckUsername.bind(this)} />
-        <div className={classes.textDescription}>
-          ログイン時に使用します
-        </div>
-        {this.state.usernameError &&
-        <div>
-          {this.state.usernameError}
-        </div>}
-        <InputButton
-          onClick={this.onSubmitUsername.bind(this)}>
-          変更する
-        </InputButton>
-      </Block>
-      {/* メールアドレス */}
-      <Block>
-        <div className={classes.textItemTitle}>
-          メールアドレス
-        </div>
-        {this.props.user.info.emails && this.props.user.info.emails[0]
-          ? <div>
-            {this.props.user.info.emails.map(email =>
-              <div className={classes.blockExistEmail} key={email.address}>
-                <div>
-                  {email.address}
-                </div>
-                <div
-                  className={classes.inputRemoveEmail}
-                  onTouchTap={this.onRemoveEmail.bind(this, email.address)}>
-                  <IconClear style={{width: 30, height: 30}} color='tomato' />
-                </div>
-              </div>)}
-          </div>
-          : <div>登録されていません</div>}
-        <div>
+      <Sheet>
+        <SheetActions>
+          <Typography>
+            ハンドルネーム
+          </Typography>
+        </SheetActions>
+        <SheetActions>
           <InputText
-            value={this.state.inputNewEmail}
-            onChange={this.onInputNewEmail.bind(this)}
-            placeholder='追加するメールアドレス' />
+            value={this.state.name}
+            placeholder='ハンドルネーム'
+            maxLength={20}
+            onChange={this.onInputName}
+            onBlur={this.onCheckName} />
+        </SheetActions>
+        {this.state.nameError &&
+        <SheetActions>
+          <div className={classes.textError}>
+            {this.state.nameError}
+          </div>
+        </SheetActions>}
+        <SheetActions>
           <InputButton
-            onTouchTap={this.onSubmitNewEmail.bind(this)}>
-            追加する
+            onClick={this.onSubmitName}>
+            変更する
           </InputButton>
-          {this.state.inputNewEmailError &&
-          <div>{this.state.inputNewEmailError}</div>}
-        </div>
-      </Block>
+        </SheetActions>
+      </Sheet>
+      {/* ユーザネーム */}
+      <Sheet>
+        <SheetActions>
+          <Typography>
+            ユーザネーム（ユーザID）
+          </Typography>
+        </SheetActions>
+        <SheetActions>
+          <InputText
+            value={this.state.username}
+            placeholder='ユーザネーム'
+            maxLength={10}
+            onChange={this.onInputUsername}
+            onBlur={this.onCheckUsername} />
+        </SheetActions>
+        <SheetActions>
+          <Typography>
+            ログイン時に使用します
+          </Typography>
+        </SheetActions>
+        {this.state.usernameError &&
+        <SheetContent>
+          <Typography>
+            {this.state.usernameError}
+          </Typography>
+        </SheetContent>}
+        <SheetActions>
+          <InputButton
+            onClick={this.onSubmitUsername}>
+            変更する
+          </InputButton>
+        </SheetActions>
+      </Sheet>
       {/* パスワード */}
-      <Block>
-        <div className={classes.textItemTitle}>
-          パスワード変更
-        </div>
-        <InputText
-          value={this.state.oldPassword}
-          placeholder='現在のパスワード'
-          onChange={this.onInputOldPassword.bind(this)} />
-        <InputText
-          value={this.state.newPassword}
-          placeholder='新しいパスワード'
-          onChange={this.onInputNewPassword.bind(this)} />
-        <InputButton
-          onClick={this.onSubmitPassword.bind(this)}>
-          変更する
-        </InputButton>
-      </Block>
+      <Sheet>
+        <SheetActions>
+          <Typography>
+            パスワード変更
+          </Typography>
+        </SheetActions>
+        <SheetActions>
+          <InputText
+            value={this.state.oldPassword}
+            placeholder='現在のパスワード'
+            onChange={this.onInputOldPassword} />
+        </SheetActions>
+        <SheetActions>
+          <InputText
+            value={this.state.newPassword}
+            placeholder='新しいパスワード'
+            onChange={this.onInputNewPassword} />
+        </SheetActions>
+        <SheetActions>
+          <InputButton
+            onClick={this.onSubmitPassword}>
+            変更する
+          </InputButton>
+        </SheetActions>
+      </Sheet>
     </div>
   }
 
@@ -136,6 +128,8 @@ export default class ConfigAccount extends Component {
     this.setState({name: value})
   }
 
+  onInputName = ::this.onInputName
+
   // ディスプレイネームをチェックする
   onCheckName () {
     const name = this.state.name
@@ -152,6 +146,8 @@ export default class ConfigAccount extends Component {
     }
     this.setState({nameError: ''})
   }
+
+  onCheckName = ::this.onCheckName
 
   // ハンドルネームの更新を送信する
   onSubmitName () {
@@ -170,6 +166,8 @@ export default class ConfigAccount extends Component {
     })
   }
 
+  onSubmitName = ::this.onSubmitName
+
   // ユーザネームを入力する
   onInputUsername (event) {
     event.persist()
@@ -177,6 +175,8 @@ export default class ConfigAccount extends Component {
     if (value.length > 20) return
     this.setState({username: value})
   }
+
+  onInputUsername = ::this.onInputUsername
 
   // ユーザネームをチェックする
   onCheckUsername () {
@@ -214,22 +214,25 @@ export default class ConfigAccount extends Component {
     })
   }
 
+  onCheckUsername = ::this.onCheckUsername
+
   // ユーザネームの更新を送信する
-  onSubmitUsername () {
+  async onSubmitUsername () {
     if (this.process) return
     this.process = true
     const username = this.state.username
-    this.props.user.updateUsername(username)
+    await this.props.user.updateUsername(username)
     .then(res => {
       this.props.snackbar.show('ユーザネームを変更しました')
       this.setState({usernameError: '', username: username})
-      this.process = false
     })
     .catch(err => {
       this.props.snackbar.error(err)
-      this.process = false
     })
+    this.process = false
   }
+
+  onSubmitUsername = ::this.onSubmitUsername
 
   // チャンネルを更新する
   onInputChannel (event) {
@@ -238,6 +241,8 @@ export default class ConfigAccount extends Component {
     this.props.user.updateChannel(value)
   }
 
+  onInputChannel = ::this.onInputChannel
+
   // 現在のパスワードを更新する
   onInputOldPassword (event) {
     event.persist()
@@ -245,12 +250,16 @@ export default class ConfigAccount extends Component {
     this.setState({oldPassword: value})
   }
 
+  onInputOldPassword = ::this.onInputOldPassword
+
   // 新しいパスワードの更新する
   onInputNewPassword (event) {
     event.persist()
     const value = event.target.value
     this.setState({newPassword: value})
   }
+
+  onInputNewPassword = ::this.onInputNewPassword
 
   // パスワードの更新を送信する
   onSubmitPassword () {
@@ -270,6 +279,8 @@ export default class ConfigAccount extends Component {
     })
   }
 
+  onSubmitPassword = ::this.onSubmitPassword
+
   // メールアドレスを削除する
   onRemoveEmail (email) {
     const confirm = window.confirm('削除してもいいですか？')
@@ -283,6 +294,8 @@ export default class ConfigAccount extends Component {
     })
   }
 
+  onRemoveEmail = ::this.onRemoveEmail
+
   // 新しいメールアドレスを入力する
   onInputNewEmail (event) {
     event.persist()
@@ -290,22 +303,25 @@ export default class ConfigAccount extends Component {
     this.setState({inputNewEmail: value})
   }
 
+  onInputNewEmail = ::this.onInputNewEmail
+
   // 新しいメールアドレスを追加する
   async onSubmitNewEmail () {
     if (this.process) return
     this.process = true
     const newEmail = this.state.inputNewEmail
-    this.props.user.addEmail(newEmail)
+    await this.props.user.addEmail(newEmail)
     .then(() => {
       this.props.snackbar.show('メールアドレスを追加しました')
       this.setState({inputNewEmail: '', inputNewEmailError: ''})
-      this.process = false
     })
     .catch(err => {
       this.props.snackbar.error(err)
-      this.process = false
     })
+    this.process = false
   }
+
+  onSubmitNewEmail = ::this.onSubmitNewEmail
 
   componentDidMount () {
     this.context.onScrollTop()

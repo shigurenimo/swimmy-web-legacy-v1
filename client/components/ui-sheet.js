@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('UIBlock', theme => {
+const styleSheet = createStyleSheet('UISheet', theme => {
   return {
     container: {
       display: 'block',
@@ -12,18 +13,23 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
     },
     hover: {
       '&:hover': {
-        backgroundColor: 'rgba(0, 0, 0, 0.2)'
+        backgroundColor: 'rgba(0, 0, 0, 0.05)'
       }
     }
   }
 })
 
 @withStyles(styleSheet)
-export default class extends Component {
+export default class UILayout extends Component {
   render () {
-    const {classes} = this.props
+    const {
+      classes,
+      hover
+    } = this.props
     return (
-      <div className={classes.container}>
+      <div className={classNames(classes.container, {
+        [classes.hover]: hover
+      })}>
         {this.props.children}
       </div>
     )

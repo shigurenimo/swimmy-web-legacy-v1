@@ -22,7 +22,7 @@ export const styleSheet = createStyleSheet('UIInputText', theme => {
       '&:placeholder-shown': {
         color: 'rgba(0, 0, 0, 0.6)' // TODO: primary 0.6
       },
-      ' &:hover:placeholder-shown': {
+      '&:hover:placeholder-shown': {
         color: 'rgba(0, 0, 0, 0.8)' // primary 0.8
       },
       '&:focus:placeholder-shown': {
