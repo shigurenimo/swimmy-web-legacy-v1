@@ -15,6 +15,7 @@ export default class Threads {
 
   @action
   insertIndex (posts) {
+    this.index = []
     if (Array.isArray(posts)) {
       posts.forEach(post => {
         this.ids[post._id] = post
@@ -25,7 +26,6 @@ export default class Threads {
       this.index.push(posts)
     }
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-
   }
 
   @action
