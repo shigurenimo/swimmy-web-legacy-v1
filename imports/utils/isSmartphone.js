@@ -1,4 +1,4 @@
-const isSmartphone = typeof window === 'undefined' ? null : [
+export default typeof window === 'undefined' ? null : [
   'mobile',
   'tablet',
   'tablet pc',
@@ -11,5 +11,3 @@ const isSmartphone = typeof window === 'undefined' ? null : [
   'iphone',
   'blackberry'
 ].map(type => window.navigator.userAgent.toLowerCase().indexOf(type) !== -1).indexOf(true) !== -1
-
-export { isSmartphone }

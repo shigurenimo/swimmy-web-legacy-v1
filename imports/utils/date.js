@@ -24,6 +24,4 @@ function createdAt (date) {
   return [year, month, day].join('.')
 }
 
-const date = {since, createdAt}
-
-export { date }
+export default {since, createdAt}

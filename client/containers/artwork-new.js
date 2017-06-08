@@ -3,73 +3,84 @@ import { HTTP } from 'meteor/http'
 import { Random } from 'meteor/random'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import Dropzone from 'react-dropzone'
 import IconClear from 'material-ui-icons/Clear'
-import { utils } from '../../imports/utils'
+import IconAdd from 'material-ui-icons/Add'
+import Radio from 'material-ui/Radio'
+import Typography from 'material-ui/Typography'
+import Avatar from 'material-ui/Avatar'
+import UIDropzone from '../components/ui-dropzone'
+import InlineBlock from '../components/ui-inline-block'
+import InputButton from '../components/ui-input-button'
+import InputText from '../components/ui-input-text'
+import InputTextarea from '../components/ui-input-textarea'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
+import SheetActions from '../components/ui-sheet-actions'
+import SheetContent from '../components/ui-sheet-content'
+import utils from '../../imports/utils'
 
 @inject('artworks', 'snackbar', 'user')
 @observer
 export default class ArtworkNew extends Component {
   render () {
-    return <div className='container:artwork-new'>
-      <div className='block:container-layout'>
-        {/* 画像の投稿 */}
-        <div className='block:dropzone'>
-          <Dropzone
-            className='input:dropzone'
-            onDrop={this.onDropImage.bind(this)}>
-            <div className='block:frame'>
-              {this.state.inputImage &&
-              <img src={this.state.inputImage.preview} />}
-              {!this.state.inputImage &&
-              <div className='text:dropzone-name'>画像をドロップ or タップ</div>}
-            </div>
-          </Dropzone>
-          {this.state.inputImage &&
-          <div className='input:close-message'
-            onTouchTap={this.onCloseImage.bind(this)}>
-            <IconClear style={{width: 35, height: 35}} color='tomato' hoverColor='white' />
-          </div>}
-        </div>
-        {/* エラーメッセージ */}
-        {this.state.errorImage &&
-        <div className='block:error-image'>
-          <div className='text:error-image'>{this.state.errorImage}</div>
-        </div>}
-        {/* タイトル */}
-        <div className='block:post-title'>
-          <input
-            className='input:post-title'
-            placeholder='タイトル（任意）'
-            type='text'
-            value={this.state.inputTitle}
-            maxLength='100'
-            onChange={this.onInputTitle.bind(this)} />
-        </div>
-        {/* ノート */}
-        <div className='block:post-note'>
-        <textarea
-          className='input:post-note'
-          placeholder='タップしてノートを入力'
-          onChange={this.onInputNote.bind(this)}
-          rows={4}
-          maxLength='1000'
-          value={this.state.inputNote} />
-        </div>
-        {/* カラー */}
-        <div className='block:post-color'>
-          {utils.color.cmyk.map(code =>
-            <div
-              className={`block:color ${this.state.inputColors.includes(code)}`}
-              key={code}
-              onTouchTap={this.onSelectColor.bind(this, code)}>
-              <div
-                className='image:color'
-                style={{backgroundColor: '#' + code}} />
-            </div>)}
-        </div>
-        {/* レーティング */}
-        {/*
+    return (
+      <Layout>
+        <Sheet>
+          {/* 画像の投稿 */}
+          <SheetActions>
+            <UIDropzone
+              className='input:dropzone'
+              onDrop={this.onDropImage.bind(this)}
+              image={this.state.inputImage}
+              text='画像をドロップ or タップ' />
+            {this.state.inputImage &&
+            <div className='input:close-message'
+              onTouchTap={this.onCloseImage.bind(this)}>
+              <IconClear style={{width: 35, height: 35}} color='tomato' />
+            </div>}
+          </SheetActions>
+          {/* エラーメッセージ */}
+          {this.state.errorImage &&
+          <SheetContent className='block:error-image'>
+            <Typography className='text:error-image'>{this.state.errorImage}</Typography>
+          </SheetContent>}
+        </Sheet>
+        <Sheet>
+          {/* タイトル */}
+          <SheetActions className='block:post-title'>
+            <InputText
+              className='input:post-title'
+              placeholder='タイトル（任意）'
+              value={this.state.inputTitle}
+              maxLength='100'
+              onChange={this.onInputTitle.bind(this)} />
+          </SheetActions>
+          {/* ノート */}
+          <SheetActions className='block:post-note'>
+            <InputTextarea
+              className='input:post-note'
+              placeholder='タップしてノートを入力'
+              onChange={this.onInputNote.bind(this)}
+              rows={4}
+              maxLength='1000'
+              value={this.state.inputNote} />
+          </SheetActions>
+          {/* カラー */}
+          <SheetActions className='block:post-color'>
+            {utils.colors.cmyk.map(code =>
+              <Radio
+                key={code}
+                checked={this.state.inputColors.includes(code)}
+                onChange={this.onSelectColor.bind(this, code)}
+                icon={
+                  <Avatar style={{color: '#' + code, background: 'rgba(0, 0, 0, 0.05)'}}><IconAdd /></Avatar>
+                }
+                checkedIcon={
+                  <Avatar style={{background: '#' + code}}><IconClear /></Avatar>
+                } />)}
+          </SheetActions>
+          {/* レーティング */}
+          {/*
         <div className='block:post-rate'>
           <div
             className={`input:rate ${this.state.inputRate === 0}`}
@@ -89,50 +100,40 @@ export default class ArtworkNew extends Component {
           </div>
         </div>
         */}
-        {/* 匿名 */}
-        <div className='block:post-public'>
-          <div className='text:select-name'>匿名</div>
-          <input className={'input:public ' + !this.state.isPublic}
-            type='button'
-            value='オン'
-            onTouchTap={this.onChangePublic.bind(this, false)} />
-          <input className={'input:public ' + this.state.isPublic}
-            type='button'
-            value='オフ'
-            onTouchTap={this.onChangePublic.bind(this, true)} />
+          {/* 匿名 */}
+          <SheetActions>
+            <InlineBlock>匿名機能</InlineBlock>
+            <InputButton
+              primary={!this.state.isPublic}
+              onClick={this.onChangePublic.bind(this, false)}>ON</InputButton>
+            <InputButton
+              primary={this.state.isPublic}
+              onClick={this.onChangePublic.bind(this, true)}>OFF</InputButton>
+          </SheetActions>
           {this.state.isPublic &&
-          <div className='text:public-info'>
-            ユーザネームが公開されます
-          </div>}
-        </div>
-        {/* タイムラインの表示 */}
-        <div className='block:post-public'>
-          <div className='text:select-name'>過去の作品</div>
-          <input className={'input:public ' + this.state.isSecret}
-            type='button'
-            value='オン'
-            onTouchTap={this.onChangeSecret.bind(this, true)} />
-          <input className={'input:public ' + !this.state.isSecret}
-            type='button'
-            value='オフ'
-            onTouchTap={this.onChangeSecret.bind(this, false)} />
-          {/*
-          this.state.isSecret &&
-          <div className='text:public-info'>
-            タイムラインに表示されなくなります
-          </div>
-          */}
-        </div>
-        {/* 送信ボタン */}
-        {!this.state.errorImage &&
-        <div className='block:submit-message'>
-          <input className='input:submit-message'
-            type='button'
-            value='送信する'
-            onTouchTap={this.onSubmit.bind(this)} />
-        </div>}
-      </div>
-    </div>
+          <SheetActions>
+            <Typography className='text:public-info'>
+              ユーザネームが公開されます
+            </Typography>
+          </SheetActions>}
+          {/* タイムラインの表示 */}
+          <SheetActions>
+            <InlineBlock>過去の作品</InlineBlock>
+            <InputButton
+              primary={this.state.isSecret}
+              onClick={this.onChangeSecret.bind(this, true)}>ON</InputButton>
+            <InputButton
+              primary={!this.state.isSecret}
+              onClick={this.onChangeSecret.bind(this, false)}>OFF</InputButton>
+          </SheetActions>
+          {/* 送信ボタン */}
+          {!this.state.errorImage &&
+          <SheetActions className='block:submit-message'>
+            <InputButton onClick={this.onSubmit.bind(this)}>送信する</InputButton>
+          </SheetActions>}
+        </Sheet>
+      </Layout>
+    )
   }
 
   state = {

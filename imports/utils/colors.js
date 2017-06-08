@@ -1,4 +1,4 @@
-const color = {
+export default {
   cmyk: [
     'EB6100',
     'FCC800',
@@ -14,5 +14,3 @@ const color = {
     'E60033'
   ]
 }
-
-export { color }

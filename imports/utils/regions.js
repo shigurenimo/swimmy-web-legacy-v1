@@ -1,4 +1,4 @@
-const regions = {
+export default {
   okinawa: {name: {jp: '沖縄'}, value: 'okinawa', katakana: 'オキナワ'},
   kagoshima: {name: {jp: '鹿児島'}, value: 'kagoshima', katakana: 'カゴシマ'},
   miyazaki: {name: {jp: '宮崎'}, value: 'miyazaki', katakana: 'ミヤザキ'},
@@ -217,5 +217,3 @@ const regions = {
     ]
   ]
 }
-
-export { regions }
