@@ -12,35 +12,45 @@ export default class Report extends Component {
   render () {
     return (
       <Layout>
-        <Sheet>
+        <Sheet hover>
           <SheetContent>
             <Typography type='display1'>{this.props.reports.index.total.users}</Typography>
+          </SheetContent>
+          <SheetContent>
             <Typography>ユーザ数</Typography>
           </SheetContent>
         </Sheet>
-        <Sheet>
+        <Sheet hover>
           <SheetContent>
             <Typography type='display1'>{this.props.reports.index.total.posts}</Typography>
+          </SheetContent>
+          <SheetContent>
             <Typography>書き込み</Typography>
           </SheetContent>
         </Sheet>
-        <Sheet>
+        <Sheet hover>
           <SheetContent>
             <Typography type='display1'>{this.props.reports.index.total.artworks}</Typography>
+          </SheetContent>
+          <SheetContent>
             <Typography>アートワーク</Typography>
           </SheetContent>
         </Sheet>
         {this.props.reports.index.user &&
-        <Sheet>
+        <Sheet hover>
           <SheetContent>
             <Typography type='display1'>{this.props.reports.index.user.posts}</Typography>
+          </SheetContent>
+          <SheetContent>
             <Typography>あなたの書き込み</Typography>
           </SheetContent>
         </Sheet>}
         {this.props.reports.index.user &&
-        <Sheet>
+        <Sheet hover>
           <SheetContent>
             <Typography type='display1'>{this.props.reports.index.user.artworks}</Typography>
+          </SheetContent>
+          <SheetContent>
             <Typography>あなたのアートワーク</Typography>
           </SheetContent>
         </Sheet>}

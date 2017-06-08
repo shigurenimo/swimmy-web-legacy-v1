@@ -6,7 +6,7 @@ const styleSheet = createStyleSheet('UISheet', theme => {
   return {
     container: {
       display: 'block',
-      padding: '20px 10px 20px 10px',
+      padding: '10px 10px 20px 10px',
       width: '100%',
       borderBottom: 'none',
       transitionDuration: '200ms'
@@ -24,14 +24,18 @@ export default class UILayout extends Component {
   render () {
     const {
       classes,
-      hover
+      hover,
+      href
     } = this.props
+    const Component = href ? 'a' : 'div'
     return (
-      <div className={classNames(classes.container, {
-        [classes.hover]: hover
-      })}>
+      <Component
+        className={classNames(classes.container, {
+          [classes.hover]: hover
+        })}
+        href={href}>
         {this.props.children}
-      </div>
+      </Component>
     )
   }
 }
