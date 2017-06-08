@@ -28,9 +28,11 @@ export default class ThreadList extends Component {
     const index = this.props.threads.index
     if (index.length < 1) {
       return (
-        <Sheet hover>
+        <Sheet>
           <SheetContent>
-            {this.props.threads.isFetching ? '読み込み中 ..' : ''}
+            <Typography>
+              {this.props.threads.isFetching ? '読み込み中 ..' : ''}
+            </Typography>
           </SheetContent>
         </Sheet>
       )

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
-import { createStyleSheet } from 'material-ui/styles'
+import classNames from 'classnames'
+import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 export const styleSheet = createStyleSheet('UIInputButton', theme => {
   return {
@@ -18,15 +19,23 @@ export const styleSheet = createStyleSheet('UIInputButton', theme => {
       borderRadius: 1,
       borderBottom: 'none',
       transitionDuration: '200ms'
+    },
+    primary: {
+      background: Meteor.settings.public.color.primary,
+      color: 'white'
     }
   }
 })
 
+@withStyles(styleSheet)
 export default class extends Component {
   render () {
+    const {classes, primary} = this.props
     return (
       <button
-        className='ui-input-button'
+        className={classNames('ui-input-button', {
+          [classes.primary]: primary
+        })}
         onTouchTap={this.props.onClick}>
         {this.props.children}
       </button>

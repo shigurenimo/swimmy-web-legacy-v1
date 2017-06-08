@@ -1,42 +1,56 @@
 import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import { withStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
+import InputButton from '../components/ui-input-button'
+import Sheet from '../components/ui-sheet'
+import SheetContent from '../components/ui-sheet-content'
+import SheetImage from '../components/ui-sheet-image'
+import styleSheet from './post-artwork.style'
 
+@withStyles(styleSheet)
 @inject('artworks', 'snackbar', 'user')
 @observer
 export default class PostArtwork extends Component {
   render () {
-    return <div className='container:post-work'>
-      <div className='block:container-layout'>
+    const {classes} = this.props
+    return (
+      <Sheet>
         {/* ユーザ */}
         {this.props.public &&
-        <div className='block:post-username'>
-          <div className='text:public-name'>{this.props.public.name}</div>
-          <div className='text:public-username'>@{this.props.public.username}</div>
-        </div>}
-        {/* イラスト */}
-        <a className='block:artwork-image' href={'/uuid/' + this.props._id}>
-          <img src={this.src}/>
-        </a>
+        <SheetContent>
+          <Typography className='text:public-name'>
+            {this.props.public.name} @{this.props.public.username}
+          </Typography>
+        </SheetContent>}
+        {/* イメージ */}
+        <SheetContent>
+          <SheetImage href={'/uuid/' + this.props._id} src={this.src} />
+        </SheetContent>
         {/* タイトル */}
         {this.props.title &&
-        <div className='block:post-title'>{this.props.title}</div>}
+        <SheetContent>
+          <Typography>{this.props.title}</Typography>
+        </SheetContent>}
         {/* ノート */}
         {this.props.note &&
-        <div className='block:post-note' dangerouslySetInnerHTML={{__html: this.props.note}}/>}
+        <SheetContent>
+          <Typography dangerouslySetInnerHTML={{__html: this.props.note}} />
+        </SheetContent>}
         {/* リアクションボタン */}
-        <div className='block:reaction-list'>
+        <SheetContent>
           {Object.keys(this.props.reactions).map(name =>
-            <input
-              className={'input:reaction ' +
-              (!!this.props.user.isLogged && this.props.reactions[name].includes(this.props.user._id))}
+            <InputButton
+              className={'input:reaction'}
               key={name}
-              onTouchTap={this.onUpdateReaction.bind(this, this.props._id, name)}
-              type='button'
-              value={name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}/>)}
-        </div>
-      </div>
-    </div>
+              primary={!!this.props.user.isLogged && this.props.reactions[name].includes(this.props.user._id)}
+              onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
+              {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
+            </InputButton>)}
+        </SheetContent>
+      </Sheet>
+    )
   }
 
   get src () {
