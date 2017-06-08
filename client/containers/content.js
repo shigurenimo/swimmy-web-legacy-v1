@@ -33,7 +33,7 @@ export default class Content extends Component {
         transitionName='transition-content'
         transitionEnterTimeout={450}
         transitionLeaveTimeout={150}
-        transitionAppear={true}
+        transitionAppear
         transitionAppearTimeout={150}>
         {this.router()}
       </CSSTransitionGroup>

@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import { PostArtwork } from './post-artwork'
+import PostArtwork from './post-artwork'
 
 @inject('artworks', 'user')
 @observer
@@ -24,7 +24,7 @@ export default class ArtworkList extends Component {
         </div>
       </div>
     }
-    return index.map(item => <PostArtwork key={item._id} {...item}/>)
+    return index.map(item => <PostArtwork key={item._id} {...item} />)
   }
 
   componentDidMount () {
