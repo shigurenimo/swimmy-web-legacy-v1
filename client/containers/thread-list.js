@@ -1,41 +1,55 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
+import SheetContent from '../components/ui-sheet-content'
 import utils from '../../imports/utils'
+import styleSheet from './thread-list.style'
 
+@withStyles(styleSheet)
 @inject('threads')
 @observer
 export default class ThreadList extends Component {
   render () {
-    return <div className='container:thread-list'>
-      <div className='block:thread-list'>
-        {this.forThreads()}
-      </div>
-    </div>
+    return (
+      <Layout>
+        <div className='block:thread-list'>
+          {this.forThreads()}
+        </div>
+      </Layout>
+    )
   }
 
   forThreads () {
+    const {classes} = this.props
     const index = this.props.threads.index
     if (index.length < 1) {
-      return <div className='block:no-post'>
-        <div className='text:no-post'>
-          {this.props.threads.isFetching ? '読み込み中 ..' : ''}
-        </div>
-      </div>
+      return (
+        <Sheet hover>
+          <SheetContent>
+            {this.props.threads.isFetching ? '読み込み中 ..' : ''}
+          </SheetContent>
+        </Sheet>
+      )
     }
     return index.map(item =>
-      <a className='input:thread-item' key={item._id} href={'/thread/' + item._id}>
-        <div className='text:thread-name'>
-          {item.content}
-          <div className='text:count'> +{item.replies.length}</div>
-        </div>
-        <div className='text:updatedAt'>
-          {utils.date.createdAt(item.updatedAt)}
-        </div>
-        <div className='text:since'>
-          {utils.date.since(item.updatedAt)}
-        </div>
-      </a>)
+      <Sheet hover key={item._id} href={'/thread/' + item._id}>
+        <SheetContent>
+          <Typography>
+            {item.content}
+            <span className={classes.count}> +{item.replies.length}</span>
+          </Typography>
+        </SheetContent>
+        <SheetContent>
+          <Typography type='caption'>
+            {utils.date.createdAt(item.updatedAt)} - {utils.date.since(item.updatedAt)}
+          </Typography>
+        </SheetContent>
+      </Sheet>
+    )
   }
 
   componentDidMount () {
