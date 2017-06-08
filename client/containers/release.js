@@ -1,20 +1,23 @@
 import { observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import Typography from 'material-ui/Typography'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
 import releases from '../assets/release'
 
 @observer
 export default class Release extends Component {
   render () {
     return (
-      <div className='container:release'>
+      <Layout>
         {releases.map(item =>
-          <div className='block:release' key={item.version}>
-            <h2 className='text:version'>{item.version}</h2>
-            <p className='text:description' dangerouslySetInnerHTML={{__html: item.content.join('</br>')}}/>
-          </div>
+          <Sheet hover key={item.version}>
+            <Typography type='display1'>{item.version}</Typography>
+            <Typography dangerouslySetInnerHTML={{__html: item.content.join('</br>')}} />
+          </Sheet>
         )}
-      </div>
+      </Layout>
     )
   }
 
