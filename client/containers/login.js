@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { isAlpha, isEmail } from 'validator'
 import IconNotInterested from 'material-ui-icons/NotInterested'
 import IconWhatshot from 'material-ui-icons/Whatshot'
-import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import Textfiled from 'material-ui/TextField'
@@ -63,31 +62,35 @@ export default class Login extends Component {
           </Block>
         </Sheet>
         <Sheet>
-          <SheetContent>
-            <IconNotInterested {...this.iconStyle} />
-            <InlineTypography>完全匿名</InlineTypography>
-          </SheetContent>
-          <SheetContent>
-            <Typography>
-              メールアドレスは要らない。完全匿名で利用できます。
-            </Typography>
-          </SheetContent>
+          <Block width={500} align='center'>
+            <SheetContent>
+              <IconNotInterested {...this.iconStyle} />
+              <InlineTypography>完全匿名</InlineTypography>
+            </SheetContent>
+            <SheetContent>
+              <Typography>
+                メールアドレスは要らない。完全匿名で利用できます。
+              </Typography>
+            </SheetContent>
+          </Block>
         </Sheet>
         <Sheet>
-          <SheetContent>
-            <IconWhatshot {...this.iconStyle} />
-            <InlineTypography>オープンソース</InlineTypography>
-          </SheetContent>
-          <SheetContent className='text:description'>
-            <Typography>
-              Meteor・React・Material-UIで開発しているオープンソースのプロジェクトです。<br />
-            </Typography>
-            <Typography>
-              <a href='https://github.com/uu-fish/swimmy.io' target='new'>GitHub</a>
-              {' or '}
-              <a href='https://bitbucket.org/swimmy-io/swimmy.io' target='new'>Bitbucket</a>
-            </Typography>
-          </SheetContent>
+          <Block width={500} align='center'>
+            <SheetContent>
+              <IconWhatshot {...this.iconStyle} />
+              <InlineTypography>オープンソース</InlineTypography>
+            </SheetContent>
+            <SheetContent className='text:description'>
+              <Typography>
+                Meteor・React・Material-UIで開発しているオープンソースのプロジェクトです。<br />
+              </Typography>
+              <Typography>
+                <a href='https://github.com/uu-fish/swimmy.io' target='new'>GitHub</a>
+                {' or '}
+                <a href='https://bitbucket.org/swimmy-io/swimmy.io' target='new'>Bitbucket</a>
+              </Typography>
+            </SheetContent>
+          </Block>
         </Sheet>
       </Layout>
     )
