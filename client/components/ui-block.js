@@ -7,7 +7,7 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
     container: {
       display: 'block',
       width: '100%',
-      maxWidth: '300px',
+      maxWidth: '600px',
       borderBottom: 'none',
       transitionDuration: '200ms'
     },
@@ -24,18 +24,34 @@ export default class UILayout extends Component {
       classes,
       href,
       center,
-      width
+      align = 'left',
+      width,
+      ...more
     } = this.props
     const Component = href ? 'a' : 'div'
     return (
       <Component
+        {...more}
         className={classNames(classes.container, {
           [classes.center]: center
         })}
-        style={{maxWidth: width ? (width + 'px') : '600px'}}
         href={href}>
-        {this.props.children}
+        <div style={{
+          margin: this.margin(align),
+          maxWidth: width ? (width + 'px') : '600px'
+        }}>
+          {this.props.children}
+        </div>
       </Component>
     )
+  }
+
+  margin (align) {
+    switch (align) {
+      case 'left':
+        return '0 auto 0 0'
+      case 'center':
+        return '0 auto'
+    }
   }
 }

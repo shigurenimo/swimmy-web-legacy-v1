@@ -24,10 +24,12 @@ export default class extends Component {
     const {
       classes,
       primary,
-      background
+      background,
+      ...more
     } = this.props
     return (
       <Button
+        {...more}
         className={classNames({
           [classes.background]: background,
           [classes.primary]: primary

@@ -14,14 +14,11 @@ import SheetContent from '../components/ui-sheet-content'
 import SheetActions from '../components/ui-sheet-actions'
 import Block from '../components/ui-block'
 import InlineTypography from '../components/ui-inline-typography'
-import styleSheet from './login.style'
 
-@withStyles(styleSheet)
 @inject('user', 'snackbar')
 @observer
 export default class Login extends Component {
   render () {
-    const {classes} = this.props
     return (
       <Layout>
         <Sheet>
@@ -31,7 +28,7 @@ export default class Login extends Component {
           </Block>
         </Sheet>
         <Sheet key='login'>
-          <Block>
+          <Block width={400} align='center'>
             <SheetActions>
               <Textfiled
                 name='username'

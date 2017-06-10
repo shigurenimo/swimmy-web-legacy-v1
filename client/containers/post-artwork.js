@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Typography from 'material-ui/Typography'
-import InputButton from '../components/ui-input-button'
+import Button from '../components/ui-input-button'
 import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
 import SheetImage from '../components/ui-sheet-image'
@@ -35,13 +35,13 @@ export default class PostArtwork extends Component {
         {/* リアクションボタン */}
         <SheetContent>
           {Object.keys(this.props.reactions).map(name =>
-            <InputButton
+            <Button compact
               className={'input:reaction'}
               key={name}
               primary={!!this.props.user.isLogged && this.props.reactions[name].includes(this.props.user._id)}
               onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
               {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
-            </InputButton>)}
+            </Button>)}
         </SheetContent>
       </Sheet>
     )
