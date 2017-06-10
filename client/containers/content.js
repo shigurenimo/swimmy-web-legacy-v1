@@ -2,6 +2,8 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import propTypes from 'prop-types'
+import classNames from 'classnames'
+import { withStyles } from 'material-ui/styles'
 import Admin from './admin'
 import ArtworkList from './artwork-list'
 import ArtworkDetail from './artwork-detail'
@@ -21,27 +23,41 @@ import ThreadList from './thread-list'
 import TimeMachine from './time-machine'
 import Timeline from './timeline'
 import utils from '../../imports/utils'
+import styleSheet from './content.style'
 
+@withStyles(styleSheet)
 @inject('layout', 'inputPost', 'router', 'user')
 @observer
 export default class Content extends Component {
   render () {
-    return <div className={this.className} style={{paddingTop: this.paddingTop}} ref='content'>
-      <CSSTransitionGroup
-        component='div'
-        className='block:fix-height'
-        transitionName='transition-content'
-        transitionEnterTimeout={450}
-        transitionLeaveTimeout={150}
-        transitionAppear
-        transitionAppearTimeout={150}>
-        {this.router()}
-      </CSSTransitionGroup>
-    </div>
-  }
-
-  get className () {
-    return `container:content ${this.props.layout.oneColumnClassName}`
+    const {classes, layout} = this.props
+    return (
+      <div
+        className={classNames(classes.container, {
+          [classes.oneColumn]: layout.oneColumn,
+          [classes.twoColumn]: !layout.oneColumn
+        })}
+        style={{paddingTop: this.paddingTop}}
+        ref='content'>
+        <CSSTransitionGroup
+          component='div'
+          className={classes.fixHeight}
+          transitionName={{
+            enter: classes.transitionEnter,
+            enterActive: classes.transitionEnterActive,
+            leave: classes.transitionLeave,
+            leaveActive: classes.transitionLeaveActive,
+            appear: classes.transitionAppear,
+            appearActive: classes.transitionAppearActive
+          }}
+          transitionEnterTimeout={450}
+          transitionLeaveTimeout={150}
+          transitionAppear
+          transitionAppearTimeout={150}>
+          {this.router()}
+        </CSSTransitionGroup>
+      </div>
+    )
   }
 
   get paddingTop () {
