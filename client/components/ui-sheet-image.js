@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('UIImage', theme => {
+const styleSheet = createStyleSheet('UISheetImage', theme => {
   return {
     link: {
       display: 'inline-block',

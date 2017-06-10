@@ -2,60 +2,65 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import Typography from 'material-ui/Typography'
+import Block from '../components/ui-block'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
+import SheetContent from '../components/ui-sheet-content'
+import SheetBackgroundImage from '../components/ui-sheet-background-image'
 import utils from '../../imports/utils'
 
 @inject('networks', 'user')
 @observer
 export default class NetworkList extends Component {
   render () {
-    return <div className='container:network-list'>
-      <div className='block:network-list'>
+    return (
+      <Layout>
         {this.forNetworks()}
-      </div>
-    </div>
+      </Layout>
+    )
   }
 
   forNetworks () {
     const index = this.props.networks.index.slice()
     const isFetching = this.props.networks.isFetching
     if (index.length < 1) {
-      return <div className='block:no-post'>
-        <div className='text:no-post'>
-          {isFetching ? '読み込み中 ..' : 'データが見つかりませんでした'}
-        </div>
-      </div>
+      return (
+        <Sheet>
+          <SheetContent>
+            <Typography>
+              {isFetching ? '読み込み中 ..' : 'データが見つかりませんでした'}
+            </Typography>
+          </SheetContent>
+        </Sheet>
+      )
     }
     return index.map(item =>
-      <div className='block:network-item' key={item._id}>
-        <a className='block:layout' href={'/room/' + item._id + '/?preview=true'}>
-          <div className='block:network-name'>
-            {/* 大学名 */}
-            {item.univ &&
-            <div className='text:univ'>
-              {utils.regions[item.channel].name.jp}・{item.univ}
-            </div>}
-            {/* リスト名 */}
-            <h2 className='text:network-name'>
-              {item.name}
-            </h2>
-            {/* リストイメージ */}
-            {item.header &&
-            <div className='image:network-name'
-              style={{
-                backgroundImage: item.header
-                  ? 'url(' + Meteor.settings.public.assets.network.root + item._id + '/' + item.header + ')'
-                  : 'url()'
-              }}>
-            </div>}
-          </div>
-          {/* コンテンツ */}
-          <div className='block:network-description'>
-            <div className='text:network-description'>
+      <Sheet hover key={item._id} href={'/room/' + item._id + '/?preview=true'}>
+        {item.univ &&
+        <SheetContent type='caption'>
+          <Typography>
+            {utils.regions[item.channel].name.jp}・{item.univ}
+          </Typography>
+        </SheetContent>}
+        <SheetContent>
+          <Typography type='subheading'>
+            {item.name}
+          </Typography>
+        </SheetContent>
+        {item.header &&
+        <SheetBackgroundImage src={
+          item.header &&
+          Meteor.settings.public.assets.network.root + item._id + '/' + item.header
+        } />}
+        <Block width={600}>
+          <SheetContent>
+            <Typography>
               {item.description}
-            </div>
-          </div>
-        </a>
-      </div>)
+            </Typography>
+          </SheetContent>
+        </Block>
+      </Sheet>)
   }
 
   componentDidMount () {

@@ -6,7 +6,6 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
   return {
     container: {
       display: 'block',
-      margin: '0 auto',
       width: '100%',
       maxWidth: '300px',
       borderBottom: 'none',
@@ -16,6 +15,9 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.05)'
       }
+    },
+    center: {
+      margin: '0 auto'
     }
   }
 })
@@ -26,14 +28,18 @@ export default class UILayout extends Component {
     const {
       classes,
       hover,
-      href
+      href,
+      center,
+      width
     } = this.props
     const Component = href ? 'a' : 'div'
     return (
       <Component
         className={classNames(classes.container, {
-          [classes.hover]: hover
+          [classes.hover]: hover,
+          [classes.center]: center
         })}
+        style={{maxWidth: width || 300}}
         href={href}>
         {this.props.children}
       </Component>
