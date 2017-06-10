@@ -32,7 +32,7 @@ export default class UILayout extends Component {
         className={classNames(classes.container, {
           [classes.center]: center
         })}
-        style={{maxWidth: width ? (width + 'px') : '300px'}}
+        style={{maxWidth: width ? (width + 'px') : '600px'}}
         href={href}>
         {this.props.children}
       </Component>

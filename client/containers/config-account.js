@@ -4,12 +4,13 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
+import Input from 'material-ui/Input'
+import Block from '../components/ui-block'
 import Layout from '../components/ui-layout'
 import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import InputButton from '../components/ui-input-button'
-import InputText from '../components/ui-input-text'
 import styleSheet from './config-account.style'
 
 @withStyles(styleSheet)
@@ -19,93 +20,93 @@ export default class ConfigAccount extends Component {
   render () {
     return (
       <Layout>
-        {/* ディスプレイネーム */}
-        <Sheet>
-          <SheetActions>
-            <Typography>
-              ハンドルネーム
-            </Typography>
-          </SheetActions>
-          <SheetActions>
-            <InputText
-              value={this.state.name}
-              placeholder='ハンドルネーム'
-              maxLength={20}
-              onChange={this.onInputName}
-              onBlur={this.onCheckName} />
-          </SheetActions>
-          {this.state.nameError &&
-          <SheetActions>
-            <Typography>
-              {this.state.nameError}
-            </Typography>
-          </SheetActions>}
-          <SheetActions>
-            <InputButton
-              onClick={this.onSubmitName}>
-              変更する
-            </InputButton>
-          </SheetActions>
-        </Sheet>
-        {/* ユーザネーム */}
-        <Sheet>
-          <SheetActions>
-            <Typography>
-              ユーザネーム（ユーザID）
-            </Typography>
-          </SheetActions>
-          <SheetActions>
-            <InputText
-              value={this.state.username}
-              placeholder='ユーザネーム'
-              maxLength={10}
-              onChange={this.onInputUsername}
-              onBlur={this.onCheckUsername} />
-          </SheetActions>
-          <SheetActions>
-            <Typography>
-              ログイン時に使用します
-            </Typography>
-          </SheetActions>
-          {this.state.usernameError &&
-          <SheetContent>
-            <Typography>
-              {this.state.usernameError}
-            </Typography>
-          </SheetContent>}
-          <SheetActions>
-            <InputButton
-              onClick={this.onSubmitUsername}>
-              変更する
-            </InputButton>
-          </SheetActions>
-        </Sheet>
-        {/* パスワード */}
-        <Sheet>
-          <SheetActions>
-            <Typography>
-              パスワード変更
-            </Typography>
-          </SheetActions>
-          <SheetActions>
-            <InputText
-              value={this.state.oldPassword}
-              placeholder='現在のパスワード'
-              onChange={this.onInputOldPassword} />
-          </SheetActions>
-          <SheetActions>
-            <InputText
-              value={this.state.newPassword}
-              placeholder='新しいパスワード'
-              onChange={this.onInputNewPassword} />
-          </SheetActions>
-          <SheetActions>
-            <InputButton
-              onClick={this.onSubmitPassword}>
-              変更する
-            </InputButton>
-          </SheetActions>
-        </Sheet>
+        <Block width={400}>
+          {/* ディスプレイネーム */}
+          <Sheet>
+            <SheetActions>
+              <Typography>
+                ハンドルネーム
+              </Typography>
+            </SheetActions>
+            <SheetActions align='right'>
+              <Input
+                value={this.state.name}
+                placeholder='ハンドルネーム'
+                maxLength={20}
+                onChange={this.onInputName}
+                onBlur={this.onCheckName} />
+            </SheetActions>
+            {this.state.nameError &&
+            <SheetActions>
+              <Typography>
+                {this.state.nameError}
+              </Typography>
+            </SheetActions>}
+            <SheetActions align='right'>
+              <InputButton
+                onClick={this.onSubmitName}>
+                変更する
+              </InputButton>
+            </SheetActions>
+          </Sheet>
+          {/* ユーザネーム */}
+          <Sheet>
+            <SheetActions>
+              <Typography>
+                ユーザネーム（ユーザID）
+              </Typography>
+              <Typography type='caption'>
+                ログイン時に使用します
+              </Typography>
+            </SheetActions>
+            <SheetActions>
+              <Input
+                value={this.state.username}
+                placeholder='ユーザネーム'
+                maxLength={10}
+                onChange={this.onInputUsername}
+                onBlur={this.onCheckUsername} />
+            </SheetActions>
+            {this.state.usernameError &&
+            <SheetContent>
+              <Typography>
+                {this.state.usernameError}
+              </Typography>
+            </SheetContent>}
+            <SheetActions align='right'>
+              <InputButton
+                onClick={this.onSubmitUsername}>
+                変更する
+              </InputButton>
+            </SheetActions>
+          </Sheet>
+          {/* パスワード */}
+          <Sheet>
+            <SheetActions>
+              <Typography>
+                パスワード変更
+              </Typography>
+            </SheetActions>
+            <SheetActions>
+              <Input
+                value={this.state.oldPassword}
+                placeholder='現在のパスワード'
+                onChange={this.onInputOldPassword} />
+            </SheetActions>
+            <SheetActions>
+              <Input
+                value={this.state.newPassword}
+                placeholder='新しいパスワード'
+                onChange={this.onInputNewPassword} />
+            </SheetActions>
+            <SheetActions align='right'>
+              <InputButton
+                onClick={this.onSubmitPassword}>
+                変更する
+              </InputButton>
+            </SheetActions>
+          </Sheet>
+        </Block>
       </Layout>
     )
   }
