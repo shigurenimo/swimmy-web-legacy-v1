@@ -4,8 +4,9 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 const styleSheet = createStyleSheet('UISheetContent', theme => {
   return {
     container: {
-      display: 'block',
       paddingTop: '10px',
+      position: 'relative',
+      display: 'block',
       width: '100%'
     }
   }
@@ -15,10 +16,17 @@ const styleSheet = createStyleSheet('UISheetContent', theme => {
 export default class UILayout extends Component {
   render () {
     const {
-      classes
+      classes,
+      align,
+      ...more
     } = this.props
     return (
-      <div className={classes.container}>
+      <div
+        {...more}
+        className={classes.container}
+        style={{
+          textAlign: align || 'left'
+        }}>
         {this.props.children}
       </div>
     )

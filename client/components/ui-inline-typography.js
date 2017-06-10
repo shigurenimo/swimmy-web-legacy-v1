@@ -15,9 +15,13 @@ export const styleSheet = createStyleSheet('UIInlineTypograhy', theme => {
 @withStyles(styleSheet)
 export default class extends Component {
   render () {
-    const {classes} = this.props
+    const {
+      classes,
+      ...more
+    } = this.props
     return (
       <Typography
+        {...more}
         className={classes.container}>
         {this.props.children}
       </Typography>

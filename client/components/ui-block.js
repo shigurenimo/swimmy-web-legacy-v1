@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 const styleSheet = createStyleSheet('UIBlock', theme => {
@@ -7,11 +6,12 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
     container: {
       display: 'block',
       width: '100%',
-      maxWidth: '600px',
+      // maxWidth: '600px',
       borderBottom: 'none',
       transitionDuration: '200ms'
     },
-    center: {
+    inner: {
+      position: 'relative',
       margin: '0 auto'
     }
   }
@@ -32,14 +32,14 @@ export default class UILayout extends Component {
     return (
       <Component
         {...more}
-        className={classNames(classes.container, {
-          [classes.center]: center
-        })}
+        className={classes.container}
         href={href}>
-        <div style={{
-          margin: this.margin(align),
-          maxWidth: width ? (width + 'px') : '600px'
-        }}>
+        <div
+          className={classes.inner}
+          style={{
+            margin: this.margin(align),
+            maxWidth: width ? (width + 'px') : '600px'
+          }}>
           {this.props.children}
         </div>
       </Component>
