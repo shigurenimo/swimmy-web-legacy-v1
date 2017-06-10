@@ -10,6 +10,9 @@ const styleSheet = createStyleSheet('UISheetActions', theme => {
     },
     alignRight: {
       textAlign: 'right'
+    },
+    flexDisplay: {
+      display: 'flex'
     }
   }
 })
@@ -19,12 +22,14 @@ export default class UILayout extends Component {
   render () {
     const {
       classes,
-      align
+      align,
+      flex
     } = this.props
     return (
       <div
         className={classes.container}
         style={{
+          display: flex ? 'flex' : 'inline-block',
           textAlign: align || 'left'
         }}>
         {this.props.children}

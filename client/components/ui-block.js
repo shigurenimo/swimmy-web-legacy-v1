@@ -11,11 +11,6 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
       borderBottom: 'none',
       transitionDuration: '200ms'
     },
-    hover: {
-      '&:hover': {
-        backgroundColor: 'rgba(0, 0, 0, 0.05)'
-      }
-    },
     center: {
       margin: '0 auto'
     }
@@ -27,7 +22,6 @@ export default class UILayout extends Component {
   render () {
     const {
       classes,
-      hover,
       href,
       center,
       width
@@ -36,10 +30,9 @@ export default class UILayout extends Component {
     return (
       <Component
         className={classNames(classes.container, {
-          [classes.hover]: hover,
           [classes.center]: center
         })}
-        style={{maxWidth: width || 300}}
+        style={{maxWidth: width ? (width + 'px') : '300px'}}
         href={href}>
         {this.props.children}
       </Component>

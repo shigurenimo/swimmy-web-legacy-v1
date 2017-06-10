@@ -1,33 +1,27 @@
 import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 import InputButton from '../components/ui-input-button'
 import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
 import SheetImage from '../components/ui-sheet-image'
-import styleSheet from './post-artwork.style'
 
-@withStyles(styleSheet)
 @inject('artworks', 'snackbar', 'user')
 @observer
 export default class PostArtwork extends Component {
   render () {
-    const {classes} = this.props
     return (
       <Sheet>
         {/* ユーザ */}
         {this.props.public &&
         <SheetContent>
-          <Typography className='text:public-name'>
+          <Typography>
             {this.props.public.name} @{this.props.public.username}
           </Typography>
         </SheetContent>}
         {/* イメージ */}
-        <SheetContent>
-          <SheetImage href={'/uuid/' + this.props._id} src={this.src} />
-        </SheetContent>
+        <SheetImage href={'/uuid/' + this.props._id} src={this.src} />
         {/* タイトル */}
         {this.props.title &&
         <SheetContent>

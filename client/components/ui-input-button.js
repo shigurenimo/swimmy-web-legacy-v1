@@ -1,28 +1,19 @@
-import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { fade } from 'material-ui/styles/colorManipulator'
+import Button from 'material-ui/Button'
 
 export const styleSheet = createStyleSheet('UIInputButton', theme => {
   return {
-    container: {
-      display: 'inline-block',
-      verticalAlign: 'top',
-      padding: '0 10px',
-      width: 'auto',
-      height: 30,
-      lineHeight: 30,
-      textAlign: 'center',
-      color: Meteor.settings.public.color.primary,
-      backgroundColor: 'rgba(0, 0, 0, 0.05)',
-      cursor: 'pointer',
-      borderRadius: 1,
-      borderBottom: 'none',
-      transitionDuration: '200ms'
+    background: {
+      backgroundColor: 'rgba(0, 0, 0, 0.02)'
     },
     primary: {
-      background: Meteor.settings.public.color.primary,
-      color: 'white'
+      background: fade(theme.palette.text.primary, 0.12),
+      '&:hover': {
+        background: fade(theme.palette.text.primary, 0.12)
+      }
     }
   }
 })
@@ -30,15 +21,20 @@ export const styleSheet = createStyleSheet('UIInputButton', theme => {
 @withStyles(styleSheet)
 export default class extends Component {
   render () {
-    const {classes, primary} = this.props
+    const {
+      classes,
+      primary,
+      background
+    } = this.props
     return (
-      <button
-        className={classNames('ui-input-button', {
+      <Button
+        className={classNames({
+          [classes.background]: background,
           [classes.primary]: primary
         })}
-        onTouchTap={this.props.onClick}>
+        onClick={this.props.onClick}>
         {this.props.children}
-      </button>
+      </Button>
     )
   }
 }

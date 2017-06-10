@@ -1,7 +1,7 @@
-import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { fade } from 'material-ui/styles/colorManipulator'
 
 export const styleSheet = createStyleSheet('UIInlineBlock', theme => {
   return {
@@ -10,17 +10,17 @@ export const styleSheet = createStyleSheet('UIInlineBlock', theme => {
       verticalAlign: 'top',
       padding: '0 10px',
       width: 'auto',
-      height: '30px',
-      lineHeight: '30px',
+      height: '33px',
+      lineHeight: '33px',
       textAlign: 'center',
-      color: Meteor.settings.public.color.primary,
-      backgroundColor: 'rgba(0, 0, 0, 0.05)',
+      color: theme.palette.text.primary,
+      backgroundColor: fade(theme.palette.text.primary, 0.12),
       borderRadius: 1,
       borderBottom: 'none',
       transitionDuration: '200ms'
     },
     primary: {
-      background: Meteor.settings.public.color.primary,
+      background: theme.palette.text.primary,
       color: 'white'
     }
   }

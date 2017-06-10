@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
+import classNames from 'classnames'
 
 const styleSheet = createStyleSheet('UISheetImage', theme => {
   return {
@@ -12,7 +13,10 @@ const styleSheet = createStyleSheet('UISheetImage', theme => {
       width: '100%',
       maxWidth: '600px',
       minHeight: '100px',
-      borderRadius: '1px',
+      paddingTop: '10px',
+      borderRadius: '1px'
+    },
+    hover: {
       '&:hover': {
         opacity: 0.8
       }
@@ -31,7 +35,7 @@ export default class UISheetImage extends Component {
     if (href) {
       return (
         <a className={classes.link} href={href}>
-          <img className={classes.image} src={src} />
+          <img className={classNames(classes.image, classes.hover)} src={src} />
         </a>
       )
     } else {
