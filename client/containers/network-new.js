@@ -3,129 +3,108 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { isNumeric } from 'validator'
-import utils from '../../imports/utils'
+import Button from 'material-ui/Button'
+import Input from 'material-ui/Input'
+import Typography from 'material-ui/Typography'
+import Block from '../components/ui-block'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
+import SheetContent from '../components/ui-sheet-content'
+import TypographyError from '../components/ui-typography-error'
 
 @inject('networks', 'posts', 'snackbar')
 @observer
 export default class NetworkNew extends Component {
   render () {
-    return <div className='container:network-new'>
-      {/* リストの名前 */}
-      <div className='block:network-name'>
-        <div className='text:input-title'>
-          リストの名前
-          <div className='text:require'>必須</div>
-        </div>
-        <input
-          className='input:text'
-          type='text'
-          value={this.state.networkName}
-          placeholder='ソーシャルゲーム'
-          maxLength='100'
-          onChange={this.onInputNetworkName.bind(this)} />
-      </div>
-      {/* リストの説明 */}
-      <div className='block:network-description'>
-        <div className='text:input-title'>簡単な説明</div>
-        <textarea
-          className='input:text'
-          value={this.state.networkDescription}
-          placeholder='ソーシャルゲームの情報交換をするリスト'
-          maxLength='400'
-          onChange={this.onInputNetworkDescription.bind(this)} />
-      </div>
-      {/* もっと詳しく */}
-      {!this.state.isDetail &&
-      <div className='block:open-detail'>
-        <input className='input:open-detail' type='button' value='もっと詳しく設定する'
-          onTouchTap={this.onOpenDetail.bind(this)} />
-      </div>}
-
-      {this.state.isDetail &&
-      <div>
-        {/* SNS:Webサイト */}
-        <div className='block:network-social'>
-          <div className='text:input-title'>Webサイト</div>
-          <input
-            className='input:text'
-            type='text'
-            value={this.state.networkSite}
-            placeholder='https://swimmy.io'
-            maxLength='20'
-            onChange={this.onInputNetworkSite.bind(this)} />
-        </div>
-        {/* SNS:Twitter */}
-        <div className='block:network-social'>
-          <div className='text:input-title'>Twitter</div>
-          <div className='text:inline'>@</div>
-          <input
-            className='input:text'
-            type='text'
-            value={this.state.networkTwitter}
-            placeholder='swimmy_io'
-            maxLength='20'
-            onChange={this.onInputNetworkTwitter.bind(this)} />
-        </div>
-        <div className='block:post-description'>
-          <div className='text:post-description'>
-            もし、大学サークルなら
-          </div>
-        </div>
-        {/* 地域 */}
-        <div className='block:network-region'>
-          <div className='text:input-title'>地域</div>
-          <select
-            className='input:text'
-            value={this.state.networkChannel}
-            onChange={this.onInputNetworkChannel.bind(this)}>
-            {utils.regions.list.map(item =>
-              <option key={item.value} value={item.value}>
-                {item.name.jp}
-              </option>)}
-          </select>
-        </div>
-        {/* 大学 */}
-        <div className='block:network-university'>
-          <div className='text:input-title'>
-            大学名
-          </div>
-          <input
-            className='input:network-university'
-            type='text'
-            value={this.state.networkUniversity}
-            placeholder='名桜大学'
-            maxLength='40'
-            onChange={this.onInputNetworkUniversity.bind(this)} />
-        </div>
-        {/* 活動場所 */}
-        <div className='block:network-place'>
-          <div className='text:input-title'>主な活動場所</div>
-          <input
-            className='input:text'
-            type='text'
-            value={this.state.networkPlace}
-            placeholder='サークル棟2階'
-            maxLength='20'
-            onChange={this.onInputNetworkPlace.bind(this)} />
-        </div>
-      </div>}
-      {/* エラー */}
-      {this.state.submitError &&
-      <div className='block:error'>
-        <div className='text:error'>
-          {this.state.submitError}
-        </div>
-      </div>}
-      {/* 送信 */}
-      <div className='block:submit'>
-        <input
-          className='input:submit'
-          type='button'
-          value='作成する'
-          onTouchTap={this.onSubmit.bind(this)}>
-        </input>
-      </div>
-    </div>
+    return (
+      <Layout>
+        <Block width={400}>
+          {/* リストの名前 */}
+          <Sheet>
+            <SheetContent>
+              <Typography>
+                リストの名前 ※
+              </Typography>
+              <Input
+                value={this.state.networkName}
+                placeholder='ソーシャルゲーム'
+                maxLength='100'
+                onChange={this.onInputNetworkName.bind(this)} />
+            </SheetContent>
+          </Sheet>
+          {/* リストの説明 */}
+          <Sheet>
+            <SheetContent>
+              <Block width={400}>
+                <Typography>簡単な説明</Typography>
+                <Input multiline
+                  value={this.state.networkDescription}
+                  placeholder='ソーシャルゲームの情報交換をするリスト'
+                  maxLength={400}
+                  onChange={this.onInputNetworkDescription.bind(this)} />
+              </Block>
+            </SheetContent>
+          </Sheet>
+          {this.state.isDetail &&
+          <div>
+            <Sheet>
+              {/* SNS:Webサイト */}
+              <SheetContent>
+                <Typography>Webサイト</Typography>
+                <Input
+                  value={this.state.networkSite}
+                  placeholder='https://swimmy.io'
+                  maxLength='20'
+                  onChange={this.onInputNetworkSite.bind(this)} />
+              </SheetContent>
+            </Sheet>
+            {/* SNS:Twitter */}
+            <Sheet>
+              <SheetContent>
+                <Typography>Twitter</Typography>
+                <Input
+                  value={this.state.networkTwitter}
+                  placeholder='username'
+                  maxLength='20'
+                  onChange={this.onInputNetworkTwitter.bind(this)} />
+              </SheetContent>
+            </Sheet>
+            <Sheet>
+              {/* 大学 */}
+              <SheetContent>
+                <Typography>大学名</Typography>
+                <Input
+                  value={this.state.networkUniversity}
+                  placeholder='名桜大学'
+                  maxLength='40'
+                  onChange={this.onInputNetworkUniversity.bind(this)} />
+              </SheetContent>
+            </Sheet>
+          </div>}
+          {/* エラー */}
+          {this.state.submitError &&
+          <Sheet>
+            <SheetContent>
+              <TypographyError>
+                {this.state.submitError}
+              </TypographyError>
+            </SheetContent>
+          </Sheet>}
+          {/* 送信 */}
+          <Sheet>
+            <SheetContent align='right'>
+              {!this.state.isDetail &&
+              <Button onClick={this.onOpenDetail.bind(this)}>
+                more
+              </Button>}
+              <Button onClick={this.onSubmit.bind(this)}>
+                create
+              </Button>
+            </SheetContent>
+          </Sheet>
+        </Block>
+      </Layout>
+    )
   }
 
   state = {
