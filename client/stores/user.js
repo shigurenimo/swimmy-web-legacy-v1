@@ -63,9 +63,9 @@ export default class User {
     })
   }
 
-  insert ({username, password, passwordRetype}) {
+  insert ({username, password}) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:insert', {username, password, passwordRetype}, (err, res) => {
+      Meteor.call('user:insert', {username, password}, (err, res) => {
         if (err) {
           reject(err)
         } else {

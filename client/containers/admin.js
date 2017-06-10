@@ -61,7 +61,9 @@ export default class Admin extends Component {
     return index.map(user =>
       <a key={user._id} href={'/' + user.username}>
         <Sheet hover>
-          <Typography>{user.name}@{user.username}</Typography>
+          <SheetContent>
+            <Typography>{user.name}@{user.username}</Typography>
+          </SheetContent>
         </Sheet>
       </a>
     )

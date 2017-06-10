@@ -4,62 +4,105 @@ import React, { Component } from 'react'
 import { isAlpha, isEmail } from 'validator'
 import IconNotInterested from 'material-ui-icons/NotInterested'
 import IconWhatshot from 'material-ui-icons/Whatshot'
-import IconGesture from 'material-ui-icons/Gesture'
+import { withStyles } from 'material-ui/styles'
+import Button from 'material-ui/Button'
+import Typography from 'material-ui/Typography'
+import Textfiled from 'material-ui/TextField'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
+import SheetContent from '../components/ui-sheet-content'
+import SheetActions from '../components/ui-sheet-actions'
+import Block from '../components/ui-block'
+import InlineTypography from '../components/ui-inline-typography'
+import styleSheet from './login.style'
 
+@withStyles(styleSheet)
 @inject('user', 'snackbar')
 @observer
 export default class Login extends Component {
   render () {
-    return <div className='container:login'>
-      <div className='block:form-title' key='title'>
-        <div className='block:app-title'>
-          <div className='text:app-version'>{Meteor.settings.public.version}</div>
-          <div className='text:app-name'>Swimmy</div>
-          <div className='text:app-description'>- 完全匿名の小さな電子掲示板 -</div>
-        </div>
-      </div>
-      {this.router()}
-      <div className='block:form-description-list'>
-        <div className='block:form-description'>
-          <div className='text:title'>
-            <IconNotInterested {...this.iconStyle}/>
-            <div className='text:inline'>完全匿名</div>
-          </div>
-          <div className='text:description'>
-            メールアドレスは要らない。完全匿名で利用できます。
-          </div>
-        </div>
-        <div className='block:form-description'>
-          <div className='text:title'>
-            <IconWhatshot {...this.iconStyle}/>
-            <div className='text:inline'>オープンソース</div>
-          </div>
-          <div className='text:description'>
-            Meteor・Reactで開発しているオープンソースのプロジェクトです。<br/>
-            <a href='https://github.com/uu-fish/swimmy.io' target='new'>GitHub</a>
-            {' or '}
-            <a href='https://bitbucket.org/swimmy-io/swimmy.io' target='new'>Bitbucket</a>
-          </div>
-        </div>
-        <div className='block:form-description'>
-          <div className='text:title'>
-            <IconGesture {...this.iconStyle}/>
-            <div className='text:inline'>React Native</div>
-          </div>
-          <div className='text:description'>
-            iOS・Androidアプリを開発中。
-            でもリリースにはちょっと時間がかかっている。
-          </div>
-        </div>
-      </div>
-    </div>
+    const {classes} = this.props
+    console.log(this.state.error)
+    return (
+      <Layout>
+        <Sheet>
+          <SheetContent className={classes.appTitle}>
+            <div className={classes.appVersion}>{Meteor.settings.public.version}</div>
+            <div className={classes.appName}>Swimmy</div>
+          </SheetContent>
+        </Sheet>
+        <Sheet key='login'>
+          <Block>
+            <SheetActions>
+              <Textfiled
+                name='username'
+                label={this.state.error === 'username' ? this.state.errorMessage : 'username or email'}
+                onChange={this.onInputUsername}
+                onKeyDown={this.onPressEnter}
+                value={this.state.username}
+                error={this.state.error === 'username'}
+                maxLength='40' />
+            </SheetActions>
+            <SheetActions>
+              <Textfiled
+                type='password'
+                name='password'
+                label={this.state.error === 'password' ? this.state.errorMessage : 'password'}
+                onChange={this.onInputPassword}
+                onKeyDown={this.onPressEnter}
+                value={this.state.password}
+                error={this.state.error === 'password'}
+                maxLength='20' />
+            </SheetActions>
+            <SheetActions>
+              <Typography align='right'>
+                <Button onClick={this.onRegister}>
+                  New
+                </Button>
+                <Button onClick={this.onLogin}>
+                  Login
+                </Button>
+              </Typography>
+            </SheetActions>
+          </Block>
+        </Sheet>
+        <Sheet>
+          <SheetContent>
+            <IconNotInterested {...this.iconStyle} />
+            <InlineTypography>完全匿名</InlineTypography>
+          </SheetContent>
+          <SheetContent>
+            <Typography>
+              メールアドレスは要らない。完全匿名で利用できます。
+            </Typography>
+          </SheetContent>
+        </Sheet>
+        <Sheet>
+          <SheetContent>
+            <IconWhatshot {...this.iconStyle} />
+            <InlineTypography>オープンソース</InlineTypography>
+          </SheetContent>
+          <SheetContent className='text:description'>
+            <Typography>
+              Meteor・React・Material-UIで開発しているオープンソースのプロジェクトです。<br />
+            </Typography>
+            <Typography>
+              <a href='https://github.com/uu-fish/swimmy.io' target='new'>GitHub</a>
+              {' or '}
+              <a href='https://bitbucket.org/swimmy-io/swimmy.io' target='new'>Bitbucket</a>
+            </Typography>
+          </SheetContent>
+        </Sheet>
+      </Layout>
+    )
   }
 
   get iconStyle () {
     return {
       style: {
-        width: 26,
-        height: 26
+        width: '35px',
+        height: '35px',
+        paddingRight: '10px'
       },
       color: Meteor.settings.public.color.primary
     }
@@ -70,126 +113,11 @@ export default class Login extends Component {
     displayName: '',
     channel: 'tokyo',
     password: '',
-    passwordRetype: '',
-    submitError: null,
-    error: null
+    error: null,
+    errorMessage: ''
   }
+
   process = false
-  form = 'login'
-
-  router () {
-    switch (this.state.form) {
-      case 'register':
-        return this.registerForm()
-      default:
-        return this.loginForm()
-    }
-  }
-
-  onSwitchForm (form) {
-    this.setState({
-      form: form,
-      username: '',
-      displayName: '',
-      password: '',
-      passwordRetype: '',
-      error: null
-    })
-  }
-
-  loginForm () {
-    return <div className='block:form-login' key='login'>
-      <input
-        className='input:data'
-        type='text'
-        name='username'
-        placeholder='ユーザネーム or メールアドレス'
-        onChange={this.onInputUsername.bind(this)}
-        onKeyDown={this.onPressEnter.bind(this)}
-        value={this.state.username}
-        maxLength='40'/>
-      {/* パスワード */}
-      <input
-        className='input:data'
-        type='password'
-        name='password'
-        placeholder='パスワード'
-        onChange={this.onInputPassword.bind(this)}
-        onKeyDown={this.onPressEnter.bind(this)}
-        value={this.state.password}
-        maxLength='20'/>
-      {/* ログイン */}
-      <input
-        className='input:next'
-        type='button'
-        value='ログイン'
-        onTouchTap={this.onLogin.bind(this, null)}/>
-      {/* エラー */}
-      <div className='text:error'>
-        {this.state.error}
-      </div>
-      {/* 新規登録 */}
-      <div className='block:login-or-register'>
-        <div className='text:or-login'>または</div>
-        <input
-          className='input:register'
-          value='新規ユーザ'
-          type='submit'
-          onTouchTap={this.onSwitchForm.bind(this, 'register')}/>
-      </div>
-    </div>
-  }
-
-  registerForm () {
-    return <div className='block:form-register' key='register'>
-      {/* キャンセル */}
-      <input
-        className='input:cancel'
-        type='button'
-        value='取り消し'
-        onTouchTap={this.onSwitchForm.bind(this, null)}/>
-      {/* ユーザネーム */}
-      <input
-        className='input:data'
-        type='text'
-        name='username'
-        placeholder='ユーザID（英数字）'
-        onChange={this.onInputUsername.bind(this)}
-        onKeyDown={this.onPressEnter.bind(this)}
-        value={this.state.username}
-        maxLength='20'/>
-      {/* パスワード */}
-      <input
-        className='input:data'
-        type='password'
-        name='password'
-        placeholder='パスワード'
-        onChange={this.onInputPassword.bind(this)}
-        onKeyDown={this.onPressEnter.bind(this)}
-        value={this.state.password}
-        maxLength='20'/>
-      {/* パスワード 再入力 */}
-      <input
-        className='input:data'
-        type='password'
-        name='password'
-        placeholder='パスワード:再入力'
-        onChange={this.onInputPasswordRetype.bind(this)}
-        onKeyDown={this.onPressEnter.bind(this)}
-        value={this.state.passwordRetype}
-        maxLength='20'/>
-      {/* 登録 */}
-      <input
-        className='input:next'
-        type='button'
-        value='参加する'
-        onTouchTap={this.onRegister.bind(this, null)}/>
-      {/* エラー */}
-      <div className='text:error'>
-        {this.state.error}
-      </div>
-    </div>
-  }
 
   // ユーザネームを入力する
   onInputUsername (event) {
@@ -203,24 +131,7 @@ export default class Login extends Component {
     }
   }
 
-  // ディスプレイネームを入力する
-  onInputDisplayName (event) {
-    event.preventDefault()
-    event.persist()
-    const value = event.target.value
-    if (this.state.error) {
-      this.setState({displayName: value, error: null})
-    } else {
-      this.setState({displayName: value})
-    }
-  }
-
-  // リージョンを入力する
-  onInputChannel (event) {
-    event.persist()
-    const value = event.target.value
-    this.setState({channel: value})
-  }
+  onInputUsername = ::this.onInputUsername
 
   // パスワードを入力する
   onInputPassword (event) {
@@ -234,93 +145,82 @@ export default class Login extends Component {
     }
   }
 
-  // パスワードを再入力する
-  onInputPasswordRetype (event) {
-    event.preventDefault()
-    event.persist()
-    const value = event.target.value
-    if (this.state.error) {
-      this.setState({passwordRetype: value, error: null})
-    } else {
-      this.setState({passwordRetype: value})
-    }
-  }
+  onInputPassword = ::this.onInputPassword
 
   // ログインする
-  async onLogin (event) {
+  onLogin (event) {
     if (event) event.preventDefault()
     if (this.process) return
     this.process = true
-    // ↓ ユーザネーム
     const username = this.state.username
     if (username.length === 0) {
-      this.setState({error: 'ユーザネームを入力してください'})
+      this.setState({error: 'username', errorMessage: 'ユーザネームを入力してください'})
       this.process = false
       return
     }
     const isNotUsername = username.indexOf('@') !== -1
     if (isNotUsername) {
       if (!isEmail(username)) {
-        this.setState({error: 'メールアドレスの形式がちがいます'})
+        this.setState({error: 'email', errorMessage: 'メールアドレスの形式がちがいます'})
         this.process = false
         return
       }
     } else {
       if (username.match(new RegExp('[^A-Za-z0-9]+'))) {
-        this.setState({error: 'ユーザネームは英数字のみです'})
+        this.setState({error: 'email', errorMessage: 'ユーザネームは英数字のみです'})
         this.process = false
         return
       }
     }
-    // ↓ パスワード
     const password = this.state.password
     if (password.length === 0) {
-      this.setState({error: 'パスワードを入力してください'})
+      this.setState({error: 'password', errorMessage: 'パスワードを入力してください'})
       this.process = false
       return
     }
     if (isAlpha(password)) {
-      this.setState({error: 'パスワードは数字を含みます'})
+      this.setState({error: 'password', errorMessage: 'パスワードは数字を含みます'})
       this.process = false
       return
     }
     Meteor.loginWithPassword(username, password, error => {
       if (error) {
-        this.setState({error: 'ログインに失敗しました'})
+        this.setState({error: 'password', errorMessage: 'ログインに失敗しました'})
       }
       this.process = false
     })
   }
 
+  onLogin = ::this.onLogin
+
   // 新規登録する
-  async onRegister (event) {
+  onRegister (event) {
     if (event) event.preventDefault()
     if (this.process) return
     this.process = true
     this.props.user.insert({
       username: this.state.username,
-      password: this.state.password,
-      passwordRetype: this.state.passwordRetype
+      password: this.state.password
     })
     .then(user => {
       Meteor.loginWithPassword(this.state.username, this.state.password)
     })
     .catch(err => {
-      this.setState({error: err.reason})
+      this.setState({error: err.error, errorMessage: err.reason})
       this.process = false
     })
   }
+
+  onRegister = ::this.onRegister
 
   // エンターキーを入力する
   onPressEnter (event) {
     const ENTER = 13
     if (event.which === ENTER) {
       event.preventDefault()
-      if (this.state.form === 'register') {
-        this.onRegister()
-      } else {
-        this.onLogin()
-      }
+      this.onLogin()
     }
   }
+
+  onPressEnter = ::this.onPressEnter
 }
