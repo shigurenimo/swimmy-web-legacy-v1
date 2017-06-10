@@ -22,7 +22,6 @@ import styleSheet from './login.style'
 export default class Login extends Component {
   render () {
     const {classes} = this.props
-    console.log(this.state.error)
     return (
       <Layout>
         <Sheet>
