@@ -25,10 +25,10 @@ export default class Login extends Component {
     return (
       <Layout>
         <Sheet>
-          <SheetContent className={classes.appTitle}>
-            <div className={classes.appVersion}>{Meteor.settings.public.version}</div>
-            <div className={classes.appName}>Swimmy</div>
-          </SheetContent>
+          <Block>
+            <Typography align='center'>{Meteor.settings.public.version}</Typography>
+            <Typography type='display1' align='center'>Swimmy</Typography>
+          </Block>
         </Sheet>
         <Sheet key='login'>
           <Block>
