@@ -7,16 +7,18 @@ import InputPost from './input-post'
 @observer
 export default class InputAction extends Component {
   render () {
-    return <CSSTransitionGroup
-      component='div'
-      className='container:input-action'
-      transitionName='transition'
-      transitionEnterTimeout={450}
-      transitionLeaveTimeout={150}
-      transitionAppear
-      transitionAppearTimeout={150}>
-      {this.router()}
-    </CSSTransitionGroup>
+    return (
+      <CSSTransitionGroup
+        component='div'
+        className='container:input-action'
+        transitionName='transition'
+        transitionEnterTimeout={450}
+        transitionLeaveTimeout={150}
+        transitionAppear
+        transitionAppearTimeout={150}>
+        {this.router()}
+      </CSSTransitionGroup>
+    )
   }
 
   router () {

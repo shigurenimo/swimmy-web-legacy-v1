@@ -11,9 +11,7 @@ import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import InputButton from '../components/ui-input-button'
-import styleSheet from './config-account.style'
 
-@withStyles(styleSheet)
 @inject('snackbar', 'user')
 @observer
 export default class ConfigAccount extends Component {

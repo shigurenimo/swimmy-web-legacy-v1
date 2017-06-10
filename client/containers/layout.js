@@ -11,14 +11,16 @@ import utils from '../../imports/utils'
 @observer
 export default class Layout extends Component {
   render () {
-    return <div className={this.className}>
-      <Swipeable onSwiped={this.onSwiped.bind(this)}>
-        <LeftMenu />
-        <Content />
-      </Swipeable>
-      <InputAction />
-      <NavigationSwipe />
-    </div>
+    return (
+      <div className={this.className}>
+        <Swipeable onSwiped={this.onSwiped.bind(this)}>
+          <LeftMenu />
+          <Content />
+        </Swipeable>
+        <InputAction />
+        <NavigationSwipe />
+      </div>
+    )
   }
 
   get className () {
