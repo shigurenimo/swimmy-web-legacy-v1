@@ -7,6 +7,9 @@ const styleSheet = createStyleSheet('UISheetActions', theme => {
       display: 'block',
       paddingTop: '10px',
       width: '100%'
+    },
+    alignRight: {
+      textAlign: 'right'
     }
   }
 })
@@ -15,10 +18,15 @@ const styleSheet = createStyleSheet('UISheetActions', theme => {
 export default class UILayout extends Component {
   render () {
     const {
-      classes
+      classes,
+      align
     } = this.props
     return (
-      <div className={classes.container}>
+      <div
+        className={classes.container}
+        style={{
+          textAlign: align || 'left'
+        }}>
         {this.props.children}
       </div>
     )

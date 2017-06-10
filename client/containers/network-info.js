@@ -3,123 +3,72 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import IconLanguage from 'material-ui-icons/Language'
-import IconChat from 'material-ui-icons/Chat'
-import IconStyle from 'material-ui-icons/Style'
-import IconEmail from 'material-ui-icons/Email'
+import Button from 'material-ui/Button'
+import Typography from 'material-ui/Typography'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
+import SheetActions from '../components/ui-sheet-actions'
+import SheetContent from '../components/ui-sheet-content'
+import SheetBackgroundImage from '../components/ui-sheet-background-image'
 import utils from '../../imports/utils'
 
 @inject('networks', 'posts', 'snackbar', 'user')
 @observer
 export default class NetworkInfo extends Component {
   render () {
-    return <div className='container:network-info'>
-      <div className='block:layout'>
-        {/* ヘッダー画像 */}
+    return (
+      <div>
         {this.data.header &&
-        <div className='block:network-header'>
-          {this.data.header &&
-          <div className='image:network-header'
-            style={{
-              backgroundImage: this.data.header
-                ? 'url(' + Meteor.settings.public.assets.network.root + this.data._id + '/' + this.data.header + ')'
-                : 'url()'
-            }}>
-          </div>}
-        </div>}
-        {/* リスト名 */}
-        <div className='block:network-name'>
+        <Sheet className='block:network-header'>
+          {this.item.header &&
+          <SheetBackgroundImage src={
+            this.item.header &&
+            Meteor.settings.public.assets.network.root + this.data._id + '/' + this.data.header
+          } />}
+        </Sheet>}
+        <Sheet>
           {this.data.univ &&
-          <div className='text:univ'>
-            {utils.regions[this.data.channel].name.jp}・{this.data.univ}
-          </div>}
-          {this.data.title &&
-          <h2 className='text:network-title'>
-            {this.data.title}
-          </h2>}
-          <h2 className='text:network-name'>
-            {this.data.name}
-          </h2>
-        </div>
-        {/* 説明 */}
-        <div className='block:network-description'>
-          <div className='text:network-description'>
-            {this.data.description || '説明がありません'}
-          </div>
-        </div>
-        {/* ハッシュタグ */}
-        {this.data.tags.slice()[0] &&
-        <div className='block:network-tags'>
-          <div className='image:icon'>
-            <IconStyle color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}} />
-          </div>
-          {this.data.tags.map(item =>
-            <div className='text:tag' key={item}>{item}</div>)}
-        </div>}
-        {/* 場所 */}
-        {this.data.place &&
-        <div className='block:network-place'>
-          <div className='text:place'>
-            活動場所 : {this.data.place}
-          </div>
-        </div>}
-        {this.data.email &&
-        <div className='block:network-email'>
-          <div className='image:icon'>
-            <IconEmail color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}} />
-          </div>
-          <a className='text:text'
-            target='_blank'
-            href={`mailto:${this.data.email}?subject=from swimmy&body=お問い合わせ内容`}>
-            {this.data.email}</a>
-        </div>}
-        {/* webサイト */}
-        {this.data.sns.site &&
-        <div className='block:network-social'>
-          <div className='image:icon'>
-            <IconLanguage color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}} />
-          </div>
-          <a className='text:social'
-            target='_blank'
-            href={this.data.sns.site}>
-            {this.data.sns.site}</a>
-        </div>}
-        {/* Twitter */}
-        {this.data.sns.twitter &&
-        <div className='block:network-social'>
-          <div className='image:icon'>
-            <IconChat color={Meteor.settings.public.color.primary} style={{width: 30, height: 30}} />
-          </div>
-          <a className='text:social'
-            target='_blank'
-            href={'//twitter.com/' + this.data.sns.twitter}>
-            @{this.data.sns.twitter}</a>
-        </div>}
-        {this.props.user.isLogged &&
-        <div className='block:edit'>
-          {this.data.member.includes(this.props.user._id)
-            ? <input
-              className='input:edit'
-              type='button'
-              onTouchTap={this.onLeaveNetwork.bind(this)}
-              value='チェックアウト' />
-            : <input
-              className='input:edit'
-              type='button'
-              onTouchTap={this.onJoinNetwork.bind(this)}
-              value='チェックイン' />}
-          {this.data.member.includes(this.props.user._id) &&
-          <a className='input:edit' href={'/network/' + this.data._id + '/edit'}>アップデート</a>}
-        </div>}
+          <SheetContent>
+            <Typography>
+              {utils.regions[this.data.channel].name.jp}・{this.data.univ}
+            </Typography>
+          </SheetContent>}
+          <SheetContent>
+            <Typography type='headline'>
+              {this.data.name}
+            </Typography>
+          </SheetContent>
+          <SheetContent>
+            <Typography>
+              {this.data.description || '説明がありません'}
+            </Typography>
+          </SheetContent>
+          {this.props.user.isLogged &&
+          <SheetActions align='right'>
+            {this.data.member.includes(this.props.user._id) ? (
+              <Button onTouchTap={this.onLeaveNetwork.bind(this)}>
+                チェックアウト
+              </Button>
+            ) : (
+              <Button onTouchTap={this.onJoinNetwork.bind(this)}>
+                チェックイン
+              </Button>
+            )}
+          </SheetActions>}
+        </Sheet>
         {this.props.user.isLogged &&
         this.props.user._id === this.data.owner &&
-        <div className='block:edit'>
-          <button className='input:edit' onTouchTap={this.onRemoveList.bind(this)}>
-            このリストを削除する
-          </button>
-        </div>}
+        <Sheet>
+          <SheetActions>
+            <Button onClick={this.onRemoveList.bind(this)}>
+              このリストを削除する
+            </Button>
+            {this.data.member.includes(this.props.user._id) &&
+            <Button component='a' href={'/network/' + this.data._id + '/edit'}>アップデート</Button>}
+          </SheetActions>
+        </Sheet>}
       </div>
-    </div>
+    )
   }
 
   get data () {
