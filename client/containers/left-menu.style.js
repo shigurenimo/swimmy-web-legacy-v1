@@ -14,7 +14,8 @@ export default createStyleSheet('LeftMenu', theme => {
       transition: 'width 300ms',
       overflowY: 'scroll',
       overflowX: 'hidden',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      '-webkit-overflow-scrolling': 'touch'
     },
     oneColumn: {
       width: '105%',

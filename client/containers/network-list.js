@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 import Block from '../components/ui-block'
 import Layout from '../components/ui-layout'
@@ -9,7 +10,9 @@ import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
 import SheetBackgroundImage from '../components/ui-sheet-background-image'
 import utils from '../../imports/utils'
+import styleSheet from './network-list.style'
 
+@withStyles(styleSheet)
 @inject('networks', 'user')
 @observer
 export default class NetworkList extends Component {
@@ -22,6 +25,7 @@ export default class NetworkList extends Component {
   }
 
   forNetworks () {
+    const {classes} = this.props
     const index = this.props.networks.index.slice()
     const isFetching = this.props.networks.isFetching
     if (index.length < 1) {
@@ -55,7 +59,7 @@ export default class NetworkList extends Component {
         } />}
         <Block width={600}>
           <SheetContent>
-            <Typography>
+            <Typography className={classes.content}>
               {item.description}
             </Typography>
           </SheetContent>

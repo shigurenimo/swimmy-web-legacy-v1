@@ -9,7 +9,8 @@ export default createStyleSheet('Content', theme => {
       boxSizing: 'border-box',
       overflowY: 'auto',
       overflowX: 'hidden',
-      transition: 'padding-top 300ms, width 300ms'
+      transition: 'padding-top 300ms, width 300ms',
+      '-webkit-overflow-scrolling': 'touch'
     },
     twoColumn: {
       right: '-20px',

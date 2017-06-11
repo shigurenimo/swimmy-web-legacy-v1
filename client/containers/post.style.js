@@ -43,6 +43,9 @@ export default createStyleSheet('Post', theme => {
         top: 0,
         left: 0
       }
+    },
+    reaction: {
+      marginBottom: '5px'
     }
   }
 })

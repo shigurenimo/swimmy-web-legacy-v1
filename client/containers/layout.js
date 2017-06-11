@@ -23,7 +23,7 @@ export default class Layout extends Component {
         [classes.left]: layout.left,
         [classes.right]: !layout.left,
         [classes.smartphone]: utils.isSmartphone,
-        [classes.smartphoneNot]: utils.isSmartphone
+        [classes.smartphoneNot]: !utils.isSmartphone
       })}>
         <Swipeable onSwiped={this.onSwiped.bind(this)}>
           <LeftMenu />

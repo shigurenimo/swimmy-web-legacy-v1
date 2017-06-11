@@ -109,6 +109,7 @@ export default class Post extends Component {
             {Object.keys(this.props.reactions).map(name =>
               <Button compact minimal background
                 key={name}
+                className={classes.reaction}
                 primary={!!this.props.user.isLogged && this.props.reactions[name].includes(this.props.user._id)}
                 onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
                 {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}

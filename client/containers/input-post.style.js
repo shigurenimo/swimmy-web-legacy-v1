@@ -10,6 +10,7 @@ export default createStyleSheet('InputPost', theme => {
       height: 'auto',
       overflowX: 'hidden',
       backgroundColor: '#F8F7F8',
+      boxSizing: 'border-box',
       zIndex: 140
     },
     oneColumn: {
@@ -39,7 +40,7 @@ export default createStyleSheet('InputPost', theme => {
       padding: 0,
       lineHeight: '20px',
       verticalAlign: 'top',
-      fontSize: '1rem',
+      fontSize: '13px',
       border: 0,
       borderRadius: 0,
       appearance: 'none',
