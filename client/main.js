@@ -7,7 +7,6 @@ import App from './containers/app'
 import theme from '/client/theme'
 import stores from './stores'
 import './router'
-import './styles/main'
 
 injectTapEventPlugin()
 
