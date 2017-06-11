@@ -1,81 +1,165 @@
 import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import classNames from 'classnames'
+import { withStyles } from 'material-ui/styles'
+import List, { ListItem, ListItemText } from 'material-ui/List'
+import Typography from 'material-ui/Typography'
+import Sheet from '../components/ui-sheet'
+import SheetContent from '../components/ui-sheet-content'
+import styleSheet from './left-menu-default.style'
 
+@withStyles(styleSheet)
 @inject('artworks', 'layout', 'networks', 'router', 'posts', 'postsSocket', 'snackbar', 'user')
 @observer
 export default class LeftMenuDefault extends Component {
   render () {
-    return <div className='container:left-menu-default'>
-      <div className='block:app-logo'>
-        <img src='/images/logo.png'/>
-        <div className='text:version'>{Meteor.settings.public.version}</div>
-      </div>
-      {/* 既存のネットワーク */}
-      <div className='block:menu-network'>
-        <a className={`input:list-item ${this.props.router.page.includes('thread')}`}
-          href='/thread'>スレッド</a>
-        {this.props.posts.timelines.map(item =>
-          <a className={`input:list-item ${
-          this.props.router.page === 'timeline' &&
-          this.props.posts.timeline.unique === item.unique}`}
-            key={item.unique} href={'/' + item.unique}>{item.name}</a>)}
-        <a className={`input:list-item ${this.props.router.page === 'timemachine'}`}
-          href={'/timemachine'}>過去ログ</a>
-        {this.props.posts.networkTimelines.map(item =>
-          <a className={`input:list-item ${
-          this.props.router.page === 'timeline' &&
-          this.props.posts.timeline.unique === item.unique}`}
-            key={item.unique} href={'/room/' + item.network}>{item.name}</a>)}
-      </div>
-      {/* アートワーク */}
-      <div className='block:menu-artwork'>
-        {this.props.artworks.timelines.map(item =>
-          <a className={`input:list-item ${
-          this.props.router.page === 'artwork' &&
-          this.props.artworks.timeline.unique === item.unique}`}
-            key={item.unique} href={'/artwork/' + item.unique}>{item.name}</a>)}
-        {this.props.user.isLogged &&
-        <a
-          className={`input:list-item ${this.props.router.page.includes('artwork-new')}`}
-          href='/artwork/new'>+ 新しいアートワーク</a>}
-      </div>
-      {/* リスト */}
-      <div className='block:menu-network'>
-        {this.props.networks.timelines.map(item =>
-          <a className={`input:list-item ${
-          this.props.router.page === 'network-list' &&
-          this.props.networks.timeline.unique === item.unique}`}
-            key={item.unique} href={'/network/' + item.unique}>{item.name}</a>)}
-        {this.props.user.isLogged &&
-        !this.props.router.page.includes('network/new') &&
-        <a className='input:list-item' href='/network/new'>+ 新しいリスト</a>}
-      </div>
-      {/* マイページ */}
-      <div className='block:menu-config'>
-        <a className={`input:list-item ${this.props.router.page.includes('admin')}`} href='/admin'>
-          {this.props.user.isLogged ? 'マイページ' : 'ログイン'}
-        </a>
-        {this.props.user.isLogged &&
-        <a className={`input:list-item ${this.props.router.page.includes('config')}`} href='/config'>
-          アカウント設定
-        </a>}
-        <a className={`input:list-item ${this.props.router.page.includes('release')}`} href='/release'>
-          リリースノート
-        </a>
-        <a className={`input:list-item ${this.props.router.page.includes('report')}`} href='/report'>
-          統計データ
-        </a>
-        {this.props.user.isLogged &&
-        <div className='input:list-item' onTouchTap={this.onLogout.bind(this)}>
-          ログアウト</div>}
-      </div>
-      <div className='block:copyright'>
-        <div className='text:copyright'>
-          © 2016 - 2017 swimmy.io
+    const {classes} = this.props
+    return (
+      <div>
+        <div className={classes.appLogo}>
+          <img className={classes.appLogoImage} src='/images/logo.png' />
+          <Typography className={classes.appVersion}>
+            {Meteor.settings.public.version}
+          </Typography>
         </div>
+        {/* 既存のネットワーク */}
+        <List>
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page.includes('thread')
+            })}
+            component='a'
+            href='/thread'>
+            <ListItemText primary='スレッド' />
+          </ListItem>
+          {this.props.posts.timelines.map(item =>
+            <ListItem button dense
+              key={item.unique}
+              className={classNames({
+                [classes.select]: this.props.router.page === 'timeline' &&
+                this.props.posts.timeline.unique === item.unique
+              })}
+              component='a'
+              href={'/' + item.unique}>
+              <ListItemText primary={item.name} />
+            </ListItem>)}
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page === 'timemachine'
+            })}
+            component='a'
+            href={'/timemachine'}>
+            <ListItemText primary='過去ログ' />
+          </ListItem>
+          {this.props.posts.networkTimelines.map(item =>
+            <ListItem button dense
+              key={item.unique}
+              className={classNames({
+                [classes.select]: this.props.router.page === 'timeline' &&
+                this.props.posts.timeline.unique === item.unique
+              })}
+              component='a'
+              href={'/room/' + item.network}>
+              <ListItemText primary={item.name} />
+            </ListItem>)}
+        </List>
+        {/* アートワーク */}
+        <List>
+          {this.props.artworks.timelines.map(item =>
+            <ListItem button dense
+              key={item.unique}
+              className={classNames({
+                [classes.select]: this.props.router.page === 'artwork' &&
+                this.props.artworks.timeline.unique === item.unique
+              })}
+              component='a'
+              href={'/artwork/' + item.unique}>
+              <ListItemText primary={item.name} />
+            </ListItem>)}
+          {this.props.user.isLogged &&
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page.includes('artwork-new')
+            })}
+            component='a'
+            href='/artwork/new'>
+            <ListItemText primary='+ 新しいアートワーク' />
+          </ListItem>}
+        </List>
+        {/* リスト */}
+        <List>
+          {this.props.networks.timelines.map(item =>
+            <ListItem button dense
+              key={item.unique}
+              className={classNames({
+                [classes.select]: this.props.router.page === 'network-list' &&
+                this.props.networks.timeline.unique === item.unique
+              })}
+              component='a'
+              href={'/network/' + item.unique}>
+              <ListItemText primary={item.name} />
+            </ListItem>)}
+          {this.props.user.isLogged &&
+          !this.props.router.page.includes('network/new') &&
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page === 'network-new'
+            })}
+            component='a'
+            href={'/network/new'}>
+            <ListItemText primary='+ 新しいリスト' />
+          </ListItem>}
+        </List>
+        {/* マイページ */}
+        <List>
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page.includes('admin')
+            })}
+            component='a'
+            href='/admin'>
+            <ListItemText primary={this.props.user.isLogged ? 'マイページ' : 'ログイン'} />
+          </ListItem>
+          {this.props.user.isLogged &&
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page.includes('config')
+            })}
+            component='a'
+            href='/config'>
+            <ListItemText primary='アカウント設定' />
+          </ListItem>}
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page.includes('release')
+            })}
+            component='a'
+            href='/release'>
+            <ListItemText primary='リリースノート' />
+          </ListItem>
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page.includes('report')
+            })}
+            component='a'
+            href='/report'>
+            <ListItemText primary='統計データ' />
+          </ListItem>
+          {this.props.user.isLogged &&
+          <ListItem button dense onClick={this.onLogout.bind(this)}>
+            <ListItemText primary='ログアウト' />
+          </ListItem>}
+        </List>
+        <Sheet>
+          <SheetContent>
+            <Typography type='caption'>
+              © 2016 - 2017 swimmy.io
+            </Typography>
+          </SheetContent>
+        </Sheet>
       </div>
-    </div>
+    )
   }
 
   // ログアウトする
