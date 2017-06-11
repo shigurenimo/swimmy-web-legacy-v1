@@ -38,7 +38,7 @@ export default class Content extends Component {
           [classes.twoColumn]: !layout.oneColumn
         })}
         style={{paddingTop: this.paddingTop}}
-        ref='content'>
+        ref={self => { this.ref = self }}>
         <CSSTransitionGroup
           component='div'
           className={classes.fixHeight}
@@ -131,7 +131,7 @@ export default class Content extends Component {
   componentDidMount () {
     // ↓ iOSのスクロールに対する処置
     const isSmartphone = utils.isSmartphone
-    const element = this.refs.content
+    const element = this.ref
     // ↓ 初回時の修正
     setTimeout(() => {
       if (element.scrollTop === 0) {
@@ -185,8 +185,10 @@ export default class Content extends Component {
           case 'artwork-info':
             scroll = self.props.router.scrollCache
         }
-        const element = document.querySelector('.container\\:content')
-        setTimeout(() => { element.scrollTop = scroll }, 150)
+        setTimeout(() => {
+          const element = self.ref
+          element.scrollTop = scroll
+        }, 150)
       }
     }
   }
