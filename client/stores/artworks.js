@@ -66,6 +66,14 @@ export default class Artworks {
     this.one.replies = this.one.replies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   }
 
+  removeOneReply (replyId) {
+    for (let i = 0, len = this.one.replies.length; i < len; ++i) {
+      if (this.one.replies[i]._id !== replyId) continue
+      this.one.replies.splice(i, 1)
+      break
+    }
+  }
+
   @action
   fetch (selector, options) {
     return new Promise((resolve, reject) => {

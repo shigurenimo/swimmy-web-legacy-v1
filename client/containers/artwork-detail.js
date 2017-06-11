@@ -3,7 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import IconClear from 'material-ui-icons/Clear'
+import { withStyles } from 'material-ui/styles'
 import Input from 'material-ui/Input'
 import Typography from 'material-ui/Typography'
 import Layout from '../components/ui-layout'
@@ -14,12 +14,15 @@ import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import SheetImage from '../components/ui-sheet-image'
-import { utils } from '../../imports/utils'
+import utils from '../../imports/utils'
+import styleSheet from './artwork-detail.style'
 
+@withStyles(styleSheet)
 @inject('artworks', 'user', 'snackbar')
 @observer
 export default class ArtworkDetail extends Component {
   render () {
+    const {classes} = this.props
     return (
       <Layout>
         <Sheet>
@@ -119,75 +122,84 @@ export default class ArtworkDetail extends Component {
                 </Button>
               )}
             </SheetContent>}
-            {/* リアクションボタンの編集 */}
+            {/* input reaction */}
             {this.props.user.isLogged && !this.state.isEdit &&
-            <SheetActions flex>
+            <SheetActions>
               <Input
                 value={this.state.inputNewReaction}
-                placeholder='reaction'
+                placeholder='New Reaction'
                 maxLength='10'
                 onChange={this.onInputNewReaction.bind(this)} />
+            </SheetActions>}
+            {this.props.user.isLogged &&
+            this.state.inputNewReaction.length > 0 && !this.state.isEdit &&
+            <SheetActions align='right'>
+              <Button onClick={this.onSubmitNewReaction.bind(this)}>
+                push
+              </Button>
             </SheetActions>}
             {/* リプライ */}
             {this.props.user.isLogged && !this.state.isEdit &&
             <SheetActions>
               <Input multiline
                 value={this.state.inputReply}
-                placeholder='タップしてコメントを入力'
+                placeholder='New Comment'
                 onChange={this.onInputReply.bind(this)} />
             </SheetActions>}
             {/* リプライの送信 */}
             {this.state.inputReply.length > 0 && !this.state.isEdit &&
             <SheetActions align='right'>
               <Button onClick={this.onSubmitReply.bind(this, this.data._id)}>
-                匿名リプライ
+                secret
               </Button>
               <Button onClick={this.onSubmitReply.bind(this, this.data._id)}>
-                リプライ
+                comment
               </Button>
             </SheetActions>}
           </Block>
         </Sheet>
-        {/* リプライ メッセージ */}
+        {/* reply */}
         {this.data.replies.length > 0 && !this.state.isEdit &&
-        <Sheet>
-          <Block>
-            {this.data.replies.map((reply, index) =>
-              <div className='block:reply-item' key={index}>
-                <div className='block:layout'>
-                  {/* ユーザネーム */}
-                  {reply.public &&
-                  <a className='block:public-name' href={'/' + reply.public.username}>
-                    <div className='text:public-name'>{reply.public.name}</div>
-                    <div className='text:public-username'>@{reply.public.username}</div>
-                  </a>}
-                  {/* 内容 */}
-                  <div className='text:reply-message'>
-                    {reply.content}
-                    <span className='text:date'> - {utils.date.since(reply.createdAt)}</span>
-                  </div>
-                  {/* 削除 */}
-                  {this.props.user.isLogged && reply.owner === this.props.user._id &&
-                  <div
-                    className='input:remove-reply'
-                    onTouchTap={this.onRemoveReply.bind(this, this.data._id, reply._id)}>
-                    <IconClear style={{width: 30, height: 30}} color='tomato' />
-                  </div>}
-                  {/* リアクションボタン */}
-                  <div className='block:reaction-list'>
-                    {Object.keys(reply.reactions).map(name =>
-                      <input
-                        className={'input:reaction ' +
-                        (!!this.props.user.isLogged && reply.reactions[name].includes(this.props.user._id))}
-                        key={name}
-                        onTouchTap={this.onUpdateReplyReaction.bind(this, this.data._id, reply._id, name)}
-                        type='button'
-                        value={name + (reply.reactions[name].length > 0 ? ' ' + reply.reactions[name].length : '')} />)}
-                  </div>
-                </div>
-              </div>)}
-          </Block>
-        </Sheet>}
+        <Block>
+          {this.data.replies.map((reply, index) =>
+            <Sheet hover key={reply._id}>
+              {/* username */}
+              {reply.public &&
+              <SheetContent>
+                <Typography component='a' href={'/' + reply.public.username}>
+                  {reply.public.name}@{reply.public.username}
+                </Typography>
+              </SheetContent>}
+              {/* content */}
+              <SheetContent>
+                <Typography
+                  className={classes.replyContent}
+                  dangerouslySetInnerHTML={{__html: reply.content}} />
+              </SheetContent>
+              {/* createdAt */}
+              <SheetContent>
+                <Typography type='caption'> - {utils.date.since(reply.createdAt)}</Typography>
+              </SheetContent>
+              {/* add */}
+              <SheetActions>
+                {Object.keys(reply.reactions).map(name =>
+                  <Button compact minimal background
+                    key={name}
+                    primary={!!this.props.user.isLogged && reply.reactions[name].includes(this.props.user._id)}
+                    onClick={this.onUpdateReplyReaction.bind(this, this.data._id, reply._id, name)}>
+                    {name + (reply.reactions[name].length > 0 ? ' ' + reply.reactions[name].length : '')}
+                  </Button>
+                )}
+              </SheetActions>
+              {/* delete */}
+              {this.props.user.isLogged && reply.owner === this.props.user._id &&
+              <SheetActions align='right'>
+                <Button onTouchTap={this.onRemoveReply.bind(this, this.data._id, reply._id)}>
+                  remove
+                </Button>
+              </SheetActions>}
+            </Sheet>)}
+        </Block>}
       </Layout>
     )
   }
