@@ -4,59 +4,81 @@ import { Random } from 'meteor/random'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
+import classNames from 'classnames'
+import { withStyles } from 'material-ui/styles'
 import IconAdd from 'material-ui-icons/Add'
+import Button from '../components/ui-input-button'
+import styleSheet from './input-post.style'
 
+@withStyles(styleSheet)
 @inject('inputPost', 'layout', 'networks', 'posts', 'snackbar', 'router', 'user')
 @observer
 export default class InputPost extends Component {
   render () {
-    return <div
-      className={`container:input-post ${this.props.layout.oneColumnClassName}`}>
-      {/* 匿名 */}
-      <div className='block:timeline-name'>
-        <div className={`input:timeline-name ${this.props.posts.networkInfo}`}
-          onTouchTap={this.openNetworkInfo.bind(this)}>
-          {this.timelineName}
+    const {
+      classes,
+      layout
+    } = this.props
+    return (
+      <div
+        className={classNames(classes.container, {
+          [classes.oneColumn]: layout.oneColumn,
+          [classes.twoColumn]: !layout.oneColumn
+        })}>
+        {/* 匿名 */}
+        <div className={classes.timelineName}>
+          <Button background minimal
+            primary={this.props.posts.networkInfo}
+            onClick={this.openNetworkInfo.bind(this)}>
+            {this.timelineName}
+          </Button>
         </div>
-      </div>
-      <div className='block:message'>
+        <div className={classes.message}>
           <textarea
-            className='input:post-content'
+            className={classes.postContent}
             value={this.props.inputPost.postContent}
             placeholder='ここタップすると入力できます'
-            ref='textarea'
+            ref={self => { this.ref = self }}
             onKeyDown={this.onSubmitKeyDown.bind(this)}
             onChange={this.onInputContent.bind(this)} />
-        {this.state.inputImage &&
-        <div className='block:image-preview'>
-          <img src={this.state.inputImage.preview} onTouchTap={this.onCloseImage.bind(this)} />
-        </div>}
+          {this.state.inputImage &&
+          <div className={classes.imagePreview}>
+            <img
+              className={classes.image}
+              src={this.state.inputImage.preview}
+              onTouchTap={this.onCloseImage.bind(this)} />
+          </div>}
+        </div>
+        <div className={classes.postPublic}>
+          <Button compact>
+            <Dropzone
+              className={classes.openImage}
+              onDrop={this.onDropImage.bind(this)}>
+              <IconAdd style={{width: 25, height: 25}}
+                color={Meteor.settings.public.color.primary} />
+            </Dropzone>
+          </Button>
+          {this.props.user.isLogged &&
+          <Button compact
+            primary={this.state.inputIsPublic}
+            onClick={this.onChangePublic.bind(this, true)}>
+            {this.props.user.username}
+          </Button>}
+          {this.props.user.isLogged &&
+          <Button compact
+            primary={!this.state.inputIsPublic}
+            onClick={this.onChangePublic.bind(this, false)}>
+            内緒
+          </Button>}
+          {/* 送信ボタン */}
+          {!this.state.errorImage &&
+          <Button compact
+            onClick={this.onSubmit.bind(this)}>
+            GOGO
+          </Button>}
+        </div>
       </div>
-      <div className='block:post-public'>
-        <Dropzone
-          className='input:open-image'
-          onDrop={this.onDropImage.bind(this)}>
-          <IconAdd style={{width: 25, height: 25}}
-            color={Meteor.settings.public.color.primary} />
-        </Dropzone>
-        {this.props.user.isLogged &&
-        <input className={'input:public ' + this.state.inputIsPublic}
-          type='button'
-          value={this.props.user.username}
-          onTouchTap={this.onChangePublic.bind(this, true)} />}
-        {this.props.user.isLogged &&
-        <input className={'input:public ' + !this.state.inputIsPublic}
-          type='button'
-          value='内緒'
-          onTouchTap={this.onChangePublic.bind(this, false)} />}
-        {/* 送信ボタン */}
-        {!this.state.errorImage &&
-        <input className='input:post-submit'
-          type='button'
-          value='GOGO!'
-          onTouchTap={this.onSubmit.bind(this)} />}
-      </div>
-    </div>
+    )
   }
 
   state = {
@@ -99,7 +121,7 @@ export default class InputPost extends Component {
 
   // 内容を入力する
   onInputContent (event) {
-    const textarea = this.refs.textarea
+    const textarea = this.ref
     if (textarea.scrollHeight > 200) return
     textarea.style.height = 'auto'
     textarea.style.height = textarea.scrollHeight + 'px'
@@ -214,7 +236,7 @@ export default class InputPost extends Component {
         })
       })
       .then(post => {
-        this.refs.textarea.style.height = 'auto'
+        this.ref.style.height = 'auto'
         this.props.posts.insertIndex(post)
         this.props.inputPost.reset()
         this.props.snackbar.show('送信しました')
@@ -231,7 +253,7 @@ export default class InputPost extends Component {
         content: this.props.inputPost.postContent
       })
       .then(post => {
-        this.refs.textarea.style.height = 'auto'
+        this.ref.style.height = 'auto'
         this.props.posts.insertIndex(post)
         this.props.inputPost.reset()
         this.props.snackbar.show('送信しました')
