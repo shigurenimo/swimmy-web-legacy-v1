@@ -98,6 +98,7 @@ FlowRouter.route('/thread', {
 
 FlowRouter.route('/thread/:_id', {
   action (params) {
+    console.log(params._id)
     stores.posts.fetchOneFromId(params._id)
     .then(post => {
       if (!post) {
