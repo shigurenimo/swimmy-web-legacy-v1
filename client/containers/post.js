@@ -34,9 +34,11 @@ export default class Post extends Component {
           </SheetContent>}
           {/* content */}
           <SheetContent>
-            <Typography component='a' href={'/thread/' + (this.props.reply ? this.props.reply._id : this.props._id)}>
-              <Typography className={classes.content} dangerouslySetInnerHTML={{__html: this.props.content}} />
-            </Typography>
+            <Typography
+              className={classes.content}
+              dangerouslySetInnerHTML={{__html: this.props.content}}
+              component='a'
+              href={'/thread/' + (this.props.reply ? this.props.reply._id : this.props._id)} />
           </SheetContent>
           <SheetContent>
             <Typography type='caption'> - {utils.date.since(this.props.createdAt)}</Typography>
@@ -196,7 +198,8 @@ export default class Post extends Component {
   onOpenThread (event) {
     event.persist()
     const nodeName = event.target.nodeName
-    if (nodeName === 'INPUT' || nodeName === 'SPAN' || nodeName === 'BUTTON' || nodeName === 'IMG' || nodeName === 'svg' ||
+    if (nodeName === 'INPUT' || nodeName === 'SPAN' || nodeName === 'BUTTON' || nodeName === 'IMG' ||
+      nodeName === 'svg' ||
       nodeName === 'path' || nodeName === 'A') return
     FlowRouter.go('/thread/' + this.props._id)
   }

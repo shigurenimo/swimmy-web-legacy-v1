@@ -2,93 +2,122 @@ import { Meteor } from 'meteor/meteor'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
+import classNames from 'classnames'
+import { withStyles } from 'material-ui/styles'
 import IconKeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import IconKeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
+import Typography from 'material-ui/Typography'
+import Input from 'material-ui/Input'
+import Button from '../components/ui-input-button'
+import Image from '../components/ui-image'
+import Sheet from '../components/ui-sheet'
+import SheetActions from '../components/ui-sheet-actions'
+import SheetContent from '../components/ui-sheet-content'
 import utils from '../../imports/utils'
+import styleSheet from './post.style'
 
+@withStyles(styleSheet)
 @inject('router', 'user', 'posts', 'snackbar')
 @observer
 export default class PostRes extends Component {
   render () {
-    return <div className='container:post'>
-      <div className='block:layout' onTouchTap={this.onOpenThread.bind(this)}>
-        {/* メッセージ コンテンツ */}
-        <div className='block:content-layout'>
-          {/* ユーザネーム */}
+    const {classes} = this.props
+    return (
+      <div>
+        <Sheet hover onTouchTap={this.onOpenThread.bind(this)}>
+          {/* username */}
           {this.props.public &&
-          <a className='block:public-name' href={'/' + this.props.public.username}>
-            <p className='text:public-name'>{this.props.public.name}</p>
-            <div className='text:public-username'>@{this.props.public.username}</div>
-          </a>}
-          {/* コンテント */}
-          <a className='text:content'>
-            <p dangerouslySetInnerHTML={{__html: this.props.content}} />
-            <span className='text:date'> - {utils.date.since(this.props.createdAt)}</span>
-          </a>
-        </div>
-        {/* フォト */}
-        {this.props.images && this.props.images.slice()[0] &&
-        <div className={'block:image ' + this.state.selectImage}
-          onTouchTap={this.onSelectImage.bind(this)}>
-          <img
-            src={Meteor.settings.public.assets.post.image + this.props.imagesDate + '/' +
-            this.props.images.slice()[0].min} />
-        </div>}
-        {/* oEmbed */}
-        {this.props.oEmbed && this.state.iframe &&
-        <div className='text:service-name'>{this.props.oEmbed.provider_name}</div>}
-        {this.props.oEmbed && this.embed(this.props.oEmbed)}
-        {this.props.web && this.props.web.meta['og:image'] &&
-        <a href={this.props.url} target='_blank'>
-          <img className='image:web-image' src={this.props.web.meta['og:image']} />
-        </a>}
-        {this.props.web && this.props.web.title &&
-        <a href={this.props.url} target='_blank'>
-          <div className='text:web-title'>{this.props.web.title}</div>
-        </a>}
-        {/* リアクションボタン */}
-        <div className='block:reaction-list'>
-          {Object.keys(this.props.reactions).map(name =>
-            <input
-              className={'input:reaction ' +
-              (!!this.props.user.isLogged && this.props.reactions[name].includes(this.props.user._id))}
-              key={name}
-              onTouchTap={this.onUpdateReaction.bind(this, this.props._id, name)}
-              type='button'
-              value={name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')} />)}
-        </div>
-        {this.props.user.isLogged &&
-        <button className='input:add-reaction' onTouchTap={this.onOpenReply.bind(this)}>
-          {this.state.isReply
-            ? <IconKeyboardArrowUp {...this.iconStyle} />
-            : <IconKeyboardArrowDown {...this.iconStyle} />}
-        </button>}
+          <SheetContent>
+            <Typography component='a' href={'/' + this.props.public.username}>
+              {this.props.public.name}@{this.props.public.username}
+            </Typography>
+          </SheetContent>}
+          {/* content */}
+          <SheetContent>
+            <Typography
+              className={classes.content}
+              dangerouslySetInnerHTML={{__html: this.props.content}} />
+          </SheetContent>
+          <SheetContent>
+            <Typography type='caption'> - {utils.date.since(this.props.createdAt)}</Typography>
+          </SheetContent>
+          {/* photo */}
+          {this.props.images && this.props.images.slice()[0] &&
+          <SheetContent>
+            <button
+              className={classNames(classes.photoImage, {
+                [classes.photoImageOpen]: this.state.selectImage
+              })}
+              onTouchTap={this.onSelectImage.bind(this)}>
+              <Image src={
+                Meteor.settings.public.assets.post.image +
+                this.props.imagesDate + '/' +
+                this.props.images.slice()[0].min
+              } />
+            </button>
+          </SheetContent>}
+          {/* oEmbed */}
+          {this.props.oEmbed &&
+          <SheetContent>
+            {this.props.oEmbed && this.embed(this.props.oEmbed)}
+          </SheetContent>}
+          {/* web meta */}
+          {this.props.web && this.props.web.meta['og:image'] &&
+          <SheetContent>
+            <a href={this.props.url} target='_blank'>
+              <Image src={this.props.web.meta['og:image']} />
+            </a>
+          </SheetContent>}
+          {/* web title */}
+          {this.props.web && this.props.web.title &&
+          <SheetContent>
+            <Typography
+              type='subheading'
+              component='a'
+              href={this.props.url}
+              target='_blank'>
+              {this.props.web.title}
+            </Typography>
+          </SheetContent>}
+          {/* reaction */}
+          <SheetActions>
+            {Object.keys(this.props.reactions).map(name =>
+              <Button compact minimal background
+                key={name}
+                primary={!!this.props.user.isLogged && this.props.reactions[name].includes(this.props.user._id)}
+                onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
+                {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
+              </Button>
+            )}
+          </SheetActions>
+          {/* more */}
+          {this.props.user.isLogged &&
+          <Button compact className={classes.more} onClick={this.onOpenReply.bind(this)}>
+            {this.state.isReply
+              ? <IconKeyboardArrowUp {...this.iconStyle} />
+              : <IconKeyboardArrowDown {...this.iconStyle} />}
+          </Button>}
+        </Sheet>
+        {/* reaction */}
+        {this.state.isReply &&
+        <Sheet>
+          <SheetActions>
+            <Input
+              value={this.state.inputNewReaction}
+              placeholder={'new reaction : ' + this.reactionPlaceholder}
+              maxLength='10'
+              onChange={this.onInputNewReaction.bind(this)} />
+          </SheetActions>
+          <SheetActions align='right'>
+            {this.props.user.isLogged &&
+            this.state.isReply &&
+            (this.props.owner === this.props.user._id) &&
+            <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete</Button>}
+            <Button onClick={this.onSubmitNewReaction.bind(this)}>push</Button>
+          </SheetActions>
+        </Sheet>}
       </div>
-      {/* リアクションボタンの編集 */}
-      {this.state.isReply &&
-      <div className='block:new-reaction'>
-        <input
-          className='input:new-reaction'
-          type='text'
-          value={this.state.inputNewReaction}
-          placeholder={this.reactionPlaceholder}
-          maxLength='10'
-          onChange={this.onInputNewReaction.bind(this)} />
-        <input className='input:submit-reaction'
-          type='button'
-          value='up'
-          onTouchTap={this.onSubmitNewReaction.bind(this)} />
-        {/* 修正 */}
-        {this.props.user.isLogged &&
-        this.state.isReply &&
-        (this.props.owner === this.props.user._id) &&
-        <input
-          className='input:delete'
-          type='button'
-          value='削除する'
-          onTouchTap={this.onRemovePost.bind(this, this.props._id)} />}
-      </div>}
-    </div>
+    )
   }
 
   get iconStyle () {
