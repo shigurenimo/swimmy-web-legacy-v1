@@ -39,6 +39,7 @@ export default class Posts {
 
   @action
   insertIndex (posts) {
+    if (!posts) return
     if (Array.isArray(posts)) {
       posts.forEach(post => {
         this.ids[post._id] = post

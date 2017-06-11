@@ -16,7 +16,9 @@ export default class UserOther {
         if (err) {
           reject(err)
         } else {
-          res.profile.code = res.profile.code.split('')
+          if (res) {
+            res.profile.code = res.profile.code.split('')
+          }
           resolve(res)
         }
       })

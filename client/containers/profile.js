@@ -2,50 +2,64 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import Button from 'material-ui/Button'
+import Typography from 'material-ui/Typography'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
+import SheetActions from '../components/ui-sheet-actions'
+import SheetContent from '../components/ui-sheet-content'
 import Post from '../containers/post'
+import styleSheet from './profile.style'
 
+@withStyles(styleSheet)
 @inject('posts', 'snackbar', 'user', 'userOther')
 @observer
 export default class Profile extends Component {
   render () {
-    return <div className='container:profile'>
-      {/* アイコン */}
-      <div className='block:user-icon'>
-        <div className='block:squares'>
-          {this.user.profile.code.map((i, index) =>
-            <div
-              className='block:square'
-              key={index + '-' + i}
-              style={{
-                backgroundColor: i === '1'
-                  ? Meteor.settings.public.color.primary
-                  : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
-              }} />)}
-        </div>
-      </div>
-      {/* ネーム */}
-      <div className='block:name'>
-        <div className='text:username'>
-          {this.user.username}
-        </div>
-        <div className='text:name'>
-          {this.user.profile.name}
-        </div>
-      </div>
-      {this.props.user.isLogged &&
-      this.user.username !== this.props.user.username &&
-      <div
-        className='block:follow'
-        onTouchTap={this.onFollow.bind(this, this.user.username)}>
-        <div className='input:follow'>
-          {this.followsIds.includes(this.user._id) ? 'フォローを外す' : 'フォローする'}
-        </div>
-      </div>}
-      {/* 投稿 */}
-      <div className='block:post-list'>
+    const {classes} = this.props
+    return (
+      <Layout>
+        {/* アイコン */}
+        <Sheet>
+          <div className={classes.squares}>
+            {this.user.profile.code.map((i, index) =>
+              <div
+                className={classes.square}
+                key={index + '-' + i}
+                style={{
+                  backgroundColor: i === '1'
+                    ? Meteor.settings.public.color.primary
+                    : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
+                }} />)}
+          </div>
+        </Sheet>
+        {/* ネーム */}
+        <Sheet>
+          <SheetContent>
+            <Typography align='center'>
+              {this.user.username}
+            </Typography>
+          </SheetContent>
+          <SheetContent>
+            <Typography type='title' align='center'>
+              {this.user.profile.name}
+            </Typography>
+          </SheetContent>
+        </Sheet>
+        {this.props.user.isLogged &&
+        this.user.username !== this.props.user.username &&
+        <Sheet>
+          <SheetActions align='center'>
+            <Button onClick={this.onFollow.bind(this, this.user.username)}>
+              {this.followsIds.includes(this.user._id) ? 'フォローを外す' : 'フォローする'}
+            </Button>
+          </SheetActions>
+        </Sheet>}
+        {/* 投稿 */}
         {this.posts.map(item => <Post key={item._id} {...item} />)}
-      </div>
-    </div>
+      </Layout>
+    )
   }
 
   get user () {

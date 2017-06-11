@@ -20,6 +20,7 @@ export default class Networks {
 
   @action
   insertIndex (data) {
+    if (!data) return
     if (Array.isArray(data)) {
       data.forEach(post => {
         this.ids[post._id] = post
