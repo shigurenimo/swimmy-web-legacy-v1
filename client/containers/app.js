@@ -4,9 +4,11 @@ import Layout from './layout'
 
 export default class App extends Component {
   render () {
-    return <div>
-      <Layout />
-      <Snackbar />
-    </div>
+    return (
+      <div>
+        <Layout />
+        <Snackbar />
+      </div>
+    )
   }
 }
