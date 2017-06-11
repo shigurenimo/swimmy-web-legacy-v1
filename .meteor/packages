@@ -30,7 +30,4 @@ standard-minifiers-js
 
 ecmascript@0.8.0
 
-stylus@2.513.9
-
-juliancwirko:postcss
 dynamic-import

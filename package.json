@@ -48,15 +48,6 @@
     "standard": "^10.0.2"
   },
   "private": true,
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {
-        "browsers": [
-          "> 0%"
-        ]
-      }
-    }
-  },
   "standard": {
     "parser": "babel-eslint",
     "env": {
