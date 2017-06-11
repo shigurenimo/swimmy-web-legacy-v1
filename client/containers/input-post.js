@@ -68,13 +68,13 @@ export default class InputPost extends Component {
           <Button compact
             primary={!this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, false)}>
-            内緒
+            secret
           </Button>}
           {/* 送信ボタン */}
           {!this.state.errorImage &&
           <Button compact
             onClick={this.onSubmit.bind(this)}>
-            GOGO
+            GOGO!
           </Button>}
         </div>
       </div>

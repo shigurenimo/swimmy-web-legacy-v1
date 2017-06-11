@@ -5,11 +5,17 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 const styleSheet = createStyleSheet('UISheet', theme => {
   return {
     container: {
+      position: 'relative',
       display: 'block',
-      padding: '10px 10px 20px 10px',
       width: '100%',
       borderBottom: 'none',
       transitionDuration: '200ms'
+    },
+    padding: {
+      padding: '10px 10px 20px 10px'
+    },
+    paddingMinimal: {
+      padding: '0px 10px 10px 10px'
     },
     hover: {
       '&:hover': {
@@ -25,12 +31,17 @@ export default class UILayout extends Component {
     const {
       classes,
       hover,
-      href
+      minimal,
+      href,
+      ...more
     } = this.props
     const Component = href ? 'a' : 'div'
     return (
       <Component
+        {...more}
         className={classNames(classes.container, {
+          [classes.paddingMinimal]: minimal,
+          [classes.padding]: !minimal,
           [classes.hover]: hover
         })}
         href={href}>

@@ -29,6 +29,7 @@ export default class extends Component {
       classes,
       primary,
       background,
+      className,
       minimal,
       ...more
     } = this.props
@@ -36,6 +37,7 @@ export default class extends Component {
       <Button
         {...more}
         className={classNames({
+          [className]: className,
           [classes.background]: background,
           [classes.primary]: primary,
           [classes.minimal]: minimal

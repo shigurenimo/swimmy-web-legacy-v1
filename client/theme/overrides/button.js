@@ -3,5 +3,8 @@ export default {
     height: '33px',
     padding: '0px 10px',
     verticalAlign: 'top'
+  },
+  compact: {
+    minWidth: 32
   }
 }

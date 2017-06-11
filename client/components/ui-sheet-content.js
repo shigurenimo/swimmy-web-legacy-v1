@@ -18,17 +18,20 @@ export default class UILayout extends Component {
     const {
       classes,
       align,
+      href,
       ...more
     } = this.props
+    const Component = href ? 'a' : 'div'
     return (
-      <div
+      <Component
         {...more}
         className={classes.container}
         style={{
           textAlign: align || 'left'
-        }}>
+        }}
+        href={href}>
         {this.props.children}
-      </div>
+      </Component>
     )
   }
 }
