@@ -8,8 +8,7 @@ export default createStyleSheet('InputAction', theme => {
       right: 0,
       width: '100%',
       height: '10px',
-      backgroundColor: '#F8F7F8',
-      padding: '10px 10px 0 10px'
+      backgroundColor: '#F8F7F8'
     },
     transitionEnter: {
       opacity: 0

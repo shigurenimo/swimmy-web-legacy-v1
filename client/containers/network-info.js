@@ -3,6 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import Layout from '../components/ui-layout'
@@ -11,19 +12,23 @@ import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import SheetBackgroundImage from '../components/ui-sheet-background-image'
 import utils from '../../imports/utils'
+import styleSheet from './network-info.style'
 
+@withStyles(styleSheet)
 @inject('networks', 'posts', 'snackbar', 'user')
 @observer
 export default class NetworkInfo extends Component {
   render () {
+    const {classes} = this.props
     return (
       <Layout>
         {this.data.header &&
         <Sheet className='block:network-header'>
-          {this.item.header &&
+          {this.data.header &&
           <SheetBackgroundImage src={
-            this.item.header &&
-            Meteor.settings.public.assets.network.root + this.data._id + '/' + this.data.header
+            this.data.header &&
+            Meteor.settings.public.assets.network.root + this.data._id + '/' +
+            this.data.header
           } />}
         </Sheet>}
         <Sheet>
@@ -39,7 +44,7 @@ export default class NetworkInfo extends Component {
             </Typography>
           </SheetContent>
           <SheetContent>
-            <Typography>
+            <Typography className={classes.content}>
               {this.data.description || '説明がありません'}
             </Typography>
           </SheetContent>

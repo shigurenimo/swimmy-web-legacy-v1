@@ -18,3 +18,5 @@ render(
   </Provider>,
   document.querySelector('.root\\:app')
 )
+
+document.body.style.background = '#F8F7F8'

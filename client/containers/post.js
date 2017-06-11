@@ -46,7 +46,7 @@ export default class Post extends Component {
           {/* photo */}
           {this.props.images && this.props.images.slice()[0] &&
           <SheetContent>
-            <button
+            <div
               className={classNames(classes.photoImage, {
                 [classes.photoImageOpen]: this.state.selectImage
               })}
@@ -56,7 +56,7 @@ export default class Post extends Component {
                 this.props.imagesDate + '/' +
                 this.props.images.slice()[0].min
               } />
-            </button>
+            </div>
           </SheetContent>}
           {/* oEmbed */}
           {this.props.oEmbed &&
@@ -129,7 +129,7 @@ export default class Post extends Component {
           <SheetActions>
             <Input
               value={this.state.inputNewReaction}
-              placeholder={'new reaction : ' + this.reactionPlaceholder}
+              placeholder={'New Reaction : ' + this.reactionPlaceholder}
               maxLength='10'
               onChange={this.onInputNewReaction.bind(this)} />
           </SheetActions>

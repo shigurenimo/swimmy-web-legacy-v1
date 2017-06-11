@@ -40,7 +40,7 @@ export default class ThreadList extends Component {
     return index.map(item =>
       <Sheet hover key={item._id} href={'/thread/' + item._id}>
         <SheetContent>
-          <Typography>
+          <Typography className={classes.content}>
             {item.content}
             <span className={classes.count}> +{item.replies.length}</span>
           </Typography>

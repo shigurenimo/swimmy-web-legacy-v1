@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 
 const styleSheet = createStyleSheet('UISheet', theme => {
   return {
@@ -9,7 +10,8 @@ const styleSheet = createStyleSheet('UISheet', theme => {
       display: 'block',
       width: '100%',
       borderBottom: 'none',
-      transitionDuration: '200ms'
+      transitionDuration: '200ms',
+      boxSizing: 'border-box'
     },
     padding: {
       padding: '10px 10px 20px 10px'
@@ -35,18 +37,32 @@ export default class UILayout extends Component {
       href,
       ...more
     } = this.props
-    const Component = href ? 'a' : 'div'
-    return (
-      <Component
-        {...more}
-        className={classNames(classes.container, {
-          [classes.paddingMinimal]: minimal,
-          [classes.padding]: !minimal,
-          [classes.hover]: hover
-        })}
-        href={href}>
-        {this.props.children}
-      </Component>
-    )
+    if (href) {
+      return (
+        <Typography
+          {...more}
+          className={classNames(classes.container, {
+            [classes.paddingMinimal]: minimal,
+            [classes.padding]: !minimal,
+            [classes.hover]: hover
+          })}
+          component='a'
+          href={href}>
+          {this.props.children}
+        </Typography>
+      )
+    } else {
+      return (
+        <div
+          {...more}
+          className={classNames(classes.container, {
+            [classes.paddingMinimal]: minimal,
+            [classes.padding]: !minimal,
+            [classes.hover]: hover
+          })}>
+          {this.props.children}
+        </div>
+      )
+    }
   }
 }

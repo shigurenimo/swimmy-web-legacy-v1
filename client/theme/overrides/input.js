@@ -10,7 +10,8 @@ export default {
       '-moz-appearance': 'textfield',
       '-webkit-appearance': 'none',
       'margin': 0
-    }
+    },
+    fontSize: '13px'
   },
   wrapper: {
     width: '100%'

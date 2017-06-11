@@ -8,11 +8,9 @@ import IconClear from 'material-ui-icons/Clear'
 import Radio from 'material-ui/Radio'
 import Typography from 'material-ui/Typography'
 import Avatar from 'material-ui/Avatar'
+import Input from 'material-ui/Input'
 import UIDropzone from '../components/ui-dropzone'
-import InlineBlock from '../components/ui-inline-block'
 import InputButton from '../components/ui-input-button'
-import InputText from '../components/ui-input-text'
-import InputTextarea from '../components/ui-input-textarea'
 import Layout from '../components/ui-layout'
 import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
@@ -23,6 +21,7 @@ import utils from '../../imports/utils'
 @observer
 export default class ArtworkNew extends Component {
   render () {
+    const {user} = this.props
     return (
       <Layout>
         <Sheet>
@@ -47,40 +46,45 @@ export default class ArtworkNew extends Component {
         </Sheet>
         <Sheet>
           {/* タイトル */}
-          <SheetActions className='block:post-title'>
-            <InputText
-              className='input:post-title'
+          <SheetActions>
+            <Input
               placeholder='タイトル（任意）'
               value={this.state.inputTitle}
               maxLength='100'
               onChange={this.onInputTitle.bind(this)} />
           </SheetActions>
+        </Sheet>
+        <Sheet>
           {/* ノート */}
-          <SheetActions className='block:post-note'>
-            <InputTextarea
-              className='input:post-note'
+          <SheetActions>
+            <Input multiline
               placeholder='タップしてノートを入力'
               onChange={this.onInputNote.bind(this)}
               rows={4}
               maxLength='1000'
               value={this.state.inputNote} />
           </SheetActions>
+        </Sheet>
+        <Sheet>
           {/* カラー */}
-          <SheetActions className='block:post-color'>
+          <SheetActions>
             {utils.colors.cmyk.map(code =>
               <Radio
                 key={code}
                 checked={this.state.inputColors.includes(code)}
                 onChange={this.onSelectColor.bind(this, code)}
                 icon={
-                  <Avatar style={{color: '#' + code, background: 'rgba(0, 0, 0, 0.05)'}}><IconAdd /></Avatar>
+                  <Avatar style={{color: '#' + code, background: 'rgba(0, 0, 0, 0.05)'}}>
+                    <IconAdd />
+                  </Avatar>
                 }
                 checkedIcon={
                   <Avatar style={{background: '#' + code}}><IconClear /></Avatar>
                 } />)}
           </SheetActions>
-          {/* レーティング */}
-          {/*
+        </Sheet>
+        {/* レーティング */}
+        {/*
         <div className='block:post-rate'>
           <div
             className={`input:rate ${this.state.inputRate === 0}`}
@@ -100,36 +104,40 @@ export default class ArtworkNew extends Component {
           </div>
         </div>
         */}
-          {/* 匿名 */}
+        <Sheet>
           <SheetActions>
-            <InlineBlock>匿名機能</InlineBlock>
             <InputButton
               primary={!this.state.isPublic}
-              onClick={this.onChangePublic.bind(this, false)}>ON</InputButton>
+              onClick={this.onChangePublic.bind(this, false)}>anonymous</InputButton>
             <InputButton
               primary={this.state.isPublic}
-              onClick={this.onChangePublic.bind(this, true)}>OFF</InputButton>
+              onClick={this.onChangePublic.bind(this, true)}>{user.username}</InputButton>
           </SheetActions>
+        </Sheet>
+        <Sheet>
           {this.state.isPublic &&
           <SheetActions>
-            <Typography className='text:public-info'>
+            <Typography>
               ユーザネームが公開されます
             </Typography>
           </SheetActions>}
-          {/* タイムラインの表示 */}
+        </Sheet>
+        {/* タイムラインの表示 */}
+        <Sheet>
           <SheetActions>
-            <InlineBlock>過去の作品</InlineBlock>
             <InputButton
               primary={this.state.isSecret}
-              onClick={this.onChangeSecret.bind(this, true)}>ON</InputButton>
+              onClick={this.onChangeSecret.bind(this, true)}>show timeline</InputButton>
             <InputButton
               primary={!this.state.isSecret}
-              onClick={this.onChangeSecret.bind(this, false)}>OFF</InputButton>
+              onClick={this.onChangeSecret.bind(this, false)}>hide</InputButton>
           </SheetActions>
+        </Sheet>
+        <Sheet>
           {/* 送信ボタン */}
           {!this.state.errorImage &&
-          <SheetActions className='block:submit-message'>
-            <InputButton onClick={this.onSubmit.bind(this)}>送信する</InputButton>
+          <SheetActions align='right'>
+            <InputButton onClick={this.onSubmit.bind(this)}>push</InputButton>
           </SheetActions>}
         </Sheet>
       </Layout>

@@ -1,6 +1,7 @@
 export default {
   text: {
     wordWrap: 'break-word',
-    whiteSpace: 'pre-wrap'
+    whiteSpace: 'pre-wrap',
+    textDecoration: 'none'
   }
 }

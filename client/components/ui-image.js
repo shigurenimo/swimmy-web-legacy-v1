@@ -5,8 +5,9 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 const styleSheet = createStyleSheet('UIImage', theme => {
   return {
     container: {
-      position: 'block',
-      maxWidth: '600px'
+      display: 'block',
+      maxWidth: '600px',
+      '-webkit-touch-callout': 'default'
     }
   }
 })

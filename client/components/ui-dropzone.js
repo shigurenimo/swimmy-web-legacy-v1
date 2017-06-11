@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 
 export const styleSheet = createStyleSheet('UIDropzone', theme => {
   return {
@@ -63,7 +64,7 @@ export default class extends Component {
           {image &&
           <img src={image.preview} />}
           {!image &&
-          <div className={classes.name}>画像をドロップ or タップ</div>}
+          <Typography className={classes.name}>画像をドロップ or タップ</Typography>}
         </div>
       </Dropzone>
     )

@@ -6,6 +6,7 @@ export default createStyleSheet('Content', theme => {
       position: 'absolute',
       top: 0,
       height: '100%',
+      boxSizing: 'border-box',
       overflowY: 'auto',
       overflowX: 'hidden',
       transition: 'padding-top 300ms, width 300ms'

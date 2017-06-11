@@ -13,7 +13,8 @@ export default createStyleSheet('LeftMenu', theme => {
       height: '100%',
       transition: 'width 300ms',
       overflowY: 'scroll',
-      overflowX: 'hidden'
+      overflowX: 'hidden',
+      boxSizing: 'border-box'
     },
     oneColumn: {
       width: '105%',

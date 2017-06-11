@@ -38,7 +38,15 @@ export default createStyleSheet('InputPost', theme => {
       height: 'auto',
       padding: 0,
       lineHeight: '20px',
-      verticalAlign: 'top'
+      verticalAlign: 'top',
+      fontSize: '1rem',
+      border: 0,
+      borderRadius: 0,
+      appearance: 'none',
+      outline: 0,
+      '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      resize: 'none'
     },
     imagePreview: {
       padding: '10px 10px 10px 10px',
