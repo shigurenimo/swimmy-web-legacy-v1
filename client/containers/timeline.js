@@ -1,6 +1,10 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import Typography from 'material-ui/Typography'
+import Layout from '../components/ui-layout'
+import Sheet from '../components/ui-sheet'
+import SheetContent from '../components/ui-sheet-content'
 import NetworkInfo from './network-info'
 import Post from './post'
 
@@ -8,13 +12,13 @@ import Post from './post'
 @observer
 export default class Timeline extends Component {
   render () {
-    return <div className='container:timeline'>
-      {this.props.posts.networkInfo &&
-      <NetworkInfo />}
-      <div className='block:post-list'>
+    return (
+      <Layout className='container:timeline'>
+        {this.props.posts.networkInfo &&
+        <NetworkInfo />}
         {this.forPosts()}
-      </div>
-    </div>
+      </Layout>
+    )
   }
 
   forPosts () {
@@ -26,11 +30,15 @@ export default class Timeline extends Component {
       ? this.props.posts.isFetching
       : this.props.postsSocket.isFetching
     if (index.length < 1) {
-      return <div className='block:no-post'>
-        <div className='text:no-post'>
-          {isFetching ? '読み込み中 ..' : ''}
-        </div>
-      </div>
+      return (
+        <Sheet>
+          <SheetContent>
+            <Typography>
+              {isFetching ? '読み込み中 ..' : ''}
+            </Typography>
+          </SheetContent>
+        </Sheet>
+      )
     }
     return index.map(item => <Post key={item._id} {...item} />)
   }
