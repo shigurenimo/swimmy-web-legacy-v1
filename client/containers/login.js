@@ -21,7 +21,7 @@ export default class Login extends Component {
     return (
       <Layout>
         <Sheet>
-          <Block>
+          <Block align='center'>
             <Typography align='center'>{Meteor.settings.public.version}</Typography>
             <Typography type='display1' align='center'>Swimmy</Typography>
           </Block>
