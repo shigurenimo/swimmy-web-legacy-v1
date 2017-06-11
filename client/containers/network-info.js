@@ -17,7 +17,7 @@ import utils from '../../imports/utils'
 export default class NetworkInfo extends Component {
   render () {
     return (
-      <div>
+      <Layout>
         {this.data.header &&
         <Sheet className='block:network-header'>
           {this.item.header &&
@@ -67,7 +67,7 @@ export default class NetworkInfo extends Component {
             <Button component='a' href={'/network/' + this.data._id + '/edit'}>アップデート</Button>}
           </SheetActions>
         </Sheet>}
-      </div>
+      </Layout>
     )
   }
 
