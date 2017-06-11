@@ -28,6 +28,11 @@ export default createStyleSheet('Content', theme => {
       height: '101%'
     },
     transitionEnter: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: '100%',
+      height: '100%',
       opacity: 0
     },
     transitionEnterActive: {
