@@ -84,7 +84,7 @@ export default class Post extends Component {
           {/* res */}
           {this.props.reply &&
           <SheetContent>
-            <Sheet minimal hover>
+            <Sheet minimal hover background>
               {/* username */}
               {this.props.reply.public &&
               <SheetContent>

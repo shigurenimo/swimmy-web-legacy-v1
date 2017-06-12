@@ -27,13 +27,17 @@ export default createStyleSheet('Post', theme => {
       maxHeight: '100%'
     },
     oEmbed: {
-      maxWidth: '500px'
+      maxWidth: '500px',
+      '& iframe': {
+        width: '100%',
+        height: 'auto'
+      }
     },
     oEmbedIframe: {
       paddingBottom: '100%',
       width: '100%',
       position: 'relative',
-      iframe: {
+      '& iframe': {
         width: '100%',
         height: '100%',
         border: 0,

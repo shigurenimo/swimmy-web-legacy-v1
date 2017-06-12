@@ -11,7 +11,8 @@ const styleSheet = createStyleSheet('UISheet', theme => {
       width: '100%',
       borderBottom: 'none',
       transitionDuration: '200ms',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      textDecoration: 'none'
     },
     padding: {
       padding: '10px 10px 20px 10px'
@@ -23,6 +24,9 @@ const styleSheet = createStyleSheet('UISheet', theme => {
       '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.05)'
       }
+    },
+    background: {
+      backgroundColor: 'rgba(0, 0, 0, 0.02)'
     }
   }
 })
@@ -34,6 +38,7 @@ export default class UILayout extends Component {
       classes,
       hover,
       minimal,
+      background,
       href,
       ...more
     } = this.props
@@ -44,7 +49,8 @@ export default class UILayout extends Component {
           className={classNames(classes.container, {
             [classes.paddingMinimal]: minimal,
             [classes.padding]: !minimal,
-            [classes.hover]: hover
+            [classes.hover]: hover,
+            [classes.background]: background
           })}
           component='a'
           href={href}>
@@ -58,7 +64,8 @@ export default class UILayout extends Component {
           className={classNames(classes.container, {
             [classes.paddingMinimal]: minimal,
             [classes.padding]: !minimal,
-            [classes.hover]: hover
+            [classes.hover]: hover,
+            [classes.background]: background
           })}>
           {this.props.children}
         </div>

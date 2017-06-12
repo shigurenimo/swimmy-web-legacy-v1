@@ -7,7 +7,8 @@ const styleSheet = createStyleSheet('UISheetContent', theme => {
       paddingTop: '10px',
       position: 'relative',
       display: 'block',
-      width: '100%'
+      width: '100%',
+      textDecoration: 'none'
     }
   }
 })

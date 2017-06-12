@@ -66,7 +66,8 @@ export default createStyleSheet('InputPost', theme => {
     },
     openImage: {
       display: 'inline-block',
-      width: 'auto'
+      width: 'auto',
+      paddingTop: '3px'
     }
   }
 })
