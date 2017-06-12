@@ -61,7 +61,7 @@ export default class Content extends Component {
   }
 
   get paddingTop () {
-    const fix = this.props.layout.oneColumn ? -10 : 0
+    const fix = this.props.layout.oneColumn ? 5 : 0
     switch (this.props.router.page) {
       case 'timeline':
       case 'timemachine':

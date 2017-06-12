@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import IconAdd from 'material-ui-icons/Add'
 import Button from '../components/ui-input-button'
+import Image from '../components/ui-image'
 import styleSheet from './input-post.style'
 
 @withStyles(styleSheet)
@@ -43,8 +44,7 @@ export default class InputPost extends Component {
             onChange={this.onInputContent.bind(this)} />
           {this.state.inputImage &&
           <div className={classes.imagePreview}>
-            <img
-              className={classes.image}
+            <Image
               src={this.state.inputImage.preview}
               onTouchTap={this.onCloseImage.bind(this)} />
           </div>}
@@ -72,8 +72,7 @@ export default class InputPost extends Component {
           </Button>}
           {/* 送信ボタン */}
           {!this.state.errorImage &&
-          <Button compact
-            onClick={this.onSubmit.bind(this)}>
+          <Button compact onClick={this.onSubmit.bind(this)}>
             GOGO!
           </Button>}
         </div>
@@ -268,24 +267,92 @@ export default class InputPost extends Component {
   }
 
   onSubmitReply () {
-    const replyId = this.props.posts.one._id
-    this.props.posts.insert({
-      isPublic: this.state.inputIsPublic,
-      content: this.props.inputPost.postContent,
-      reply: replyId
-    })
-    .then(posts => {
-      this.props.posts.insertIndex(posts)
-      this.props.inputPost.reset()
-      this.props.snackbar.show('送信しました')
-      this.setState({errorImage: null, inputImage: null})
-      return this.props.posts.fetchOneFromId(replyId)
-    })
-    .then(post => {
-      this.props.posts.updateOne(post)
-    })
-    .catch(err => {
-      this.props.snackbar.error(err)
-    })
+    if (this.process) return
+    this.process = true
+    const date = new Date()
+    const dateStr = ['' + date.getFullYear(), '' + (date.getMonth() + 1), '' + date.getDate()]
+    .map(n => n.length === 1 ? '0' + n : n)
+    .join('-')
+    if (this.state.inputImage) {
+      const file = this.state.inputImage
+      const nameArray = file.name.split('.')
+      const extension = nameArray[nameArray.length - 1].toLowerCase()
+      const id = Random.id()
+      const imageName = id + '.' + extension
+      const imageNameMin = id + '-min.' + extension
+      const imageNameCache = imageName + '?uuid=' + Random.id()
+      const imageNameCacheMin = imageNameMin + '?uuid=' + Random.id()
+      const formdata = new FormData()
+      formdata.append('file', file)
+      formdata.append('date', dateStr)
+      formdata.append('name', imageName)
+      formdata.append('name_min', imageNameMin)
+      if (Meteor.isDevelopment) {
+        if (!Meteor.settings.public.api || !Meteor.settings.public.api.unique) {
+          this.props.snackbar.errorMessage('開発環境では画像のアップロードは利用できません')
+          this.process = false
+          return
+        }
+        formdata.append('unique', Meteor.settings.public.api.unique)
+      }
+      new Promise((resolve, reject) => {
+        HTTP.post(Meteor.settings.public.api.post.image, {content: formdata}, err => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve()
+          }
+        })
+      })
+      .then(() => {
+        const replyId = this.props.posts.one._id
+        return this.props.posts.insert({
+          isPublic: this.state.inputIsPublic,
+          content: this.props.inputPost.postContent,
+          images: [{
+            full: imageNameCache,
+            min: imageNameCacheMin
+          }],
+          imagesDate: dateStr,
+          reply: replyId
+        })
+      })
+      .then(post => {
+        this.ref.style.height = 'auto'
+        this.props.posts.insertIndex(post)
+        this.props.inputPost.reset()
+        this.props.snackbar.show('送信しました')
+        this.setState({errorImage: null, inputImage: null})
+        const replyId = this.props.posts.one._id
+        return this.props.posts.fetchOneFromId(replyId)
+      })
+      .then(post => {
+        this.props.posts.updateOne(post)
+      })
+      .catch(err => {
+        this.props.snackbar.error(err)
+        this.process = false
+      })
+    } else {
+      const replyId = this.props.posts.one._id
+      this.props.posts.insert({
+        isPublic: this.state.inputIsPublic,
+        content: this.props.inputPost.postContent,
+        reply: replyId
+      })
+      .then(posts => {
+        this.props.posts.insertIndex(posts)
+        this.props.inputPost.reset()
+        this.props.snackbar.show('送信しました')
+        this.setState({errorImage: null, inputImage: null})
+        return this.props.posts.fetchOneFromId(replyId)
+      })
+      .then(post => {
+        this.props.posts.updateOne(post)
+      })
+      .catch(err => {
+        this.props.snackbar.error(err)
+      })
+    }
   }
 }

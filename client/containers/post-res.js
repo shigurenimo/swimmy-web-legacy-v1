@@ -44,17 +44,18 @@ export default class PostRes extends Component {
           {/* photo */}
           {this.props.images && this.props.images.slice()[0] &&
           <SheetContent>
-            <button
+            <div
               className={classNames(classes.photoImage, {
                 [classes.photoImageOpen]: this.state.selectImage
               })}
               onTouchTap={this.onSelectImage.bind(this)}>
-              <Image src={
-                Meteor.settings.public.assets.post.image +
-                this.props.imagesDate + '/' +
-                this.props.images.slice()[0].min
-              } />
-            </button>
+              <Image
+                src={
+                  Meteor.settings.public.assets.post.image +
+                  this.props.imagesDate + '/' +
+                  this.props.images.slice()[0].min
+                } />
+            </div>
           </SheetContent>}
           {/* oEmbed */}
           {this.props.oEmbed &&

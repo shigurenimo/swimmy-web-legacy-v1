@@ -16,7 +16,7 @@ export default createStyleSheet('InputPost', theme => {
     oneColumn: {
       top: 0,
       right: 0,
-      padding: '10px 10px 0 10px',
+      padding: '10px 10px 10px 10px',
       width: '50%'
     },
     twoColumn: {
@@ -50,8 +50,8 @@ export default createStyleSheet('InputPost', theme => {
       resize: 'none'
     },
     imagePreview: {
-      padding: '10px 10px 10px 10px',
-      height: '200px'
+      padding: '10px 0 0 0',
+      height: 'auto'
     },
     image: {
       height: '100%',
@@ -60,14 +60,12 @@ export default createStyleSheet('InputPost', theme => {
     postPublic: {
       width: 'auto',
       display: 'block',
-      paddingTop: '5px',
-      paddingBottom: '10px',
+      paddingTop: '10px',
       marginRight: '0',
       textAlign: 'right'
     },
     openImage: {
       display: 'inline-block',
-      margin: '0 10px 0 auto',
       width: 'auto'
     }
   }
