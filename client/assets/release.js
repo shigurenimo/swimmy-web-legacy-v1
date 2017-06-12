@@ -1,4 +1,11 @@
 export default [{
+  version: '1.1.0',
+  date: '2017.6.12',
+  content: [
+    'Material-UIの追加',
+    '処理速度の改善'
+  ]
+}, {
   version: '1.0.4',
   date: '2017.5.25',
   content: [
