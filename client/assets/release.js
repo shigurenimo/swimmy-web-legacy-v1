@@ -1,4 +1,10 @@
 export default [{
+  version: '1.1.1',
+  date: '2017.6.12',
+  content: [
+    'レスの画像添付機能の追加'
+  ]
+}, {
   version: '1.1.0',
   date: '2017.6.12',
   content: [
