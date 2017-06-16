@@ -2,32 +2,24 @@ import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import { action, observable, toJS } from 'mobx'
 
-// 書き込みデータ
-export default class Posts {
-  @observable
-  index = []
+export default class {
+  @observable index = []
 
-  @observable
-  one = null
+  @observable one = null
+
+  @observable isFetching = false
+
+  @observable timelines = []
+
+  @observable networkTimelines = []
+
+  @observable timeline = null
+
+  @observable networkInfo = false
 
   ids = {}
 
-  @observable
-  isFetching = false
-
-  @observable
-  timelines = []
-
-  @observable
-  networkTimelines = []
-
-  @observable
-  timeline = null
-
   tempTimeline = null
-
-  @observable
-  networkInfo = false
 
   openNetworkInfo () {
     this.networkInfo = true

@@ -1,18 +1,13 @@
 import { action, observable } from 'mobx'
 
-// クライアントサイドルーティングデータ
-export default class Router {
-  @observable
-  page = null // 表示しているページ
+export default class {
+  @observable page = null // 表示しているページ
 
-  @observable
-  pageCache = null // 前回表示したページ
+  @observable pageCache = null // 前回表示したページ
 
-  @observable
-  scrollCache = 0 // 前回表示したページのスクロール値
+  @observable scrollCache = 0 // 前回表示したページのスクロール値
 
-  @observable
-  verifyError = null
+  @observable verifyError = null
 
   @action
   setRoute (page) {

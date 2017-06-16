@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { observable } from 'mobx'
 
-// レポートデータ
-export default class Reports {
-  @observable
-  index = null
+export default class {
+  @observable index = null
 
   updateIndex (data) {
     this.index = data

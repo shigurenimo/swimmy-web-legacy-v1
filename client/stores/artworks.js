@@ -2,23 +2,18 @@ import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import { action, observable, toJS } from 'mobx'
 
-// アートワークデータ
-export default class Artworks {
-  @observable
-  index = [] // 全てのデータ
+export default class {
+  @observable index = []
 
-  @observable
-  one = null
+  @observable one = null
+
+  @observable isFetching = false
+
+  @observable timeline = null
 
   ids = {}
 
-  @observable
-  isFetching = false
-
   timelines = []
-
-  @observable
-  timeline = null
 
   @action
   insertIndex (posts) {

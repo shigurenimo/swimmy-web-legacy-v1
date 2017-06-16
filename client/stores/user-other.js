@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { observable } from 'mobx'
 
-// その他ユーザデータ
-export default class UserOther {
-  @observable
-  one = {}
+export default class {
+  @observable one = {}
 
   updateOne (user) {
     this.one = user

@@ -1,9 +1,7 @@
 import { observable } from 'mobx'
 
-// レイアウトデータ
-export default class Navigation {
-  @observable
-  swipe = true
+export default class {
+  @observable swipe = true
 
   removeSwipe () {
     if (this.swipe) {

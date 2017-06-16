@@ -1,15 +1,11 @@
 import { action, observable } from 'mobx'
 
-// 入力データ
-export default class InputPost {
-  @observable
-  postContent = ''
+export default class {
+  @observable postContent = ''
 
-  @observable
-  postImage = false
+  @observable postImage = false
 
-  @observable
-  postContentHeight = 40
+  @observable postContentHeight = 40
 
   get paddingTop () {
     const image = this.postImage ? 200 : 0

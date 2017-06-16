@@ -2,19 +2,16 @@ import { Meteor } from 'meteor/meteor'
 import { action, observable, toJS } from 'mobx'
 import collections from '../../imports/collections'
 
-// 書き込みデータ（socket.io）
-export default class PostsSocket {
-  @observable
-  index = []
+export default class {
+  @observable index = []
+
+  @observable isFetching = false
 
   ids = {}
 
-  @observable
-  isFetching = false
-
   subscription = null
 
-  cursor = null // カーソル
+  cursor = null
 
   uniqueCache = '' // 前回のタイムライン
 
@@ -67,6 +64,7 @@ export default class PostsSocket {
             time = setTimeout(() => {
               self.updateIndex(stocks)
               self.isFetching = false
+              stocks = []
             }, 10)
           },
           changed (res) {

@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { action, observable } from 'mobx'
 
-// タグデータ
-export default class Tags {
-  @observable
-  index = []
+export default class {
+  @observable index = []
 
   // 全てのハッシュタグを取得する
   @action

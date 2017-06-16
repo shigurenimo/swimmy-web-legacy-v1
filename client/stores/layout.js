@@ -1,27 +1,14 @@
 import { observable } from 'mobx'
 
 // レイアウトデータ
-export default class Layout {
-  @observable
-  scrollOver = false
+export default class {
+  @observable scrollOver = false
 
-  @observable
-  width = window.innerWidth
+  @observable width = window.innerWidth
 
-  @observable
-  left = false
+  @observable left = false
 
-  get oneColumn () {
-    return this.width < 700
-  }
-
-  get oneColumnClassName () {
-    return this.width < 700 ? 'one-column' : 'two-column'
-  }
-
-  get leftClassName () {
-    return this.left ? 'left' : 'right'
-  }
+  get oneColumn () { return this.width < 700 }
 
   toMain () {
     this.left = false

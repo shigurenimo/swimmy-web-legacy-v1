@@ -1,17 +1,14 @@
 import { Meteor } from 'meteor/meteor'
 import { action, observable } from 'mobx'
 
-// スレッドデータ
-export default class Threads {
+export default class {
+  @observable index = []
+
+  @observable isFetching = false
+
   tabs = []
 
-  @observable
-  index = []
-
   ids = {}
-
-  @observable
-  isFetching = false
 
   @action
   insertIndex (posts) {

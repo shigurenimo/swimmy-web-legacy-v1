@@ -1,12 +1,9 @@
 import { Random } from 'meteor/random'
 
-// プロセスデータ
-export default class Process {
+export default class {
   index = []
 
-  get wait () {
-    return this.index.length !== 0
-  }
+  get wait () { return this.index.length !== 0 }
 
   checkin () {
     const uuid = Random.id()

@@ -1,12 +1,9 @@
 import { action, observable } from 'mobx'
 
-// スナックバーデータ
-export default class Snackbar {
-  @observable
-  message = '' // レポートに表示するメッセージ
+export default class {
+  @observable message = '' // レポートに表示するメッセージ
 
-  @observable
-  isShow = false // レポートの表示の状態
+  @observable isShow = false  // レポートの表示の状態
 
   @action
   show (message) {

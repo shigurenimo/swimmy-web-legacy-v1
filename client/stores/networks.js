@@ -2,21 +2,16 @@ import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import { action, observable, toJS } from 'mobx'
 
-// リストデータ
-export default class Networks {
-  @observable
-  index = []
+export default class {
+  @observable index = []
 
-  @observable
-  one = null
+  @observable one = null
+
+  @observable timelines = []
+
+  @observable timeline = null
 
   ids = {}
-
-  @observable
-  timelines = []
-
-  @observable
-  timeline = null
 
   @action
   insertIndex (data) {

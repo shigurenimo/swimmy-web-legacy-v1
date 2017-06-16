@@ -2,12 +2,18 @@ import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import { action, observable } from 'mobx'
 
-// ユーザデータ
-export default class User {
-  @observable
-  info = {} // ユーザのデータ
+export default class {
+  @observable info = {}
 
-  cursor = null // カーソル
+  @observable followsIds = []
+
+  @observable loginState = null
+
+  cursor = null
+
+  address = null // ipアドレス
+
+  unique = null // ユニークID
 
   get _id () { return Accounts.userId() }
 
@@ -23,12 +29,6 @@ export default class User {
 
   get createdAt () { return this.info.createdAt }
 
-  @observable
-  followsIds = []
-
-  @observable
-  loginState = null
-
   // 未ログインのときtrueを返す
   get isNotLoggedIn () {
     return this.loginState === 'isNotLoggedIn'
@@ -43,10 +43,6 @@ export default class User {
   get isLogged () {
     return this.loginState === 'isLoggedIn'
   }
-
-  address = null // ipアドレス
-
-  unique = null // ユニークID
 
   // ipアドレスを取得する
   fetchAddress () {
