@@ -5,7 +5,7 @@ import propTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
-import utils from '../../imports/utils'
+import utils from '/utils'
 
 @inject('networks', 'snackbar')
 @observer

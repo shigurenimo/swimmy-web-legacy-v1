@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography'
 import Layout from '../components/ui-layout'
 import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
-import utils from '../../imports/utils'
+import utils from '/utils'
 import styleSheet from './thread-list.style'
 
 @withStyles(styleSheet)

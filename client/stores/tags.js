@@ -8,7 +8,7 @@ export default class {
   @action
   getAllTags () {
     return new Promise((resolve, reject) => {
-      Meteor.call('tags:fetchAll', {limit: 50}, (err, res) => {
+      Meteor.call('tags.fetchAll', {limit: 50}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -22,7 +22,7 @@ export default class {
   @action
   getNewTags () {
     return new Promise((resolve, reject) => {
-      Meteor.call('tags:fetchNew', {limit: 50}, (err, res) => {
+      Meteor.call('tags.fetchNew', {limit: 50}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -36,7 +36,7 @@ export default class {
   @action
   getHotTags () {
     return new Promise((resolve, reject) => {
-      Meteor.call('tags:fetchHot', {limit: 50}, (err, res) => {
+      Meteor.call('tags.fetchHot', {limit: 50}, (err, res) => {
         if (err) {
           reject(err)
         } else {

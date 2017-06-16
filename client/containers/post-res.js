@@ -13,7 +13,7 @@ import Image from '../components/ui-image'
 import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
-import utils from '../../imports/utils'
+import utils from '/utils'
 import styleSheet from './post.style'
 
 @withStyles(styleSheet)

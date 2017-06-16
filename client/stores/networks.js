@@ -64,7 +64,7 @@ export default class {
       this.ids = {}
       selector = toJS(selector)
       options = toJS(options)
-      Meteor.call('networks:fetch', selector, options, (err, res) => {
+      Meteor.call('networks.fetch', selector, options, (err, res) => {
         this.isFetching = false
         if (err) {
           reject(err)
@@ -79,7 +79,7 @@ export default class {
     return new Promise((resolve, reject) => {
       selector = toJS(selector)
       options = toJS(options)
-      Meteor.call('networks:fetchOne', selector, options, (err, res) => {
+      Meteor.call('networks.fetchOne', selector, options, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -95,7 +95,7 @@ export default class {
 
   insert (next) {
     return new Promise((resolve, reject) => {
-      Meteor.call('networks:insert', next, (err, res) => {
+      Meteor.call('networks.insert', next, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -107,7 +107,7 @@ export default class {
 
   remove (networkId) {
     return new Promise((resolve, reject) => {
-      Meteor.call('networks:remove', {networkId}, (err, res) => {
+      Meteor.call('networks.remove', {networkId}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -121,7 +121,7 @@ export default class {
     return new Promise((resolve, reject) => {
       let req = {networkId}
       req[name] = next
-      Meteor.call('networks:update', req, (err, res) => {
+      Meteor.call('networks.update', req, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -133,7 +133,7 @@ export default class {
 
   join (networkId) {
     return new Promise((resolve, reject) => {
-      Meteor.call('networks:join', {networkId}, (err, res) => {
+      Meteor.call('networks.join', {networkId}, (err, res) => {
         if (err) {
           reject(err)
         } else {

@@ -22,7 +22,7 @@ import Thread from './thread'
 import ThreadList from './thread-list'
 import TimeMachine from './time-machine'
 import Timeline from './timeline'
-import utils from '../../imports/utils'
+import utils from '/utils'
 import styleSheet from './content.style'
 
 @withStyles(styleSheet)

@@ -31,7 +31,7 @@ export default class {
     const selector = {}
     const options = {limit: 50}
     return new Promise((resolve, reject) => {
-      Meteor.call('threads:fetch', selector, options, (err, res) => {
+      Meteor.call('threads.fetch', selector, options, (err, res) => {
         this.isFetching = false
         if (err) {
           reject(err)

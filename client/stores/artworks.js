@@ -77,7 +77,7 @@ export default class {
       this.ids = {}
       selector = toJS(selector)
       options = toJS(options)
-      Meteor.call('artworks:fetch', selector, options, (err, res) => {
+      Meteor.call('artworks.fetch', selector, options, (err, res) => {
         this.isFetching = false
         if (err) {
           reject(err)
@@ -92,7 +92,7 @@ export default class {
     return new Promise((resolve, reject) => {
       selector = toJS(selector)
       options = toJS(options)
-      Meteor.call('artworks:fetchOne', selector, options, (err, res) => {
+      Meteor.call('artworks.fetchOne', selector, options, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -121,7 +121,7 @@ export default class {
         image: next.image,
         imageDate: next.imageDate
       }
-      Meteor.call('artworks:insert', req, (err, res) => {
+      Meteor.call('artworks.insert', req, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -133,7 +133,7 @@ export default class {
 
   insertReply (postId, {content, isPublic}) {
     return new Promise((resolve, reject) => {
-      Meteor.call('artworks:insertReply', {postId, content, isPublic}, (err, res) => {
+      Meteor.call('artworks.insertReply', {postId, content, isPublic}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -153,7 +153,7 @@ export default class {
         note: next.note,
         colors: next.colors.slice() // MobX-array
       }
-      Meteor.call('artworks:update', req, (err, res) => {
+      Meteor.call('artworks.update', req, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -165,7 +165,7 @@ export default class {
 
   updateReaction (postId, name) {
     return new Promise((resolve, reject) => {
-      Meteor.call('artworks:updateReaction', {
+      Meteor.call('artworks.updateReaction', {
         postId: postId,
         name: name
       }, (err, res) => {
@@ -180,7 +180,7 @@ export default class {
 
   updateReplyReaction (postId, replyId, name) {
     return new Promise((resolve, reject) => {
-      Meteor.call('artworks:updateReplyReaction', {postId, replyId, name}, (err, res) => {
+      Meteor.call('artworks.updateReplyReaction', {postId, replyId, name}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -192,7 +192,7 @@ export default class {
 
   remove (postId) {
     return new Promise((resolve, reject) => {
-      Meteor.call('artworks:remove', {postId}, (err, res) => {
+      Meteor.call('artworks.remove', {postId}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -204,7 +204,7 @@ export default class {
 
   removeReply (postId, replyId) {
     return new Promise((resolve, reject) => {
-      Meteor.call('artworks:removeReply', {postId, replyId}, (err, res) => {
+      Meteor.call('artworks.removeReply', {postId, replyId}, (err, res) => {
         if (err) {
           reject(err)
         } else {

@@ -11,7 +11,7 @@ import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import SheetBackgroundImage from '../components/ui-sheet-background-image'
-import utils from '../../imports/utils'
+import utils from '/utils'
 import styleSheet from './network-info.style'
 
 @withStyles(styleSheet)

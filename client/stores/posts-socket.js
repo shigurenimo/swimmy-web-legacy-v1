@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { action, observable, toJS } from 'mobx'
-import collections from '../../imports/collections'
+import collections from '/collections'
 
 export default class {
   @observable index = []

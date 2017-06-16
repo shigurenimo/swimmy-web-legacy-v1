@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor'
-import collections from '../imports/collections'
+import collections from '/collections'
 
 Meteor.methods({
-  'threads:fetch' (selector, options) {
+  'threads.fetch' (selector, options) {
     selector.content = {$ne: ''}
     selector['replies.0'] = {$exists: true}
     options.fields = {

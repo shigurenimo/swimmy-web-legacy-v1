@@ -10,7 +10,7 @@ export default class {
 
   fetchOne (selector, options) {
     return new Promise((resolve, reject) => {
-      Meteor.call('users:fetch', selector, options, (err, res) => {
+      Meteor.call('users.fetchProfile', selector, options, (err, res) => {
         if (err) {
           reject(err)
         } else {

@@ -81,7 +81,7 @@ export default class {
       this.ids = {}
       selector = toJS(selector)
       options = toJS(options)
-      Meteor.call('posts:fetch', selector, options, (err, res) => {
+      Meteor.call('posts.fetch', selector, options, (err, res) => {
         this.isFetching = false
         if (err) {
           reject(err)
@@ -105,7 +105,7 @@ export default class {
     return new Promise((resolve, reject) => {
       selector = toJS(selector)
       options = toJS(options)
-      Meteor.call('posts:fetchOne', selector, options, (err, res) => {
+      Meteor.call('posts.fetchOne', selector, options, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -138,7 +138,7 @@ export default class {
       if (this.timeline.network) {
         req.network = this.timeline.network
       }
-      Meteor.call('posts:insert', req, (err, res) => {
+      Meteor.call('posts.insert', req, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -150,7 +150,7 @@ export default class {
 
   updateReaction (postId, name) {
     return new Promise((resolve, reject) => {
-      Meteor.call('posts:updateReaction', {
+      Meteor.call('posts.updateReaction', {
         postId: postId,
         name: name
       }, (err, res) => {
@@ -166,7 +166,7 @@ export default class {
   // 投稿を削除する
   remove (postId) {
     return new Promise((resolve, reject) => {
-      Meteor.call('posts:remove', {
+      Meteor.call('posts.remove', {
         postId: postId
       }, err => {
         if (err) {

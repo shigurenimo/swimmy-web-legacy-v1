@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import collections from '../imports/collections'
+import collections from '/collections'
 
 Meteor.methods({
   'report:main' () {

@@ -7,7 +7,7 @@ import Content from './content'
 import InputAction from './input-action'
 import LeftMenu from './left-menu'
 import NavigationSwipe from './navigatoin-swipe'
-import utils from '../../imports/utils'
+import utils from '/utils'
 import styleSheet from './layout.style'
 
 @withStyles(styleSheet)

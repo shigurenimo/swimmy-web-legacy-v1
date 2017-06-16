@@ -47,7 +47,7 @@ export default class {
   // ipアドレスを取得する
   fetchAddress () {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:fetchAddress', (err, res) => {
+      Meteor.call('users.fetchAddress', (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -61,7 +61,7 @@ export default class {
 
   insert ({username, password}) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:insert', {username, password}, (err, res) => {
+      Meteor.call('users.insert', {username, password}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -74,7 +74,7 @@ export default class {
   // フォローを更新する
   updateFollow (userId) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:updateFollow', {userId}, err => {
+      Meteor.call('users.updateFollow', {userId}, err => {
         if (err) {
           reject(err)
         } else {
@@ -87,7 +87,7 @@ export default class {
   // ネームを更新する
   updateName (name) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:setName', {name}, err => {
+      Meteor.call('users.setName', {name}, err => {
         if (err) {
           reject(err)
         } else {
@@ -100,7 +100,7 @@ export default class {
   // ユーザネームを更新する
   updateUsername (username) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:updateUsername', {username}, (err, res) => {
+      Meteor.call('users.updateUsername', {username}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -112,7 +112,7 @@ export default class {
 
   checkExistUsername (username) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:checkExistUsername', username, (err, res) => {
+      Meteor.call('users.checkExistUsername', username, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -124,7 +124,7 @@ export default class {
 
   updateChannel (channel) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:updateChannel', {
+      Meteor.call('users.updateChannel', {
         channel: channel
       }, err => {
         if (err) {
@@ -150,7 +150,7 @@ export default class {
 
   addEmail (email) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:addEmail', {email}, err => {
+      Meteor.call('users.addEmail', {email}, err => {
         if (err) {
           reject(err)
         } else {
@@ -162,7 +162,7 @@ export default class {
 
   removeEmail (email) {
     return new Promise((resolve, reject) => {
-      Meteor.call('user:removeEmail', {email}, err => {
+      Meteor.call('users.removeEmail', {email}, err => {
         if (err) {
           reject(err)
         } else {
@@ -176,7 +176,7 @@ export default class {
   @action
   onLogin () {
     const self = this
-    Meteor.subscribe('user')
+    Meteor.subscribe('users')
     if (self.cursor) {
       self.cursor.stop()
       self.cursor = null

@@ -1,26 +1,15 @@
-import { Restivus } from 'meteor/nimble:restivus'
+import { Meteor } from 'meteor/meteor'
 import collections from '/collections'
 import utils from '/utils'
 
-const api = new Restivus({
-  version: 'v1',
-  defaultHeaders: {
-    'Content-Type': 'application/json'
-  },
-  useDefaultAuth: true,
-  prettyJson: true
-})
-
-api.addRoute('posts/', {
-  // レスを取得する
-  get () {
-    const userId = this.userId
-    const selector = {
-      thread: {$exists: false}
-    }
-    const options = {
-      limit: 80,
-      sort: {createdAt: -1}
+Meteor.methods({
+  'posts.fetch' (selector, options) {
+    selector.thread = {$exists: false}
+    options.sort = {createdAt: -1}
+    if (selector.owner) {
+      if (selector.owner !== this.userId) {
+        selector.public = {$exists: true}
+      }
     }
     const posts = collections.posts.find(selector, options).fetch()
     .map(post => {
@@ -35,8 +24,8 @@ api.addRoute('posts/', {
         }
       }
       if (post.link) post.content = utils.replace.link(post.content)
-      if (post.tags) post.content = utils.replace.tags(post.content)
-      if (userId !== post.owner) delete post.owner
+      // if (post.tags) post.content = utils.replace.tags(post.content)
+      if (this.userId !== post.owner) delete post.owner
       delete post.addr
       return post
     })
