@@ -80,7 +80,7 @@ export default class Login extends Component {
               <IconWhatshot {...this.iconStyle} />
               <InlineTypography>オープンソース</InlineTypography>
             </SheetContent>
-            <SheetContent className='text:description'>
+            <SheetContent>
               <Typography>
                 Meteor・React・Material-UIで開発しているオープンソースのプロジェクトです。<br />
               </Typography>

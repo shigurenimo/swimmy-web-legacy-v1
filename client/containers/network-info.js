@@ -26,13 +26,12 @@ export default class NetworkInfo extends Component {
     return (
       <Layout>
         {network.header &&
-        <Sheet className='block:network-header'>
-          {network.header &&
+        <Sheet>
           <SheetBackgroundImage src={
             network.header &&
             Meteor.settings.public.assets.network.root + network._id + '/' +
             network.header
-          } />}
+          } />
         </Sheet>}
         <Sheet>
           {network.univ &&

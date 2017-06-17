@@ -74,7 +74,6 @@ export default class extends Component {
     return (
       <input
         {...props}
-        className='ui-input-text'
         value={this.props.value}
         placeholder={this.props.placeholder}
         maxLength={this.props.maxLength || 100}

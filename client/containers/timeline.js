@@ -13,7 +13,7 @@ import Post from './post'
 export default class Timeline extends Component {
   render () {
     return (
-      <Layout className='container:timeline'>
+      <Layout>
         {this.props.posts.networkInfo &&
         <NetworkInfo />}
         {this.forPosts()}

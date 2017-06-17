@@ -136,24 +136,27 @@ export default class PostRes extends Component {
   process = false
 
   embed (data) {
+    const {classes} = this.props
     if (!this.state.iframe) {
-      return <div className='block:oEmbed-echo'>
-        <button className='input:oEmbed-echo' onTouchTap={this.onOpenIframe.bind(this)}>
-          {data.title}<br />
-          タップして{data.provider_name}を読み込む
-        </button>
-      </div>
+      return (
+        <Sheet minimal hover>
+          <SheetActions>
+            <Typography type='subheading'>
+              {data.title}
+            </Typography>
+            <Button onClick={this.onOpenIframe.bind(this)}>
+              タップして{data.provider_name}を読み込む
+            </Button>
+          </SheetActions>
+        </Sheet>
+      )
     }
     switch (data.provider_name) {
       case 'Vine':
       case 'SoundCloud':
-        return <div
-          className='block:oEmbed-iframe'
-          dangerouslySetInnerHTML={{__html: data.html}}></div>
+        return <div className={classes.oEmbedIframe} dangerouslySetInnerHTML={{__html: data.html}} />
       default:
-        return <div
-          className='block:oEmbed'
-          dangerouslySetInnerHTML={{__html: data.html}}></div>
+        return <div className={classes.oEmbed} dangerouslySetInnerHTML={{__html: data.html}} />
     }
   }
 

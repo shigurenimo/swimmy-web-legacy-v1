@@ -37,8 +37,8 @@ export default class ArtworkNew extends Component {
           </SheetActions>
           {/* エラーメッセージ */}
           {this.state.errorImage &&
-          <SheetContent className='block:error-image'>
-            <Typography className='text:error-image'>{this.state.errorImage}</Typography>
+          <SheetContent>
+            <Typography>{this.state.errorImage}</Typography>
           </SheetContent>}
         </Sheet>
         <Sheet>

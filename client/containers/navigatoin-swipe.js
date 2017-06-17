@@ -10,8 +10,8 @@ export default class NavigationSwipe extends Component {
     if (!this.props.layout.oneColumn) return null
     if (this.props.router.page === null) return null
     if (this.props.users.isLoggingIn) return null
-    return <div className='container:navigation-swipe' onTouchTap={this.onSwipe.bind(this)}>
-      <div className='text:swipe'>swipe</div>
+    return <div onTouchTap={this.onSwipe.bind(this)}>
+      <div>swipe</div>
       <div><IconTouchApp {...this.iconStyle}/></div>
     </div>
   }

@@ -16,9 +16,7 @@ export default class ThreadList extends Component {
   render () {
     return (
       <Layout>
-        <div className='block:thread-list'>
-          {this.forThreads()}
-        </div>
+        {this.forThreads()}
       </Layout>
     )
   }
