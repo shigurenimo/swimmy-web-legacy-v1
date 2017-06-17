@@ -68,7 +68,8 @@ export default class Profile extends Component {
   }
 
   onFollow () {
-    this.props.users.updateFollow(this.user._id)
+    const {usersProfile} = this.props
+    this.props.users.updateFollow(usersProfile.one._id)
     .then(() => {
       this.props.snackbar.show('フォローを更新しました')
     })
