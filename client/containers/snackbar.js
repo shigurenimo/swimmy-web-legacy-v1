@@ -2,6 +2,7 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
+import Card from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import styleSheet from './snackbar.style'
 
@@ -15,14 +16,17 @@ export default class Snackbar extends Component {
       snackbar
     } = this.props
     return (
-      <div className={classNames(classes.container, {
-        [classes.on]: snackbar.isShow,
-        [classes.off]: !snackbar.isShow,
-        [classes.minimal]: this.isMinimal
-      })}>
-        <Typography>
-          {this.props.snackbar.message}
-        </Typography>
+      <div
+        className={classNames(classes.container, {
+          [classes.on]: snackbar.isShow,
+          [classes.off]: !snackbar.isShow,
+          [classes.minimal]: this.isMinimal
+        })}>
+        <Card className={classes.inner}>
+          <Typography className={classes.text}>
+            {this.props.snackbar.message}
+          </Typography>
+        </Card>
       </div>
     )
   }

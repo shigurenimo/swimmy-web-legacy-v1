@@ -5,18 +5,25 @@ export default createStyleSheet('Snackbar', theme => {
     container: {
       position: 'fixed',
       margin: 'auto',
+      padding: '10px',
       left: 0,
       right: 0,
-      bottom: 0,
       width: '100%',
-      height: '45px',
-      lineHeight: '45px',
-      textAlign: 'center',
-      backgroundColor: theme.palette.text.primary,
-      color: 'white',
+      maxWidth: '600px',
+      height: '50px',
+      boxSizing: 'border-box',
       zIndex: 500,
       transitionDuration: '200ms',
       opacity: 0
+    },
+    inner: {
+      height: '100%',
+      backgroundColor: theme.palette.text.primary,
+    },
+    text: {
+      textAlign: 'center',
+      lineHeight: '30px',
+      color: 'white'
     },
     on: {
       opacity: 1,

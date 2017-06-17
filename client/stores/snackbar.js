@@ -1,9 +1,9 @@
 import { action, observable } from 'mobx'
 
 export default class {
-  @observable message = '' // レポートに表示するメッセージ
+  @observable message = '' // スナックバーに表示するメッセージ
 
-  @observable isShow = false  // レポートの表示の状態
+  @observable isShow = false  // スナックバーの表示の状態
 
   @action
   show (message) {
