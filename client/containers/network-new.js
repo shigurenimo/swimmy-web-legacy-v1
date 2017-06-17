@@ -33,7 +33,6 @@ export default class NetworkNew extends Component {
           <Sheet>
             <SheetContent>
               <Block width={400}>
-                <Typography>簡単な説明</Typography>
                 <TextField multiline
                   value={this.state.networkDescription}
                   label='リストの説明'

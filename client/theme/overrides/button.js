@@ -5,7 +5,9 @@ export default {
     height: '30px',
     padding: '0px 10px',
     verticalAlign: 'top',
-    color: cyan[600]
+    color: cyan[600],
+    textTransform: 'default',
+    letterSpacing: '1px'
   },
   compact: {
     minWidth: 32

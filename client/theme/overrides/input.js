@@ -11,7 +11,8 @@ export default {
       '-webkit-appearance': 'none',
       'margin': 0
     },
-    fontSize: '13px'
+    fontSize: '13px',
+    letterSpacing: '1px'
   },
   wrapper: {
     width: '100%'

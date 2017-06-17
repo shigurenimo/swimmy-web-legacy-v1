@@ -2,6 +2,7 @@ export default {
   root: {
     wordWrap: 'break-word',
     whiteSpace: 'pre-wrap',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    letterSpacing: '1px'
   }
 }
