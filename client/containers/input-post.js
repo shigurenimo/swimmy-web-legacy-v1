@@ -62,7 +62,7 @@ export default class InputPost extends Component {
           <Button compact
             primary={this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, true)}>
-            {this.props.users.username}
+            {this.props.users.one._username}
           </Button>}
           {this.props.users.isLogged &&
           <Button compact

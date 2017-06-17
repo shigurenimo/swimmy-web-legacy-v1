@@ -11,23 +11,9 @@ export default class {
 
   cursor = null
 
-  address = null // ipアドレス
+  address = null
 
-  unique = null // ユニークID
-
-  get _id () { return Accounts.userId() }
-
-  get username () { return this.one.username }
-
-  get networks () { return this.one.profile.networks }
-
-  get profile () { return this.one.profile }
-
-  get follows () { return this.one.profile.follows }
-
-  get services () { return this.one.services }
-
-  get createdAt () { return this.one.createdAt }
+  unique = null
 
   // 未ログインのときtrueを返す
   get isNotLoggedIn () {

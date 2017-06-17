@@ -52,7 +52,7 @@ export default class NetworkInfo extends Component {
           </SheetContent>
           {this.props.users.isLogged &&
           <SheetActions align='right'>
-            {network.member.includes(this.props.users._id) ? (
+            {network.member.includes(this.props.users.one._id) ? (
               <Button onTouchTap={this.onLeaveNetwork}>
                 チェックアウト
               </Button>
@@ -64,13 +64,13 @@ export default class NetworkInfo extends Component {
           </SheetActions>}
         </Sheet>
         {this.props.users.isLogged &&
-        this.props.users._id === network.owner &&
+        this.props.users.one._id === network.owner &&
         <Sheet>
           <SheetActions>
             <Button onClick={this.onRemoveList}>
               このリストを削除する
             </Button>
-            {network.member.includes(this.props.users._id) &&
+            {network.member.includes(this.props.users.one._id) &&
             <Button component='a' href={'/network/' + network._id + '/edit'}>アップデート</Button>}
           </SheetActions>
         </Sheet>}

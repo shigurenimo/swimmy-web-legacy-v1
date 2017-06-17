@@ -108,7 +108,7 @@ export default class ArtworkNew extends Component {
               onClick={this.onChangePublic.bind(this, false)}>anonymous</InputButton>
             <InputButton
               primary={this.state.isPublic}
-              onClick={this.onChangePublic.bind(this, true)}>{this.props.users.username}</InputButton>
+              onClick={this.onChangePublic.bind(this, true)}>{this.props.users.one._username}</InputButton>
           </SheetActions>
         </Sheet>
         <Sheet>

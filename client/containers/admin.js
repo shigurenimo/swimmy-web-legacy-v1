@@ -50,7 +50,7 @@ export default class Admin extends Component {
   }
 
   forFollows () {
-    const index = this.props.users.follows
+    const index = this.props.users.one.profile.follows
     if (index.length < 1) {
       return null
     }

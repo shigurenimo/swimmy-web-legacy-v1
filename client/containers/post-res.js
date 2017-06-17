@@ -85,7 +85,7 @@ export default class PostRes extends Component {
             {Object.keys(this.props.reactions).map(name =>
               <Button compact minimal background
                 key={name}
-                primary={!!this.props.users.isLogged && this.props.reactions[name].includes(this.props.users._id)}
+                primary={!!this.props.users.isLogged && this.props.reactions[name].includes(this.props.users.one._id)}
                 onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
                 {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
               </Button>
@@ -112,7 +112,7 @@ export default class PostRes extends Component {
           <SheetActions align='right'>
             {this.props.users.isLogged &&
             this.state.isReply &&
-            (this.props.owner === this.props.users._id) &&
+            (this.props.owner === this.props.users.one._id) &&
             <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete</Button>}
             <Button onClick={this.onSubmitNewReaction}>push</Button>
           </SheetActions>

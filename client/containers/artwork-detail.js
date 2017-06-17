@@ -97,7 +97,7 @@ export default class ArtworkDetail extends Component {
             </SheetContent>}
             {/* 投稿の削除 */}
             {this.props.users.isLogged &&
-            this.props.artworks.one.owner === this.props.users._id &&
+            this.props.artworks.one.owner === this.props.users.one._id &&
             <SheetActions align='right'>
               {!this.state.isEdit &&
               <Button onClick={this.onRemove}>
@@ -119,7 +119,7 @@ export default class ArtworkDetail extends Component {
                 <Button background
                   key={name}
                   primary={!!this.props.users.isLogged &&
-                  this.props.artworks.one.reactions[name].includes(this.props.users._id)}
+                  this.props.artworks.one.reactions[name].includes(this.props.users.one._id)}
                   onClick={this.onUpdateReaction.bind(this, this.props.artworks.one._id, name)}>
                   {name + (this.props.artworks.one.reactions[name].length > 0 ? ' ' +
                     this.props.artworks.one.reactions[name].length : '')}
@@ -189,14 +189,14 @@ export default class ArtworkDetail extends Component {
                 {Object.keys(reply.reactions).map(name =>
                   <Button compact minimal background
                     key={name}
-                    primary={!!this.props.users.isLogged && reply.reactions[name].includes(this.props.users._id)}
+                    primary={!!this.props.users.isLogged && reply.reactions[name].includes(this.props.users.one._id)}
                     onClick={this.onUpdateReplyReaction.bind(this, this.props.artworks.one._id, reply._id, name)}>
                     {name + (reply.reactions[name].length > 0 ? ' ' + reply.reactions[name].length : '')}
                   </Button>
                 )}
               </SheetActions>
               {/* delete */}
-              {this.props.users.isLogged && reply.owner === this.props.users._id &&
+              {this.props.users.isLogged && reply.owner === this.props.users.one._id &&
               <SheetActions align='right'>
                 <Button onTouchTap={this.onRemoveReply.bind(this, this.props.artworks.one._id, reply._id)}>
                   remove
