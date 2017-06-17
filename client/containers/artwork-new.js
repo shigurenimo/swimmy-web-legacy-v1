@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import IconAdd from 'material-ui-icons/Add'
 import IconClear from 'material-ui-icons/Clear'
-import Radio from 'material-ui/Radio'
+import CheckBox from 'material-ui/CheckBox'
 import Typography from 'material-ui/Typography'
 import Avatar from 'material-ui/Avatar'
 import TextField from 'material-ui/TextField'
@@ -57,7 +57,6 @@ export default class ArtworkNew extends Component {
             <TextField multiline
               label='note'
               onChange={this.onInputNote}
-              rows={4}
               maxLength='1000'
               value={this.state.inputNote} />
           </SheetActions>
@@ -66,7 +65,7 @@ export default class ArtworkNew extends Component {
           {/* カラー */}
           <SheetActions>
             {utils.colors.cmyk.map(code =>
-              <Radio
+              <CheckBox
                 key={code}
                 checked={this.state.inputColors.includes(code)}
                 onChange={this.onSelectColor.bind(this, code)}
@@ -76,7 +75,9 @@ export default class ArtworkNew extends Component {
                   </Avatar>
                 }
                 checkedIcon={
-                  <Avatar style={{background: '#' + code}}><IconClear /></Avatar>
+                  <Avatar style={{background: '#' + code}}>
+                    <IconClear />
+                  </Avatar>
                 } />)}
           </SheetActions>
         </Sheet>
@@ -110,14 +111,6 @@ export default class ArtworkNew extends Component {
               primary={this.state.isPublic}
               onClick={this.onChangePublic.bind(this, true)}>{this.props.users.one.username}</Button>
           </SheetActions>
-        </Sheet>
-        <Sheet>
-          {this.state.isPublic &&
-          <SheetActions>
-            <Typography>
-              ユーザネームが公開されます
-            </Typography>
-          </SheetActions>}
         </Sheet>
         {/* タイムラインの表示 */}
         <Sheet>
