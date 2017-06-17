@@ -35,8 +35,7 @@ export default class NetworkEdit extends Component {
           <SheetActions>
             <UIDropzone
               src={Meteor.settings.public.assets.network.root + network._id + '/' + this.state.header}
-              onDrop={this.onDropHeader}>
-            </UIDropzone>
+              onDrop={this.onDropHeader} />
           </SheetActions>
         </Sheet>
         {/* description */}

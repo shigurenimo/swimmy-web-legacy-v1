@@ -1,6 +1,6 @@
 import colors from './colors'
 import date from './date'
-import isSmartphone from './isSmartphone'
+import isSmartphone from './is-smartphone'
 import regions from './regions'
 import { match, replace } from './replace'
 
