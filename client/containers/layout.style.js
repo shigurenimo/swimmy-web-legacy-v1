@@ -23,7 +23,7 @@ export default createStyleSheet('Layout', theme => {
       transform: 'translate3d(0, 0, 0)'
     },
     smartphone: {
-      transition: 'translate3d 250ms'
+      transition: 'translate3d 300ms'
     },
     smartphoneNot: {
       transition: 'translateX 0'
