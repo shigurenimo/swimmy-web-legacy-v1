@@ -10,17 +10,18 @@ import styleSheet from './left-menu.style'
 @observer
 export default class LeftMenu extends Component {
   render () {
-    const {classes, layout} = this.props
-    if (this.props.users.isLoggingIn) {
+    const {classes, layout, router, users} = this.props
+    if (users.isLoggingIn) {
       return null
     }
-    if (!this.props.router.page) {
+    if (!router.page) {
       return null
     }
     return (
-      <div className={classNames(classes.container, {
-        [classes.oneColumn]: layout.oneColumn
-      })}>
+      <div
+        className={classNames(classes.container, {
+          [classes.oneColumn]: layout.oneColumn
+        })}>
         <LeftMenuDefault />
       </div>
     )

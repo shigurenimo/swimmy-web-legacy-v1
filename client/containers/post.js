@@ -24,7 +24,7 @@ export default class Post extends Component {
     const {classes} = this.props
     return (
       <div>
-        <Sheet hover onTouchTap={this.onOpenThread.bind(this)}>
+        <Sheet hover onTouchTap={this.onOpenThread}>
           {/* username */}
           {this.props.public &&
           <SheetContent>
@@ -50,7 +50,7 @@ export default class Post extends Component {
               className={classNames(classes.photoImage, {
                 [classes.photoImageOpen]: this.state.selectImage
               })}
-              onTouchTap={this.onSelectImage.bind(this)}>
+              onTouchTap={this.onSelectImage}>
               <Image src={
                 Meteor.settings.public.assets.post.image +
                 this.props.imagesDate + '/' +
@@ -118,7 +118,7 @@ export default class Post extends Component {
           </SheetActions>
           {/* more */}
           {this.props.users.isLogged &&
-          <Button compact className={classes.more} onClick={this.onOpenReply.bind(this)}>
+          <Button compact className={classes.more} onClick={this.onOpenReply}>
             {this.state.isReply
               ? <IconKeyboardArrowUp className={classes.icon} />
               : <IconKeyboardArrowDown className={classes.icon} />}
@@ -132,14 +132,14 @@ export default class Post extends Component {
               value={this.state.inputNewReaction}
               placeholder={'New Reaction : ' + this.reactionPlaceholder}
               maxLength='10'
-              onChange={this.onInputNewReaction.bind(this)} />
+              onChange={this.onInputNewReaction} />
           </SheetActions>
           <SheetActions align='right'>
             {this.props.users.isLogged &&
             this.state.isReply &&
             (this.props.owner === this.props.users._id) &&
             <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete</Button>}
-            <Button onClick={this.onSubmitNewReaction.bind(this)}>push</Button>
+            <Button onClick={this.onSubmitNewReaction}>push</Button>
           </SheetActions>
         </Sheet>}
       </div>
@@ -170,7 +170,7 @@ export default class Post extends Component {
             <Typography type='subheading'>
               {data.title}
             </Typography>
-            <Button onClick={this.onOpenIframe.bind(this)}>
+            <Button onClick={this.onOpenIframe}>
               タップして{data.provider_name}を読み込む
             </Button>
           </SheetActions>
@@ -195,14 +195,20 @@ export default class Post extends Component {
     FlowRouter.go('/thread/' + this.props._id)
   }
 
+  onOpenThread = ::this.onOpenThread
+
   onOpenIframe () {
     this.setState({iframe: true})
   }
+
+  onOpenIframe = ::this.onOpenIframe
 
   // 写真を選択する
   onSelectImage () {
     this.setState({selectImage: !this.state.selectImage})
   }
+
+  onSelectImage = ::this.onSelectImage
 
   // リプライを開く
   onOpenReply (event) {
@@ -214,6 +220,8 @@ export default class Post extends Component {
     }
   }
 
+  onOpenReply = ::this.onOpenReply
+
   // 新しいリアクションを入力する
   onInputNewReaction (event) {
     event.persist()
@@ -221,6 +229,8 @@ export default class Post extends Component {
     if (value.length > 20) return
     this.setState({inputNewReaction: value})
   }
+
+  onInputNewReaction = ::this.onInputNewReaction
 
   // リアクションを更新する
   onUpdateReaction (postId, name) {
@@ -259,6 +269,8 @@ export default class Post extends Component {
     const inputNewReaction = this.state.inputNewReaction
     this.onUpdateReaction(postId, inputNewReaction)
   }
+
+  onSubmitNewReaction = ::this.onSubmitNewReaction
 
   // 投稿を削除する
   onRemovePost (postId) {

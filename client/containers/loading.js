@@ -7,8 +7,6 @@ import styleSheet from './loading.style'
 @withStyles(styleSheet)
 @observer
 export default class Loading extends Component {
-  animation = null
-
   render () {
     const {classes} = this.props
     return (
@@ -30,6 +28,8 @@ export default class Loading extends Component {
       </div>
     )
   }
+
+  animation = null
 
   componentDidMount () {
     this.animation = setInterval(() => {

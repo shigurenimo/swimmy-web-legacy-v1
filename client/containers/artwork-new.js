@@ -31,7 +31,7 @@ export default class ArtworkNew extends Component {
               image={this.state.inputImage}
               text='画像をドロップ or タップ' />
             {this.state.inputImage &&
-            <div onTouchTap={this.onCloseImage.bind(this)}>
+            <div onTouchTap={this.onCloseImage}>
               <IconClear style={{width: 35, height: 35}} color='tomato' />
             </div>}
           </SheetActions>
@@ -48,7 +48,7 @@ export default class ArtworkNew extends Component {
               placeholder='タイトル（任意）'
               value={this.state.inputTitle}
               maxLength='100'
-              onChange={this.onInputTitle.bind(this)} />
+              onChange={this.onInputTitle} />
           </SheetActions>
         </Sheet>
         <Sheet>
@@ -56,7 +56,7 @@ export default class ArtworkNew extends Component {
           <SheetActions>
             <Input multiline
               placeholder='タップしてノートを入力'
-              onChange={this.onInputNote.bind(this)}
+              onChange={this.onInputNote}
               rows={4}
               maxLength='1000'
               value={this.state.inputNote} />
@@ -134,7 +134,7 @@ export default class ArtworkNew extends Component {
           {/* 送信ボタン */}
           {!this.state.errorImage &&
           <SheetActions align='right'>
-            <InputButton onClick={this.onSubmit.bind(this)}>push</InputButton>
+            <InputButton onClick={this.onSubmit}>push</InputButton>
           </SheetActions>}
         </Sheet>
       </Layout>
@@ -151,6 +151,7 @@ export default class ArtworkNew extends Component {
     isPublic: false,
     isSecret: false
   }
+
   process = false
 
   // タイトルを入力する
@@ -161,6 +162,8 @@ export default class ArtworkNew extends Component {
     this.setState({inputTitle: value})
   }
 
+  onInputTitle = ::this.onInputTitle
+
   // ノートを入力する
   onInputNote (event) {
     event.persist()
@@ -168,6 +171,8 @@ export default class ArtworkNew extends Component {
     if (value.length > 1000) return
     this.setState({inputNote: value})
   }
+
+  onInputNote = ::this.onInputNote
 
   // 画像を設定する
   onDropImage (acceptedFiles) {
@@ -204,6 +209,8 @@ export default class ArtworkNew extends Component {
   onCloseImage () {
     this.setState({errorImage: null, inputImage: null})
   }
+
+  onCloseImage = ::this.onCloseImage
 
   // カラーを入力する
   onSelectColor (color, event) {
@@ -250,6 +257,8 @@ export default class ArtworkNew extends Component {
       setTimeout(() => { this.setState({errorArtwork: ''}) }, 5000)
     }
   }
+
+  onInputArtwork = ::this.onInputArtwork
 
   // メッセージの更新をサーバーに送信する
   onSubmit () {
@@ -326,4 +335,6 @@ export default class ArtworkNew extends Component {
       this.props.snackbar.error(err)
     })
   }
+
+  onSubmit = ::this.onSubmit
 }

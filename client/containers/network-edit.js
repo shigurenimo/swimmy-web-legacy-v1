@@ -18,7 +18,6 @@ export default class NetworkEdit extends Component {
     const {
       networks: {one: network}
     } = this.props
-    console.log(Meteor.settings.public.assets.network.root + network._id + '/' + this.state.header)
     return (
       <Layout>
         {/* name */}
@@ -27,8 +26,8 @@ export default class NetworkEdit extends Component {
             <TextField
               value={this.state.name}
               maxLength={50}
-              onChange={this.onChangeName.bind(this)}
-              onBlur={this.onSubmitName.bind(this)} />
+              onChange={this.onChangeName}
+              onBlur={this.onSubmitName} />
           </SheetContent>
         </Sheet>
         {/* header */}
@@ -36,7 +35,7 @@ export default class NetworkEdit extends Component {
           <SheetActions>
             <UIDropzone
               src={Meteor.settings.public.assets.network.root + network._id + '/' + this.state.header}
-              onDrop={this.onDropHeader.bind(this)}>
+              onDrop={this.onDropHeader}>
             </UIDropzone>
           </SheetActions>
         </Sheet>
@@ -48,8 +47,8 @@ export default class NetworkEdit extends Component {
               placeholder='リストの簡単な説明'
               value={this.state.description}
               maxLength='100'
-              onChange={this.onInputDescription.bind(this)}
-              onBlur={this.onSubmitDescription.bind(this)} />
+              onChange={this.onInputDescription}
+              onBlur={this.onSubmitDescription} />
           </SheetActions>
         </Sheet>
         {/* sns : web site */}
@@ -61,7 +60,7 @@ export default class NetworkEdit extends Component {
               placeholder='https://swimmy.io'
               maxLength='20'
               onChange={this.onInputSocial.bind(this, 'site')}
-              onBlur={this.onSubmitSocial.bind(this, 'site')} />
+              onBlur={this.onSubmitSocial} />
           </SheetContent>
         </Sheet>
         {/* sns : twitter */}
@@ -73,7 +72,7 @@ export default class NetworkEdit extends Component {
               placeholder='username'
               maxLength='20'
               onChange={this.onInputSocial.bind(this, 'twitter')}
-              onBlur={this.onSubmitSocial.bind(this, 'twitter')} />
+              onBlur={this.onSubmitSocial} />
           </SheetContent>
         </Sheet>
         {/* school */}
@@ -84,8 +83,8 @@ export default class NetworkEdit extends Component {
               label='学校名'
               placeholder={'名桜大学'}
               maxLength='40'
-              onChange={this.onInputUniv.bind(this)}
-              onBlur={this.onSubmitUniv.bind(this)} />
+              onChange={this.onInputUniv}
+              onBlur={this.onSubmitUniv} />
           </SheetContent>
         </Sheet>
       </Layout>
@@ -120,6 +119,8 @@ export default class NetworkEdit extends Component {
     this.setState({name: value})
   }
 
+  onChangeName = ::this.onChangeName
+
   // リストの名前の更新をサーバーに送信する
   onSubmitName () {
     if (this.props.networks.one.name === this.state.name) return
@@ -134,6 +135,8 @@ export default class NetworkEdit extends Component {
       this.props.snackbar.error(err)
     })
   }
+
+  onSubmitName = ::this.onSubmitName
 
   // 画像をアップロードしてサーバーに送信する
   onDropHeader (acceptedFiles) {
@@ -195,6 +198,8 @@ export default class NetworkEdit extends Component {
     })
   }
 
+  onDropHeader = ::this.onDropHeader
+
   // リストの説明を更新する
   onInputDescription (event) {
     event.persist()
@@ -203,6 +208,8 @@ export default class NetworkEdit extends Component {
     if (value < 0) return
     this.setState({description: value})
   }
+
+  onInputDescription = ::this.onInputDescription
 
   // リストの説明の更新をサーバーに送信する
   onSubmitDescription () {
@@ -219,6 +226,8 @@ export default class NetworkEdit extends Component {
     })
   }
 
+  onSubmitDescription = ::this.onSubmitDescription
+
   // 大学名を更新する
   onInputUniv (event) {
     event.persist()
@@ -227,6 +236,8 @@ export default class NetworkEdit extends Component {
     if (value < 0) return
     this.setState({univ: value})
   }
+
+  onInputUniv = ::this.onInputUniv
 
   // 大学名の更新をサーバーに送信する
   onSubmitUniv () {
@@ -242,6 +253,8 @@ export default class NetworkEdit extends Component {
       this.props.snackbar.error(err)
     })
   }
+
+  onSubmitUniv = ::this.onSubmitUniv
 
   // テキストを入力する
   onInputSocial (name, event) {
@@ -272,6 +285,8 @@ export default class NetworkEdit extends Component {
       this.props.snackbar.error(err)
     })
   }
+
+  onSubmitSocial = ::this.onSubmitSocial
 
   componentDidMount () {
     this.context.onScrollTop()

@@ -31,10 +31,10 @@ export default class TimeMachine extends Component {
               <InlineTypography>{this.state.currentYear}</InlineTypography>
               <InlineTypography type='display1'>{'・'}</InlineTypography>
               <InlineTypography type='display1'>{this.state.currentMonth}</InlineTypography>
-              <Button compact className={classes.prev} onClick={this.onBeforeMonth.bind(this)}>
+              <Button compact className={classes.prev} onClick={this.onBeforeMonth}>
                 <IconBefore className={classes.icon} />
               </Button>
-              <Button compact className={classes.next} onClick={this.onNextMonth.bind(this)}>
+              <Button compact className={classes.next} onClick={this.onNextMonth}>
                 <IconNext className={classes.icon} /></Button>
             </Block>
           </SheetContent>
@@ -45,10 +45,10 @@ export default class TimeMachine extends Component {
               <Typography type='title'>
                 {this.state.currentDay}
               </Typography>
-              <Button compact className={classes.prev} onClick={this.onBeforeDay.bind(this)}>
+              <Button compact className={classes.prev} onClick={this.onBeforeDay}>
                 <IconBefore className={classes.icon} />
               </Button>
-              <Button compact className={classes.next} onClick={this.onNextDay.bind(this)}>
+              <Button compact className={classes.next} onClick={this.onNextDay}>
                 <IconNext className={classes.icon} />
               </Button>
             </Block>
@@ -86,6 +86,8 @@ export default class TimeMachine extends Component {
     }
   }
 
+  onBeforeMonth = ::this.onBeforeMonth
+
   onNextMonth (event) {
     if (event) event.preventDefault()
     if (this.state.currentMonth > 11) {
@@ -94,6 +96,8 @@ export default class TimeMachine extends Component {
       this.setState({currentMonth: this.state.currentMonth + 1, currentDay: 1})
     }
   }
+
+  onNextMonth = ::this.onNextMonth
 
   onBeforeDay (event) {
     if (event) event.preventDefault()
@@ -106,6 +110,8 @@ export default class TimeMachine extends Component {
     }
   }
 
+  onBeforeDay = ::this.onBeforeDay
+
   onNextDay (event) {
     if (event) event.preventDefault()
     const count = new Date(2017, this.state.currentDay - 1, 0).getDate()
@@ -117,9 +123,10 @@ export default class TimeMachine extends Component {
     }
   }
 
+  onNextDay = ::this.onNextDay
+
   forPosts () {
-    const index = this.props.posts.index.slice()
-    const isFetching = this.props.posts.isFetching
+    const {posts: {index, isFetching}} = this.props
     if (index.length < 1) {
       return (
         <Sheet>

@@ -147,7 +147,7 @@ export default class LeftMenuDefault extends Component {
             <ListItemText primary='統計データ' />
           </ListItem>
           {this.props.users.isLogged &&
-          <ListItem button dense onClick={this.onLogout.bind(this)}>
+          <ListItem button dense onClick={this.onLogout}>
             <ListItemText primary='ログアウト' />
           </ListItem>}
         </List>
@@ -172,4 +172,6 @@ export default class LeftMenuDefault extends Component {
       this.props.snackbar.error(err)
     })
   }
+
+  onLogout = ::this.onLogout
 }

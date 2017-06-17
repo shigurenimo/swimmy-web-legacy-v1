@@ -56,7 +56,7 @@ export default class Profile extends Component {
         user.username !== this.props.users.username &&
         <Sheet>
           <SheetActions align='center'>
-            <Button onClick={this.onFollow.bind(this, user.username)}>
+            <Button onClick={this.onFollow}>
               {followsIds.includes(user._id) ? 'フォローを外す' : 'フォローする'}
             </Button>
           </SheetActions>
@@ -76,6 +76,8 @@ export default class Profile extends Component {
       this.props.snackbar.error(err)
     })
   }
+
+  onFollow = ::this.onFollow
 
   componentDidMount () {
     this.context.onScrollTop()

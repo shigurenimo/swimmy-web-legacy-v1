@@ -53,11 +53,11 @@ export default class NetworkInfo extends Component {
           {this.props.users.isLogged &&
           <SheetActions align='right'>
             {network.member.includes(this.props.users._id) ? (
-              <Button onTouchTap={this.onLeaveNetwork.bind(this)}>
+              <Button onTouchTap={this.onLeaveNetwork}>
                 チェックアウト
               </Button>
             ) : (
-              <Button onTouchTap={this.onJoinNetwork.bind(this)}>
+              <Button onTouchTap={this.onJoinNetwork}>
                 チェックイン
               </Button>
             )}
@@ -67,7 +67,7 @@ export default class NetworkInfo extends Component {
         this.props.users._id === network.owner &&
         <Sheet>
           <SheetActions>
-            <Button onClick={this.onRemoveList.bind(this)}>
+            <Button onClick={this.onRemoveList}>
               このリストを削除する
             </Button>
             {network.member.includes(this.props.users._id) &&
@@ -90,6 +90,8 @@ export default class NetworkInfo extends Component {
     })
   }
 
+  onJoinNetwork = ::this.onJoinNetwork
+
   // リストを外す
   onLeaveNetwork () {
     const networkId = this.props.networks.one._id
@@ -101,6 +103,8 @@ export default class NetworkInfo extends Component {
       this.props.snackbar.show('リストを外しました')
     })
   }
+
+  onLeaveNetwork = ::this.onLeaveNetwork
 
   onRemoveList () {
     const confirm = window.confirm('削除してもいいですか？')
@@ -118,6 +122,8 @@ export default class NetworkInfo extends Component {
       this.props.snackbar.error(err)
     })
   }
+
+  onRemoveList = ::this.onRemoveList
 
   componentDidMount () {
     this.context.onScrollTop()

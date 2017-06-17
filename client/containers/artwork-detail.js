@@ -29,7 +29,9 @@ export default class ArtworkDetail extends Component {
           {/* ユーザ */}
           {this.props.artworks.one.public &&
           <SheetContent>
-            <Typography>{this.props.artworks.one.public.name}@{this.props.artworks.one.public.username}</Typography>
+            <Typography>
+              {this.props.artworks.one.public.name}@{this.props.artworks.one.public.username}
+            </Typography>
           </SheetContent>}
           {/* イメージ */}
           <SheetImage src={this.src} />
@@ -41,7 +43,7 @@ export default class ArtworkDetail extends Component {
                 placeholder='タイトル（任意）'
                 value={this.state.inputTitle}
                 maxLength='100'
-                onChange={this.onInputTitle.bind(this)} />
+                onChange={this.onInputTitle} />
             </SheetContent>}
             {/* ノート */}
             {!this.state.isEdit && this.state.inputNote &&
@@ -52,7 +54,7 @@ export default class ArtworkDetail extends Component {
             <SheetContent>
               <Input multiline
                 placeholder='タップしてノートを編集'
-                onChange={this.onInputNote.bind(this)}
+                onChange={this.onInputNote}
                 rows={8}
                 maxLength='1000'
                 value={this.state.inputNote} />
@@ -98,15 +100,15 @@ export default class ArtworkDetail extends Component {
             this.props.artworks.one.owner === this.props.users._id &&
             <SheetActions align='right'>
               {!this.state.isEdit &&
-              <Button onClick={this.onRemove.bind(this)}>
+              <Button onClick={this.onRemove}>
                 投稿を削除する
               </Button>}
               {!this.state.isEdit &&
-              <Button onClick={this.onChangeEdit.bind(this)}>
+              <Button onClick={this.onChangeEdit}>
                 内容を編集する
               </Button>}
               {this.state.isEdit &&
-              <Button onClick={this.onChangeEdit.bind(this)}>
+              <Button onClick={this.onChangeEdit}>
                 編集を完了する
               </Button>}
             </SheetActions>}
@@ -116,9 +118,11 @@ export default class ArtworkDetail extends Component {
               {Object.keys(this.props.artworks.one.reactions).map(name =>
                 <Button background
                   key={name}
-                  primary={!!this.props.users.isLogged && this.props.artworks.one.reactions[name].includes(this.props.users._id)}
+                  primary={!!this.props.users.isLogged &&
+                  this.props.artworks.one.reactions[name].includes(this.props.users._id)}
                   onClick={this.onUpdateReaction.bind(this, this.props.artworks.one._id, name)}>
-                  {name + (this.props.artworks.one.reactions[name].length > 0 ? ' ' + this.props.artworks.one.reactions[name].length : '')}
+                  {name + (this.props.artworks.one.reactions[name].length > 0 ? ' ' +
+                    this.props.artworks.one.reactions[name].length : '')}
                 </Button>
               )}
             </SheetContent>}
@@ -129,12 +133,12 @@ export default class ArtworkDetail extends Component {
                 value={this.state.inputNewReaction}
                 placeholder='New Reaction'
                 maxLength='10'
-                onChange={this.onInputNewReaction.bind(this)} />
+                onChange={this.onInputNewReaction} />
             </SheetActions>}
             {this.props.users.isLogged &&
             this.state.inputNewReaction.length > 0 && !this.state.isEdit &&
             <SheetActions align='right'>
-              <Button onClick={this.onSubmitNewReaction.bind(this)}>
+              <Button onClick={this.onSubmitNewReaction}>
                 push
               </Button>
             </SheetActions>}
@@ -144,7 +148,7 @@ export default class ArtworkDetail extends Component {
               <Input multiline
                 value={this.state.inputReply}
                 placeholder='New Comment'
-                onChange={this.onInputReply.bind(this)} />
+                onChange={this.onInputReply} />
             </SheetActions>}
             {/* リプライの送信 */}
             {this.state.inputReply.length > 0 && !this.state.isEdit &&
@@ -245,6 +249,8 @@ export default class ArtworkDetail extends Component {
     })
   }
 
+  onRemove = ::this.onRemove
+
   // 編集のモードを切り替える
   onChangeEdit () {
     if (this.state.isEdit) {
@@ -279,6 +285,8 @@ export default class ArtworkDetail extends Component {
     }
   }
 
+  onChangeEdit = ::this.onChangeEdit
+
   // タイトルを入力する
   onInputTitle (event) {
     event.persist()
@@ -287,6 +295,8 @@ export default class ArtworkDetail extends Component {
     this.setState({inputTitle: value})
   }
 
+  onInputTitle = ::this.onInputTitle
+
   // ノートを入力する
   onInputNote (event) {
     event.persist()
@@ -294,6 +304,8 @@ export default class ArtworkDetail extends Component {
     if (value.length > 1000) return
     this.setState({inputNote: value})
   }
+
+  onInputNote = ::this.onInputNote
 
   // カラーを入力する
   onSelectColor (color, event) {
@@ -345,12 +357,16 @@ export default class ArtworkDetail extends Component {
     this.setState({inputNewReaction: value})
   }
 
+  onInputNewReaction = ::this.onInputNewReaction
+
   // 新しいリアクションを送信する
   onSubmitNewReaction () {
     const postId = this.props.artworks.one._id
     const inputNewReaction = this.state.inputNewReaction
     this.onUpdateReaction(postId, inputNewReaction)
   }
+
+  onSubmitNewReaction = ::this.onSubmitNewReaction
 
   // リプライを入力する
   onInputReply (event) {
@@ -359,6 +375,8 @@ export default class ArtworkDetail extends Component {
     if (value.length > 200) return
     this.setState({inputReply: value})
   }
+
+  onInputReply = ::this.onInputReply
 
   // 投稿の種類をパブリックに変更する
   onChangeReplyPublic (bool) {

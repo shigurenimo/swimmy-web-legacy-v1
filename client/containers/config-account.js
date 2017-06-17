@@ -119,6 +119,7 @@ export default class ConfigAccount extends Component {
     oldPassword: '',
     newPassword: ''
   }
+
   process = false
 
   // ハンドルネームを入力する

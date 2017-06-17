@@ -30,7 +30,7 @@ export default class InputPost extends Component {
         <div className={classes.timelineName}>
           <Button background minimal
             primary={this.props.posts.networkInfo}
-            onClick={this.openNetworkInfo.bind(this)}>
+            onClick={this.openNetworkInfo}>
             {this.timelineName}
           </Button>
         </div>
@@ -40,13 +40,13 @@ export default class InputPost extends Component {
             value={this.props.inputPost.postContent}
             placeholder='ここタップすると入力できます'
             ref={self => { this.ref = self }}
-            onKeyDown={this.onSubmitKeyDown.bind(this)}
-            onChange={this.onInputContent.bind(this)} />
+            onKeyDown={this.onSubmitKeyDown}
+            onChange={this.onInputContent} />
           {this.state.inputImage &&
           <div className={classes.imagePreview}>
             <Image
               src={this.state.inputImage.preview}
-              onTouchTap={this.onCloseImage.bind(this)} />
+              onTouchTap={this.onCloseImage} />
           </div>}
         </div>
         <div className={classes.postPublic}>
@@ -72,7 +72,7 @@ export default class InputPost extends Component {
           </Button>}
           {/* 送信ボタン */}
           {!this.state.errorImage &&
-          <Button compact onClick={this.onSubmit.bind(this)}>
+          <Button compact onClick={this.onSubmit}>
             GOGO!
           </Button>}
         </div>
@@ -118,6 +118,8 @@ export default class InputPost extends Component {
     }
   }
 
+  openNetworkInfo = ::this.openNetworkInfo
+
   // 内容を入力する
   onInputContent (event) {
     const textarea = this.ref
@@ -130,6 +132,8 @@ export default class InputPost extends Component {
     this.props.inputPost.setPostContentHeight(textarea.scrollHeight)
     this.props.inputPost.setPostContent(value)
   }
+
+  onInputContent = ::this.onInputContent
 
   // 画像を設定する
   onDropImage (acceptedFiles) {
@@ -169,6 +173,8 @@ export default class InputPost extends Component {
     this.props.inputPost.setPostImage(false)
   }
 
+  onCloseImage = ::this.onCloseImage
+
   // 公開・非公開を変更する
   onChangePublic (bool) {
     this.setState({inputIsPublic: bool})
@@ -179,11 +185,15 @@ export default class InputPost extends Component {
     this.onSubmit()
   }
 
+  onSubmitKeyDown = ::this.onSubmitKeyDown
+
   onSubmit () {
     this.props.router.page === 'thread'
       ? this.onSubmitReply()
       : this.onSubmitPost()
   }
+
+  onSubmit = ::this.onSubmit
 
   onSubmitPost () {
     if (this.process) return

@@ -29,7 +29,7 @@ export default class NetworkNew extends Component {
                 value={this.state.networkName}
                 placeholder='ソーシャルゲーム'
                 maxLength='100'
-                onChange={this.onInputNetworkName.bind(this)} />
+                onChange={this.onInputNetworkName} />
             </SheetContent>
           </Sheet>
           {/* リストの説明 */}
@@ -41,7 +41,7 @@ export default class NetworkNew extends Component {
                   value={this.state.networkDescription}
                   placeholder='ソーシャルゲームの情報交換をするリスト'
                   maxLength={400}
-                  onChange={this.onInputNetworkDescription.bind(this)} />
+                  onChange={this.onInputNetworkDescription} />
               </Block>
             </SheetContent>
           </Sheet>
@@ -55,7 +55,7 @@ export default class NetworkNew extends Component {
                   value={this.state.networkSite}
                   placeholder='https://swimmy.io'
                   maxLength='20'
-                  onChange={this.onInputNetworkSite.bind(this)} />
+                  onChange={this.onInputNetworkSite} />
               </SheetContent>
             </Sheet>
             {/* SNS:Twitter */}
@@ -66,7 +66,7 @@ export default class NetworkNew extends Component {
                   value={this.state.networkTwitter}
                   placeholder='username'
                   maxLength='20'
-                  onChange={this.onInputNetworkTwitter.bind(this)} />
+                  onChange={this.onInputNetworkTwitter} />
               </SheetContent>
             </Sheet>
             <Sheet>
@@ -77,7 +77,7 @@ export default class NetworkNew extends Component {
                   value={this.state.networkUniversity}
                   placeholder='名桜大学'
                   maxLength='40'
-                  onChange={this.onInputNetworkUniversity.bind(this)} />
+                  onChange={this.onInputNetworkUniversity} />
               </SheetContent>
             </Sheet>
           </div>}
@@ -94,10 +94,10 @@ export default class NetworkNew extends Component {
           <Sheet>
             <SheetContent align='right'>
               {!this.state.isDetail &&
-              <Button onClick={this.onOpenDetail.bind(this)}>
+              <Button onClick={this.onOpenDetail}>
                 more
               </Button>}
-              <Button onClick={this.onSubmit.bind(this)}>
+              <Button onClick={this.onSubmit}>
                 create
               </Button>
             </SheetContent>
@@ -127,6 +127,8 @@ export default class NetworkNew extends Component {
     this.setState({isDetail: true})
   }
 
+  onOpenDetail = ::this.onOpenDetail
+
   // リスト名を入力する
   onInputNetworkName (event) {
     event.persist()
@@ -134,6 +136,8 @@ export default class NetworkNew extends Component {
     if (value.length > 100) return
     this.setState({networkName: value})
   }
+
+  onInputNetworkName = ::this.onInputNetworkName
 
   // リストの説明を入力する
   onInputNetworkDescription (event) {
@@ -143,6 +147,8 @@ export default class NetworkNew extends Component {
     this.setState({networkDescription: value})
   }
 
+  onInputNetworkDescription = ::this.onInputNetworkDescription
+
   // リストの大学名を入力する
   onInputNetworkUniversity (event) {
     event.persist()
@@ -150,20 +156,7 @@ export default class NetworkNew extends Component {
     this.setState({networkUniversity: value})
   }
 
-  // リストの活動場所を入力する
-  onInputNetworkPlace (event) {
-    event.persist()
-    const value = event.target.value
-    if (value.length > 100) return
-    this.setState({networkPlace: value})
-  }
-
-  // リストの地域を入力する
-  onInputNetworkChannel (event) {
-    event.persist()
-    const value = event.target.value
-    this.setState({networkChannel: value})
-  }
+  onInputNetworkUniversity = ::this.onInputNetworkUniversity
 
   // リストのサイトを入力する
   onInputNetworkSite (event) {
@@ -172,6 +165,8 @@ export default class NetworkNew extends Component {
     if (value.length > 100) return
     this.setState({networkSite: value})
   }
+
+  onInputNetworkSite = ::this.onInputNetworkSite
 
   // リストのTwitterアカウントを更新する
   onInputNetworkTwitter (event) {
@@ -182,6 +177,8 @@ export default class NetworkNew extends Component {
     this.setState({networkTwitter: value})
   }
 
+  onInputNetworkTwitter = ::this.onInputNetworkTwitter
+
   // リストのFacebookアカウントを入力する
   onInputNetworkFacebook (event) {
     event.persist()
@@ -190,6 +187,8 @@ export default class NetworkNew extends Component {
     if (!isNumeric(value)) return
     this.setState({networkFacebook: value})
   }
+
+  onInputNetworkFacebook = ::this.onInputNetworkFacebook
 
   // リストを送信する
   onSubmit () {
@@ -231,6 +230,8 @@ export default class NetworkNew extends Component {
       this.process = false
     })
   }
+
+  onSubmit = ::this.onSubmit
 
   componentDidMount () {
     this.context.onScrollTop()
