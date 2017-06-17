@@ -28,8 +28,8 @@ export default class Post extends Component {
           {/* username */}
           {this.props.public &&
           <SheetContent>
-            <Typography component='a' href={'/' + this.props.public.username}>
-              {this.props.public.name}@{this.props.public.username}
+            <Typography className={classes.username} component='a' href={'/' + this.props.public.username}>
+              @{this.props.public.username}
             </Typography>
           </SheetContent>}
           {/* content */}
@@ -106,15 +106,17 @@ export default class Post extends Component {
           </SheetContent>}
           {/* reaction */}
           <SheetActions>
-            {Object.keys(this.props.reactions).map(name =>
-              <Button compact minimal background
-                key={name}
-                className={classes.reaction}
-                primary={!!this.props.users.isLogged && this.props.reactions[name].includes(this.props.users.one._id)}
-                onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
-                {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
-              </Button>
-            )}
+            <div className={classes.reactionRoot}>
+              {Object.keys(this.props.reactions).map(name =>
+                <Button compact minimal background
+                  key={name}
+                  className={classes.reaction}
+                  primary={!!this.props.users.isLogged && this.props.reactions[name].includes(this.props.users.one._id)}
+                  onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
+                  {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
+                </Button>
+              )}
+            </div>
           </SheetActions>
           {/* more */}
           {this.props.users.isLogged &&

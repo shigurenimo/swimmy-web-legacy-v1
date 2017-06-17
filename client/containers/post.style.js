@@ -14,6 +14,10 @@ export default createStyleSheet('Post', theme => {
       bottom: '10px',
       right: '10px'
     },
+    username: {
+      fontWeight: 'bold',
+      color: theme.palette.primary[500]
+    },
     photoImage: {
       display: 'block',
       height: 'auto',
@@ -48,6 +52,9 @@ export default createStyleSheet('Post', theme => {
         top: 0,
         left: 0
       }
+    },
+    reactionRoot: {
+      width: 'calc(100% - 50px)'
     },
     reaction: {
       marginBottom: '5px'

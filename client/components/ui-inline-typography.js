@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 
@@ -17,12 +18,13 @@ export default class extends Component {
   render () {
     const {
       classes,
+      className,
       ...more
     } = this.props
     return (
       <Typography
         {...more}
-        className={classes.container}>
+        className={classNames(classes.container, className)}>
         {this.props.children}
       </Typography>
     )

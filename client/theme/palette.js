@@ -7,7 +7,7 @@ const palette = createPalette({
   type: 'light'
 })
 
-palette.text.secondary = 'darkturquoise'
-palette.text.primary = '#00afcc'
+palette.text.secondary = 'rgba(0, 0, 0, 0.5)'
+palette.text.primary = 'rgba(0, 0, 0, 0.6)'
 
 export default palette

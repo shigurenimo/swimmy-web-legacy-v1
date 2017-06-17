@@ -2,8 +2,9 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { isAlpha, isEmail } from 'validator'
-import IconNotInterested from 'material-ui-icons/NotInterested'
+import IconLayers from 'material-ui-icons/Layers'
 import IconWhatshot from 'material-ui-icons/Whatshot'
+import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import Textfiled from 'material-ui/TextField'
@@ -13,17 +14,20 @@ import SheetContent from '../components/ui-sheet-content'
 import SheetActions from '../components/ui-sheet-actions'
 import Block from '../components/ui-block'
 import InlineTypography from '../components/ui-inline-typography'
+import styleSheet from './login.style'
 
+@withStyles(styleSheet)
 @inject('users', 'snackbar')
 @observer
 export default class Login extends Component {
   render () {
+    const {classes} = this.props
     return (
       <Layout>
         <Sheet>
           <Block align='center'>
-            <Typography align='center'>{Meteor.settings.public.version}</Typography>
-            <Typography type='display1' align='center'>Swimmy</Typography>
+            <img className={classes.appLogoImage} src='/images/logo.png' />
+            <Typography className={classes.appVersion} align='center'>{Meteor.settings.public.version}</Typography>
           </Block>
         </Sheet>
         <Sheet key='login'>
@@ -31,7 +35,7 @@ export default class Login extends Component {
             <SheetActions>
               <Textfiled
                 name='username'
-                label={this.state.error === 'username' ? this.state.errorMessage : 'username or email'}
+                label={this.state.error === 'username' ? this.state.errorMessage : 'username'}
                 onChange={this.onInputUsername}
                 onKeyDown={this.onPressEnter}
                 value={this.state.username}
@@ -64,12 +68,13 @@ export default class Login extends Component {
         <Sheet>
           <Block width={500} align='center'>
             <SheetContent>
-              <IconNotInterested {...this.iconStyle} />
-              <InlineTypography>完全匿名</InlineTypography>
+              <IconLayers {...this.iconStyle} />
+              <InlineTypography className={classes.AppPointTitle}>シンプル</InlineTypography>
             </SheetContent>
             <SheetContent>
               <Typography>
-                メールアドレスは要らない。完全匿名で利用できます。
+                Swはとてもシンプルな電子掲示板です。<br />
+                登録にメールアドレスは必要ありません。
               </Typography>
             </SheetContent>
           </Block>
@@ -78,19 +83,26 @@ export default class Login extends Component {
           <Block width={500} align='center'>
             <SheetContent>
               <IconWhatshot {...this.iconStyle} />
-              <InlineTypography>オープンソース</InlineTypography>
+              <InlineTypography className={classes.AppPointTitle}>オープンソース</InlineTypography>
             </SheetContent>
             <SheetContent>
               <Typography>
-                Meteor・React・Material-UIで開発しているオープンソースのプロジェクトです。<br />
-              </Typography>
-              <Typography>
-                <a href='https://github.com/uu-fish/swimmy.io' target='new'>GitHub</a>
-                {' or '}
-                <a href='https://bitbucket.org/swimmy-io/swimmy.io' target='new'>Bitbucket</a>
+                Meteor・Reactで開発しているオープンソースのプロジェクトです。<br />
               </Typography>
             </SheetContent>
           </Block>
+        </Sheet>
+        <Sheet>
+          <SheetContent>
+            <Typography
+              component='a'
+              type='display1'
+              target='new'
+              href='https://github.com/uu-fish/swimmy.io'
+              align='center'>
+              GitHub
+            </Typography>
+          </SheetContent>
         </Sheet>
       </Layout>
     )

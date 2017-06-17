@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 const styleSheet = createStyleSheet('UISheetActions', theme => {
@@ -22,12 +23,13 @@ export default class UILayout extends Component {
   render () {
     const {
       classes,
+      className,
       align,
       flex
     } = this.props
     return (
       <div
-        className={classes.container}
+        className={classNames(className, classes.container)}
         style={{
           display: flex ? 'flex' : 'inline-block',
           textAlign: align || 'left'

@@ -4,7 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 const styleSheet = createStyleSheet('UILayout', theme => {
   return {
     container: {
-      paddingBottom: 50
+      paddingBottom: 20
     }
   }
 })

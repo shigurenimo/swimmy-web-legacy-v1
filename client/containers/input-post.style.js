@@ -40,7 +40,7 @@ export default createStyleSheet('InputPost', theme => {
       padding: 0,
       lineHeight: '20px',
       verticalAlign: 'top',
-      fontSize: '13px',
+      fontSize: '14px',
       border: 0,
       borderRadius: 0,
       appearance: 'none',

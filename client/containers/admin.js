@@ -35,12 +35,12 @@ export default class Admin extends Component {
         <Sheet>
           <SheetContent>
             <Typography align='center'>
-              {this.props.users.one.username}
+              {this.props.users.one.profile.name}
             </Typography>
           </SheetContent>
           <SheetContent>
-            <Typography type='title' align='center'>
-              {this.props.users.one.profile.name}
+            <Typography type='display1' align='center'>
+              @{this.props.users.one.username}
             </Typography>
           </SheetContent>
         </Sheet>

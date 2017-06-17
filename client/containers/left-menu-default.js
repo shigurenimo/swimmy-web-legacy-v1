@@ -17,12 +17,6 @@ export default class LeftMenuDefault extends Component {
     const {classes} = this.props
     return (
       <div>
-        <div className={classes.appLogo}>
-          <img className={classes.appLogoImage} src='/images/logo.png' />
-          <Typography className={classes.appVersion}>
-            {Meteor.settings.public.version}
-          </Typography>
-        </div>
         {/* 既存のネットワーク */}
         <List>
           <ListItem button dense

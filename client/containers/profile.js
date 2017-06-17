@@ -43,12 +43,12 @@ export default class Profile extends Component {
         <Sheet>
           <SheetContent>
             <Typography align='center'>
-              {user.username}
+              {user.profile.name}
             </Typography>
           </SheetContent>
           <SheetContent>
-            <Typography type='title' align='center'>
-              {user.profile.name}
+            <Typography type='display1' align='center'>
+              @{user.username}
             </Typography>
           </SheetContent>
         </Sheet>

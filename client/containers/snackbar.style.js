@@ -18,7 +18,7 @@ export default createStyleSheet('Snackbar', theme => {
     },
     inner: {
       height: '100%',
-      backgroundColor: theme.palette.text.primary
+      backgroundColor: theme.palette.primary[500]
     },
     text: {
       textAlign: 'center',
