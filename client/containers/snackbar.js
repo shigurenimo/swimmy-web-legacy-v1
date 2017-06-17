@@ -23,9 +23,10 @@ export default class Snackbar extends Component {
           [classes.minimal]: this.isMinimal
         })}>
         <Card className={classes.inner}>
+          {this.props.snackbar.message &&
           <Typography className={classes.text}>
             {this.props.snackbar.message}
-          </Typography>
+          </Typography>}
         </Card>
       </div>
     )

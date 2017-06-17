@@ -4,7 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 import { fade } from 'material-ui/styles/colorManipulator'
 import Button from 'material-ui/Button'
 
-export const styleSheet = createStyleSheet('UIInputButton', theme => {
+export const styleSheet = createStyleSheet('UIButton', theme => {
   return {
     background: {
       backgroundColor: 'rgba(0, 0, 0, 0.05)'

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { isNumeric } from 'validator'
 import Button from 'material-ui/Button'
-import Input from 'material-ui/Input'
+import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
 import Block from '../components/ui-block'
 import Layout from '../components/ui-layout'
@@ -22,12 +22,9 @@ export default class NetworkNew extends Component {
           {/* name */}
           <Sheet>
             <SheetContent>
-              <Typography>
-                リストの名前 ※
-              </Typography>
-              <Input
+              <TextField required
                 value={this.state.networkName}
-                placeholder='ソーシャルゲーム'
+                label='リストの名前'
                 maxLength='100'
                 onChange={this.onInputNetworkName} />
             </SheetContent>
@@ -37,9 +34,9 @@ export default class NetworkNew extends Component {
             <SheetContent>
               <Block width={400}>
                 <Typography>簡単な説明</Typography>
-                <Input multiline
+                <TextField multiline
                   value={this.state.networkDescription}
-                  placeholder='ソーシャルゲームの情報交換をするリスト'
+                  label='リストの説明'
                   maxLength={400}
                   onChange={this.onInputNetworkDescription} />
               </Block>
@@ -50,10 +47,10 @@ export default class NetworkNew extends Component {
             <Sheet>
               {/* SNS:Webサイト */}
               <SheetContent>
-                <Typography>Webサイト</Typography>
-                <Input
+                <TextField
                   value={this.state.networkSite}
-                  placeholder='https://swimmy.io'
+                  label='web site url'
+                  InputProps={{placeholder: 'https://swimmy.io'}}
                   maxLength='20'
                   onChange={this.onInputNetworkSite} />
               </SheetContent>
@@ -61,10 +58,10 @@ export default class NetworkNew extends Component {
             {/* SNS:Twitter */}
             <Sheet>
               <SheetContent>
-                <Typography>Twitter</Typography>
-                <Input
+                <TextField
                   value={this.state.networkTwitter}
-                  placeholder='username'
+                  label='twitter'
+                  InputProps={{placeholder: 'username'}}
                   maxLength='20'
                   onChange={this.onInputNetworkTwitter} />
               </SheetContent>
@@ -72,10 +69,10 @@ export default class NetworkNew extends Component {
             <Sheet>
               {/* 大学 */}
               <SheetContent>
-                <Typography>大学名</Typography>
-                <Input
+                <TextField
                   value={this.state.networkUniversity}
-                  placeholder='名桜大学'
+                  label='関係する学校'
+                  helperText='サークルなどの場合'
                   maxLength='40'
                   onChange={this.onInputNetworkUniversity} />
               </SheetContent>

@@ -10,14 +10,14 @@ import SheetContent from '../components/ui-sheet-content'
 import styleSheet from './admin.style'
 
 @withStyles(styleSheet)
-@inject('posts', 'users')
+@inject('users')
 @observer
 export default class Admin extends Component {
   render () {
     const {classes} = this.props
     return (
       <Layout>
-        {/* アイコン */}
+        {/* icon */}
         <Sheet>
           <div className={classes.squares}>
             {this.props.users.one.profile.code.map((i, index) =>
@@ -31,7 +31,7 @@ export default class Admin extends Component {
                 }} />)}
           </div>
         </Sheet>
-        {/* ネーム */}
+        {/* name */}
         <Sheet>
           <SheetContent>
             <Typography align='center'>

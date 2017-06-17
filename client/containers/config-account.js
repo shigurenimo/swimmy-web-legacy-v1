@@ -3,13 +3,13 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import Typography from 'material-ui/Typography'
-import Input from 'material-ui/Input'
+import TextField from 'material-ui/TextField'
 import Block from '../components/ui-block'
 import Layout from '../components/ui-layout'
 import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
-import InputButton from '../components/ui-input-button'
+import Button from '../components/ui-button'
 
 @inject('snackbar', 'users')
 @observer
@@ -20,15 +20,10 @@ export default class ConfigAccount extends Component {
         <Block width={400}>
           {/* ディスプレイネーム */}
           <Sheet>
-            <SheetActions>
-              <Typography>
-                ハンドルネーム
-              </Typography>
-            </SheetActions>
             <SheetActions align='right'>
-              <Input
+              <TextField
                 value={this.state.name}
-                placeholder='ハンドルネーム'
+                label='ユーザの表示名'
                 maxLength={20}
                 onChange={this.onInputName}
                 onBlur={this.onCheckName} />
@@ -40,26 +35,19 @@ export default class ConfigAccount extends Component {
               </Typography>
             </SheetActions>}
             <SheetActions align='right'>
-              <InputButton
+              <Button
                 onClick={this.onSubmitName}>
-                変更する
-              </InputButton>
+                update
+              </Button>
             </SheetActions>
           </Sheet>
           {/* ユーザネーム */}
           <Sheet>
             <SheetActions>
-              <Typography>
-                ユーザネーム（ユーザID）
-              </Typography>
-              <Typography type='caption'>
-                ログイン時に使用します
-              </Typography>
-            </SheetActions>
-            <SheetActions>
-              <Input
+              <TextField
                 value={this.state.username}
-                placeholder='ユーザネーム'
+                label='ユーザネーム'
+                helperText='ログイン時に使用します'
                 maxLength={10}
                 onChange={this.onInputUsername}
                 onBlur={this.onCheckUsername} />
@@ -71,36 +59,30 @@ export default class ConfigAccount extends Component {
               </Typography>
             </SheetContent>}
             <SheetActions align='right'>
-              <InputButton
+              <Button
                 onClick={this.onSubmitUsername}>
-                変更する
-              </InputButton>
+                update
+              </Button>
             </SheetActions>
           </Sheet>
           {/* パスワード */}
           <Sheet>
             <SheetActions>
-              <Typography>
-                パスワード変更
-              </Typography>
-            </SheetActions>
-            <SheetActions>
-              <Input
+              <TextField
                 value={this.state.oldPassword}
-                placeholder='現在のパスワード'
+                label='現在のパスワード'
                 onChange={this.onInputOldPassword} />
             </SheetActions>
             <SheetActions>
-              <Input
+              <TextField
                 value={this.state.newPassword}
-                placeholder='新しいパスワード'
+                label='新しいパスワード'
                 onChange={this.onInputNewPassword} />
             </SheetActions>
             <SheetActions align='right'>
-              <InputButton
-                onClick={this.onSubmitPassword}>
-                変更する
-              </InputButton>
+              <Button onClick={this.onSubmitPassword}>
+                update
+              </Button>
             </SheetActions>
           </Sheet>
         </Block>

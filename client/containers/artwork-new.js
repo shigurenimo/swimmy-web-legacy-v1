@@ -8,9 +8,9 @@ import IconClear from 'material-ui-icons/Clear'
 import Radio from 'material-ui/Radio'
 import Typography from 'material-ui/Typography'
 import Avatar from 'material-ui/Avatar'
-import Input from 'material-ui/Input'
+import TextField from 'material-ui/TextField'
 import UIDropzone from '../components/ui-dropzone'
-import InputButton from '../components/ui-input-button'
+import Button from '../components/ui-button'
 import Layout from '../components/ui-layout'
 import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
@@ -42,10 +42,10 @@ export default class ArtworkNew extends Component {
           </SheetContent>}
         </Sheet>
         <Sheet>
-          {/* タイトル */}
+          {/* title */}
           <SheetActions>
-            <Input
-              placeholder='タイトル（任意）'
+            <TextField
+              label='title'
               value={this.state.inputTitle}
               maxLength='100'
               onChange={this.onInputTitle} />
@@ -54,8 +54,8 @@ export default class ArtworkNew extends Component {
         <Sheet>
           {/* ノート */}
           <SheetActions>
-            <Input multiline
-              placeholder='タップしてノートを入力'
+            <TextField multiline
+              label='note'
               onChange={this.onInputNote}
               rows={4}
               maxLength='1000'
@@ -103,12 +103,12 @@ export default class ArtworkNew extends Component {
         */}
         <Sheet>
           <SheetActions>
-            <InputButton
+            <Button
               primary={!this.state.isPublic}
-              onClick={this.onChangePublic.bind(this, false)}>anonymous</InputButton>
-            <InputButton
+              onClick={this.onChangePublic.bind(this, false)}>anonymous</Button>
+            <Button
               primary={this.state.isPublic}
-              onClick={this.onChangePublic.bind(this, true)}>{this.props.users.one._username}</InputButton>
+              onClick={this.onChangePublic.bind(this, true)}>{this.props.users.one.username}</Button>
           </SheetActions>
         </Sheet>
         <Sheet>
@@ -122,19 +122,19 @@ export default class ArtworkNew extends Component {
         {/* タイムラインの表示 */}
         <Sheet>
           <SheetActions>
-            <InputButton
+            <Button
               primary={this.state.isSecret}
-              onClick={this.onChangeSecret.bind(this, true)}>show timeline</InputButton>
-            <InputButton
+              onClick={this.onChangeSecret.bind(this, true)}>show timeline</Button>
+            <Button
               primary={!this.state.isSecret}
-              onClick={this.onChangeSecret.bind(this, false)}>hide</InputButton>
+              onClick={this.onChangeSecret.bind(this, false)}>hide</Button>
           </SheetActions>
         </Sheet>
         <Sheet>
           {/* 送信ボタン */}
           {!this.state.errorImage &&
           <SheetActions align='right'>
-            <InputButton onClick={this.onSubmit}>push</InputButton>
+            <Button onClick={this.onSubmit}>push</Button>
           </SheetActions>}
         </Sheet>
       </Layout>

@@ -3,18 +3,18 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
+import utils from '/utils'
 import { withStyles } from 'material-ui/styles'
-import Input from 'material-ui/Input'
+import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
+import InlineTypography from '../components/ui-inline-typography'
 import Layout from '../components/ui-layout'
 import Block from '../components/ui-block'
-import InlineBlock from '../components/ui-inline-block'
-import Button from '../components/ui-input-button'
+import Button from '../components/ui-button'
 import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import SheetImage from '../components/ui-sheet-image'
-import utils from '/utils'
 import styleSheet from './artwork-detail.style'
 
 @withStyles(styleSheet)
@@ -39,11 +39,12 @@ export default class ArtworkDetail extends Component {
             {/* タイトル */}
             {this.state.isEdit &&
             <SheetContent>
-              <Input
-                placeholder='タイトル（任意）'
+              <TextField
+                label='title'
+                InputProps={{placeholder: 'My Artwork'}}
                 value={this.state.inputTitle}
                 maxLength='100'
-                onChange={this.onInputTitle} />
+                onChange={this.onTextFieldTitle} />
             </SheetContent>}
             {/* ノート */}
             {!this.state.isEdit && this.state.inputNote &&
@@ -52,41 +53,40 @@ export default class ArtworkDetail extends Component {
             </SheetContent>}
             {this.state.isEdit &&
             <SheetContent>
-              <Input multiline
-                placeholder='タップしてノートを編集'
-                onChange={this.onInputNote}
-                rows={8}
+              <TextField multiline
+                label='note'
+                onChange={this.onTextFieldNote}
                 maxLength='1000'
                 value={this.state.inputNote} />
             </SheetContent>}
             {/* 匿名 */}
             {this.state.isEdit &&
             <SheetActions>
-              <InlineBlock>匿名</InlineBlock>
+              <InlineTypography>匿名</InlineTypography>
               <Button
                 primary={!this.state.inputIsPublic}
                 onClick={this.onChangePublic.bind(this, false)}>
-                オン
+                on
               </Button>
               <Button
                 primary={this.state.inputIsPublic}
                 onClick={this.onChangePublic.bind(this, true)}>
-                オフ
+                off
               </Button>
             </SheetActions>}
             {/* タイムラインの表示 */}
             {this.state.isEdit &&
             <SheetActions>
-              <InlineBlock>過去の作品</InlineBlock>
+              <InlineTypography>過去の作品</InlineTypography>
               <Button
                 primary={this.state.inputIsSecret}
                 onClick={this.onChangeSecret.bind(this, true)}>
-                オン
+                on
               </Button>
               <Button
                 primary={!this.state.inputIsSecret}
                 onClick={this.onChangeSecret.bind(this, false)}>
-                オフ
+                off
               </Button>
             </SheetActions>}
             {this.state.inputIsSecret &&
@@ -101,15 +101,15 @@ export default class ArtworkDetail extends Component {
             <SheetActions align='right'>
               {!this.state.isEdit &&
               <Button onClick={this.onRemove}>
-                投稿を削除する
+                remove
               </Button>}
               {!this.state.isEdit &&
               <Button onClick={this.onChangeEdit}>
-                内容を編集する
+                update
               </Button>}
               {this.state.isEdit &&
               <Button onClick={this.onChangeEdit}>
-                編集を完了する
+                finish
               </Button>}
             </SheetActions>}
             {/* リアクションボタン */}
@@ -129,11 +129,12 @@ export default class ArtworkDetail extends Component {
             {/* input reaction */}
             {this.props.users.isLogged && !this.state.isEdit &&
             <SheetActions>
-              <Input
+              <TextField
+                label='new reaction'
+                InputProps={{placeholder: 'スキ'}}
                 value={this.state.inputNewReaction}
-                placeholder='New Reaction'
                 maxLength='10'
-                onChange={this.onInputNewReaction} />
+                onChange={this.onTextFieldNewReaction} />
             </SheetActions>}
             {this.props.users.isLogged &&
             this.state.inputNewReaction.length > 0 && !this.state.isEdit &&
@@ -145,10 +146,10 @@ export default class ArtworkDetail extends Component {
             {/* リプライ */}
             {this.props.users.isLogged && !this.state.isEdit &&
             <SheetActions>
-              <Input multiline
+              <TextField multiline
+                label='new comment'
                 value={this.state.inputReply}
-                placeholder='New Comment'
-                onChange={this.onInputReply} />
+                onChange={this.onTextFieldReply} />
             </SheetActions>}
             {/* リプライの送信 */}
             {this.state.inputReply.length > 0 && !this.state.isEdit &&
@@ -288,24 +289,24 @@ export default class ArtworkDetail extends Component {
   onChangeEdit = ::this.onChangeEdit
 
   // タイトルを入力する
-  onInputTitle (event) {
+  onTextFieldTitle (event) {
     event.persist()
     const value = event.target.value
     if (value.length > 100) return
     this.setState({inputTitle: value})
   }
 
-  onInputTitle = ::this.onInputTitle
+  onTextFieldTitle = ::this.onTextFieldTitle
 
   // ノートを入力する
-  onInputNote (event) {
+  onTextFieldNote (event) {
     event.persist()
     const value = event.target.value
     if (value.length > 1000) return
     this.setState({inputNote: value})
   }
 
-  onInputNote = ::this.onInputNote
+  onTextFieldNote = ::this.onTextFieldNote
 
   // カラーを入力する
   onSelectColor (color, event) {
@@ -350,14 +351,14 @@ export default class ArtworkDetail extends Component {
   }
 
   // 新しいリアクションを入力する
-  onInputNewReaction (event) {
+  onTextFieldNewReaction (event) {
     event.persist()
     const value = event.target.value
     if (value.length > 20) return
     this.setState({inputNewReaction: value})
   }
 
-  onInputNewReaction = ::this.onInputNewReaction
+  onTextFieldNewReaction = ::this.onTextFieldNewReaction
 
   // 新しいリアクションを送信する
   onSubmitNewReaction () {
@@ -369,14 +370,14 @@ export default class ArtworkDetail extends Component {
   onSubmitNewReaction = ::this.onSubmitNewReaction
 
   // リプライを入力する
-  onInputReply (event) {
+  onTextFieldReply (event) {
     event.persist()
     const value = event.target.value
     if (value.length > 200) return
     this.setState({inputReply: value})
   }
 
-  onInputReply = ::this.onInputReply
+  onTextFieldReply = ::this.onTextFieldReply
 
   // 投稿の種類をパブリックに変更する
   onChangeReplyPublic (bool) {

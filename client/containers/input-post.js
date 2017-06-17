@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import IconAdd from 'material-ui-icons/Add'
-import Button from '../components/ui-input-button'
+import Button from '../components/ui-button'
 import Image from '../components/ui-image'
 import styleSheet from './input-post.style'
 
@@ -62,7 +62,7 @@ export default class InputPost extends Component {
           <Button compact
             primary={this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, true)}>
-            {this.props.users.one._username}
+            {this.props.users.one.username}
           </Button>}
           {this.props.users.isLogged &&
           <Button compact

@@ -7,8 +7,8 @@ import { withStyles } from 'material-ui/styles'
 import IconKeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import IconKeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
 import Typography from 'material-ui/Typography'
-import Input from 'material-ui/Input'
-import Button from '../components/ui-input-button'
+import TextField from 'material-ui/TextField'
+import Button from '../components/ui-button'
 import Image from '../components/ui-image'
 import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
@@ -103,9 +103,10 @@ export default class PostRes extends Component {
         {this.state.isReply &&
         <Sheet>
           <SheetActions>
-            <Input
+            <TextField
               value={this.state.inputNewReaction}
-              placeholder={'new reaction : ' + this.reactionPlaceholder}
+              label='new reaction'
+              InputProps={{placeholder: this.reactionPlaceholder}}
               maxLength='10'
               onChange={this.onInputNewReaction} />
           </SheetActions>
