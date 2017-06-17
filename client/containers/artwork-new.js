@@ -27,13 +27,11 @@ export default class ArtworkNew extends Component {
           {/* 画像の投稿 */}
           <SheetActions>
             <UIDropzone
-              className='input:dropzone'
               onDrop={this.onDropImage.bind(this)}
               image={this.state.inputImage}
               text='画像をドロップ or タップ' />
             {this.state.inputImage &&
-            <div className='input:close-message'
-              onTouchTap={this.onCloseImage.bind(this)}>
+            <div onTouchTap={this.onCloseImage.bind(this)}>
               <IconClear style={{width: 35, height: 35}} color='tomato' />
             </div>}
           </SheetActions>

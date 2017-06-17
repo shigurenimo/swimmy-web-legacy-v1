@@ -19,7 +19,7 @@ export default class NetworkNew extends Component {
     return (
       <Layout>
         <Block width={400}>
-          {/* リストの名前 */}
+          {/* name */}
           <Sheet>
             <SheetContent>
               <Typography>

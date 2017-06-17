@@ -11,12 +11,13 @@ export const styleSheet = createStyleSheet('UIDropzone', theme => {
       position: 'relative',
       maxWidth: '100%',
       height: 'auto',
-      minHeight: '100px'
+      minHeight: '80px'
     },
     frame: {
-      width: '100%',
+      width: 'auto',
+      minWidth: '200px',
       height: '100%',
-      minHeight: '100px',
+      minHeight: '80px',
       backgroundColor: 'rgba(0, 0, 0, 0.05)',
       border: `dashed 2px ${Meteor.settings.public.color.primary}`,
       borderRadius: '2px',
@@ -52,8 +53,8 @@ export default class extends Component {
   render () {
     const {
       classes,
-      primary,
       image,
+      src,
       onDrop
     } = this.props
     return (
@@ -63,6 +64,8 @@ export default class extends Component {
         <div className={classes.frame}>
           {image &&
           <img src={image.preview} />}
+          {src &&
+          <img src={src} />}
           {!image &&
           <Typography className={classes.name}>画像をドロップ or タップ</Typography>}
         </div>
