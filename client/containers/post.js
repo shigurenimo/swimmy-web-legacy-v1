@@ -81,7 +81,7 @@ export default class Post extends Component {
               {this.props.web.title}
             </Typography>
           </SheetContent>}
-          {/* res */}
+          {/* reply */}
           {this.props.reply &&
           <SheetContent>
             <Sheet minimal hover background>

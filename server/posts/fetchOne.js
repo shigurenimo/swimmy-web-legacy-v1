@@ -8,7 +8,7 @@ Meteor.methods({
     const post = collections.posts.findOne(selector, options)
     if (!post) return null
     if (post.reply) {
-      const reply = collections.posts.find(post.reply, {limit: 1}).fetch()
+      const reply = collections.posts.findOne(post.reply)
       if (reply) {
         post.reply = reply
       } else {
