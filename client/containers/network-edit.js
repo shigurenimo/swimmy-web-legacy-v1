@@ -173,10 +173,6 @@ export default class NetworkEdit extends Component {
     </div>
   }
 
-  get data () {
-    return this.props.networks.one
-  }
-
   state = {
     name: this.data.name,
     header: this.data.header,

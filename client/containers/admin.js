@@ -10,7 +10,7 @@ import SheetContent from '../components/ui-sheet-content'
 import styleSheet from './admin.style'
 
 @withStyles(styleSheet)
-@inject('posts', 'user')
+@inject('posts', 'users')
 @observer
 export default class Admin extends Component {
   render () {
@@ -20,7 +20,7 @@ export default class Admin extends Component {
         {/* アイコン */}
         <Sheet>
           <div className={classes.squares}>
-            {this.user.profile.code.map((i, index) =>
+            {this.props.users.one.profile.code.map((i, index) =>
               <div
                 className={classes.square}
                 key={index + '-' + i}
@@ -35,12 +35,12 @@ export default class Admin extends Component {
         <Sheet>
           <SheetContent>
             <Typography align='center'>
-              {this.user.username}
+              {this.props.users.one.username}
             </Typography>
           </SheetContent>
           <SheetContent>
             <Typography type='title' align='center'>
-              {this.user.profile.name}
+              {this.props.users.one.profile.name}
             </Typography>
           </SheetContent>
         </Sheet>
@@ -49,12 +49,8 @@ export default class Admin extends Component {
     )
   }
 
-  get user () {
-    return this.props.user.info
-  }
-
   forFollows () {
-    const index = this.props.user.follows
+    const index = this.props.users.follows
     if (index.length < 1) {
       return null
     }

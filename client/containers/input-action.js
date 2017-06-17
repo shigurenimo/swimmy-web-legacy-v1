@@ -6,7 +6,7 @@ import InputPost from './input-post'
 import styleSheet from './input-action.style'
 
 @withStyles(styleSheet)
-@inject('router', 'user')
+@inject('router', 'users')
 @observer
 export default class InputAction extends Component {
   render () {
@@ -36,7 +36,7 @@ export default class InputAction extends Component {
     if (this.props.router.page === null) {
       return null
     }
-    if (this.props.user.isLoggingIn) {
+    if (this.props.users.isLoggingIn) {
       return null
     }
     switch (this.props.router.page) {

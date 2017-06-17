@@ -9,11 +9,11 @@ import NetworkInfo from './network-info'
 import Post from '../containers/post'
 import PostRes from './post-res'
 
-@inject('posts', 'user')
+@inject('posts', 'users')
 @observer
 export default class Thread extends Component {
   render () {
-    if (!this.data) {
+    if (!this.props.posts.one) {
       return (
         <Layout>
           <Sheet>
@@ -30,16 +30,12 @@ export default class Thread extends Component {
       <Layout>
         {this.props.posts.networkInfo &&
         <NetworkInfo />}
-        <Post {...this.props.posts.one} isReply />
-        {this.data.replies &&
-        this.data.replies.length > 0 &&
-        this.data.replies.map(item => <PostRes key={item._id} {...item} />)}
+        <Post isReply {...this.props.posts.one} />
+        {this.props.posts.one.replies &&
+        this.props.posts.one.replies.length > 0 &&
+        this.props.posts.one.replies.map(item => <PostRes key={item._id} {...item} />)}
       </Layout>
     )
-  }
-
-  get data () {
-    return this.props.posts.one
   }
 
   componentDidMount () {

@@ -356,10 +356,10 @@ FlowRouter.route('/report', {
 FlowRouter.route('/:username', {
   action (params) {
     const username = params.username
-    stores.userOther.fetchOneFromUsername(username)
+    stores.usersProfile.fetchOneFromUsername(username)
     .then(user => {
       if (!user) return notFound()
-      stores.userOther.updateOne(user)
+      stores.usersProfile.updateOne(user)
       stores.router.setRoute('profile')
       return stores.posts.fetchFromUserId(user._id)
     })

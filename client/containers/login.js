@@ -14,7 +14,7 @@ import SheetActions from '../components/ui-sheet-actions'
 import Block from '../components/ui-block'
 import InlineTypography from '../components/ui-inline-typography'
 
-@inject('user', 'snackbar')
+@inject('users', 'snackbar')
 @observer
 export default class Login extends Component {
   render () {
@@ -197,7 +197,7 @@ export default class Login extends Component {
     if (event) event.preventDefault()
     if (this.process) return
     this.process = true
-    this.props.user.insert({
+    this.props.users.insert({
       username: this.state.username,
       password: this.state.password
     })

@@ -7,7 +7,7 @@ import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
 import SheetImage from '../components/ui-sheet-image'
 
-@inject('artworks', 'snackbar', 'user')
+@inject('artworks', 'snackbar', 'users')
 @observer
 export default class PostArtwork extends Component {
   render () {
@@ -38,7 +38,7 @@ export default class PostArtwork extends Component {
             <Button compact
               className={'input:reaction'}
               key={name}
-              primary={!!this.props.user.isLogged && this.props.reactions[name].includes(this.props.user._id)}
+              primary={!!this.props.users.isLogged && this.props.reactions[name].includes(this.props.users._id)}
               onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
               {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
             </Button>)}
@@ -56,7 +56,7 @@ export default class PostArtwork extends Component {
 
   // リアクションを更新する
   onUpdateReaction (postId, name) {
-    if (!this.props.user.isLogged) {
+    if (!this.props.users.isLogged) {
       this.props.snackbar.requireLogin()
       return
     }

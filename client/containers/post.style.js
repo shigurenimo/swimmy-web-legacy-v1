@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { createStyleSheet } from 'material-ui/styles'
 
 export default createStyleSheet('Post', theme => {
@@ -50,6 +51,11 @@ export default createStyleSheet('Post', theme => {
     },
     reaction: {
       marginBottom: '5px'
+    },
+    icon: {
+      width: '30px',
+      height: '30px',
+      color: Meteor.settings.public.color.primary
     }
   }
 })

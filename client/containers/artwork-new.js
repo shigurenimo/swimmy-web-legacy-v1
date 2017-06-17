@@ -17,11 +17,10 @@ import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import utils from '/utils'
 
-@inject('artworks', 'snackbar', 'user')
+@inject('artworks', 'snackbar', 'users')
 @observer
 export default class ArtworkNew extends Component {
   render () {
-    const {user} = this.props
     return (
       <Layout>
         <Sheet>
@@ -111,7 +110,7 @@ export default class ArtworkNew extends Component {
               onClick={this.onChangePublic.bind(this, false)}>anonymous</InputButton>
             <InputButton
               primary={this.state.isPublic}
-              onClick={this.onChangePublic.bind(this, true)}>{user.username}</InputButton>
+              onClick={this.onChangePublic.bind(this, true)}>{this.props.users.username}</InputButton>
           </SheetActions>
         </Sheet>
         <Sheet>

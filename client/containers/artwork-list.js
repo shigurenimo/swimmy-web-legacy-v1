@@ -7,7 +7,7 @@ import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
 import PostArtwork from './post-artwork'
 
-@inject('artworks', 'user')
+@inject('artworks', 'users')
 @observer
 export default class ArtworkList extends Component {
   render () {

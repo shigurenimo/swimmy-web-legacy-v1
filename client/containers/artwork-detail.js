@@ -18,7 +18,7 @@ import utils from '/utils'
 import styleSheet from './artwork-detail.style'
 
 @withStyles(styleSheet)
-@inject('artworks', 'user', 'snackbar')
+@inject('artworks', 'users', 'snackbar')
 @observer
 export default class ArtworkDetail extends Component {
   render () {
@@ -27,9 +27,9 @@ export default class ArtworkDetail extends Component {
       <Layout>
         <Sheet>
           {/* ユーザ */}
-          {this.data.public &&
+          {this.props.artworks.one.public &&
           <SheetContent>
-            <Typography>{this.data.public.name}@{this.data.public.username}</Typography>
+            <Typography>{this.props.artworks.one.public.name}@{this.props.artworks.one.public.username}</Typography>
           </SheetContent>}
           {/* イメージ */}
           <SheetImage src={this.src} />
@@ -46,7 +46,7 @@ export default class ArtworkDetail extends Component {
             {/* ノート */}
             {!this.state.isEdit && this.state.inputNote &&
             <SheetContent>
-              <Typography dangerouslySetInnerHTML={{__html: this.data.note}} />
+              <Typography dangerouslySetInnerHTML={{__html: this.props.artworks.one.note}} />
             </SheetContent>}
             {this.state.isEdit &&
             <SheetContent>
@@ -94,8 +94,8 @@ export default class ArtworkDetail extends Component {
               </Typography>
             </SheetContent>}
             {/* 投稿の削除 */}
-            {this.props.user.isLogged &&
-            this.data.owner === this.props.user._id &&
+            {this.props.users.isLogged &&
+            this.props.artworks.one.owner === this.props.users._id &&
             <SheetActions align='right'>
               {!this.state.isEdit &&
               <Button onClick={this.onRemove.bind(this)}>
@@ -113,17 +113,17 @@ export default class ArtworkDetail extends Component {
             {/* リアクションボタン */}
             {!this.state.isEdit &&
             <SheetContent>
-              {Object.keys(this.data.reactions).map(name =>
+              {Object.keys(this.props.artworks.one.reactions).map(name =>
                 <Button background
                   key={name}
-                  primary={!!this.props.user.isLogged && this.data.reactions[name].includes(this.props.user._id)}
-                  onClick={this.onUpdateReaction.bind(this, this.data._id, name)}>
-                  {name + (this.data.reactions[name].length > 0 ? ' ' + this.data.reactions[name].length : '')}
+                  primary={!!this.props.users.isLogged && this.props.artworks.one.reactions[name].includes(this.props.users._id)}
+                  onClick={this.onUpdateReaction.bind(this, this.props.artworks.one._id, name)}>
+                  {name + (this.props.artworks.one.reactions[name].length > 0 ? ' ' + this.props.artworks.one.reactions[name].length : '')}
                 </Button>
               )}
             </SheetContent>}
             {/* input reaction */}
-            {this.props.user.isLogged && !this.state.isEdit &&
+            {this.props.users.isLogged && !this.state.isEdit &&
             <SheetActions>
               <Input
                 value={this.state.inputNewReaction}
@@ -131,7 +131,7 @@ export default class ArtworkDetail extends Component {
                 maxLength='10'
                 onChange={this.onInputNewReaction.bind(this)} />
             </SheetActions>}
-            {this.props.user.isLogged &&
+            {this.props.users.isLogged &&
             this.state.inputNewReaction.length > 0 && !this.state.isEdit &&
             <SheetActions align='right'>
               <Button onClick={this.onSubmitNewReaction.bind(this)}>
@@ -139,7 +139,7 @@ export default class ArtworkDetail extends Component {
               </Button>
             </SheetActions>}
             {/* リプライ */}
-            {this.props.user.isLogged && !this.state.isEdit &&
+            {this.props.users.isLogged && !this.state.isEdit &&
             <SheetActions>
               <Input multiline
                 value={this.state.inputReply}
@@ -149,19 +149,19 @@ export default class ArtworkDetail extends Component {
             {/* リプライの送信 */}
             {this.state.inputReply.length > 0 && !this.state.isEdit &&
             <SheetActions align='right'>
-              <Button onClick={this.onSubmitReply.bind(this, this.data._id)}>
+              <Button onClick={this.onSubmitReply.bind(this, this.props.artworks.one._id)}>
                 secret
               </Button>
-              <Button onClick={this.onSubmitReply.bind(this, this.data._id)}>
+              <Button onClick={this.onSubmitReply.bind(this, this.props.artworks.one._id)}>
                 comment
               </Button>
             </SheetActions>}
           </Block>
         </Sheet>
         {/* reply */}
-        {this.data.replies.length > 0 && !this.state.isEdit &&
+        {this.props.artworks.one.replies.length > 0 && !this.state.isEdit &&
         <Block>
-          {this.data.replies.map((reply, index) =>
+          {this.props.artworks.one.replies.map((reply, index) =>
             <Sheet hover key={reply._id}>
               {/* username */}
               {reply.public &&
@@ -185,16 +185,16 @@ export default class ArtworkDetail extends Component {
                 {Object.keys(reply.reactions).map(name =>
                   <Button compact minimal background
                     key={name}
-                    primary={!!this.props.user.isLogged && reply.reactions[name].includes(this.props.user._id)}
-                    onClick={this.onUpdateReplyReaction.bind(this, this.data._id, reply._id, name)}>
+                    primary={!!this.props.users.isLogged && reply.reactions[name].includes(this.props.users._id)}
+                    onClick={this.onUpdateReplyReaction.bind(this, this.props.artworks.one._id, reply._id, name)}>
                     {name + (reply.reactions[name].length > 0 ? ' ' + reply.reactions[name].length : '')}
                   </Button>
                 )}
               </SheetActions>
               {/* delete */}
-              {this.props.user.isLogged && reply.owner === this.props.user._id &&
+              {this.props.users.isLogged && reply.owner === this.props.users._id &&
               <SheetActions align='right'>
-                <Button onTouchTap={this.onRemoveReply.bind(this, this.data._id, reply._id)}>
+                <Button onTouchTap={this.onRemoveReply.bind(this, this.props.artworks.one._id, reply._id)}>
                   remove
                 </Button>
               </SheetActions>}
@@ -204,15 +204,11 @@ export default class ArtworkDetail extends Component {
     )
   }
 
-  get data () {
-    return this.props.artworks.one
-  }
-
   get src () {
     return Meteor.settings.public.assets.work.root +
-      this.data.type + '/' +
-      this.data.imageDate + '/' +
-      this.data.image.full
+      this.props.artworks.one.type + '/' +
+      this.props.artworks.one.imageDate + '/' +
+      this.props.artworks.one.image.full
   }
 
   reactionPlaceholder = [
@@ -226,11 +222,11 @@ export default class ArtworkDetail extends Component {
     isEdit: false,
     isPublic: false,
     inputReply: '',
-    inputIsPublic: !!this.data.public,
-    inputIsSecret: this.data.secret,
-    inputTitle: this.data.title || '',
-    inputNote: this.data.note || '',
-    inputColors: this.data.colors,
+    inputIsPublic: !!this.props.artworks.one.public,
+    inputIsSecret: this.props.artworks.one.secret,
+    inputTitle: this.props.artworks.one.title || '',
+    inputNote: this.props.artworks.one.note || '',
+    inputColors: this.props.artworks.one.colors,
     inputNewReaction: ''
   }
 
@@ -238,7 +234,7 @@ export default class ArtworkDetail extends Component {
   onRemove () {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
-    const postId = this.data._id
+    const postId = this.props.artworks.one._id
     this.props.artworks.remove(postId)
     .then(postId => {
       FlowRouter.go('/artwork')
@@ -252,7 +248,7 @@ export default class ArtworkDetail extends Component {
   // 編集のモードを切り替える
   onChangeEdit () {
     if (this.state.isEdit) {
-      const postId = this.data._id
+      const postId = this.props.artworks.one._id
       const next = {
         isPublic: !!this.state.inputIsPublic,
         isSecret: this.state.inputIsSecret,
@@ -261,11 +257,11 @@ export default class ArtworkDetail extends Component {
         colors: this.state.inputColors.slice()
       }
       const eq = {
-        isPublic: next.isPublic !== !!this.data.public,
-        isSecret: next.isSecret !== this.data.secret,
-        title: next.title !== this.data.title,
-        note: next.note !== this.data.note,
-        colors: String(next.colors) !== String(this.data.colors.slice())
+        isPublic: next.isPublic !== !!this.props.artworks.one.public,
+        isSecret: next.isSecret !== this.props.artworks.one.secret,
+        title: next.title !== this.props.artworks.one.title,
+        note: next.note !== this.props.artworks.one.note,
+        colors: String(next.colors) !== String(this.props.artworks.one.colors.slice())
       }
       this.setState({isEdit: false})
       if (!(eq.isPublic || eq.isSecret || eq.title || eq.note || eq.colors)) return
@@ -326,7 +322,7 @@ export default class ArtworkDetail extends Component {
 
   // リアクションを更新する
   onUpdateReaction (postId, name) {
-    if (!this.props.user.isLogged) {
+    if (!this.props.users.isLogged) {
       this.props.snackbar.requireLogin()
       return
     }
@@ -351,7 +347,7 @@ export default class ArtworkDetail extends Component {
 
   // 新しいリアクションを送信する
   onSubmitNewReaction () {
-    const postId = this.data._id
+    const postId = this.props.artworks.one._id
     const inputNewReaction = this.state.inputNewReaction
     this.onUpdateReaction(postId, inputNewReaction)
   }
@@ -401,7 +397,7 @@ export default class ArtworkDetail extends Component {
 
   // リアクションを更新する
   onUpdateReplyReaction (postId, replyId, name) {
-    if (!this.props.user.isLogged) {
+    if (!this.props.users.isLogged) {
       this.props.snackbar.requireLogin()
       return
     }

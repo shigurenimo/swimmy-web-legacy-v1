@@ -15,42 +15,45 @@ import utils from '/utils'
 import styleSheet from './network-info.style'
 
 @withStyles(styleSheet)
-@inject('networks', 'posts', 'snackbar', 'user')
+@inject('networks', 'posts', 'snackbar', 'users')
 @observer
 export default class NetworkInfo extends Component {
   render () {
-    const {classes} = this.props
+    const {
+      networks: {one: network},
+      classes
+    } = this.props
     return (
       <Layout>
-        {this.data.header &&
+        {network.header &&
         <Sheet className='block:network-header'>
-          {this.data.header &&
+          {network.header &&
           <SheetBackgroundImage src={
-            this.data.header &&
-            Meteor.settings.public.assets.network.root + this.data._id + '/' +
-            this.data.header
+            network.header &&
+            Meteor.settings.public.assets.network.root + network._id + '/' +
+            network.header
           } />}
         </Sheet>}
         <Sheet>
-          {this.data.univ &&
+          {network.univ &&
           <SheetContent>
             <Typography>
-              {utils.regions[this.data.channel].name.jp}・{this.data.univ}
+              {utils.regions[network.channel].name.jp}・{network.univ}
             </Typography>
           </SheetContent>}
           <SheetContent>
             <Typography type='headline'>
-              {this.data.name}
+              {network.name}
             </Typography>
           </SheetContent>
           <SheetContent>
             <Typography className={classes.content}>
-              {this.data.description || '説明がありません'}
+              {network.description || '説明がありません'}
             </Typography>
           </SheetContent>
-          {this.props.user.isLogged &&
+          {this.props.users.isLogged &&
           <SheetActions align='right'>
-            {this.data.member.includes(this.props.user._id) ? (
+            {network.member.includes(this.props.users._id) ? (
               <Button onTouchTap={this.onLeaveNetwork.bind(this)}>
                 チェックアウト
               </Button>
@@ -61,23 +64,19 @@ export default class NetworkInfo extends Component {
             )}
           </SheetActions>}
         </Sheet>
-        {this.props.user.isLogged &&
-        this.props.user._id === this.data.owner &&
+        {this.props.users.isLogged &&
+        this.props.users._id === network.owner &&
         <Sheet>
           <SheetActions>
             <Button onClick={this.onRemoveList.bind(this)}>
               このリストを削除する
             </Button>
-            {this.data.member.includes(this.props.user._id) &&
-            <Button component='a' href={'/network/' + this.data._id + '/edit'}>アップデート</Button>}
+            {network.member.includes(this.props.users._id) &&
+            <Button component='a' href={'/network/' + network._id + '/edit'}>アップデート</Button>}
           </SheetActions>
         </Sheet>}
       </Layout>
     )
-  }
-
-  get data () {
-    return this.props.networks.one
   }
 
   // リストを追加する

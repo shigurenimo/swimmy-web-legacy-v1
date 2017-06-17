@@ -32,10 +32,10 @@ export default class TimeMachine extends Component {
               <InlineTypography type='display1'>{'・'}</InlineTypography>
               <InlineTypography type='display1'>{this.state.currentMonth}</InlineTypography>
               <Button compact className={classes.prev} onClick={this.onBeforeMonth.bind(this)}>
-                <IconBefore {...this.iconStyle} />
+                <IconBefore className={classes.icon} />
               </Button>
               <Button compact className={classes.next} onClick={this.onNextMonth.bind(this)}>
-                <IconNext {...this.iconStyle} /></Button>
+                <IconNext className={classes.icon} /></Button>
             </Block>
           </SheetContent>
         </Sheet>
@@ -46,10 +46,10 @@ export default class TimeMachine extends Component {
                 {this.state.currentDay}
               </Typography>
               <Button compact className={classes.prev} onClick={this.onBeforeDay.bind(this)}>
-                <IconBefore {...this.iconStyle} />
+                <IconBefore className={classes.icon} />
               </Button>
               <Button compact className={classes.next} onClick={this.onNextDay.bind(this)}>
-                <IconNext {...this.iconStyle} />
+                <IconNext className={classes.icon} />
               </Button>
             </Block>
           </SheetContent>
@@ -62,17 +62,6 @@ export default class TimeMachine extends Component {
         {this.forPosts()}
       </Layout>
     )
-  }
-
-  get iconStyle () {
-    return {
-      style: {
-        display: 'block',
-        width: 30,
-        height: 30
-      },
-      color: Meteor.settings.public.color.primary
-    }
   }
 
   get href () {

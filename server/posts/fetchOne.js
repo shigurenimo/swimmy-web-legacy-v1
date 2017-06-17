@@ -18,7 +18,7 @@ Meteor.methods({
       }
     }
     if (post.replies && post.replies[0]) {
-      post.replies = collections.posts.find({_id: {$in: post.replies}}, {sort: {createdAt: -1}}).fetch()
+      post.replies = collections.posts.find({_id: {$in: post.replies}}, {sort: {createdAt: 1}}).fetch()
       .map(reply => {
         if (reply.public) {
           if (!users[reply.owner]) {

@@ -11,8 +11,8 @@ import Router from './router'
 import Snackbar from './snackbar'
 import Tags from './tags'
 import Threads from './threads'
-import User from './user'
-import UserOther from './user-other'
+import Users from './users'
+import UsersProfile from './users-profile'
 
 export default {
   artworks: new Artworks(),
@@ -28,6 +28,6 @@ export default {
   snackbar: new Snackbar(),
   tags: new Tags(),
   threads: new Threads(),
-  user: new User(),
-  userOther: new UserOther()
+  users: new Users(),
+  usersProfile: new UsersProfile()
 }

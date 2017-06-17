@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor'
 import { createStyleSheet } from 'material-ui/styles'
 
 export default createStyleSheet('TimeMachine', theme => {
@@ -35,6 +36,12 @@ export default createStyleSheet('TimeMachine', theme => {
       width: '30px',
       height: '30px',
       cursor: 'pointer'
+    },
+    icon: {
+      display: 'block',
+      width: 30,
+      height: 30,
+      color: Meteor.settings.public.color.primary
     }
   }
 })

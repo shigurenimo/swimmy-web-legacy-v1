@@ -17,7 +17,7 @@ import utils from '/utils'
 import styleSheet from './post.style'
 
 @withStyles(styleSheet)
-@inject('router', 'user', 'posts', 'snackbar')
+@inject('router', 'users', 'posts', 'snackbar')
 @observer
 export default class PostRes extends Component {
   render () {
@@ -85,18 +85,18 @@ export default class PostRes extends Component {
             {Object.keys(this.props.reactions).map(name =>
               <Button compact minimal background
                 key={name}
-                primary={!!this.props.user.isLogged && this.props.reactions[name].includes(this.props.user._id)}
+                primary={!!this.props.users.isLogged && this.props.reactions[name].includes(this.props.users._id)}
                 onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
                 {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
               </Button>
             )}
           </SheetActions>
           {/* more */}
-          {this.props.user.isLogged &&
+          {this.props.users.isLogged &&
           <Button compact className={classes.more} onClick={this.onOpenReply.bind(this)}>
             {this.state.isReply
-              ? <IconKeyboardArrowUp {...this.iconStyle} />
-              : <IconKeyboardArrowDown {...this.iconStyle} />}
+              ? <IconKeyboardArrowUp className={classes.icon} />
+              : <IconKeyboardArrowDown className={classes.icon} />}
           </Button>}
         </Sheet>
         {/* reaction */}
@@ -110,25 +110,15 @@ export default class PostRes extends Component {
               onChange={this.onInputNewReaction.bind(this)} />
           </SheetActions>
           <SheetActions align='right'>
-            {this.props.user.isLogged &&
+            {this.props.users.isLogged &&
             this.state.isReply &&
-            (this.props.owner === this.props.user._id) &&
+            (this.props.owner === this.props.users._id) &&
             <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete</Button>}
             <Button onClick={this.onSubmitNewReaction.bind(this)}>push</Button>
           </SheetActions>
         </Sheet>}
       </div>
     )
-  }
-
-  get iconStyle () {
-    return {
-      style: {
-        width: 30,
-        height: 30
-      },
-      color: Meteor.settings.public.color.primary
-    }
   }
 
   reactionPlaceholder = [
@@ -208,7 +198,7 @@ export default class PostRes extends Component {
   // リアクションを更新する
   onUpdateReaction (postId, name) {
     const replyId = this.props.posts.one._id
-    if (!this.props.user.isLogged) {
+    if (!this.props.users.isLogged) {
       this.props.snackbar.requireLogin()
       return
     }

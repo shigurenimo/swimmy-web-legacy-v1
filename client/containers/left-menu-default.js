@@ -10,7 +10,7 @@ import SheetContent from '../components/ui-sheet-content'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
-@inject('artworks', 'layout', 'networks', 'router', 'posts', 'postsSocket', 'snackbar', 'user')
+@inject('artworks', 'layout', 'networks', 'router', 'posts', 'postsSocket', 'snackbar', 'users')
 @observer
 export default class LeftMenuDefault extends Component {
   render () {
@@ -77,7 +77,7 @@ export default class LeftMenuDefault extends Component {
               href={'/artwork/' + item.unique}>
               <ListItemText primary={item.name} />
             </ListItem>)}
-          {this.props.user.isLogged &&
+          {this.props.users.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]: this.props.router.page.includes('artwork-new')
@@ -100,7 +100,7 @@ export default class LeftMenuDefault extends Component {
               href={'/network/' + item.unique}>
               <ListItemText primary={item.name} />
             </ListItem>)}
-          {this.props.user.isLogged &&
+          {this.props.users.isLogged &&
           !this.props.router.page.includes('network/new') &&
           <ListItem button dense
             className={classNames({
@@ -119,9 +119,9 @@ export default class LeftMenuDefault extends Component {
             })}
             component='a'
             href='/admin'>
-            <ListItemText primary={this.props.user.isLogged ? 'マイページ' : 'ログイン'} />
+            <ListItemText primary={this.props.users.isLogged ? 'マイページ' : 'ログイン'} />
           </ListItem>
-          {this.props.user.isLogged &&
+          {this.props.users.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]: this.props.router.page.includes('config')
@@ -146,7 +146,7 @@ export default class LeftMenuDefault extends Component {
             href='/report'>
             <ListItemText primary='統計データ' />
           </ListItem>
-          {this.props.user.isLogged &&
+          {this.props.users.isLogged &&
           <ListItem button dense onClick={this.onLogout.bind(this)}>
             <ListItemText primary='ログアウト' />
           </ListItem>}
@@ -164,7 +164,7 @@ export default class LeftMenuDefault extends Component {
 
   // ログアウトする
   onLogout () {
-    this.props.user.logout()
+    this.props.users.logout()
     .then(() => {
       this.props.snackbar.show('ログアウトしました')
     })

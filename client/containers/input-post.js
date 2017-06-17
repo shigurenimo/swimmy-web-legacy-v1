@@ -12,7 +12,7 @@ import Image from '../components/ui-image'
 import styleSheet from './input-post.style'
 
 @withStyles(styleSheet)
-@inject('inputPost', 'layout', 'networks', 'posts', 'snackbar', 'router', 'user')
+@inject('inputPost', 'layout', 'networks', 'posts', 'snackbar', 'router', 'users')
 @observer
 export default class InputPost extends Component {
   render () {
@@ -58,13 +58,13 @@ export default class InputPost extends Component {
                 color={Meteor.settings.public.color.primary} />
             </Dropzone>
           </Button>
-          {this.props.user.isLogged &&
+          {this.props.users.isLogged &&
           <Button compact
             primary={this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, true)}>
-            {this.props.user.username}
+            {this.props.users.username}
           </Button>}
-          {this.props.user.isLogged &&
+          {this.props.users.isLogged &&
           <Button compact
             primary={!this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, false)}>

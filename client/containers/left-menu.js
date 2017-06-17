@@ -6,12 +6,12 @@ import LeftMenuDefault from './left-menu-default'
 import styleSheet from './left-menu.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'router', 'user')
+@inject('layout', 'router', 'users')
 @observer
 export default class LeftMenu extends Component {
   render () {
     const {classes, layout} = this.props
-    if (this.props.user.isLoggingIn) {
+    if (this.props.users.isLoggingIn) {
       return null
     }
     if (!this.props.router.page) {

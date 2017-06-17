@@ -12,7 +12,7 @@ import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import InputButton from '../components/ui-input-button'
 
-@inject('snackbar', 'user')
+@inject('snackbar', 'users')
 @observer
 export default class ConfigAccount extends Component {
   render () {
@@ -110,9 +110,9 @@ export default class ConfigAccount extends Component {
   }
 
   state = {
-    name: this.props.user.info.profile.name,
+    name: this.props.users.one.profile.name,
     nameError: '',
-    username: this.props.user.info.username,
+    username: this.props.users.one.username,
     usernameError: '',
     inputNewEmail: '',
     inputNewEmailError: '',
@@ -134,12 +134,12 @@ export default class ConfigAccount extends Component {
   // ディスプレイネームをチェックする
   onCheckName () {
     const name = this.state.name
-    if (name === this.props.user.info.profile.name) {
+    if (name === this.props.users.one.profile.name) {
       this.setState({nameError: ''})
       return
     }
     if (name.length === 0) {
-      this.setState({name: this.props.user.info.profile.name, usernameError: ''})
+      this.setState({name: this.props.users.one.profile.name, usernameError: ''})
     }
     if (name.length < 1) {
       this.setState({nameError: '！ ちょっと短すぎます'})
@@ -155,7 +155,7 @@ export default class ConfigAccount extends Component {
     if (this.process) return
     this.process = true
     const name = this.state.name
-    this.props.user.updateName(name)
+    this.props.users.updateName(name)
     .then(() => {
       this.props.snackbar.show('ハンドルネームを変更しました')
       this.setState({nameError: ''})
@@ -182,12 +182,12 @@ export default class ConfigAccount extends Component {
   // ユーザネームをチェックする
   onCheckUsername () {
     const username = this.state.username
-    if (username === this.props.user.info.username) {
+    if (username === this.props.users.one.username) {
       this.setState({usernameError: ''})
       return
     }
     if (username.length === 0) {
-      this.setState({username: this.props.user.info.username, usernameError: ''})
+      this.setState({username: this.props.users.one.username, usernameError: ''})
       return
     }
     if (username.length < 2) {
@@ -202,7 +202,7 @@ export default class ConfigAccount extends Component {
       this.setState({usernameError: 'そのワードは予約されています'})
       return
     }
-    this.props.user.checkExistUsername(username)
+    this.props.users.checkExistUsername(username)
     .then(res => {
       if (res) {
         this.setState({usernameError: 'そのユーザネームは既に存在します'})
@@ -222,7 +222,7 @@ export default class ConfigAccount extends Component {
     if (this.process) return
     this.process = true
     const username = this.state.username
-    await this.props.user.updateUsername(username)
+    await this.props.users.updateUsername(username)
     .then(res => {
       this.props.snackbar.show('ユーザネームを変更しました')
       this.setState({usernameError: '', username: username})
@@ -239,7 +239,7 @@ export default class ConfigAccount extends Component {
   onInputChannel (event) {
     event.persist()
     const value = event.target.value
-    this.props.user.updateChannel(value)
+    this.props.users.updateChannel(value)
   }
 
   onInputChannel = ::this.onInputChannel
@@ -270,7 +270,7 @@ export default class ConfigAccount extends Component {
       this.props.snackbar.show('パスワードが短すぎます')
       return
     }
-    this.props.user.updatePassword(oldPassword, newPassword)
+    this.props.users.updatePassword(oldPassword, newPassword)
     .then(() => {
       this.setState({oldPassword: '', newPassword: ''})
       this.props.snackbar.show('パスワードを変更しました')
@@ -286,7 +286,7 @@ export default class ConfigAccount extends Component {
   onRemoveEmail (email) {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
-    this.props.user.removeEmail(email)
+    this.props.users.removeEmail(email)
     .then(() => {
       this.props.snackbar.show('メールアドレスを削除しました')
     })
@@ -311,7 +311,7 @@ export default class ConfigAccount extends Component {
     if (this.process) return
     this.process = true
     const newEmail = this.state.inputNewEmail
-    await this.props.user.addEmail(newEmail)
+    await this.props.users.addEmail(newEmail)
     .then(() => {
       this.props.snackbar.show('メールアドレスを追加しました')
       this.setState({inputNewEmail: '', inputNewEmailError: ''})

@@ -13,17 +13,22 @@ import Post from '../containers/post'
 import styleSheet from './profile.style'
 
 @withStyles(styleSheet)
-@inject('posts', 'snackbar', 'user', 'userOther')
+@inject('posts', 'snackbar', 'users', 'usersProfile')
 @observer
 export default class Profile extends Component {
   render () {
-    const {classes} = this.props
+    const {
+      posts: {index},
+      users: {followsIds},
+      usersProfile: {one: user},
+      classes
+    } = this.props
     return (
       <Layout>
         {/* アイコン */}
         <Sheet>
           <div className={classes.squares}>
-            {this.user.profile.code.map((i, index) =>
+            {user.profile.code.map((i, index) =>
               <div
                 className={classes.square}
                 key={index + '-' + i}
@@ -38,46 +43,32 @@ export default class Profile extends Component {
         <Sheet>
           <SheetContent>
             <Typography align='center'>
-              {this.user.username}
+              {user.username}
             </Typography>
           </SheetContent>
           <SheetContent>
             <Typography type='title' align='center'>
-              {this.user.profile.name}
+              {user.profile.name}
             </Typography>
           </SheetContent>
         </Sheet>
-        {this.props.user.isLogged &&
-        this.user.username !== this.props.user.username &&
+        {this.props.users.isLogged &&
+        user.username !== this.props.users.username &&
         <Sheet>
           <SheetActions align='center'>
-            <Button onClick={this.onFollow.bind(this, this.user.username)}>
-              {this.followsIds.includes(this.user._id) ? 'フォローを外す' : 'フォローする'}
+            <Button onClick={this.onFollow.bind(this, user.username)}>
+              {followsIds.includes(user._id) ? 'フォローを外す' : 'フォローする'}
             </Button>
           </SheetActions>
         </Sheet>}
         {/* 投稿 */}
-        {this.posts.map(item => <Post key={item._id} {...item} />)}
+        {index.map(item => <Post key={item._id} {...item} />)}
       </Layout>
     )
   }
 
-  get user () {
-    return this.props.userOther.one
-  }
-
-  get posts () {
-    const isNotFound = this.props.posts.index === null
-    if (isNotFound) return null
-    return this.props.posts.index.slice()
-  }
-
-  get followsIds () {
-    return this.props.user.followsIds.slice()
-  }
-
   onFollow () {
-    this.props.user.updateFollow(this.user._id)
+    this.props.users.updateFollow(this.user._id)
     .then(() => {
       this.props.snackbar.show('フォローを更新しました')
     })

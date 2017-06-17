@@ -26,7 +26,7 @@ import utils from '/utils'
 import styleSheet from './content.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'inputPost', 'router', 'user')
+@inject('layout', 'inputPost', 'router', 'users')
 @observer
 export default class Content extends Component {
   render () {
@@ -93,7 +93,7 @@ export default class Content extends Component {
       case 'report':
         return <Report key='report' />
     }
-    if (this.props.user.isLoggingIn) {
+    if (this.props.users.isLoggingIn) {
       return <Loading key='loading' />
     }
     switch (this.props.router.page) {
@@ -112,7 +112,7 @@ export default class Content extends Component {
       case 'thread-list':
         return <ThreadList key='thread-list' />
     }
-    if (this.props.user.isNotLoggedIn) {
+    if (this.props.users.isNotLoggedIn) {
       return <Login key='login' />
     }
     switch (this.props.router.page) {
