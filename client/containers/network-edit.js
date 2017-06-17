@@ -183,8 +183,7 @@ export default class NetworkEdit extends Component {
     })
     .then(() => {
       const networkId = this.props.networks.one._id
-      const next = imageNameCache
-      return this.props.networks.updateBasic(networkId, 'header', next)
+      return this.props.networks.updateBasic(networkId, 'header', imageNameCache)
     })
     .then(data => {
       this.props.networks.replaceOne(data)

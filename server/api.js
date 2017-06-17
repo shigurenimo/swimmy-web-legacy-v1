@@ -22,7 +22,7 @@ api.addRoute('posts/', {
       limit: 80,
       sort: {createdAt: -1}
     }
-    const posts = collections.posts.find(selector, options).fetch()
+    return collections.posts.find(selector, options).fetch()
     .map(post => {
       if (post.reply) {
         const reply = collections.posts.findOne(post.reply)
@@ -40,6 +40,5 @@ api.addRoute('posts/', {
       delete post.addr
       return post
     })
-    return posts
   }
 })

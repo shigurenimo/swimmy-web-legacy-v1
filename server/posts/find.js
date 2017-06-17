@@ -11,7 +11,7 @@ Meteor.methods({
         selector.public = {$exists: true}
       }
     }
-    const posts = collections.posts.find(selector, options).fetch()
+    return collections.posts.find(selector, options).fetch()
     .map(post => {
       if (post.reply) {
         const reply = collections.posts.findOne(post.reply)
@@ -29,6 +29,6 @@ Meteor.methods({
       delete post.addr
       return post
     })
-    return posts
+
   }
 })

@@ -162,6 +162,7 @@ export default class Content extends Component {
       scrollEvent()
       element.addEventListener('scroll', scrollEvent, false)
     } catch (err) { // ↓ for IE8-
+      console.error(err)
       scrollEvent()
       element.attachEvent('onscroll', scrollEvent)
     }

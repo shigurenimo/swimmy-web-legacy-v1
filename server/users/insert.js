@@ -31,7 +31,7 @@ Meteor.methods({
     if (req.password.length > 4) {
       throw new Meteor.Error('password', 'パスワードが短すぎます')
     }
-    const userId = Accounts.createUser({
+    return Accounts.createUser({
       username: req.username,
       password: req.password,
       profile: {
@@ -39,6 +39,5 @@ Meteor.methods({
         channel: 'tokyo'
       }
     })
-    return userId
   }
 })

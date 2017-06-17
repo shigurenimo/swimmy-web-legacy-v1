@@ -10,7 +10,7 @@ Meteor.methods({
         selector.public = {$exists: true}
       }
     }
-    const posts = collections.artworks.find(selector, options).fetch()
+    return collections.artworks.find(selector, options).fetch()
     .map(post => {
       if (post.reply) {
         const reply = collections.posts.findOne(post.reply)
@@ -29,6 +29,5 @@ Meteor.methods({
       delete post.addr
       return post
     })
-    return posts
   }
 })
