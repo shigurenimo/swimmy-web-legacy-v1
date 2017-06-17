@@ -107,9 +107,9 @@ export default class InputPost extends Component {
     if (this.props.posts.networkInfo) {
       this.props.posts.closeNetworkInfo()
     } else {
-      this.props.networks.fetchOneFromId(networkId)
+      this.props.networks.findOneFromId(networkId)
       .then(network => {
-        this.props.networks.updateOne(network)
+        this.props.networks.replaceOne(network)
         this.props.posts.openNetworkInfo()
       })
       .catch(err => {
@@ -246,7 +246,7 @@ export default class InputPost extends Component {
       })
       .then(post => {
         this.ref.style.height = 'auto'
-        this.props.posts.insertIndex(post)
+        this.props.posts.pushIndex(post)
         this.props.inputPost.reset()
         this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
@@ -263,7 +263,7 @@ export default class InputPost extends Component {
       })
       .then(post => {
         this.ref.style.height = 'auto'
-        this.props.posts.insertIndex(post)
+        this.props.posts.pushIndex(post)
         this.props.inputPost.reset()
         this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
@@ -329,15 +329,15 @@ export default class InputPost extends Component {
       })
       .then(post => {
         this.ref.style.height = 'auto'
-        this.props.posts.insertIndex(post)
+        this.props.posts.pushIndex(post)
         this.props.inputPost.reset()
         this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
         const replyId = this.props.posts.one._id
-        return this.props.posts.fetchOneFromId(replyId)
+        return this.props.posts.findOneFromId(replyId)
       })
       .then(post => {
-        this.props.posts.updateOne(post)
+        this.props.posts.replaceOne(post)
       })
       .catch(err => {
         this.props.snackbar.error(err)
@@ -351,14 +351,14 @@ export default class InputPost extends Component {
         reply: replyId
       })
       .then(posts => {
-        this.props.posts.insertIndex(posts)
+        this.props.posts.pushIndex(posts)
         this.props.inputPost.reset()
         this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
-        return this.props.posts.fetchOneFromId(replyId)
+        return this.props.posts.findOneFromId(replyId)
       })
       .then(post => {
-        this.props.posts.updateOne(post)
+        this.props.posts.replaceOne(post)
       })
       .catch(err => {
         this.props.snackbar.error(err)

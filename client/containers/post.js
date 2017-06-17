@@ -245,10 +245,10 @@ export default class Post extends Component {
       this.props.posts.updateReaction(postId, name)
       .then(post => {
         this.setState({isInputReaction: false, inputNewReaction: ''})
-        return this.props.posts.fetchOneFromId(postId)
+        return this.props.posts.findOneFromId(postId)
       })
       .then(post => {
-        this.props.posts.updateOne(post)
+        this.props.posts.replaceOne(post)
       })
       .catch(err => {
         this.props.snackbar.error(err)
@@ -257,8 +257,8 @@ export default class Post extends Component {
     }
     this.props.posts.updateReaction(postId, name)
     .then(post => {
-      this.props.posts.updateOne(post)
-      this.props.posts.updateIndex(post._id, post)
+      this.props.posts.replaceOne(post)
+      this.props.posts.replaceIndex(post._id, post)
       this.setState({isReply: false, isInputReaction: false, inputNewReaction: ''})
     })
     .catch(err => {
@@ -281,7 +281,7 @@ export default class Post extends Component {
     if (!confirm) return
     this.props.posts.remove(postId)
     .then(() => {
-      this.props.posts.removeIndex(postId)
+      this.props.posts.pullIndex(postId)
     })
     .catch(err => {
       this.props.snackbar.error(err)

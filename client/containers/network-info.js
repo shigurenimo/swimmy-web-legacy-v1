@@ -81,10 +81,10 @@ export default class NetworkInfo extends Component {
   // リストを追加する
   onJoinNetwork () {
     const networkId = this.props.networks.one._id
-    this.props.networks.join(networkId)
+    this.props.networks.updateMember(networkId)
     .then(data => {
-      this.props.networks.updateOne(data)
-      this.props.networks.updateIndex(data._id, data)
+      this.props.networks.replaceOne(data)
+      this.props.networks.replaceIndex(data._id, data)
       this.props.posts.resetTimelines()
       this.props.snackbar.show('リストを追加しました')
     })
@@ -95,10 +95,10 @@ export default class NetworkInfo extends Component {
   // リストを外す
   onLeaveNetwork () {
     const networkId = this.props.networks.one._id
-    this.props.networks.join(networkId)
+    this.props.networks.updateMember(networkId)
     .then(data => {
-      this.props.networks.updateOne(data)
-      this.props.networks.updateIndex(data._id, data)
+      this.props.networks.replaceOne(data)
+      this.props.networks.replaceIndex(data._id, data)
       this.props.posts.resetTimelines()
       this.props.snackbar.show('リストを外しました')
     })
@@ -112,7 +112,7 @@ export default class NetworkInfo extends Component {
     const networkId = this.props.networks.one._id
     this.props.networks.remove(networkId)
     .then(data => {
-      this.props.networks.removeIndex(networkId)
+      this.props.networks.pullIndex(networkId)
       FlowRouter.go('/network')
       this.props.posts.resetTempTimelines()
       this.props.posts.resetTimelines()

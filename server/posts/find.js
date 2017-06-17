@@ -3,7 +3,7 @@ import collections from '/collections'
 import utils from '/utils'
 
 Meteor.methods({
-  'posts.fetch' (selector, options) {
+  'posts.find' (selector, options) {
     selector.thread = {$exists: false}
     options.sort = {createdAt: -1}
     if (selector.owner) {

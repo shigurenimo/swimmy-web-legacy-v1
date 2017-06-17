@@ -30,19 +30,44 @@ export default class {
     return this.loginState === 'isLoggedIn'
   }
 
-  // ipアドレスを取得する
-  fetchAddress () {
-    return new Promise((resolve, reject) => {
-      Meteor.call('users.fetchAddress', (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          this.address = res.address
-          this.unique = res.unique
-          resolve()
-        }
-      })
+  constructor () {
+    if (Meteor.loggingIn()) {
+      this.loginState = 'isLoggingIn'
+    } else {
+      this.loginState = 'isNotLoggedIn'
+    }
+    Accounts.onLogin(this.onLogin.bind(this))
+    Accounts.onLogout(this.onLogout.bind(this))
+  }
+
+  // ログインする
+  @action
+  onLogin () {
+    const self = this
+    Meteor.subscribe('users')
+    if (self.cursor) {
+      self.cursor.stop()
+      self.cursor = null
+    }
+    const userId = Meteor.userId()
+    self.cursor = Meteor.users.find(userId).observe({
+      added (user) {
+        user.profile.code = user.profile.code.split('')
+        self.one = user
+        self.followsIds = user.profile.follows.map(item => item._id)
+        setTimeout(() => { self.loginState = 'isLoggedIn' }, 200)
+      },
+      changed (user) {
+        user.profile.code = user.profile.code.split('')
+        self.one = user
+        self.followsIds = user.profile.follows.map(item => item._id)
+      }
     })
+  }
+
+  @action
+  onLogout () {
+    this.loginState = 'isNotLoggedIn'
   }
 
   insert ({username, password}) {
@@ -73,7 +98,7 @@ export default class {
   // ネームを更新する
   updateName (name) {
     return new Promise((resolve, reject) => {
-      Meteor.call('users.setName', {name}, err => {
+      Meteor.call('users.updateName', {name}, err => {
         if (err) {
           reject(err)
         } else {
@@ -87,18 +112,6 @@ export default class {
   updateUsername (username) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateUsername', {username}, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  checkExistUsername (username) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('users.checkExistUsername', username, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -134,9 +147,9 @@ export default class {
     })
   }
 
-  addEmail (email) {
+  updatePushEmail (email) {
     return new Promise((resolve, reject) => {
-      Meteor.call('users.addEmail', {email}, err => {
+      Meteor.call('users.updatePushEmail', {email}, err => {
         if (err) {
           reject(err)
         } else {
@@ -146,9 +159,9 @@ export default class {
     })
   }
 
-  removeEmail (email) {
+  updatePullEmail (email) {
     return new Promise((resolve, reject) => {
-      Meteor.call('users.removeEmail', {email}, err => {
+      Meteor.call('users.updatePullEmail', {email}, err => {
         if (err) {
           reject(err)
         } else {
@@ -158,34 +171,16 @@ export default class {
     })
   }
 
-  // ログインする
-  @action
-  onLogin () {
-    const self = this
-    Meteor.subscribe('users')
-    if (self.cursor) {
-      self.cursor.stop()
-      self.cursor = null
-    }
-    const userId = Meteor.userId()
-    self.cursor = Meteor.users.find(userId).observe({
-      added (user) {
-        user.profile.code = user.profile.code.split('')
-        self.one = user
-        self.followsIds = user.profile.follows.map(item => item._id)
-        setTimeout(() => { self.loginState = 'isLoggedIn' }, 200)
-      },
-      changed (user) {
-        user.profile.code = user.profile.code.split('')
-        self.one = user
-        self.followsIds = user.profile.follows.map(item => item._id)
-      }
+  checkExistUsername (username) {
+    return new Promise((resolve, reject) => {
+      Meteor.call('users.checkExistUsername', username, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
     })
-  }
-
-  @action
-  onLogout () {
-    this.loginState = 'isNotLoggedIn'
   }
 
   // ログアウトする
@@ -199,15 +194,5 @@ export default class {
         }
       })
     })
-  }
-
-  constructor () {
-    if (Meteor.loggingIn()) {
-      this.loginState = 'isLoggingIn'
-    } else {
-      this.loginState = 'isNotLoggedIn'
-    }
-    Accounts.onLogin(this.onLogin.bind(this))
-    Accounts.onLogout(this.onLogout.bind(this))
   }
 }

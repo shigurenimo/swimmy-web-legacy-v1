@@ -24,7 +24,7 @@ export default class {
   }
 
   @action
-  updateIndex (stocks) {
+  setIndex (stocks) {
     stocks.forEach(stock => {
       const id = stock._id
       if (this.ids[id]) return
@@ -34,7 +34,6 @@ export default class {
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   }
 
-  // データを取得する
   @action
   subscribe (timeline) {
     const self = this
@@ -62,7 +61,7 @@ export default class {
             stocks.push(res)
             if (time !== false) clearTimeout(time)
             time = setTimeout(() => {
-              self.updateIndex(stocks)
+              self.setIndex(stocks)
               self.isFetching = false
               stocks = []
             }, 10)

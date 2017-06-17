@@ -13,8 +13,22 @@ export default class {
 
   ids = {}
 
+  constructor () {
+    this.resetTimelines()
+    Accounts.onLogin(this.onLogin.bind(this))
+    Accounts.onLogout(this.onLogout.bind(this))
+  }
+
+  onLogin () {
+    this.resetTimelines()
+  }
+
+  onLogout () {
+    this.resetTimelines()
+  }
+
   @action
-  insertIndex (data) {
+  pushIndex (data) {
     if (!data) return
     if (Array.isArray(data)) {
       data.forEach(post => {
@@ -29,18 +43,7 @@ export default class {
   }
 
   @action
-  updateIndex (dataId, data) {
-    if (!this.ids[dataId]) return
-    for (let i = 0, len = this.index.length; i < len; ++i) {
-      if (dataId !== this.index[i]._id) continue
-      this.ids[dataId] = data
-      this.index[i] = data
-      break
-    }
-  }
-
-  @action
-  removeIndex (dataId) {
+  pullIndex (dataId) {
     if (!this.ids[dataId]) return
     for (let i = 0, len = this.index.length; i < len; ++i) {
       if (dataId !== this.index[i]._id) continue
@@ -50,100 +53,25 @@ export default class {
     }
   }
 
-  updateOne (data) {
+  @action
+  replaceIndex (dataId, data) {
+    if (!this.ids[dataId]) return
+    for (let i = 0, len = this.index.length; i < len; ++i) {
+      if (dataId !== this.index[i]._id) continue
+      this.ids[dataId] = data
+      this.index[i] = data
+      break
+    }
+  }
+
+  replaceOne (data) {
     if (!data) {
       this.one = null
     }
     this.one = data
   }
 
-  fetch (selector, options) {
-    return new Promise((resolve, reject) => {
-      this.isFetching = true
-      this.index = []
-      this.ids = {}
-      selector = toJS(selector)
-      options = toJS(options)
-      Meteor.call('networks.fetch', selector, options, (err, res) => {
-        this.isFetching = false
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  fetchOne (selector, options) {
-    return new Promise((resolve, reject) => {
-      selector = toJS(selector)
-      options = toJS(options)
-      Meteor.call('networks.fetchOne', selector, options, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  fetchOneFromId (_id) {
-    return this.fetchOne({_id}, {})
-  }
-
-  insert (next) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('networks.insert', next, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  remove (networkId) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('networks.remove', {networkId}, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  updateBasic (networkId, name, next) {
-    return new Promise((resolve, reject) => {
-      let req = {networkId}
-      req[name] = next
-      Meteor.call('networks.update', req, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  join (networkId) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('networks.join', {networkId}, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  updateTimelineFromUnique (unique) {
+  setTimelineFromUnique (unique) {
     const timelines = this.timelines.slice()
     for (let i = 0, len = timelines.length; i < len; ++i) {
       if (timelines[i].unique !== unique) continue
@@ -205,17 +133,89 @@ export default class {
     }
   }
 
-  onLogin () {
-    this.resetTimelines()
+  find (selector, options) {
+    return new Promise((resolve, reject) => {
+      this.isFetching = true
+      this.index = []
+      this.ids = {}
+      selector = toJS(selector)
+      options = toJS(options)
+      Meteor.call('networks.find', selector, options, (err, res) => {
+        this.isFetching = false
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
   }
 
-  onLogout () {
-    this.resetTimelines()
+  findOne (selector, options) {
+    return new Promise((resolve, reject) => {
+      selector = toJS(selector)
+      options = toJS(options)
+      Meteor.call('networks.findOne', selector, options, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
   }
 
-  constructor () {
-    this.resetTimelines()
-    Accounts.onLogin(this.onLogin.bind(this))
-    Accounts.onLogout(this.onLogout.bind(this))
+  findOneFromId (_id) {
+    return this.findOne({_id}, {})
+  }
+
+  insert (next) {
+    return new Promise((resolve, reject) => {
+      Meteor.call('networks.insert', next, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
+  remove (networkId) {
+    return new Promise((resolve, reject) => {
+      Meteor.call('networks.remove', {networkId}, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
+  updateBasic (networkId, name, next) {
+    return new Promise((resolve, reject) => {
+      let req = {networkId}
+      req[name] = next
+      Meteor.call('networks.update', req, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
+  updateMember (networkId) {
+    return new Promise((resolve, reject) => {
+      Meteor.call('networks.updateMember', {networkId}, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
   }
 }

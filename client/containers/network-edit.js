@@ -127,7 +127,7 @@ export default class NetworkEdit extends Component {
     const next = this.state.name
     this.props.networks.updateBasic(networkId, 'name', next)
     .then(data => {
-      this.props.networks.updateOne(data)
+      this.props.networks.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => {
@@ -187,7 +187,7 @@ export default class NetworkEdit extends Component {
       return this.props.networks.updateBasic(networkId, 'header', next)
     })
     .then(data => {
-      this.props.networks.updateOne(data)
+      this.props.networks.replaceOne(data)
       this.props.snackbar.show('更新しました')
       this.setState({header: imageNameCache})
     })
@@ -217,7 +217,7 @@ export default class NetworkEdit extends Component {
     if (this.props.networks.one.description === this.state.description) return
     this.props.networks.updateBasic(networkId, 'description', next)
     .then(data => {
-      this.props.networks.updateOne(data)
+      this.props.networks.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => {
@@ -245,7 +245,7 @@ export default class NetworkEdit extends Component {
     if (this.props.networks.one.univ === this.state.univ) return
     this.props.networks.updateBasic(networkId, 'univ', next)
     .then(data => {
-      this.props.networks.updateOne(data)
+      this.props.networks.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => {
@@ -277,7 +277,7 @@ export default class NetworkEdit extends Component {
       this.props.networks.one.sns.facebook === this.state.facebook) return
     this.props.networks.updateBasic(networkId, 'sns', next)
     .then(data => {
-      this.props.networks.updateOne(data)
+      this.props.networks.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => {

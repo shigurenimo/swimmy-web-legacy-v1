@@ -6,9 +6,9 @@ export default class {
 
   // 全てのハッシュタグを取得する
   @action
-  getAllTags () {
+  findAllTags () {
     return new Promise((resolve, reject) => {
-      Meteor.call('tags.fetchAll', {limit: 50}, (err, res) => {
+      Meteor.call('tags.findAll', {limit: 50}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -20,9 +20,9 @@ export default class {
 
   // 新着ハッシュタグを取得する
   @action
-  getNewTags () {
+  findNewTags () {
     return new Promise((resolve, reject) => {
-      Meteor.call('tags.fetchNew', {limit: 50}, (err, res) => {
+      Meteor.call('tags.findNew', {limit: 50}, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -34,9 +34,9 @@ export default class {
 
   // ホットハッシュタグを取得する
   @action
-  getHotTags () {
+  findHotTags () {
     return new Promise((resolve, reject) => {
-      Meteor.call('tags.fetchHot', {limit: 50}, (err, res) => {
+      Meteor.call('tags.findHot', {limit: 50}, (err, res) => {
         if (err) {
           reject(err)
         } else {

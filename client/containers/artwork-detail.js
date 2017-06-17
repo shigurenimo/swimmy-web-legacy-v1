@@ -243,7 +243,7 @@ export default class ArtworkDetail extends Component {
     this.props.artworks.remove(postId)
     .then(postId => {
       FlowRouter.go('/artwork')
-      this.props.artworks.removeIndex(postId)
+      this.props.artworks.pullIndex(postId)
     })
     .catch(err => {
       this.props.snackbar.error(err)
@@ -274,8 +274,8 @@ export default class ArtworkDetail extends Component {
       if (!(eq.isPublic || eq.isSecret || eq.title || eq.note || eq.colors)) return
       this.props.artworks.update(postId, next)
       .then(post => {
-        this.props.artworks.updateOne(post)
-        this.props.artworks.updateIndex(post._id, post)
+        this.props.artworks.replaceOne(post)
+        this.props.artworks.replaceIndex(post._id, post)
         this.props.snackbar.show('更新しました')
       })
       .catch(err => {
@@ -341,8 +341,8 @@ export default class ArtworkDetail extends Component {
     }
     this.props.artworks.updateReaction(postId, name)
     .then(post => {
-      this.props.artworks.updateOne(post)
-      this.props.artworks.updateIndex(post._id, post)
+      this.props.artworks.replaceOne(post)
+      this.props.artworks.replaceIndex(post._id, post)
       this.setState({inputNewReaction: ''})
     })
     .catch(err => {
@@ -393,7 +393,7 @@ export default class ArtworkDetail extends Component {
       content: value
     })
     .then(reply => {
-      this.props.artworks.insertOneReply(reply)
+      this.props.artworks.pushOneReply(reply)
     })
     .catch(err => {
       this.props.snackbar.error(err)
@@ -407,7 +407,7 @@ export default class ArtworkDetail extends Component {
     if (!confirm) return
     this.props.artworks.removeReply(postId, replyId)
     .then(() => {
-      return this.props.artworks.removeOneReply(replyId)
+      return this.props.artworks.pullOneReply(replyId)
     })
     .catch(err => {
       this.props.snackbar.error(err)
@@ -422,10 +422,10 @@ export default class ArtworkDetail extends Component {
     }
     this.props.artworks.updateReplyReaction(postId, replyId, name)
     .then(post => {
-      return this.props.artworks.fetchOneFromId(post._id)
+      return this.props.artworks.findOneFromId(post._id)
     })
     .then(post => {
-      this.props.artworks.updateOne(post)
+      this.props.artworks.replaceOne(post)
     })
     .catch(err => {
       this.props.snackbar.error(err)

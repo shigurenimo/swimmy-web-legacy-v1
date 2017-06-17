@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import collections from '/collections'
 
 Meteor.methods({
-  'networks.join' (req) {
+  'networks.updateMember' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
     const networkId = req.networkId
     const network = collections.networks.findOne(networkId)

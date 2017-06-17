@@ -268,7 +268,7 @@ export default class ConfigAccount extends Component {
   onRemoveEmail (email) {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
-    this.props.users.removeEmail(email)
+    this.props.users.updatePullEmail(email)
     .then(() => {
       this.props.snackbar.show('メールアドレスを削除しました')
     })
@@ -293,7 +293,7 @@ export default class ConfigAccount extends Component {
     if (this.process) return
     this.process = true
     const newEmail = this.state.inputNewEmail
-    await this.props.users.addEmail(newEmail)
+    await this.props.users.updatePushEmail(newEmail)
     .then(() => {
       this.props.snackbar.show('メールアドレスを追加しました')
       this.setState({inputNewEmail: '', inputNewEmailError: ''})

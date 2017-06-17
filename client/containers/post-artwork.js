@@ -62,7 +62,7 @@ export default class PostArtwork extends Component {
     }
     this.props.artworks.updateReaction(postId, name)
     .then(post => {
-      this.props.artworks.updateIndex(post._id, post)
+      this.props.artworks.replaceIndex(post._id, post)
     })
     .catch(err => {
       this.props.snackbar.error(err)

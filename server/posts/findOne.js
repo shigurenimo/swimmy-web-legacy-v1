@@ -3,7 +3,7 @@ import collections from '/collections'
 import utils from '/utils'
 
 Meteor.methods({
-  'posts.fetchOne' (selector, options) {
+  'posts.findOne' (selector, options) {
     const users = {}
     const post = collections.posts.findOne(selector, options)
     if (!post) return null

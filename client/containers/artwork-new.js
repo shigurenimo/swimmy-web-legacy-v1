@@ -313,7 +313,7 @@ export default class ArtworkNew extends Component {
       })
     })
     .then(post => {
-      this.props.artworks.insertIndex(post)
+      this.props.artworks.pushIndex(post)
       this.props.snackbar.show('投下しました')
       this.setState({
         inputTitle: '',

@@ -4,7 +4,7 @@ import collections from '/collections'
 import utils from '/utils'
 
 Meteor.methods({
-  'artworks.fetchOne' (selector, options) {
+  'artworks.findOne' (selector, options) {
     const userId = this.userId
     const users = {}
     const post = collections.artworks.findOne(selector, options)

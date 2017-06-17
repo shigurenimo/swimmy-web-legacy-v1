@@ -1,6 +1,5 @@
 import { observable } from 'mobx'
 
-// レイアウトデータ
 export default class {
   @observable scrollOver = false
 
@@ -9,6 +8,16 @@ export default class {
   @observable left = false
 
   get oneColumn () { return this.width < 700 }
+
+  constructor () {
+    let queue = null
+    window.addEventListener('resize', () => {
+      clearTimeout(queue)
+      queue = setTimeout(() => {
+        this.width = window.innerWidth
+      }, 100)
+    }, false)
+  }
 
   toMain () {
     this.left = false
@@ -28,15 +37,5 @@ export default class {
         this.scrollOver = true
       }
     }
-  }
-
-  constructor () {
-    let queue = null
-    window.addEventListener('resize', () => {
-      clearTimeout(queue)
-      queue = setTimeout(() => {
-        this.width = window.innerWidth
-      }, 100)
-    }, false)
   }
 }

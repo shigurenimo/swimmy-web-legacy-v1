@@ -3,7 +3,7 @@ import { check } from 'meteor/check'
 import collections from '/collections'
 
 Meteor.methods({
-  'users.setName' (req) {
+  'users.updateName' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized', 'ログインが必要です')
     check(req.name, String)
     const user = Meteor.users.findOne(this.userId)

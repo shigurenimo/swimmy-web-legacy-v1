@@ -11,7 +11,7 @@ export default class {
   ids = {}
 
   @action
-  insertIndex (posts) {
+  pushIndex (posts) {
     this.index = []
     if (Array.isArray(posts)) {
       posts.forEach(post => {
@@ -26,12 +26,12 @@ export default class {
   }
 
   @action
-  fetch () {
+  find () {
     this.isFetching = true
     const selector = {}
     const options = {limit: 50}
     return new Promise((resolve, reject) => {
-      Meteor.call('threads.fetch', selector, options, (err, res) => {
+      Meteor.call('threads.find', selector, options, (err, res) => {
         this.isFetching = false
         if (err) {
           reject(err)

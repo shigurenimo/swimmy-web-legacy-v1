@@ -21,6 +21,20 @@ export default class {
 
   tempTimeline = null
 
+  constructor () {
+    this.resetTimelines()
+    Accounts.onLogin(this.onLogin.bind(this))
+    Accounts.onLogout(this.onLogout.bind(this))
+  }
+
+  onLogin () {
+    this.resetTimelines()
+  }
+
+  onLogout () {
+    this.resetTimelines()
+  }
+
   openNetworkInfo () {
     this.networkInfo = true
   }
@@ -30,7 +44,7 @@ export default class {
   }
 
   @action
-  insertIndex (posts) {
+  pushIndex (posts) {
     if (!posts) return
     if (Array.isArray(posts)) {
       posts.forEach(post => {
@@ -45,7 +59,18 @@ export default class {
   }
 
   @action
-  updateIndex (postId, post) {
+  pullIndex (postId) {
+    if (!this.ids[postId]) return
+    for (let i = 0, len = this.index.length; i < len; ++i) {
+      if (postId !== this.index[i]._id) continue
+      this.index.splice(i, 1)
+      this.ids[postId] = null
+      break
+    }
+  }
+
+  @action
+  replaceIndex (postId, post) {
     if (!this.ids[postId]) return
     for (let i = 0, len = this.index.length; i < len; ++i) {
       if (postId !== this.index[i]._id) continue
@@ -56,135 +81,20 @@ export default class {
     }
   }
 
-  removeIndex (postId) {
-    if (!this.ids[postId]) return
-    for (let i = 0, len = this.index.length; i < len; ++i) {
-      if (postId !== this.index[i]._id) continue
-      this.index.splice(i, 1)
-      this.ids[postId] = null
-      break
-    }
-  }
-
-  updateOne (post) {
+  replaceOne (post) {
     if (!post) {
       this.one = null
     }
     this.one = post
   }
 
-  // データを取得する
-  fetch (selector, options) {
-    return new Promise((resolve, reject) => {
-      this.isFetching = true
-      this.index = []
-      this.ids = {}
-      selector = toJS(selector)
-      options = toJS(options)
-      Meteor.call('posts.fetch', selector, options, (err, res) => {
-        this.isFetching = false
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  fetchFromUserId (userId) {
-    const selector = {owner: userId}
-    const options = {
-      limit: 50,
-      sort: {createdAt: -1}
-    }
-    return this.fetch(selector, options)
-  }
-
-  fetchOne (selector, options) {
-    return new Promise((resolve, reject) => {
-      selector = toJS(selector)
-      options = toJS(options)
-      Meteor.call('posts.fetchOne', selector, options, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  fetchOneFromId (postId) {
-    const selector = {_id: postId}
-    const options = {}
-    return this.fetchOne(selector, options)
-  }
-
-  // 投稿を追加する
-  insert (next) {
-    return new Promise((resolve, reject) => {
-      const req = {
-        isPublic: next.isPublic,
-        content: next.content
-      }
-      if (next.reply) {
-        req.reply = next.reply
-      }
-      if (next.images) {
-        req.images = next.images
-        req.imagesDate = next.imagesDate
-      }
-      if (this.timeline.network) {
-        req.network = this.timeline.network
-      }
-      Meteor.call('posts.insert', req, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  updateReaction (postId, name) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('posts.updateReaction', {
-        postId: postId,
-        name: name
-      }, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  // 投稿を削除する
-  remove (postId) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('posts.remove', {
-        postId: postId
-      }, err => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
-    })
-  }
-
   // タイムラインを変更する
-  updateTimeline (timeline) {
+  setTimeline (timeline) {
     this.timeline = timeline
     return toJS(timeline)
   }
 
-  updateTimelineFromUnique (unique) {
+  setTimelineFromUnique (unique) {
     const timelines = this.timelines.slice()
     for (let i = 0, len = timelines.length; i < len; ++i) {
       if (timelines[i].unique !== unique) continue
@@ -194,7 +104,7 @@ export default class {
     return toJS(this.timeline)
   }
 
-  updateTimelineFromDate (y, m, d) {
+  setTimelineFromDate (y, m, d) {
     this.timeline = {
       name: y + '.' + m + '.' + d,
       selector: {
@@ -278,12 +188,12 @@ export default class {
     return this.timelines
   }
 
-  updatetTempTimeline (timeline) {
+  setTempTimeline (timeline) {
     this.tempTimeline = timeline
     return timeline
   }
 
-  updatetTempTimelineFromNetwork (network) {
+  setTempTimelineFromNetwork (network) {
     const timeline = {
       name: network.name,
       unique: network._id,
@@ -300,17 +210,106 @@ export default class {
     this.tempTimeline = null
   }
 
-  onLogin () {
-    this.resetTimelines()
+  // データを取得する
+  find (selector, options) {
+    return new Promise((resolve, reject) => {
+      this.isFetching = true
+      this.index = []
+      this.ids = {}
+      selector = toJS(selector)
+      options = toJS(options)
+      Meteor.call('posts.find', selector, options, (err, res) => {
+        this.isFetching = false
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
   }
 
-  onLogout () {
-    this.resetTimelines()
+  findFromUserId (userId) {
+    const selector = {owner: userId}
+    const options = {
+      limit: 50,
+      sort: {createdAt: -1}
+    }
+    return this.find(selector, options)
   }
 
-  constructor () {
-    this.resetTimelines()
-    Accounts.onLogin(this.onLogin.bind(this))
-    Accounts.onLogout(this.onLogout.bind(this))
+  findOne (selector, options) {
+    return new Promise((resolve, reject) => {
+      selector = toJS(selector)
+      options = toJS(options)
+      Meteor.call('posts.findOne', selector, options, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
+  findOneFromId (postId) {
+    const selector = {_id: postId}
+    const options = {}
+    return this.findOne(selector, options)
+  }
+
+  insert (next) {
+    return new Promise((resolve, reject) => {
+      const req = {
+        isPublic: next.isPublic,
+        content: next.content
+      }
+      if (next.reply) {
+        req.reply = next.reply
+      }
+      if (next.images) {
+        req.images = next.images
+        req.imagesDate = next.imagesDate
+      }
+      if (this.timeline.network) {
+        req.network = this.timeline.network
+      }
+      Meteor.call('posts.insert', req, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
+  remove (postId) {
+    return new Promise((resolve, reject) => {
+      Meteor.call('posts.remove', {
+        postId: postId
+      }, err => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
+  updateReaction (postId, name) {
+    return new Promise((resolve, reject) => {
+      Meteor.call('posts.updateReaction', {
+        postId: postId,
+        name: name
+      }, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
   }
 }

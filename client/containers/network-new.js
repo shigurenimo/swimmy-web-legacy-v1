@@ -213,10 +213,10 @@ export default class NetworkNew extends Component {
     this.props.networks.insert(next)
     .then(() => {
       const {selector, options} = this.props.networks.timeline
-      return this.props.networks.fetch(selector, options)
+      return this.props.networks.find(selector, options)
     })
     .then(data => {
-      this.props.networks.insertIndex(data)
+      this.props.networks.pushIndex(data)
       FlowRouter.go('/network')
       this.props.posts.resetTimelines()
       this.props.snackbar.show('新しいリストを作成しました')

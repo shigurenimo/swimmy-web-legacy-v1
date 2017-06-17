@@ -4,10 +4,9 @@ import collections from '/collections'
 import utils from '/utils'
 
 Meteor.methods({
-  'artworks.fetch' (selector, options) {
-    const userId = this.userId
+  'artworks.find' (selector, options) {
     if (selector.owner) {
-      if (selector.owner !== userId) {
+      if (selector.owner !== this.userId) {
         selector.public = {$exists: true}
       }
     }
@@ -25,7 +24,7 @@ Meteor.methods({
       }
       post.note = utils.replace.link(post.note)
       post.note = utils.replace.tags(post.note)
-      if (userId !== post.owner) delete post.owner
+      if (this.userId !== post.owner) delete post.owner
       post.unique = Random.createWithSeeds(post.addr).id()
       delete post.addr
       return post

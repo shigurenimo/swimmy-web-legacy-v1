@@ -4,13 +4,13 @@ import { observable } from 'mobx'
 export default class {
   @observable one = {}
 
-  updateOne (user) {
+  setOne (user) {
     this.one = user
   }
 
-  fetchOne (selector, options) {
+  findOne (selector, options) {
     return new Promise((resolve, reject) => {
-      Meteor.call('users.fetchProfile', selector, options, (err, res) => {
+      Meteor.call('users.findProfile', selector, options, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -23,7 +23,7 @@ export default class {
     })
   }
 
-  fetchOneFromUsername (username) {
-    return this.fetchOne({username}, {})
+  findOneFromUsername (username) {
+    return this.findOne({username}, {})
   }
 }

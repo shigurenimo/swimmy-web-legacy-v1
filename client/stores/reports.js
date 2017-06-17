@@ -4,11 +4,11 @@ import { observable } from 'mobx'
 export default class {
   @observable index = null
 
-  updateIndex (data) {
+  setIndex (data) {
     this.index = data
   }
 
-  fetch () {
+  find () {
     return new Promise((resolve, reject) => {
       Meteor.call('report:main', (err, res) => {
         if (err) {

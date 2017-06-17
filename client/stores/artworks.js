@@ -15,8 +15,22 @@ export default class {
 
   timelines = []
 
+  constructor () {
+    this.resetTimelines()
+    Accounts.onLogin(this.onLogin.bind(this))
+    Accounts.onLogout(this.onLogout.bind(this))
+  }
+
+  onLogin () {
+    this.resetTimelines()
+  }
+
+  onLogout () {
+    this.resetTimelines()
+  }
+
   @action
-  insertIndex (posts) {
+  pushIndex (posts) {
     if (Array.isArray(posts)) {
       posts.forEach(post => {
         this.ids[post._id] = post
@@ -29,17 +43,7 @@ export default class {
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   }
 
-  updateIndex (postId, post) {
-    if (!this.ids[postId]) return
-    for (let i = 0, len = this.index.length; i < len; ++i) {
-      if (postId !== this.index[i]._id) continue
-      this.ids[postId] = post
-      this.index[i] = post
-      break
-    }
-  }
-
-  removeIndex (postId) {
+  pullIndex (postId) {
     if (!this.ids[postId]) return
     for (let i = 0, len = this.index.length; i < len; ++i) {
       if (postId !== this.index[i]._id) continue
@@ -49,19 +53,29 @@ export default class {
     }
   }
 
-  updateOne (post) {
+  replaceIndex (postId, post) {
+    if (!this.ids[postId]) return
+    for (let i = 0, len = this.index.length; i < len; ++i) {
+      if (postId !== this.index[i]._id) continue
+      this.ids[postId] = post
+      this.index[i] = post
+      break
+    }
+  }
+
+  replaceOne (post) {
     if (!post) {
       this.one = null
     }
     this.one = post
   }
 
-  insertOneReply (reply) {
+  pushOneReply (reply) {
     this.one.replies.push(reply)
     this.one.replies = this.one.replies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   }
 
-  removeOneReply (replyId) {
+  pullOneReply (replyId) {
     for (let i = 0, len = this.one.replies.length; i < len; ++i) {
       if (this.one.replies[i]._id !== replyId) continue
       this.one.replies.splice(i, 1)
@@ -69,15 +83,71 @@ export default class {
     }
   }
 
+  // タイムラインを変更する
+  setTimelineFromUnique (unique) {
+    const timelines = this.timelines.slice()
+    for (let i = 0, len = timelines.length; i < len; ++i) {
+      if (timelines[i].unique !== unique) continue
+      this.timeline = timelines[i]
+      break
+    }
+    return toJS(this.timeline)
+  }
+
   @action
-  fetch (selector, options) {
+  resetTimelines () {
+    const user = Meteor.user()
+    const timeline = {
+      name: '全てのアートワーク',
+      unique: 'default',
+      isStatic: true,
+      selector: {},
+      options: {
+        limit: 20,
+        sort: {createdAt: -1}
+      }
+    }
+    if (!this.timeline) {
+      this.timeline = timeline
+    }
+    this.timelines = [timeline]
+    if (user) {
+      this.timelines.push({
+        name: '自分のアートワーク',
+        unique: 'self',
+        isStatic: true,
+        selector: {
+          owner: user._id
+        },
+        options: {
+          limit: 20,
+          sort: {createdAt: -1}
+        }
+      })
+      this.timelines.push({
+        name: 'フォローユーザ',
+        unique: 'follows',
+        isStatic: true,
+        selector: {
+          'public.username': {$in: user.followUsernames}
+        },
+        options: {
+          limit: 20,
+          sort: {createdAt: -1}
+        }
+      })
+    }
+  }
+
+  @action
+  find (selector, options) {
     return new Promise((resolve, reject) => {
       this.isFetching = true
       this.index = []
       this.ids = {}
       selector = toJS(selector)
       options = toJS(options)
-      Meteor.call('artworks.fetch', selector, options, (err, res) => {
+      Meteor.call('artworks.find', selector, options, (err, res) => {
         this.isFetching = false
         if (err) {
           reject(err)
@@ -88,11 +158,11 @@ export default class {
     })
   }
 
-  fetchOne (selector, options) {
+  findOne (selector, options) {
     return new Promise((resolve, reject) => {
       selector = toJS(selector)
       options = toJS(options)
-      Meteor.call('artworks.fetchOne', selector, options, (err, res) => {
+      Meteor.call('artworks.findOne', selector, options, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -102,8 +172,8 @@ export default class {
     })
   }
 
-  fetchOneFromId (_id) {
-    return this.fetchOne({_id: _id}, {})
+  findOneFromId (_id) {
+    return this.findOne({_id: _id}, {})
   }
 
   insert (next) {
@@ -212,75 +282,5 @@ export default class {
         }
       })
     })
-  }
-
-  // タイムラインを変更する
-  updateTimelineFromUnique (unique) {
-    const timelines = this.timelines.slice()
-    for (let i = 0, len = timelines.length; i < len; ++i) {
-      if (timelines[i].unique !== unique) continue
-      this.timeline = timelines[i]
-      break
-    }
-    return toJS(this.timeline)
-  }
-
-  @action
-  resetTimelines () {
-    const user = Meteor.user()
-    const timeline = {
-      name: '全てのアートワーク',
-      unique: 'default',
-      isStatic: true,
-      selector: {},
-      options: {
-        limit: 20,
-        sort: {createdAt: -1}
-      }
-    }
-    if (!this.timeline) {
-      this.timeline = timeline
-    }
-    this.timelines = [timeline]
-    if (user) {
-      this.timelines.push({
-        name: '自分のアートワーク',
-        unique: 'self',
-        isStatic: true,
-        selector: {
-          owner: user._id
-        },
-        options: {
-          limit: 20,
-          sort: {createdAt: -1}
-        }
-      })
-      this.timelines.push({
-        name: 'フォローユーザ',
-        unique: 'follows',
-        isStatic: true,
-        selector: {
-          'public.username': {$in: user.followUsernames}
-        },
-        options: {
-          limit: 20,
-          sort: {createdAt: -1}
-        }
-      })
-    }
-  }
-
-  onLogin () {
-    this.resetTimelines()
-  }
-
-  onLogout () {
-    this.resetTimelines()
-  }
-
-  constructor () {
-    this.resetTimelines()
-    Accounts.onLogin(this.onLogin.bind(this))
-    Accounts.onLogout(this.onLogout.bind(this))
   }
 }
