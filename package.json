@@ -30,6 +30,7 @@
     "react-swipeable": "^4.0.0",
     "react-tap-event-plugin": "^2.0.1",
     "react-transition-group": "^1.1.3",
+    "twit": "^2.2.9",
     "validator": "^7.0.0"
   },
   "devDependencies": {

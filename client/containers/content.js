@@ -22,6 +22,8 @@ import Thread from './thread'
 import ThreadList from './thread-list'
 import TimeMachine from './time-machine'
 import Timeline from './timeline'
+import Twitter from './twitter'
+import TwitterLogin from './twitter-login'
 import utils from '/utils'
 import styleSheet from './content.style'
 
@@ -121,6 +123,16 @@ export default class Content extends Component {
         return <NetworkEdit key='network-edit' />
       case 'network-new':
         return <NetworkNew key='network-new' />
+      case 'twitter':
+        if (this.props.users.one.services) {
+          if (this.props.users.one) {
+            return <Twitter key='twitter' />
+          } else {
+            return <TwitterLogin key='twitter' />
+          }
+        } else {
+          return <Loading key='loading' />
+        }
     }
     return null
   }

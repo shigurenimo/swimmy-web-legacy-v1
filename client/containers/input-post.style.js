@@ -47,7 +47,8 @@ export default createStyleSheet('InputPost', theme => {
       outline: 0,
       '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
       backgroundColor: 'rgba(0, 0, 0, 0)',
-      resize: 'none'
+      resize: 'none',
+      letterSpacing: '1px'
     },
     imagePreview: {
       padding: '10px 0 0 0',

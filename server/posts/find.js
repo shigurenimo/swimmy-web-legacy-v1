@@ -29,6 +29,5 @@ Meteor.methods({
       delete post.addr
       return post
     })
-
   }
 })

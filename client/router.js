@@ -353,6 +353,20 @@ FlowRouter.route('/report', {
   }
 })
 
+FlowRouter.route('/twitter', {
+  action (params) {
+    stores.router.setRoute('twitter')
+    stores.layout.toMain()
+    document.title = 'twitter' + ' | ' + documentTitleShort
+    if (Meteor.isProduction) {
+      window.ga('send', 'pageview', {
+        page: '/',
+        title: document.title
+      })
+    }
+  }
+})
+
 FlowRouter.route('/:username', {
   action (params) {
     const username = params.username

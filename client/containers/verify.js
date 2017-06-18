@@ -9,6 +9,19 @@ import SheetContent from '../components/ui-sheet-content'
 @inject('router')
 @observer
 export default class Verify extends Component {
+  onClose = ::this.onClose
+
+  get verifyMessage () {
+    if (this.props.router.verifyError === null) {
+      return '読み込み中..'
+    }
+    if (this.props.router.verifyError) {
+      return 'エラーが発生しました'
+    } else {
+      return '本人確認できました'
+    }
+  }
+
   render () {
     return (
       <Layout>
@@ -31,18 +44,5 @@ export default class Verify extends Component {
   // ウィンドウを閉じる
   onClose () {
     window.open('about:blank', '_self').close()
-  }
-
-  onClose = ::this.onClose
-
-  get verifyMessage () {
-    if (this.props.router.verifyError === null) {
-      return '読み込み中..'
-    }
-    if (this.props.router.verifyError) {
-      return 'エラーが発生しました'
-    } else {
-      return '本人確認できました'
-    }
   }
 }

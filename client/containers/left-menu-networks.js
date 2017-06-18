@@ -2,9 +2,6 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import AddIcon from 'material-ui-icons/Add'
-import ExploreIcon from 'material-ui-icons/Explore'
-import PublicIcon from 'material-ui-icons/Public'
-import SchoolIcon from 'material-ui-icons/School'
 import Collapse from 'material-ui/transitions/Collapse'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
@@ -17,7 +14,7 @@ import styleSheet from './left-menu-default.style'
 @observer
 export default class LeftMenuNetworks extends Component {
   render () {
-    const {users, classes} = this.props
+    const {classes} = this.props
     return (
       <List>
         <ListItem button dense

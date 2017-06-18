@@ -175,6 +175,18 @@ export default class {
     })
   }
 
+  updateServicesTwitter () {
+    return new Promise((resolve, reject) => {
+      Meteor.call('users.updateServicesTwitter', (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
   checkExistUsername (username) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.checkExistUsername', username, (err, res) => {

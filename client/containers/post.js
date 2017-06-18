@@ -111,7 +111,8 @@ export default class Post extends Component {
                 <Button compact minimal background
                   key={name}
                   className={classes.reaction}
-                  selected={!!this.props.users.isLogged && this.props.reactions[name].includes(this.props.users.one._id)}
+                  selected={!!this.props.users.isLogged &&
+                  this.props.reactions[name].includes(this.props.users.one._id)}
                   onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
                   {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
                 </Button>

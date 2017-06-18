@@ -29,6 +29,10 @@ export default class LeftMenuNetworks extends Component {
         </ListItem>
         <Collapse in={this.state.isExpand} transitionDuration='auto' unmountOnExit>
           {this.props.users.isLogged &&
+          <ListItem button dense component='a' href='/twitter'>
+            <ListItemText inset primary='twitter' />
+          </ListItem>}
+          {this.props.users.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]: this.props.router.page.includes('config')
