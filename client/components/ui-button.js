@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
-import { fade } from 'material-ui/styles/colorManipulator'
 import Button from 'material-ui/Button'
 
 export const styleSheet = createStyleSheet('UIButton', theme => {
@@ -10,7 +9,7 @@ export const styleSheet = createStyleSheet('UIButton', theme => {
       backgroundColor: 'rgba(0, 0, 0, 0.05)'
     },
     selected: {
-      background: theme.palette.accent[100],
+      background: theme.palette.primary[100],
       '&:hover': {
         background: theme.palette.primary[200]
       }
