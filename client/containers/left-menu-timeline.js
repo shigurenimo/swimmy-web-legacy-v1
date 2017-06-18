@@ -61,11 +61,6 @@ export default class LeftMenuTimeline extends Component {
             component='a'
             href={'/follows'}>
             <ListItemText inset primary={'follows'} />
-            <ListItemSecondaryAction>
-              <IconButton component='a' href='/follows'>
-                <TimelineIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
           </ListItem>}
           {users.isLogged &&
           <ListItem button dense
@@ -77,11 +72,6 @@ export default class LeftMenuTimeline extends Component {
             component='a'
             href={'/self'}>
             <ListItemText inset primary={'self'} />
-            <ListItemSecondaryAction>
-              <IconButton component='a' href='/self'>
-                <PersonOutlineIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
           </ListItem>}
           <ListItem button dense
             className={classNames({
@@ -90,11 +80,6 @@ export default class LeftMenuTimeline extends Component {
             component='a'
             href={'/timemachine'}>
             <ListItemText inset primary='logs' />
-            <ListItemSecondaryAction>
-              <IconButton component='a' href='/timemachine'>
-                <UpdateIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
           </ListItem>
         </Collapse>
         {this.props.posts.networkTimelines.map(item =>

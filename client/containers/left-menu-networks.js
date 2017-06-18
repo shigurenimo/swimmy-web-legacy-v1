@@ -46,11 +46,6 @@ export default class LeftMenuNetworks extends Component {
             component='a'
             href={'/network/net'}>
             <ListItemText inset primary={'internet'} />
-            <ListItemSecondaryAction>
-              <IconButton component='a' href='/network/net'>
-                <ExploreIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
           </ListItem>
           <ListItem button dense
             className={classNames({
@@ -61,11 +56,6 @@ export default class LeftMenuNetworks extends Component {
             component='a'
             href={'/network/univ'}>
             <ListItemText inset primary={'univ'} />
-            <ListItemSecondaryAction>
-              <IconButton component='a' href='/network/univ'>
-                <SchoolIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
           </ListItem>
         </Collapse>
         {this.props.users.isLogged &&

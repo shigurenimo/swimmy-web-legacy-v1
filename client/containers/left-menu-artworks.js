@@ -47,11 +47,6 @@ export default class LeftMenuArtworks extends Component {
             component='a'
             href={'/artwork/follows'}>
             <ListItemText inset primary={'follows'} />
-            <ListItemSecondaryAction>
-              <IconButton component='a' href='/artwork/follows'>
-                <TimelineIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
           </ListItem>}
           {users.isLogged &&
           <ListItem button dense
@@ -63,11 +58,6 @@ export default class LeftMenuArtworks extends Component {
             component='a'
             href={'/artwork/self'}>
             <ListItemText inset primary={'self'} />
-            <ListItemSecondaryAction>
-              <IconButton component='a' href='/artwork/self'>
-                <PersonOutlineIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
           </ListItem>}
         </Collapse>
         {this.props.users.isLogged &&
