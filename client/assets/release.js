@@ -1,4 +1,10 @@
 export default [{
+  version: '1.2.0',
+  date: '2017.6.19',
+  content: [
+    'Twitterの関連付け機能の追加'
+  ]
+}, {
   version: '1.1.2',
   date: '2017.6.18',
   content: [
