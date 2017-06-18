@@ -20,6 +20,7 @@ export default class Twitter extends Component {
     const {
       users: {
         one: {
+          config,
           services: {twitter}
         }
       },
@@ -29,28 +30,43 @@ export default class Twitter extends Component {
       <Layout>
         <Sheet>
           <SheetContent>
-            <Block>
-              <img
-                className={classes.icon}
-                src={twitter.profile_image_url_https.replace('_normal', '')} />
-            </Block>
+            <img
+              className={classes.icon}
+              src={twitter.profile_image_url_https.replace('_normal', '')} />
           </SheetContent>
           <SheetContent>
-            <Block>
-              <Typography type='title' align='center'>
-                {twitter.screenName}
-              </Typography>
-            </Block>
+            <Typography type='title' align='center'>
+              {twitter.screenName}
+            </Typography>
           </SheetContent>
           <SheetActions>
-            <FormGroup row>
-              <LabelCheckbox label='アイコンを使用する' />
-            </FormGroup>
+            <Block align='center'>
+              <FormGroup>
+                <LabelCheckbox
+                  checked={
+                    config &&
+                    config.twitter &&
+                    config.twitter.useIcon
+                  }
+                  label='アイコンを使用する'
+                  value='useIcon'
+                  onChange={this.onSelectOption} />
+                <LabelCheckbox
+                  checked={
+                    config &&
+                    config.twitter &&
+                    config.twitter.publicAccount
+                  }
+                  label='アカウントを表示する'
+                  value='publicAccount'
+                  onChange={this.onSelectOption} />
+              </FormGroup>
+            </Block>
           </SheetActions>
           <SheetActions align='right'>
-            <Block>
+            <Block align='center'>
               <Button onClick={this.onUpdateTwitter}>
-                update
+                update twitter-data
               </Button>
             </Block>
           </SheetActions>
@@ -58,6 +74,14 @@ export default class Twitter extends Component {
       </Layout>
     )
   }
+
+  onSelectOption (event, checked) {
+    const {value: name} = event.target
+    this.props.users.updateConfigTwitter(name, checked)
+    .catch(this.props.snackbar.error)
+  }
+
+  onSelectOption = ::this.onSelectOption
 
   onUpdateTwitter () {
     this.props.users.updateServicesTwitter()

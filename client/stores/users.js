@@ -40,10 +40,6 @@ export default class {
     Accounts.onLogout(this.onLogout.bind(this))
   }
 
-  toJS (name) {
-    return toJS(this[name])
-  }
-
   // ログインする
   @action
   onLogin () {
@@ -178,6 +174,18 @@ export default class {
   updateServicesTwitter () {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateServicesTwitter', (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
+  updateConfigTwitter (name, value) {
+    return new Promise((resolve, reject) => {
+      Meteor.call('users.updateConfigTwitter', {name, value}, (err, res) => {
         if (err) {
           reject(err)
         } else {
