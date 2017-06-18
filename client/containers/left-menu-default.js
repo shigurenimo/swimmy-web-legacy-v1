@@ -2,11 +2,13 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
+import Divider from 'material-ui/Divider'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
 import LeftMenuTimeline from './left-menu-timeline'
+import LeftMenuArtwork from './left-menu-artwork'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
@@ -18,30 +20,8 @@ export default class LeftMenuDefault extends Component {
     return (
       <div>
         <LeftMenuTimeline />
-        {/* アートワーク */}
-        <List>
-          {this.props.artworks.timelines.map(item =>
-            <ListItem button dense
-              key={item.unique}
-              className={classNames({
-                [classes.select]:
-                this.props.router.page === 'artwork' &&
-                this.props.artworks.timeline.unique === item.unique
-              })}
-              component='a'
-              href={'/artwork/' + item.unique}>
-              <ListItemText primary={item.name} />
-            </ListItem>)}
-          {this.props.users.isLogged &&
-          <ListItem button dense
-            className={classNames({
-              [classes.select]: this.props.router.page.includes('artwork-new')
-            })}
-            component='a'
-            href='/artwork/new'>
-            <ListItemText primary='+ 新しいアートワーク' />
-          </ListItem>}
-        </List>
+        <Divider light />
+        <LeftMenuArtwork />
         {/* リスト */}
         <List>
           {this.props.networks.timelines.map(item =>

@@ -17,7 +17,6 @@ import styleSheet from './left-menu-default.style'
 @observer
 export default class LeftMenuTimeline extends Component {
   render () {
-    console.log(this.props.posts.timeline.unique )
     const {users, classes} = this.props
     return (
       <List>
@@ -27,7 +26,7 @@ export default class LeftMenuTimeline extends Component {
           })}
           component='a'
           href='/thread'>
-          <ListItemText primary='スレッド' />
+          <ListItemText primary='thread' />
           <ListItemSecondaryAction>
             <IconButton component='a' href='/thread'>
               <SubjectIcon />
@@ -46,7 +45,7 @@ export default class LeftMenuTimeline extends Component {
           })}
           component='a'
           href={'/default'}>
-          <ListItemText primary={'タイムライン'} />
+          <ListItemText primary={'timeline'} />
           <ListItemSecondaryAction>
             <IconButtonMoreExpand isExpand={this.state.isExpand} onClick={this.onExpand} />
           </ListItemSecondaryAction>
@@ -61,7 +60,7 @@ export default class LeftMenuTimeline extends Component {
             })}
             component='a'
             href={'/follows'}>
-            <ListItemText inset primary={'フォロー'} />
+            <ListItemText inset primary={'follows'} />
             <ListItemSecondaryAction>
               <IconButton component='a' href='/follows'>
                 <TimelineIcon />
@@ -77,7 +76,7 @@ export default class LeftMenuTimeline extends Component {
             })}
             component='a'
             href={'/self'}>
-            <ListItemText inset primary={'あなた'} />
+            <ListItemText inset primary={'self'} />
             <ListItemSecondaryAction>
               <IconButton component='a' href='/self'>
                 <PersonOutlineIcon />
@@ -90,7 +89,7 @@ export default class LeftMenuTimeline extends Component {
             })}
             component='a'
             href={'/timemachine'}>
-            <ListItemText inset primary='過去ログ' />
+            <ListItemText inset primary='logs' />
             <ListItemSecondaryAction>
               <IconButton component='a' href='/timemachine'>
                 <UpdateIcon />
