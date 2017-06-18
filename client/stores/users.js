@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
-import { action, observable } from 'mobx'
+import { action, observable, toJS } from 'mobx'
 
 export default class {
   @observable one = {}
@@ -38,6 +38,10 @@ export default class {
     }
     Accounts.onLogin(this.onLogin.bind(this))
     Accounts.onLogout(this.onLogout.bind(this))
+  }
+
+  toJS (name) {
+    return toJS(this[name])
   }
 
   // ログインする
