@@ -64,12 +64,12 @@ export default class ArtworkDetail extends Component {
             <SheetActions>
               <InlineTypography>匿名</InlineTypography>
               <Button
-                primary={!this.state.inputIsPublic}
+                selected={!this.state.inputIsPublic}
                 onClick={this.onChangePublic.bind(this, false)}>
                 on
               </Button>
               <Button
-                primary={this.state.inputIsPublic}
+                selected={this.state.inputIsPublic}
                 onClick={this.onChangePublic.bind(this, true)}>
                 off
               </Button>
@@ -79,12 +79,12 @@ export default class ArtworkDetail extends Component {
             <SheetActions>
               <InlineTypography>過去の作品</InlineTypography>
               <Button
-                primary={this.state.inputIsSecret}
+                selected={this.state.inputIsSecret}
                 onClick={this.onChangeSecret.bind(this, true)}>
                 on
               </Button>
               <Button
-                primary={!this.state.inputIsSecret}
+                selected={!this.state.inputIsSecret}
                 onClick={this.onChangeSecret.bind(this, false)}>
                 off
               </Button>
@@ -118,8 +118,10 @@ export default class ArtworkDetail extends Component {
               {Object.keys(this.props.artworks.one.reactions).map(name =>
                 <Button background
                   key={name}
-                  primary={!!this.props.users.isLogged &&
-                  this.props.artworks.one.reactions[name].includes(this.props.users.one._id)}
+                  selected={
+                    !!this.props.users.isLogged &&
+                    this.props.artworks.one.reactions[name].includes(this.props.users.one._id)
+                  }
                   onClick={this.onUpdateReaction.bind(this, this.props.artworks.one._id, name)}>
                   {name + (this.props.artworks.one.reactions[name].length > 0 ? ' ' +
                     this.props.artworks.one.reactions[name].length : '')}
@@ -190,7 +192,10 @@ export default class ArtworkDetail extends Component {
                 {Object.keys(reply.reactions).map(name =>
                   <Button compact minimal background
                     key={name}
-                    primary={!!this.props.users.isLogged && reply.reactions[name].includes(this.props.users.one._id)}
+                    selected={
+                      !!this.props.users.isLogged &&
+                      reply.reactions[name].includes(this.props.users.one._id)
+                    }
                     onClick={this.onUpdateReplyReaction.bind(this, this.props.artworks.one._id, reply._id, name)}>
                     {name + (reply.reactions[name].length > 0 ? ' ' + reply.reactions[name].length : '')}
                   </Button>
@@ -199,7 +204,7 @@ export default class ArtworkDetail extends Component {
               {/* delete */}
               {this.props.users.isLogged && reply.owner === this.props.users.one._id &&
               <SheetActions align='right'>
-                <Button onTouchTap={this.onRemoveReply.bind(this, this.props.artworks.one._id, reply._id)}>
+                <Button onClick={this.onRemoveReply.bind(this, this.props.artworks.one._id, reply._id)}>
                   remove
                 </Button>
               </SheetActions>}

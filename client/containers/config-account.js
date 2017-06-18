@@ -35,8 +35,7 @@ export default class ConfigAccount extends Component {
               </Typography>
             </SheetActions>}
             <SheetActions align='right'>
-              <Button
-                onClick={this.onSubmitName}>
+              <Button onClick={this.onSubmitName}>
                 update
               </Button>
             </SheetActions>
@@ -59,8 +58,7 @@ export default class ConfigAccount extends Component {
               </Typography>
             </SheetContent>}
             <SheetActions align='right'>
-              <Button
-                onClick={this.onSubmitUsername}>
+              <Button onClick={this.onSubmitUsername}>
                 update
               </Button>
             </SheetActions>

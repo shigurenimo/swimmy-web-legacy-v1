@@ -29,7 +29,7 @@ export default class InputPost extends Component {
         {/* 匿名 */}
         <div className={classes.timelineName}>
           <Button background minimal
-            primary={this.props.posts.networkInfo}
+            selected={this.props.posts.networkInfo}
             onClick={this.openNetworkInfo}>
             {this.timelineName}
           </Button>
@@ -60,20 +60,20 @@ export default class InputPost extends Component {
           </Button>
           {this.props.users.isLogged &&
           <Button compact
-            primary={this.state.inputIsPublic}
+            selected={this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, true)}>
             {this.props.users.one.username}
           </Button>}
           {this.props.users.isLogged &&
           <Button compact
-            primary={!this.state.inputIsPublic}
+            selected={!this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, false)}>
             secret
           </Button>}
           {/* 送信ボタン */}
           {!this.state.errorImage &&
           <Button compact onClick={this.onSubmit}>
-            GOGO!
+            push
           </Button>}
         </div>
       </div>

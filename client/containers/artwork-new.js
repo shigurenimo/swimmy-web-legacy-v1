@@ -105,7 +105,7 @@ export default class ArtworkNew extends Component {
         <Sheet>
           <SheetActions>
             <Button
-              primary={!this.state.isPublic}
+              selected={!this.state.isPublic}
               onClick={this.onChangePublic.bind(this, false)}>anonymous</Button>
             <Button
               primary={this.state.isPublic}
@@ -116,10 +116,10 @@ export default class ArtworkNew extends Component {
         <Sheet>
           <SheetActions>
             <Button
-              primary={this.state.isSecret}
+              selected={this.state.isSecret}
               onClick={this.onChangeSecret.bind(this, true)}>show timeline</Button>
             <Button
-              primary={!this.state.isSecret}
+              selected={!this.state.isSecret}
               onClick={this.onChangeSecret.bind(this, false)}>hide</Button>
           </SheetActions>
         </Sheet>

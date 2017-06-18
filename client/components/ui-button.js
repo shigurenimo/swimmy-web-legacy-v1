@@ -9,10 +9,10 @@ export const styleSheet = createStyleSheet('UIButton', theme => {
     background: {
       backgroundColor: 'rgba(0, 0, 0, 0.05)'
     },
-    primary: {
-      background: fade(theme.palette.text.primary, 0.12),
+    selected: {
+      background: theme.palette.accent[100],
       '&:hover': {
-        background: fade(theme.palette.text.primary, 0.12)
+        background: theme.palette.primary[200]
       }
     },
     minimal: {
@@ -27,7 +27,7 @@ export default class extends Component {
   render () {
     const {
       classes,
-      primary,
+      selected,
       background,
       className,
       minimal,
@@ -39,7 +39,7 @@ export default class extends Component {
         className={classNames({
           [className]: className,
           [classes.background]: background,
-          [classes.primary]: primary,
+          [classes.selected]: selected,
           [classes.minimal]: minimal
         })}
         onClick={this.props.onClick}>
