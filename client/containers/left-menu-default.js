@@ -8,7 +8,8 @@ import Typography from 'material-ui/Typography'
 import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
 import LeftMenuTimeline from './left-menu-timeline'
-import LeftMenuArtwork from './left-menu-artwork'
+import LeftMenuArtworks from './left-menu-artworks'
+import LeftMenuNetworks from './left-menu-networks'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
@@ -21,32 +22,10 @@ export default class LeftMenuDefault extends Component {
       <div>
         <LeftMenuTimeline />
         <Divider light />
-        <LeftMenuArtwork />
-        {/* リスト */}
-        <List>
-          {this.props.networks.timelines.map(item =>
-            <ListItem button dense
-              key={item.unique}
-              className={classNames({
-                [classes.select]:
-                this.props.router.page === 'network-list' &&
-                this.props.networks.timeline.unique === item.unique
-              })}
-              component='a'
-              href={'/network/' + item.unique}>
-              <ListItemText primary={item.name} />
-            </ListItem>)}
-          {this.props.users.isLogged &&
-          !this.props.router.page.includes('network/new') &&
-          <ListItem button dense
-            className={classNames({
-              [classes.select]: this.props.router.page === 'network-new'
-            })}
-            component='a'
-            href={'/network/new'}>
-            <ListItemText primary='+ 新しいリスト' />
-          </ListItem>}
-        </List>
+        <LeftMenuArtworks />
+        <Divider light />
+        <LeftMenuNetworks />
+        <Divider light />
         {/* マイページ */}
         <List>
           <ListItem button dense
