@@ -20,14 +20,16 @@ accounts-base@1.3.0
 
 accounts-password@1.3.6
 
-kadira:flow-router
-
-mondora:connect-with
-
-nimble:restivus
+accounts-twitter
 
 standard-minifiers-js
 
 ecmascript@0.8.0
 
 dynamic-import
+
+nimble:restivus
+
+bozhao:link-accounts
+
+kadira:flow-router
