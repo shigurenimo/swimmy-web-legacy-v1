@@ -19,7 +19,7 @@ export default class LeftMenuNetworks extends Component {
           })}
           component='a'
           href='/release'>
-          <ListItemText primary='release note' />
+          <ListItemText primary='release' />
         </ListItem>
         <ListItem button dense
           className={classNames({
@@ -27,7 +27,7 @@ export default class LeftMenuNetworks extends Component {
           })}
           component='a'
           href='/report'>
-          <ListItemText primary='statistical data' />
+          <ListItemText primary='report' />
         </ListItem>
         <ListItem button dense
           component='a'

@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { isAlpha, isEmail } from 'validator'
-import IconLayers from 'material-ui-icons/Layers'
-import IconWhatshot from 'material-ui-icons/Whatshot'
+import LightbulbOutlineIcon from 'material-ui-icons/LightbulbOutline'
+import WhatshotIcon from 'material-ui-icons/Whatshot'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
@@ -68,7 +68,7 @@ export default class Login extends Component {
         <Sheet>
           <Block width={500} align='center'>
             <SheetContent>
-              <IconLayers {...this.iconStyle} />
+              <LightbulbOutlineIcon {...this.iconStyle} />
               <InlineTypography className={classes.AppPointTitle}>シンプル</InlineTypography>
             </SheetContent>
             <SheetContent>
@@ -82,7 +82,7 @@ export default class Login extends Component {
         <Sheet>
           <Block width={500} align='center'>
             <SheetContent>
-              <IconWhatshot {...this.iconStyle} />
+              <WhatshotIcon {...this.iconStyle} />
               <InlineTypography className={classes.AppPointTitle}>オープンソース</InlineTypography>
             </SheetContent>
             <SheetContent>
