@@ -93,9 +93,6 @@ export default class Content extends Component {
       case 'report':
         return <Report key='report' />
     }
-    if (this.props.users.isLoggingIn) {
-      return <Loading key='loading' />
-    }
     switch (this.props.router.page) {
       case 'profile':
         return <Profile key='profile' />
