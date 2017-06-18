@@ -44,7 +44,11 @@
     ]
   },
   "private": {
-    "MAIL_URL": "smtp://"
+    "MAIL_URL": "smtp://",
+    "twitter": {
+      "consumerKey": "",
+      "secret": ""
+    }
   },
   "galaxy.meteor.com": {
     "env": {
