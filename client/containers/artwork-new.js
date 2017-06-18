@@ -108,7 +108,7 @@ export default class ArtworkNew extends Component {
               selected={!this.state.isPublic}
               onClick={this.onChangePublic.bind(this, false)}>anonymous</Button>
             <Button
-              primary={this.state.isPublic}
+              selected={this.state.isPublic}
               onClick={this.onChangePublic.bind(this, true)}>{this.props.users.one.username}</Button>
           </SheetActions>
         </Sheet>
