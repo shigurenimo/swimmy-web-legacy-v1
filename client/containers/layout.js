@@ -37,6 +37,7 @@ export default class Layout extends Component {
   }
 
   onSwiped (event, deltaX, deltaY) {
+    event.preventDefault()
     if (deltaY < -80 || deltaY > 30) return
     if (deltaX < -20) {
       this.props.layout.toLeft()

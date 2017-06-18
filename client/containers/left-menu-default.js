@@ -6,6 +6,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import Sheet from '../components/ui-sheet'
 import SheetContent from '../components/ui-sheet-content'
+import LeftMenuTimeline from './left-menu-timeline'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
@@ -16,54 +17,15 @@ export default class LeftMenuDefault extends Component {
     const {classes} = this.props
     return (
       <div>
-        {/* 既存のネットワーク */}
-        <List>
-          <ListItem button dense
-            className={classNames({
-              [classes.select]: this.props.router.page.includes('thread')
-            })}
-            component='a'
-            href='/thread'>
-            <ListItemText primary='スレッド' />
-          </ListItem>
-          {this.props.posts.timelines.map(item =>
-            <ListItem button dense
-              key={item.unique}
-              className={classNames({
-                [classes.select]: this.props.router.page === 'timeline' &&
-                this.props.posts.timeline.unique === item.unique
-              })}
-              component='a'
-              href={'/' + item.unique}>
-              <ListItemText primary={item.name} />
-            </ListItem>)}
-          <ListItem button dense
-            className={classNames({
-              [classes.select]: this.props.router.page === 'timemachine'
-            })}
-            component='a'
-            href={'/timemachine'}>
-            <ListItemText primary='過去ログ' />
-          </ListItem>
-          {this.props.posts.networkTimelines.map(item =>
-            <ListItem button dense
-              key={item.unique}
-              className={classNames({
-                [classes.select]: this.props.router.page === 'timeline' &&
-                this.props.posts.timeline.unique === item.unique
-              })}
-              component='a'
-              href={'/room/' + item.network}>
-              <ListItemText primary={item.name} />
-            </ListItem>)}
-        </List>
+        <LeftMenuTimeline />
         {/* アートワーク */}
         <List>
           {this.props.artworks.timelines.map(item =>
             <ListItem button dense
               key={item.unique}
               className={classNames({
-                [classes.select]: this.props.router.page === 'artwork' &&
+                [classes.select]:
+                this.props.router.page === 'artwork' &&
                 this.props.artworks.timeline.unique === item.unique
               })}
               component='a'
@@ -86,7 +48,8 @@ export default class LeftMenuDefault extends Component {
             <ListItem button dense
               key={item.unique}
               className={classNames({
-                [classes.select]: this.props.router.page === 'network-list' &&
+                [classes.select]:
+                this.props.router.page === 'network-list' &&
                 this.props.networks.timeline.unique === item.unique
               })}
               component='a'
