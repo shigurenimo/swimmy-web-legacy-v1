@@ -14,22 +14,33 @@ import styleSheet from './admin.style'
 @observer
 export default class Admin extends Component {
   render () {
-    const {classes} = this.props
+    const {
+      users: {one: user},
+      classes
+    } = this.props
     return (
       <Layout>
         {/* icon */}
         <Sheet>
-          <div className={classes.squares}>
-            {this.props.users.one.profile.code.map((i, index) =>
-              <div
-                className={classes.square}
-                key={index + '-' + i}
-                style={{
-                  backgroundColor: i === '1'
-                    ? Meteor.settings.public.color.primary
-                    : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
-                }} />)}
-          </div>
+          {(user.config && user.config.twitter && user.config.twitter.useIcon) ? (
+            <div className=''>
+              <img
+                className={classes.icon}
+                src={user.services.twitter.profile_image_url_https.replace('_normal', '')} />
+            </div>
+          ) : (
+            <div className={classes.squares}>
+              {this.props.users.one.profile.code.map((i, index) =>
+                <div
+                  className={classes.square}
+                  key={index + '-' + i}
+                  style={{
+                    backgroundColor: i === '1'
+                      ? Meteor.settings.public.color.primary
+                      : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
+                  }} />)}
+            </div>
+          )}
         </Sheet>
         {/* name */}
         <Sheet>

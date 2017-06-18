@@ -38,7 +38,7 @@ export default class InputPost extends Component {
           <textarea
             className={classes.postContent}
             value={this.props.inputPost.postContent}
-            placeholder='ここタップしてレス'
+            placeholder='ここタップして入力する'
             ref={self => { this.ref = self }}
             onKeyDown={this.onSubmitKeyDown}
             onChange={this.onInputContent} />

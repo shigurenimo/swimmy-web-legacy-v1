@@ -27,17 +27,23 @@ export default class Profile extends Component {
       <Layout>
         {/* アイコン */}
         <Sheet>
-          <div className={classes.squares}>
-            {user.profile.code.map((i, index) =>
-              <div
-                className={classes.square}
-                key={index + '-' + i}
-                style={{
-                  backgroundColor: i === '1'
-                    ? Meteor.settings.public.color.primary
-                    : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
-                }} />)}
-          </div>
+          {user.profile.icon ? (
+            <SheetContent>
+              <img className={classes.icon} src={user.profile.icon} />
+            </SheetContent>
+          ) : (
+            <div className={classes.squares}>
+              {user.profile.code.map((i, index) =>
+                <div
+                  className={classes.square}
+                  key={index + '-' + i}
+                  style={{
+                    backgroundColor: i === '1'
+                      ? Meteor.settings.public.color.primary
+                      : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
+                  }} />)}
+            </div>
+          )}
         </Sheet>
         {/* ネーム */}
         <Sheet>

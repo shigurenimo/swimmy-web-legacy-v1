@@ -13,6 +13,12 @@ export default createStyleSheet('Profile', theme => {
       verticalAlign: 'top',
       width: '20%',
       height: '20%'
+    },
+    icon: {
+      display: 'block',
+      margin: '0 auto',
+      borderRadius: '50%',
+      maxWidth: '280px'
     }
   }
 })
