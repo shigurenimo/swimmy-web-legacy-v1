@@ -183,6 +183,18 @@ export default class {
     })
   }
 
+  updateRemoveServicesTwitter () {
+    return new Promise((resolve, reject) => {
+      Meteor.call('users.updateRemoveServicesTwitter', (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(res)
+        }
+      })
+    })
+  }
+
   updateConfigTwitter (name, value) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateConfigTwitter', {name, value}, (err, res) => {

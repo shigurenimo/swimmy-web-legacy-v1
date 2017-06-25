@@ -125,7 +125,7 @@ export default class Content extends Component {
         return <NetworkNew key='network-new' />
       case 'twitter':
         if (this.props.users.one.services) {
-          if (this.props.users.one) {
+          if (this.props.users.one.services.twitter) {
             return <Twitter key='twitter' />
           } else {
             return <TwitterLogin key='twitter' />

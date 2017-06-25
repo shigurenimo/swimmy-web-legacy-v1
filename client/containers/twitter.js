@@ -65,8 +65,11 @@ export default class Twitter extends Component {
           </SheetActions>
           <SheetActions align='right'>
             <Block align='center'>
+              <Button onClick={this.onUpdateRemoveTwitter}>
+                disconnect
+              </Button>
               <Button onClick={this.onUpdateTwitter}>
-                update twitter-data
+                update
               </Button>
             </Block>
           </SheetActions>
@@ -92,4 +95,15 @@ export default class Twitter extends Component {
   }
 
   onUpdateTwitter = ::this.onUpdateTwitter
+
+  onUpdateRemoveTwitter () {
+    if (!window.confirm('解除してもいいですか？')) return
+    this.props.users.updateRemoveServicesTwitter()
+    .then(() => {
+      this.props.snackbar.show('関連付けを解除しました')
+    })
+    .catch(this.props.snackbar.error)
+  }
+
+  onUpdateRemoveTwitter = ::this.onUpdateRemoveTwitter
 }
