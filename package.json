@@ -13,16 +13,17 @@
     "start": "meteor --settings settings.json"
   },
   "dependencies": {
+    "@google-cloud/storage": "^1.1.1",
     "babel-runtime": "^6.23.0",
     "bcrypt": "^1.0.2",
     "cheerio": "^1.0.0-rc.1",
+    "jimp": "^0.2.28",
     "marked": "^0.3.6",
     "material-ui": "1.0.0-alpha.17",
     "material-ui-icons": "^1.0.0-alpha.3",
     "mobx": "^3.1.11",
     "mobx-react": "^4.2.1",
     "mousetrap": "^1.6.1",
-    "npm-check-updates": "^2.11.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
