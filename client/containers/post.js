@@ -52,9 +52,7 @@ export default class Post extends Component {
               })}
               onTouchTap={this.onSelectImage}>
               <Image src={
-                Meteor.settings.public.assets.post.image +
-                this.props.imagesDate + '/' +
-                this.props.images.slice()[0].min
+                Meteor.settings.public.storage.images + this.props.images.slice()[0].x512
               } />
             </div>
           </SheetContent>}

@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import Storage from '@google-cloud/storage'
 
-export default function (bucketName, fileNames) {
+export default (bucketName, fileNames) => {
   return new Promise((resolve, reject) => {
     if (this.userId) {
       const error = new Error('server only')
@@ -21,21 +21,24 @@ export default function (bucketName, fileNames) {
 
     const bucket = storage.bucket(bucketName)
 
-    bucket.getFiles((err, files, nextQuery, resp) => {
+    bucket.getFiles((err, files, nextQuery, res) => {
       if (err) {
         return reject(err)
       }
+      let count = fileNames.length
       for (let i = 0, len = files.length; i < len; ++i) {
         const file = files[i]
-        console.log(file.name)
         if (!fileNames.includes(file.name)) continue
-        file.makePublic((err, resp) => {
+        file.makePublic(err => {
           if (err) {
             return reject(err)
           }
+          count = count - 1
+          if (count < 1) {
+            resolve()
+          }
         })
       }
-      resolve()
     })
   })
 }

@@ -269,7 +269,6 @@ export default class {
       }
       if (next.images) {
         req.images = next.images
-        req.imagesDate = next.imagesDate
       }
       if (this.timeline.network) {
         req.network = this.timeline.network

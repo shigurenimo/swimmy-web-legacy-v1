@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 import classNames from 'classnames'
+import utils from '/utils'
 import { withStyles } from 'material-ui/styles'
 import IconAdd from 'material-ui-icons/Add'
 import Button from '../components/ui-button'
@@ -195,54 +196,16 @@ export default class InputPost extends Component {
 
   onSubmit = ::this.onSubmit
 
-  onSubmitPost () {
+  async onSubmitPost () {
     if (this.process) return
     this.process = true
-    const date = new Date()
-    const dateStr = ['' + date.getFullYear(), '' + (date.getMonth() + 1), '' + date.getDate()]
-    .map(n => n.length === 1 ? '0' + n : n)
-    .join('-')
     if (this.state.inputImage) {
       const file = this.state.inputImage
-      const nameArray = file.name.split('.')
-      const extension = nameArray[nameArray.length - 1].toLowerCase()
-      const id = Random.id()
-      const imageName = id + '.' + extension
-      const imageNameMin = id + '-min.' + extension
-      const imageNameCache = imageName + '?uuid=' + Random.id()
-      const imageNameCacheMin = imageNameMin + '?uuid=' + Random.id()
-      const formdata = new FormData()
-      formdata.append('file', file)
-      formdata.append('date', dateStr)
-      formdata.append('name', imageName)
-      formdata.append('name_min', imageNameMin)
-      if (Meteor.isDevelopment) {
-        if (!Meteor.settings.public.api || !Meteor.settings.public.api.unique) {
-          this.props.snackbar.errorMessage('開発環境では画像のアップロードは利用できません')
-          this.process = false
-          return
-        }
-        formdata.append('unique', Meteor.settings.public.api.unique)
-      }
-      new Promise((resolve, reject) => {
-        HTTP.post(Meteor.settings.public.api.post.image, {content: formdata}, err => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve()
-          }
-        })
-      })
-      .then(() => {
-        return this.props.posts.insert({
-          isPublic: this.state.inputIsPublic,
-          content: this.props.inputPost.postContent,
-          images: [{
-            full: imageNameCache,
-            min: imageNameCacheMin
-          }],
-          imagesDate: dateStr
-        })
+      const base64 = await utils.createBase64(file)
+      this.props.posts.insert({
+        isPublic: this.state.inputIsPublic,
+        content: this.props.inputPost.postContent,
+        images: [base64]
       })
       .then(post => {
         this.ref.style.height = 'auto'
@@ -264,7 +227,6 @@ export default class InputPost extends Component {
       .then(post => {
         this.ref.style.height = 'auto'
         this.props.posts.pushIndex(post)
-        this.props.inputPost.reset()
         this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
         this.process = false

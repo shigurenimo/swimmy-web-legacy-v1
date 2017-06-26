@@ -1,22 +1,33 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { HTTP } from 'meteor/http'
+import { Random } from 'meteor/random'
+import { unlink, writeFileSync } from 'fs'
+import Jimp from 'jimp'
+import makePublic from '/utils/server/google/makePublic'
+import upload from '/utils/server/google/upload'
 import collections from '/collections'
 import utils from '/utils'
 
 Meteor.methods({
-  'posts.insert' (req) {
+  async 'posts.insert' (req) {
     const address = this.connection.clientAddress || '127.0.0.1'
+
     check(req.isPublic, Boolean)
     check(req.content, String)
+
     if (req.images) {
       check(req.images, Array)
-      check(req.imagesDate, String)
     }
+
     if (!req.images && req.content.length < 1) {
       throw new Meteor.Error('ignore', '入力がありません')
     }
+
+    const date = new Date()
+
     const url = utils.match.url(req.content)
+
     // ↓ oEmbed
     let service = null
     if (url) {
@@ -38,6 +49,7 @@ Meteor.methods({
         service = 'https://vine.co/oembed.json'
       }
     }
+
     let oEmbed = null
     let web = null
     if (service) {
@@ -45,18 +57,22 @@ Meteor.methods({
     } else if (url) {
       web = webAsync(url)
     }
+
     const data = {
       addr: address,
       content: req.content,
       reactions: {'スキ': []},
       replies: [],
       from: 'swimmy',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: date,
+      updatedAt: date
     }
+
     const tags = utils.match.tags(req.content)
     if (tags) data.tags = tags
+
     if (this.userId) data.owner = this.userId
+
     if (req.isPublic) {
       if (!this.userId) throw new Meteor.Error('not-authorized')
       const user = Meteor.users.findOne(this.userId)
@@ -66,47 +82,50 @@ Meteor.methods({
         icon: ''
       }
     }
-    Object.keys(req).forEach(name => {
-      switch (name) {
-        case 'images':
-          data.images = req.images
-          data.imagesDate = req.imagesDate
-          break
-        case 'reply':
-          check(req.reply, String)
-          data.reply = req.reply
-          break
-        case 'network':
-          check(req.network, String)
-          data.network = req.network
-          break
-      }
-    })
+
+    if (req.images) {
+      const image = await uploadImage(date, req.images[0])
+      data.images = [image]
+      console.log('images', data.images)
+    }
+
+    if (req.reply) {
+      check(req.reply, String)
+      data.reply = req.reply
+    }
+
+    if (req.network) {
+      check(req.network, String)
+      data.network = req.network
+    }
+
     if (url) data.url = url
     if (web) data.web = web
     if (oEmbed) data.oEmbed = oEmbed
+
     // ↓ 更新
     const postId = collections.posts.insert(data)
     if (req.reply) {
       collections.posts.update(req.reply, {
         $push: {replies: postId},
-        $set: {updatedAt: new Date()}
+        $set: {updatedAt: date}
       })
     }
+
     // ↓ タグの更新
     if (tags) {
       tags.filter(tag => tag !== '').forEach(hashtag => {
         const tag = collections.tags.findOne({name: hashtag})
         if (tag) {
           collections.tags.update(tag._id, {
-            $set: {updatedAt: new Date()},
+            $set: {updatedAt: date},
             $inc: {count: 1}
           })
         } else {
           collections.tags.insert({
             name: hashtag,
-            updatedAt: new Date(),
-            createdAt: new Date(),
+            updatedAt: date,
+            createdAt: date,
             count: 1,
             thread: false,
             threads: []
@@ -114,6 +133,7 @@ Meteor.methods({
         }
       })
     }
+
     return collections.posts.findOne(postId, {
       fields: {
         owner: 0,
@@ -164,3 +184,87 @@ const webAsync = Meteor.wrapAsync((url, resolve) => {
     resolve(null, html)
   })
 })
+
+async function uploadImage (date, base64) {
+  const buf = Buffer.from(base64, 'base64')
+
+  const ext = '.jpg'
+  const name = Random.id()
+
+  const temp = require('path').join(process.env.PWD, '.temp', name + ext)
+
+  writeFileSync(temp, buf)
+
+  const fileName = {
+    full: name + ext,
+    x128: name + '.x128' + ext,
+    x256: name + '.x256' + ext,
+    x512: name + '.x512' + ext,
+    x1024: name + '.x1024' + ext
+  }
+
+  const bucketName = 'swimmy-images'
+
+  const datePath = [
+    date.getFullYear(),
+    ('00' + (date.getMonth() + 1)).slice(-2),
+    ('00' + date.getDate()).slice(-2)
+  ].join('-')
+
+  const filePath = {
+    full: require('path').join(datePath, fileName.full),
+    x128: require('path').join(datePath, fileName.x128),
+    x256: require('path').join(datePath, fileName.x256),
+    x512: require('path').join(datePath, fileName.x512),
+    x1024: require('path').join(datePath, fileName.x1024)
+  }
+
+  await upload(bucketName, temp, filePath.full)
+
+  // x512
+  const x512 = require('path').join(process.env.PWD, '.temp', fileName.x512)
+  const ref = await Jimp.read(temp)
+  ref.resize(512, Jimp.AUTO)
+  .exifRotate()
+  .write(x512)
+
+  await upload(bucketName, x512, filePath.x512)
+
+  await makePublic(bucketName, [
+    filePath.full,
+    filePath.x512
+  ])
+
+  unlink(x512, err => err)
+
+  // other
+  const other = [
+    {name: 'x128', size: 128},
+    {name: 'x256', size: 256},
+    {name: 'x1024', size: 1024}
+  ]
+  let count = other.length
+  other.forEach(async ({name, size}) => {
+    const dist = require('path').join(process.env.PWD, '.temp', fileName[name])
+    const ref = await Jimp.read(temp)
+    ref.resize(size, Jimp.AUTO)
+    .exifRotate()
+    .write(dist)
+    await upload(bucketName, dist, filePath[name])
+    await makePublic(bucketName, [filePath[name]])
+    unlink(dist, err => err)
+    count = count - 1
+    if (count < 1) {
+      console.log('unlink temp')
+      unlink(temp, err => err)
+    }
+  })
+
+  return {
+    full: fileName.full,
+    x128: fileName.x128,
+    x256: fileName.x256,
+    x512: fileName.x512,
+    x1024: fileName.x1024
+  }
+}
