@@ -20,23 +20,6 @@ Meteor.methods({
         }
       }
     })
-    // ↓ 画像の削除
-    if (post.image) {
-      const image = post.image.full
-      const imageMin = post.image.min
-      if (image) {
-        HTTP.del(Meteor.settings.public.api.work.image, {
-          params: {
-            name: image.replace(/\?.*$/, ''),
-            name_min: imageMin.replace(/\?.*$/, ''),
-            imageDate: post.imageDate,
-            unique: 'DdcHJM68ksFbUA'
-          }
-        }, (err) => {
-          if (err) throw new Meteor.Error(err)
-        })
-      }
-    }
     return req.postId
   }
 })

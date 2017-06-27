@@ -51,10 +51,7 @@ export default class PostArtwork extends Component {
   }
 
   get src () {
-    return Meteor.settings.public.assets.work.root +
-      this.props.type + '/' +
-      this.props.imageDate + '/' +
-      this.props.image.min
+    return this.props.imagePath + this.props.image.x512
   }
 
   // リアクションを更新する

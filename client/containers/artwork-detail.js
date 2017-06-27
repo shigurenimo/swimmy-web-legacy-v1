@@ -215,10 +215,7 @@ export default class ArtworkDetail extends Component {
   }
 
   get src () {
-    return Meteor.settings.public.assets.work.root +
-      this.props.artworks.one.type + '/' +
-      this.props.artworks.one.imageDate + '/' +
-      this.props.artworks.one.image.full
+    return this.props.artworks.one.imagePath + this.props.artworks.one.image.x1024
   }
 
   reactionPlaceholder = [

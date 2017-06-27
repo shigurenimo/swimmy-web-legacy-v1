@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { action, observable, toJS } from 'mobx'
 import collections from '/collections'
+import utils from '/utils'
 
 export default class {
   @observable index = []
@@ -28,6 +29,9 @@ export default class {
     stocks.forEach(stock => {
       const id = stock._id
       if (this.ids[id]) return
+      stock.imagePath =
+        Meteor.settings.public.storage.images +
+        utils.createPathFromDate(stock.createdAt)
       this.ids[stock._id] = stock
       this.index.push(stock)
     })

@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
@@ -51,9 +50,7 @@ export default class Post extends Component {
                 [classes.photoImageOpen]: this.state.selectImage
               })}
               onTouchTap={this.onSelectImage}>
-              <Image src={
-                Meteor.settings.public.storage.images + this.props.images.slice()[0].x512
-              } />
+              <Image src={this.props.imagePath + this.props.images.slice()[0].x256} />
             </div>
           </SheetContent>}
           {/* oEmbed */}

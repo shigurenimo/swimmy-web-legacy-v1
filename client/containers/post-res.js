@@ -49,12 +49,7 @@ export default class PostRes extends Component {
                 [classes.photoImageOpen]: this.state.selectImage
               })}
               onTouchTap={this.onSelectImage}>
-              <Image
-                src={
-                  Meteor.settings.public.assets.post.image +
-                  this.props.imagesDate + '/' +
-                  this.props.images.slice()[0].min
-                } />
+              <Image src={this.props.imagePath + this.props.images.slice()[0].x512} />
             </div>
           </SheetContent>}
           {/* oEmbed */}

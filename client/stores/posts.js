@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import { action, observable, toJS } from 'mobx'
+import utils from '/utils'
 
 export default class {
   @observable index = []
@@ -48,10 +49,16 @@ export default class {
     if (!posts) return
     if (Array.isArray(posts)) {
       posts.forEach(post => {
+        post.imagePath =
+          Meteor.settings.public.storage.images +
+          utils.createPathFromDate(post.createdAt)
         this.ids[post._id] = post
         this.index.push(post)
       })
     } else {
+      posts.imagePath =
+        Meteor.settings.public.storage.images +
+        utils.createPathFromDate(posts.createdAt)
       this.ids[posts._id] = posts
       this.index.push(posts)
     }
@@ -74,6 +81,9 @@ export default class {
     if (!this.ids[postId]) return
     for (let i = 0, len = this.index.length; i < len; ++i) {
       if (postId !== this.index[i]._id) continue
+      post.imagePath =
+        Meteor.settings.public.storage.images +
+        utils.createPathFromDate(post.createdAt)
       post.reply = this.ids[postId].reply
       this.ids[postId] = post
       this.index[i] = post
@@ -85,6 +95,9 @@ export default class {
     if (!post) {
       this.one = null
     }
+    post.imagePath =
+      Meteor.settings.public.storage.images +
+      utils.createPathFromDate(post.createdAt)
     this.one = post
   }
 

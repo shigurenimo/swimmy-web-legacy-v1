@@ -7,7 +7,6 @@ Meteor.methods({
     if (!this.userId) throw new Meteor.Error('not-authorized')
     check(req.networkId, String)
     const network = collections.networks.findOne(req.networkId)
-    console.log(network)
     if (this.userId !== network.owner) {
       throw new Meteor.Error('not', '削除するにはオーナーである必要があります')
     }

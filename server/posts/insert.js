@@ -86,7 +86,6 @@ Meteor.methods({
     if (req.images) {
       const image = await uploadImage(date, req.images[0])
       data.images = [image]
-      console.log('images', data.images)
     }
 
     if (req.reply) {
@@ -209,7 +208,7 @@ async function uploadImage (date, base64) {
     date.getFullYear(),
     ('00' + (date.getMonth() + 1)).slice(-2),
     ('00' + date.getDate()).slice(-2)
-  ].join('-')
+  ].join('/')
 
   const filePath = {
     full: require('path').join(datePath, fileName.full),
@@ -221,10 +220,19 @@ async function uploadImage (date, base64) {
 
   await upload(bucketName, temp, filePath.full)
 
+  // x256
+  const x256 = require('path').join(process.env.PWD, '.temp', fileName.x256)
+  const x256Ref = await Jimp.read(temp)
+  x256Ref.resize(512, Jimp.AUTO)
+  .exifRotate()
+  .write(x256)
+
+  await upload(bucketName, x256, filePath.x256)
+
   // x512
   const x512 = require('path').join(process.env.PWD, '.temp', fileName.x512)
-  const ref = await Jimp.read(temp)
-  ref.resize(512, Jimp.AUTO)
+  const x512Ref = await Jimp.read(temp)
+  x512Ref.resize(512, Jimp.AUTO)
   .exifRotate()
   .write(x512)
 
@@ -232,37 +240,16 @@ async function uploadImage (date, base64) {
 
   await makePublic(bucketName, [
     filePath.full,
+    filePath.x256,
     filePath.x512
   ])
 
   unlink(x512, err => err)
 
-  // other
-  const other = [
-    {name: 'x128', size: 128},
-    {name: 'x256', size: 256},
-    {name: 'x1024', size: 1024}
-  ]
-  let count = other.length
-  other.forEach(async ({name, size}) => {
-    const dist = require('path').join(process.env.PWD, '.temp', fileName[name])
-    const ref = await Jimp.read(temp)
-    ref.resize(size, Jimp.AUTO)
-    .exifRotate()
-    .write(dist)
-    await upload(bucketName, dist, filePath[name])
-    await makePublic(bucketName, [filePath[name]])
-    unlink(dist, err => err)
-    count = count - 1
-    if (count < 1) {
-      console.log('unlink temp')
-      unlink(temp, err => err)
-    }
-  })
+  unlink(temp, err => err)
 
   return {
     full: fileName.full,
-    x128: fileName.x128,
     x256: fileName.x256,
     x512: fileName.x512,
     x1024: fileName.x1024

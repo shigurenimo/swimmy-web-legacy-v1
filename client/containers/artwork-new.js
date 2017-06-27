@@ -30,10 +30,6 @@ export default class ArtworkNew extends Component {
               onDrop={this.onDropImage.bind(this)}
               image={this.state.inputImage}
               text='画像をドロップ or タップ' />
-            {this.state.inputImage &&
-            <div onTouchTap={this.onCloseImage}>
-              <IconClear style={{width: 35, height: 35}} color='tomato' />
-            </div>}
           </SheetActions>
           {/* エラーメッセージ */}
           {this.state.errorImage &&
@@ -198,13 +194,6 @@ export default class ArtworkNew extends Component {
     this.process = false
   }
 
-  // 画像を削除する
-  onCloseImage () {
-    this.setState({errorImage: null, inputImage: null})
-  }
-
-  onCloseImage = ::this.onCloseImage
-
   // カラーを入力する
   onSelectColor (color, event) {
     event.preventDefault()
@@ -257,49 +246,21 @@ export default class ArtworkNew extends Component {
   onSubmit () {
     if (this.process) return
     this.process = true
-    const date = new Date()
-    const dateStr = ['' + date.getFullYear(), '' + (date.getMonth() + 1), '' + date.getDate()]
-    .map(n => n.length === 1 ? '0' + n : n)
-    .join('-')
     if (!this.state.inputImage) {
       this.process = false
       return
     }
     const file = this.state.inputImage
-    const nameArray = file.name.split('.')
-    const extension = nameArray[nameArray.length - 1].toLowerCase()
-    const id = Random.id()
-    const imageName = id + '.' + extension
-    const imageNameMin = id + '-min.' + extension
-    const imageNameCache = imageName + '?uuid=' + Random.id()
-    const imageNameCacheMin = imageNameMin + '?uuid=' + Random.id()
-    const formdata = new FormData()
-    formdata.append('file', file)
-    formdata.append('date', dateStr)
-    formdata.append('name', imageName)
-    formdata.append('name_min', imageNameMin)
-    if (Meteor.isDevelopment) {
-      if (!Meteor.settings.public.api || !Meteor.settings.public.api.unique) {
-        this.props.snackbar.errorMessage('開発環境では画像のアップロードは利用できません')
-        this.process = false
-        return
-      }
-      formdata.append('unique', Meteor.settings.public.api.unique)
-    }
-    new Promise((resolve, reject) => {
-      HTTP.post(Meteor.settings.public.api.work.image, {content: formdata}, err => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
+    utils.createBase64(file)
+    .then(base64 => {
+      this.props.snackbar.show('画像の圧縮を開始します')
+      this.setState({
+        inputTitle: '',
+        inputNote: '',
+        inputColors: [],
+        errorImage: null,
+        inputImage: null
       })
-    })
-    .then(() => {
-      const image = {
-        full: imageNameCache,
-        min: imageNameCacheMin
-      }
       return this.props.artworks.insert({
         type: 'illust',
         title: this.state.inputTitle,
@@ -308,20 +269,12 @@ export default class ArtworkNew extends Component {
         rate: this.state.rate,
         isPublic: this.state.isPublic,
         isSecret: this.state.isSecret,
-        image: image,
-        imageDate: dateStr
+        image: base64
       })
     })
     .then(post => {
       this.props.artworks.pushIndex(post)
-      this.props.snackbar.show('投下しました')
-      this.setState({
-        inputTitle: '',
-        inputNote: '',
-        inputColors: [],
-        errorImage: null,
-        inputImage: null
-      })
+      this.props.snackbar.show('投稿が完了しました')
       this.process = false
     })
     .catch(err => {
