@@ -1,8 +1,14 @@
 export default [{
-  version: '1.3.0',
-  date: '2017.6.19',
+  version: '1.3.1',
+  date: '2017.6.27',
   content: [
-    'GoogleCloudStorageの導入'
+    'ユーザが新規作成できないバグの回収（報告thanks）'
+  ]
+}, {
+  version: '1.3.0',
+  date: '2017.6.27',
+  content: [
+    'GoogleCloudStorageの開始'
   ]
 }, {
   version: '1.2.0',
