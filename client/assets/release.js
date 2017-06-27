@@ -1,4 +1,10 @@
 export default [{
+  version: '1.3.0',
+  date: '2017.6.19',
+  content: [
+    'GoogleCloudStorageの導入'
+  ]
+}, {
   version: '1.2.0',
   date: '2017.6.19',
   content: [
