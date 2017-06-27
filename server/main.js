@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
+import { mkdir } from 'fs'
 
 Meteor.startup(() => {
   if (!Meteor.settings.private.twitter) return
@@ -10,4 +11,7 @@ Meteor.startup(() => {
     consumerKey: Meteor.settings.private.twitter.consumerKey,
     secret: Meteor.settings.private.twitter.secret
   })
+
+  const temp = require('path').join(process.env.PWD, '.temp')
+  mkdir(temp, err => err)
 })

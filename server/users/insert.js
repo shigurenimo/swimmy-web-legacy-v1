@@ -28,7 +28,7 @@ Meteor.methods({
     if (isAlpha(req.password)) {
       throw new Meteor.Error('password', 'パスワードに数字を混ぜてください')
     }
-    if (req.password.length > 4) {
+    if (req.password.length < 4) {
       throw new Meteor.Error('password', 'パスワードが短すぎます')
     }
     return Accounts.createUser({

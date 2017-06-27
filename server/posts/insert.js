@@ -4,7 +4,6 @@ import { HTTP } from 'meteor/http'
 import { Random } from 'meteor/random'
 import { unlink, writeFileSync } from 'fs'
 import Jimp from 'jimp'
-import makePublic from '/utils/server/google/makePublic'
 import upload from '/utils/server/google/upload'
 import collections from '/collections'
 import utils from '/utils'
@@ -212,7 +211,6 @@ async function uploadImage (date, base64) {
 
   const filePath = {
     full: require('path').join(datePath, fileName.full),
-    x128: require('path').join(datePath, fileName.x128),
     x256: require('path').join(datePath, fileName.x256),
     x512: require('path').join(datePath, fileName.x512),
     x1024: require('path').join(datePath, fileName.x1024)
@@ -229,6 +227,8 @@ async function uploadImage (date, base64) {
 
   await upload(bucketName, x256, filePath.x256)
 
+  unlink(x256, err => err)
+
   // x512
   const x512 = require('path').join(process.env.PWD, '.temp', fileName.x512)
   const x512Ref = await Jimp.read(temp)
@@ -238,20 +238,16 @@ async function uploadImage (date, base64) {
 
   await upload(bucketName, x512, filePath.x512)
 
-  await makePublic(bucketName, [
-    filePath.full,
-    filePath.x256,
-    filePath.x512
-  ])
-
   unlink(x512, err => err)
 
   unlink(temp, err => err)
+
+  // await makePublic(bucketName, [filePath.full, filePath.x256, filePath.x512])
 
   return {
     full: fileName.full,
     x256: fileName.x256,
     x512: fileName.x512,
-    x1024: fileName.x1024
+    x1024: fileName.x512
   }
 }

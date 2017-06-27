@@ -203,7 +203,7 @@ export default class InputPost extends Component {
       const file = this.state.inputImage
       utils.createBase64(file)
       .then(base64 => {
-        this.props.snackbar.show('画像の圧縮を開始します')
+        this.props.snackbar.show('サーバーで画像を圧縮しています')
         this.props.inputPost.reset()
         this.setState({errorImage: null, inputImage: null})
         this.ref.style.height = 'auto'
@@ -228,8 +228,9 @@ export default class InputPost extends Component {
         content: this.props.inputPost.postContent
       })
       .then(post => {
-        this.ref.style.height = 'auto'
         this.props.posts.pushIndex(post)
+        this.props.inputPost.reset()
+        this.ref.style.height = 'auto'
         this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
         this.process = false
@@ -248,7 +249,7 @@ export default class InputPost extends Component {
       const file = this.state.inputImage
       utils.createBase64(file)
       .then(base64 => {
-        this.props.snackbar.show('画像の圧縮を開始します')
+        this.props.snackbar.show('サーバーで画像を圧縮しています')
         this.props.inputPost.reset()
         this.setState({errorImage: null, inputImage: null})
         this.ref.style.height = 'auto'

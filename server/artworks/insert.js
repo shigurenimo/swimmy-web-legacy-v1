@@ -3,7 +3,6 @@ import { check } from 'meteor/check'
 import { Random } from 'meteor/random'
 import { unlink, writeFileSync } from 'fs'
 import Jimp from 'jimp'
-import makePublic from '/utils/server/google/makePublic'
 import upload from '/utils/server/google/upload'
 import collections from '/collections'
 
@@ -105,10 +104,7 @@ async function uploadImage (date, base64) {
 
   await upload(bucketName, x512, filePath.x512)
 
-  await makePublic(bucketName, [
-    filePath.full,
-    filePath.x512
-  ])
+  // await makePublic(bucketName, [filePath.full, filePath.x512])
 
   unlink(x512, err => err)
 
@@ -126,7 +122,7 @@ async function uploadImage (date, base64) {
     .exifRotate()
     .write(dist)
     await upload(bucketName, dist, filePath[name])
-    await makePublic(bucketName, [filePath[name]])
+    // await makePublic(bucketName, [filePath[name]])
     unlink(dist, err => err)
     count = count - 1
     if (count < 1) {
