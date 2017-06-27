@@ -15,5 +15,5 @@ node_modules
 
 # project
 settings.json
-private/google/
+server/private/*
 .temp/*

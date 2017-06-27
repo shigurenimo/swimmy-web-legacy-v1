@@ -5,6 +5,7 @@ Meteor.methods({
   'posts.remove' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
     const post = collections.posts.findOne(req.postId)
+    if (!post) return 200
     if (post.owner !== this.userId) return 409
     collections.posts.remove(req.postId)
     if (post.reply) {

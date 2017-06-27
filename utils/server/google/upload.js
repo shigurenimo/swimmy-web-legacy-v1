@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import Storage from '@google-cloud/storage'
+import {join} from 'path'
 
 export default function (bucketName, srcPath, distPath) {
   return new Promise((resolve, reject) => {
@@ -7,13 +8,10 @@ export default function (bucketName, srcPath, distPath) {
       const error = new Error('server only')
       return reject(error)
     }
-    const {projectId, keyFilename} = Meteor.settings.private.googleCloud
-    const path = {
-      keyFilename: require('path').join(process.env.PWD, keyFilename)
-    }
+    const {projectId, keyFilePath} = Meteor.settings.private.googleCloud
     const storage = Storage({
       projectId: projectId,
-      keyFilename: path.keyFilename
+      keyFilename: join(process.env.PWD, keyFilePath)
     })
     const bucket = storage.bucket(bucketName)
     bucket.upload(srcPath, {
