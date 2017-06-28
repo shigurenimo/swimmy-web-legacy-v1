@@ -75,6 +75,9 @@ export default class {
             self.ids[id] = res
             for (let i = 0, len = self.index.length; i < len; ++i) {
               if (self.index[i]._id !== id) continue
+              res.imagePath =
+                Meteor.settings.public.storage.images +
+                utils.createPathFromDate(res.createdAt)
               self.index[i] = res
               break
             }
