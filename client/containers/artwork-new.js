@@ -17,8 +17,7 @@ import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import utils from '/utils'
 
-@inject('artworks', 'snackbar', 'users')
-@observer
+@inject('artworks', 'snackbar', 'accounts') @observer
 export default class ArtworkNew extends Component {
   render () {
     return (
@@ -105,7 +104,7 @@ export default class ArtworkNew extends Component {
               onClick={this.onChangePublic.bind(this, false)}>anonymous</Button>
             <Button
               selected={this.state.isPublic}
-              onClick={this.onChangePublic.bind(this, true)}>{this.props.users.one.username}</Button>
+              onClick={this.onChangePublic.bind(this, true)}>{this.props.accounts.one.username}</Button>
           </SheetActions>
         </Sheet>
         {/* タイムラインの表示 */}

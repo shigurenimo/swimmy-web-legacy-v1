@@ -28,8 +28,7 @@ import utils from '/utils'
 import styleSheet from './content.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'inputPost', 'router', 'users')
-@observer
+@inject('layout', 'inputPost', 'router', 'accounts') @observer
 export default class Content extends Component {
   render () {
     const {classes, layout} = this.props
@@ -111,7 +110,7 @@ export default class Content extends Component {
       case 'thread-list':
         return <ThreadList key='thread-list' />
     }
-    if (this.props.users.isNotLoggedIn) {
+    if (this.props.accounts.isNotLoggedIn) {
       return <Login key='login' />
     }
     switch (this.props.router.page) {
@@ -124,8 +123,8 @@ export default class Content extends Component {
       case 'network-new':
         return <NetworkNew key='network-new' />
       case 'twitter':
-        if (this.props.users.one.services) {
-          if (this.props.users.one.services.twitter) {
+        if (this.props.accounts.one.services) {
+          if (this.props.accounts.one.services.twitter) {
             return <Twitter key='twitter' />
           } else {
             return <TwitterLogin key='twitter' />

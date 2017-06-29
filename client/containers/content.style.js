@@ -34,7 +34,7 @@ export default createStyleSheet('Content', theme => {
       top: 0,
       right: 0,
       width: '100%',
-      height: '100%',
+      // height: '100%',
       opacity: 0
     },
     transitionEnterActive: {
@@ -47,7 +47,7 @@ export default createStyleSheet('Content', theme => {
       top: 0,
       right: 0,
       width: '100%',
-      height: '100%',
+      // height: '100%',
       opacity: 1
     },
     transitionLeaveActive: {

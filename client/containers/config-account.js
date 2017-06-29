@@ -11,8 +11,7 @@ import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
 import Button from '../components/ui-button'
 
-@inject('snackbar', 'users')
-@observer
+@inject('snackbar', 'accounts') @observer
 export default class ConfigAccount extends Component {
   render () {
     return (
@@ -89,9 +88,9 @@ export default class ConfigAccount extends Component {
   }
 
   state = {
-    name: this.props.users.one.profile.name,
+    name: this.props.accounts.one.profile.name,
     nameError: '',
-    username: this.props.users.one.username,
+    username: this.props.accounts.one.username,
     usernameError: '',
     inputNewEmail: '',
     inputNewEmailError: '',
@@ -114,12 +113,12 @@ export default class ConfigAccount extends Component {
   // ディスプレイネームをチェックする
   onCheckName () {
     const name = this.state.name
-    if (name === this.props.users.one.profile.name) {
+    if (name === this.props.accounts.one.profile.name) {
       this.setState({nameError: ''})
       return
     }
     if (name.length === 0) {
-      this.setState({name: this.props.users.one.profile.name, usernameError: ''})
+      this.setState({name: this.props.accounts.one.profile.name, usernameError: ''})
     }
     if (name.length < 1) {
       this.setState({nameError: '！ ちょっと短すぎます'})
@@ -135,7 +134,7 @@ export default class ConfigAccount extends Component {
     if (this.process) return
     this.process = true
     const name = this.state.name
-    this.props.users.updateName(name)
+    this.props.accounts.updateName(name)
     .then(() => {
       this.props.snackbar.show('ハンドルネームを変更しました')
       this.setState({nameError: ''})
@@ -162,12 +161,12 @@ export default class ConfigAccount extends Component {
   // ユーザネームをチェックする
   onCheckUsername () {
     const username = this.state.username
-    if (username === this.props.users.one.username) {
+    if (username === this.props.accounts.one.username) {
       this.setState({usernameError: ''})
       return
     }
     if (username.length === 0) {
-      this.setState({username: this.props.users.one.username, usernameError: ''})
+      this.setState({username: this.props.accounts.one.username, usernameError: ''})
       return
     }
     if (username.length < 2) {
@@ -182,7 +181,7 @@ export default class ConfigAccount extends Component {
       this.setState({usernameError: 'そのワードは予約されています'})
       return
     }
-    this.props.users.checkExistUsername(username)
+    this.props.accounts.checkExistUsername(username)
     .then(res => {
       if (res) {
         this.setState({usernameError: 'そのユーザネームは既に存在します'})
@@ -202,7 +201,7 @@ export default class ConfigAccount extends Component {
     if (this.process) return
     this.process = true
     const username = this.state.username
-    await this.props.users.updateUsername(username)
+    await this.props.accounts.updateUsername(username)
     .then(res => {
       this.props.snackbar.show('ユーザネームを変更しました')
       this.setState({usernameError: '', username: username})
@@ -219,7 +218,7 @@ export default class ConfigAccount extends Component {
   onInputChannel (event) {
     event.persist()
     const value = event.target.value
-    this.props.users.updateChannel(value)
+    this.props.accounts.updateChannel(value)
   }
 
   onInputChannel = ::this.onInputChannel
@@ -250,7 +249,7 @@ export default class ConfigAccount extends Component {
       this.props.snackbar.show('パスワードが短すぎます')
       return
     }
-    this.props.users.updatePassword(oldPassword, newPassword)
+    this.props.accounts.updatePassword(oldPassword, newPassword)
     .then(() => {
       this.setState({oldPassword: '', newPassword: ''})
       this.props.snackbar.show('パスワードを変更しました')
@@ -266,7 +265,7 @@ export default class ConfigAccount extends Component {
   onRemoveEmail (email) {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
-    this.props.users.updatePullEmail(email)
+    this.props.accounts.updatePullEmail(email)
     .then(() => {
       this.props.snackbar.show('メールアドレスを削除しました')
     })
@@ -291,7 +290,7 @@ export default class ConfigAccount extends Component {
     if (this.process) return
     this.process = true
     const newEmail = this.state.inputNewEmail
-    await this.props.users.updatePushEmail(newEmail)
+    await this.props.accounts.updatePushEmail(newEmail)
     .then(() => {
       this.props.snackbar.show('メールアドレスを追加しました')
       this.setState({inputNewEmail: '', inputNewEmailError: ''})

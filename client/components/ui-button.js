@@ -29,7 +29,6 @@ export default class extends Component {
       selected,
       background,
       className,
-      minimal,
       ...more
     } = this.props
     return (
@@ -38,8 +37,7 @@ export default class extends Component {
         className={classNames({
           [className]: className,
           [classes.background]: background,
-          [classes.selected]: selected,
-          [classes.minimal]: minimal
+          [classes.selected]: selected
         })}
         onClick={this.props.onClick}>
         {this.props.children}

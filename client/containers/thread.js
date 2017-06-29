@@ -9,8 +9,7 @@ import NetworkInfo from './network-info'
 import Post from '../containers/post'
 import PostRes from './post-res'
 
-@inject('posts', 'users')
-@observer
+@inject('posts', 'accounts') @observer
 export default class Thread extends Component {
   render () {
     if (!this.props.posts.one) {

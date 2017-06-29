@@ -11,7 +11,7 @@ import Router from './Router'
 import Snackbar from './Snackbar'
 import Tags from './Tags'
 import Threads from './Threads'
-import Users from './Users'
+import Accounts from './Accounts'
 import UsersProfile from './UsersProfile'
 
 export default {
@@ -28,6 +28,6 @@ export default {
   snackbar: new Snackbar(),
   tags: new Tags(),
   threads: new Threads(),
-  users: new Users(),
+  accounts: new Accounts(),
   usersProfile: new UsersProfile()
 }

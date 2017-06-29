@@ -10,7 +10,7 @@ import IconButtonMoreExpand from '../components/ui-icon-button-more-expand'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
-@inject('router', 'posts', 'users')
+@inject('router', 'posts', 'accounts')
 @observer
 export default class LeftMenuNetworks extends Component {
   render () {
@@ -55,7 +55,7 @@ export default class LeftMenuNetworks extends Component {
             <ListItemText inset primary={'univ'} />
           </ListItem>
         </Collapse>
-        {this.props.users.isLogged &&
+        {this.props.accounts.isLogged &&
         <ListItem button dense
           className={classNames({
             [classes.select]: this.props.router.page.includes('network-new')

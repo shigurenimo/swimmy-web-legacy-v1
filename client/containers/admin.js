@@ -10,27 +10,26 @@ import SheetContent from '../components/ui-sheet-content'
 import styleSheet from './admin.style'
 
 @withStyles(styleSheet)
-@inject('users')
-@observer
+@inject('accounts') @observer
 export default class Admin extends Component {
   render () {
     const {
-      users: {one: user},
+      accounts: {one: account},
       classes
     } = this.props
     return (
       <Layout>
         {/* icon */}
         <Sheet>
-          {(user.config && user.config.twitter && user.config.twitter.useIcon) ? (
+          {(account.config && account.config.twitter && account.config.twitter.useIcon) ? (
             <div className=''>
               <img
                 className={classes.icon}
-                src={user.services.twitter.profile_image_url_https.replace('_normal', '')} />
+                src={account.services.twitter.profile_image_url_https.replace('_normal', '')} />
             </div>
           ) : (
             <div className={classes.squares}>
-              {this.props.users.one.profile.code.map((i, index) =>
+              {account.profile.code.map((i, index) =>
                 <div
                   className={classes.square}
                   key={index + '-' + i}
@@ -46,12 +45,12 @@ export default class Admin extends Component {
         <Sheet>
           <SheetContent>
             <Typography align='center'>
-              {this.props.users.one.profile.name}
+              {account.profile.name}
             </Typography>
           </SheetContent>
           <SheetContent>
             <Typography type='display1' align='center'>
-              @{this.props.users.one.username}
+              @{account.username}
             </Typography>
           </SheetContent>
         </Sheet>
@@ -61,7 +60,7 @@ export default class Admin extends Component {
   }
 
   forFollows () {
-    const index = this.props.users.one.profile.follows
+    const index = this.props.accounts.one.profile.follows
     if (index.length < 1) {
       return null
     }

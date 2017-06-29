@@ -13,8 +13,7 @@ import utils from '/utils'
 import styleSheet from './network-list.style'
 
 @withStyles(styleSheet)
-@inject('networks', 'users')
-@observer
+@inject('networks', 'accounts') @observer
 export default class NetworkList extends Component {
   render () {
     return (

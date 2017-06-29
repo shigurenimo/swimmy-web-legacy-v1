@@ -9,7 +9,7 @@ export default {
     textTransform: 'default',
     letterSpacing: '1px'
   },
-  compact: {
+  dense: {
     minWidth: 32
   }
 }

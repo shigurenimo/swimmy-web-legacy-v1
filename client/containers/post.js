@@ -16,8 +16,7 @@ import utils from '/utils'
 import styleSheet from './post.style'
 
 @withStyles(styleSheet)
-@inject('router', 'users', 'posts', 'snackbar')
-@observer
+@inject('router', 'accounts', 'posts', 'snackbar') @observer
 export default class Post extends Component {
   render () {
     const {classes} = this.props
@@ -79,7 +78,7 @@ export default class Post extends Component {
           {/* reply */}
           {this.props.reply &&
           <SheetContent>
-            <Sheet minimal hover background>
+            <Sheet dense hover background>
               {/* username */}
               {this.props.reply.public &&
               <SheetContent>
@@ -103,11 +102,11 @@ export default class Post extends Component {
           <SheetActions>
             <div className={classes.reactionRoot}>
               {Object.keys(this.props.reactions).map(name =>
-                <Button compact minimal background
+                <Button dense background
                   key={name}
                   className={classes.reaction}
-                  selected={!!this.props.users.isLogged &&
-                  this.props.reactions[name].includes(this.props.users.one._id)}
+                  selected={!!this.props.accounts.isLogged &&
+                  this.props.reactions[name].includes(this.props.accounts.one._id)}
                   onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
                   {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
                 </Button>
@@ -115,8 +114,8 @@ export default class Post extends Component {
             </div>
           </SheetActions>
           {/* more */}
-          {this.props.users.isLogged &&
-          <Button compact className={classes.more} onClick={this.onOpenReply}>
+          {this.props.accounts.isLogged &&
+          <Button dense className={classes.more} onClick={this.onOpenReply}>
             {this.state.isReply
               ? <IconKeyboardArrowUp className={classes.icon} />
               : <IconKeyboardArrowDown className={classes.icon} />}
@@ -134,9 +133,9 @@ export default class Post extends Component {
               onChange={this.onInputNewReaction} />
           </SheetActions>
           <SheetActions align='right'>
-            {this.props.users.isLogged &&
+            {this.props.accounts.isLogged &&
             this.state.isReply &&
-            (this.props.owner === this.props.users.one._id) &&
+            (this.props.owner === this.props.accounts.one._id) &&
             <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete</Button>}
             <Button onClick={this.onSubmitNewReaction}>push</Button>
           </SheetActions>
@@ -233,7 +232,7 @@ export default class Post extends Component {
 
   // リアクションを更新する
   onUpdateReaction (postId, name) {
-    if (!this.props.users.isLogged) {
+    if (!this.props.accounts.isLogged) {
       this.props.snackbar.requireLogin()
       return
     }

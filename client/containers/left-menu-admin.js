@@ -8,11 +8,10 @@ import IconButtonMoreExpand from '../components/ui-icon-button-more-expand'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
-@inject('router', 'posts', 'users')
-@observer
+@inject('router', 'posts', 'accounts')  @observer
 export default class LeftMenuNetworks extends Component {
   render () {
-    const {users, classes} = this.props
+    const {accounts, classes} = this.props
     return (
       <List>
         <ListItem button dense
@@ -21,18 +20,18 @@ export default class LeftMenuNetworks extends Component {
           })}
           component='a'
           href='/admin'>
-          <ListItemText primary={this.props.users.isLogged ? users.one.username : 'login'} />
-          {this.props.users.isLogged &&
+          <ListItemText primary={this.props.accounts.isLogged ? accounts.one.username : 'login'} />
+          {this.props.accounts.isLogged &&
           <ListItemSecondaryAction>
             <IconButtonMoreExpand isExpand={this.state.isExpand} onClick={this.onExpand} />
           </ListItemSecondaryAction>}
         </ListItem>
         <Collapse in={this.state.isExpand} transitionDuration='auto' unmountOnExit>
-          {this.props.users.isLogged &&
+          {this.props.accounts.isLogged &&
           <ListItem button dense component='a' href='/twitter'>
             <ListItemText inset primary='twitter' />
           </ListItem>}
-          {this.props.users.isLogged &&
+          {this.props.accounts.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]: this.props.router.page.includes('config')
@@ -41,7 +40,7 @@ export default class LeftMenuNetworks extends Component {
             href='/config'>
             <ListItemText inset primary='config' />
           </ListItem>}
-          {this.props.users.isLogged &&
+          {this.props.accounts.isLogged &&
           <ListItem button dense onClick={this.onLogout}>
             <ListItemText inset primary='logout' />
           </ListItem>}
@@ -61,7 +60,7 @@ export default class LeftMenuNetworks extends Component {
   onExpand = ::this.onExpand
 
   onLogout () {
-    this.props.users.logout()
+    this.props.accounts.logout()
     .then(() => {
       this.props.snackbar.show('ログアウトしました')
     })

@@ -10,11 +10,10 @@ import IconButtonMoreExpand from '../components/ui-icon-button-more-expand'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
-@inject('router', 'artworks', 'users')
-@observer
+@inject('router', 'artworks', 'accounts') @observer
 export default class LeftMenuArtworks extends Component {
   render () {
-    const {users, classes} = this.props
+    const {accounts, classes} = this.props
     return (
       <List>
         <ListItem button dense
@@ -29,13 +28,13 @@ export default class LeftMenuArtworks extends Component {
           component='a'
           href={'/artwork/default'}>
           <ListItemText primary={'artworks'} />
-          {this.props.users.isLogged &&
+          {this.props.accounts.isLogged &&
           <ListItemSecondaryAction>
             <IconButtonMoreExpand isExpand={this.state.isExpand} onClick={this.onExpand} />
           </ListItemSecondaryAction>}
         </ListItem>
         <Collapse in={this.state.isExpand} transitionDuration='auto' unmountOnExit>
-          {users.isLogged &&
+          {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]:
@@ -46,7 +45,7 @@ export default class LeftMenuArtworks extends Component {
             href={'/artwork/follows'}>
             <ListItemText inset primary={'follows'} />
           </ListItem>}
-          {users.isLogged &&
+          {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]:
@@ -58,7 +57,7 @@ export default class LeftMenuArtworks extends Component {
             <ListItemText inset primary={'self'} />
           </ListItem>}
         </Collapse>
-        {this.props.users.isLogged &&
+        {this.props.accounts.isLogged &&
         <ListItem button dense
           className={classNames({
             [classes.select]: this.props.router.page.includes('artwork-new')

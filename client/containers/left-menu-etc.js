@@ -6,7 +6,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
-@inject('router', 'posts', 'users')
+@inject('router', 'posts', 'accounts')
 @observer
 export default class LeftMenuNetworks extends Component {
   render () {
@@ -50,7 +50,7 @@ export default class LeftMenuNetworks extends Component {
   onExpand = ::this.onExpand
 
   onLogout () {
-    this.props.users.logout()
+    this.props.accounts.logout()
     .then(() => {
       this.props.snackbar.show('ログアウトしました')
     })

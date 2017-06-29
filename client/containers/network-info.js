@@ -15,8 +15,7 @@ import utils from '/utils'
 import styleSheet from './network-info.style'
 
 @withStyles(styleSheet)
-@inject('networks', 'posts', 'snackbar', 'users')
-@observer
+@inject('networks', 'posts', 'snackbar', 'accounts') @observer
 export default class NetworkInfo extends Component {
   render () {
     const {
@@ -50,9 +49,9 @@ export default class NetworkInfo extends Component {
               {network.description || '説明がありません'}
             </Typography>
           </SheetContent>
-          {this.props.users.isLogged &&
+          {this.props.accounts.isLogged &&
           <SheetActions align='right'>
-            {network.member.includes(this.props.users.one._id) ? (
+            {network.member.includes(this.props.accounts.one._id) ? (
               <Button onTouchTap={this.onLeaveNetwork}>
                 チェックアウト
               </Button>
@@ -63,14 +62,14 @@ export default class NetworkInfo extends Component {
             )}
           </SheetActions>}
         </Sheet>
-        {this.props.users.isLogged &&
-        this.props.users.one._id === network.owner &&
+        {this.props.accounts.isLogged &&
+        this.props.accounts.one._id === network.owner &&
         <Sheet>
           <SheetActions>
             <Button onClick={this.onRemoveList}>
               このリストを削除する
             </Button>
-            {network.member.includes(this.props.users.one._id) &&
+            {network.member.includes(this.props.accounts.one._id) &&
             <Button component='a' href={'/network/' + network._id + '/edit'}>アップデート</Button>}
           </SheetActions>
         </Sheet>}

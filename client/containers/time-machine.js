@@ -30,10 +30,10 @@ export default class TimeMachine extends Component {
               <InlineTypography>{this.state.currentYear}</InlineTypography>
               <InlineTypography type='display1'>{'・'}</InlineTypography>
               <InlineTypography type='display1'>{this.state.currentMonth}</InlineTypography>
-              <Button compact className={classes.prev} onClick={this.onBeforeMonth}>
+              <Button dense className={classes.prev} onClick={this.onBeforeMonth}>
                 <IconBefore className={classes.icon} />
               </Button>
-              <Button compact className={classes.next} onClick={this.onNextMonth}>
+              <Button dense className={classes.next} onClick={this.onNextMonth}>
                 <IconNext className={classes.icon} /></Button>
             </Block>
           </SheetContent>
@@ -44,10 +44,10 @@ export default class TimeMachine extends Component {
               <Typography type='title'>
                 {this.state.currentDay}
               </Typography>
-              <Button compact className={classes.prev} onClick={this.onBeforeDay}>
+              <Button dense className={classes.prev} onClick={this.onBeforeDay}>
                 <IconBefore className={classes.icon} />
               </Button>
-              <Button compact className={classes.next} onClick={this.onNextDay}>
+              <Button dense className={classes.next} onClick={this.onNextDay}>
                 <IconNext className={classes.icon} />
               </Button>
             </Block>

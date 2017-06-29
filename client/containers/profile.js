@@ -13,13 +13,13 @@ import Post from '../containers/post'
 import styleSheet from './profile.style'
 
 @withStyles(styleSheet)
-@inject('posts', 'snackbar', 'users', 'usersProfile')
+@inject('posts', 'snackbar', 'accounts', 'usersProfile')
 @observer
 export default class Profile extends Component {
   render () {
     const {
       posts: {index},
-      users: {followsIds},
+      accounts,
       usersProfile: {one: user},
       classes
     } = this.props
@@ -58,12 +58,12 @@ export default class Profile extends Component {
             </Typography>
           </SheetContent>
         </Sheet>
-        {this.props.users.isLogged &&
-        user.username !== this.props.users.one.username &&
+        {this.props.account.isLogged &&
+        user.username !== accounts.one.username &&
         <Sheet>
           <SheetActions align='center'>
             <Button onClick={this.onFollow}>
-              {followsIds.includes(user._id) ? 'フォローを外す' : 'フォローする'}
+              {accounts.followsIds.includes(user._id) ? 'フォローを外す' : 'フォローする'}
             </Button>
           </SheetActions>
         </Sheet>}
@@ -75,7 +75,7 @@ export default class Profile extends Component {
 
   onFollow () {
     const {usersProfile} = this.props
-    this.props.users.updateFollow(usersProfile.one._id)
+    this.props.account.updateFollow(usersProfile.one._id)
     .then(() => {
       this.props.snackbar.show('フォローを更新しました')
     })

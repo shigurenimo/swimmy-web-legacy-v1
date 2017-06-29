@@ -26,7 +26,7 @@ export default createStyleSheet('InputPost', theme => {
       padding: '10px 10px 0 0'
     },
     timelineName: {
-      height: '25px',
+      height: '32px',
       overflow: 'hidden',
       textAlign: 'right'
     },

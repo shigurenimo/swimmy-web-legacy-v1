@@ -10,11 +10,10 @@ import IconButtonMoreExpand from '../components/ui-icon-button-more-expand'
 import styleSheet from './left-menu-default.style'
 
 @withStyles(styleSheet)
-@inject('router', 'posts', 'users')
-@observer
+@inject('router', 'posts', 'accounts') @observer
 export default class LeftMenuTimeline extends Component {
   render () {
-    const {users, classes} = this.props
+    const {accounts, classes} = this.props
     return (
       <List>
         <ListItem button dense
@@ -48,7 +47,7 @@ export default class LeftMenuTimeline extends Component {
           </ListItemSecondaryAction>
         </ListItem>
         <Collapse in={this.state.isExpand} transitionDuration='auto' unmountOnExit>
-          {users.isLogged &&
+          {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]:
@@ -59,7 +58,7 @@ export default class LeftMenuTimeline extends Component {
             href={'/follows'}>
             <ListItemText inset primary={'follows'} />
           </ListItem>}
-          {users.isLogged &&
+          {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]:

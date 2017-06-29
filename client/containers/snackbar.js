@@ -19,8 +19,7 @@ export default class Snackbar extends Component {
       <div
         className={classNames(classes.container, {
           [classes.on]: snackbar.isShow,
-          [classes.off]: !snackbar.isShow,
-          [classes.minimal]: this.isMinimal
+          [classes.off]: !snackbar.isShow
         })}>
         <Card className={classes.inner}>
           {this.props.snackbar.message &&

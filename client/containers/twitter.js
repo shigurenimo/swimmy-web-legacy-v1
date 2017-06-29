@@ -13,12 +13,11 @@ import SheetContent from '../components/ui-sheet-content'
 import styleSheet from './twitter.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'snackbar', 'users')
-@observer
+@inject('layout', 'snackbar', 'accounts') @observer
 export default class Twitter extends Component {
   render () {
     const {
-      users: {
+      accounts: {
         one: {
           config,
           services: {twitter}
@@ -80,14 +79,14 @@ export default class Twitter extends Component {
 
   onSelectOption (event, checked) {
     const {value: name} = event.target
-    this.props.users.updateConfigTwitter(name, checked)
+    this.props.accounts.updateConfigTwitter(name, checked)
     .catch(this.props.snackbar.error)
   }
 
   onSelectOption = ::this.onSelectOption
 
   onUpdateTwitter () {
-    this.props.users.updateServicesTwitter()
+    this.props.accounts.updateServicesTwitter()
     .then(() => {
       this.props.snackbar.show('アップデートに成功しました')
     })
@@ -98,7 +97,7 @@ export default class Twitter extends Component {
 
   onUpdateRemoveTwitter () {
     if (!window.confirm('解除してもいいですか？')) return
-    this.props.users.updateRemoveServicesTwitter()
+    this.props.accounts.updateRemoveServicesTwitter()
     .then(() => {
       this.props.snackbar.show('関連付けを解除しました')
     })

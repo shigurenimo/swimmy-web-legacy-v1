@@ -17,8 +17,7 @@ import InlineTypography from '../components/ui-inline-typography'
 import styleSheet from './login.style'
 
 @withStyles(styleSheet)
-@inject('users', 'snackbar')
-@observer
+@inject('accounts', 'snackbar') @observer
 export default class Login extends Component {
   render () {
     const {classes} = this.props
@@ -209,7 +208,7 @@ export default class Login extends Component {
     if (event) event.preventDefault()
     if (this.process) return
     this.process = true
-    this.props.users.insert({
+    this.props.accounts.insert({
       username: this.state.username,
       password: this.state.password
     })

@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
@@ -18,8 +17,7 @@ import SheetImage from '../components/ui-sheet-image'
 import styleSheet from './artwork-detail.style'
 
 @withStyles(styleSheet)
-@inject('artworks', 'users', 'snackbar')
-@observer
+@inject('artworks', 'accounts', 'snackbar') @observer
 export default class ArtworkDetail extends Component {
   render () {
     const {classes} = this.props
@@ -96,8 +94,8 @@ export default class ArtworkDetail extends Component {
               </Typography>
             </SheetContent>}
             {/* 投稿の削除 */}
-            {this.props.users.isLogged &&
-            this.props.artworks.one.owner === this.props.users.one._id &&
+            {this.props.accounts.isLogged &&
+            this.props.artworks.one.owner === this.props.accounts.one._id &&
             <SheetActions align='right'>
               {!this.state.isEdit &&
               <Button onClick={this.onRemove}>
@@ -119,8 +117,8 @@ export default class ArtworkDetail extends Component {
                 <Button background
                   key={name}
                   selected={
-                    !!this.props.users.isLogged &&
-                    this.props.artworks.one.reactions[name].includes(this.props.users.one._id)
+                    !!this.props.accounts.isLogged &&
+                    this.props.artworks.one.reactions[name].includes(this.props.accounts.one._id)
                   }
                   onClick={this.onUpdateReaction.bind(this, this.props.artworks.one._id, name)}>
                   {name + (this.props.artworks.one.reactions[name].length > 0 ? ' ' +
@@ -129,7 +127,7 @@ export default class ArtworkDetail extends Component {
               )}
             </SheetContent>}
             {/* input reaction */}
-            {this.props.users.isLogged && !this.state.isEdit &&
+            {this.props.accounts.isLogged && !this.state.isEdit &&
             <SheetActions>
               <TextField
                 label='new reaction'
@@ -138,7 +136,7 @@ export default class ArtworkDetail extends Component {
                 maxLength='10'
                 onChange={this.onTextFieldNewReaction} />
             </SheetActions>}
-            {this.props.users.isLogged &&
+            {this.props.accounts.isLogged &&
             this.state.inputNewReaction.length > 0 && !this.state.isEdit &&
             <SheetActions align='right'>
               <Button onClick={this.onSubmitNewReaction}>
@@ -146,7 +144,7 @@ export default class ArtworkDetail extends Component {
               </Button>
             </SheetActions>}
             {/* リプライ */}
-            {this.props.users.isLogged && !this.state.isEdit &&
+            {this.props.accounts.isLogged && !this.state.isEdit &&
             <SheetActions>
               <TextField multiline
                 label='new comment'
@@ -190,11 +188,11 @@ export default class ArtworkDetail extends Component {
               {/* add */}
               <SheetActions>
                 {Object.keys(reply.reactions).map(name =>
-                  <Button compact minimal background
+                  <Button dense background
                     key={name}
                     selected={
-                      !!this.props.users.isLogged &&
-                      reply.reactions[name].includes(this.props.users.one._id)
+                      !!this.props.accounts.isLogged &&
+                      reply.reactions[name].includes(this.props.accounts.one._id)
                     }
                     onClick={this.onUpdateReplyReaction.bind(this, this.props.artworks.one._id, reply._id, name)}>
                     {name + (reply.reactions[name].length > 0 ? ' ' + reply.reactions[name].length : '')}
@@ -202,7 +200,7 @@ export default class ArtworkDetail extends Component {
                 )}
               </SheetActions>
               {/* delete */}
-              {this.props.users.isLogged && reply.owner === this.props.users.one._id &&
+              {this.props.accounts.isLogged && reply.owner === this.props.accounts.one._id &&
               <SheetActions align='right'>
                 <Button onClick={this.onRemoveReply.bind(this, this.props.artworks.one._id, reply._id)}>
                   remove
@@ -337,7 +335,7 @@ export default class ArtworkDetail extends Component {
 
   // リアクションを更新する
   onUpdateReaction (postId, name) {
-    if (!this.props.users.isLogged) {
+    if (!this.props.accounts.isLogged) {
       this.props.snackbar.requireLogin()
       return
     }
@@ -418,7 +416,7 @@ export default class ArtworkDetail extends Component {
 
   // リアクションを更新する
   onUpdateReplyReaction (postId, replyId, name) {
-    if (!this.props.users.isLogged) {
+    if (!this.props.accounts.isLogged) {
       this.props.snackbar.requireLogin()
       return
     }

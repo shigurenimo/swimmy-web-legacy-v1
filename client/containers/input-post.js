@@ -1,6 +1,4 @@
 import { Meteor } from 'meteor/meteor'
-import { HTTP } from 'meteor/http'
-import { Random } from 'meteor/random'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
@@ -13,8 +11,7 @@ import Image from '../components/ui-image'
 import styleSheet from './input-post.style'
 
 @withStyles(styleSheet)
-@inject('inputPost', 'layout', 'networks', 'posts', 'snackbar', 'router', 'users')
-@observer
+@inject('inputPost', 'layout', 'networks', 'posts', 'snackbar', 'router', 'accounts')  @observer
 export default class InputPost extends Component {
   render () {
     const {
@@ -29,7 +26,7 @@ export default class InputPost extends Component {
         })}>
         {/* 匿名 */}
         <div className={classes.timelineName}>
-          <Button background minimal
+          <Button background dense
             selected={this.props.posts.networkInfo}
             onClick={this.openNetworkInfo}>
             {this.timelineName}
@@ -51,7 +48,7 @@ export default class InputPost extends Component {
           </div>}
         </div>
         <div className={classes.postPublic}>
-          <Button compact>
+          <Button dense>
             <Dropzone
               className={classes.openImage}
               onDrop={this.onDropImage.bind(this)}>
@@ -59,21 +56,21 @@ export default class InputPost extends Component {
                 color={Meteor.settings.public.color.primary} />
             </Dropzone>
           </Button>
-          {this.props.users.isLogged &&
-          <Button compact
+          {this.props.accounts.isLogged &&
+          <Button dense
             selected={this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, true)}>
-            {this.props.users.one.username}
+            {this.props.accounts.one.username}
           </Button>}
-          {this.props.users.isLogged &&
-          <Button compact
+          {this.props.accounts.isLogged &&
+          <Button dense
             selected={!this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, false)}>
             secret
           </Button>}
           {/* 送信ボタン */}
           {!this.state.errorImage &&
-          <Button compact onClick={this.onSubmit}>
+          <Button dense onClick={this.onSubmit}>
             push
           </Button>}
         </div>
