@@ -5,47 +5,50 @@ import utils from '/lib/utils'
 Meteor.publish('posts', function (selector, options) {
   const self = this
   const userId = this.userId
-  selector['thread'] = {$exists: false}
+
   options.sort = {createdAt: -1}
+
   const cursor = collections.posts.find(selector, options).observe({
-    addedAt (res) {
-      if (res.reply) {
-        const reply = collections.posts.findOne(res.reply)
+    addedAt (post) {
+      if (post.reply) {
+        const reply = collections.posts.findOne(post.reply)
         if (reply) {
-          res.reply = reply
+          post.reply = reply
         } else {
-          res.reply = {
+          post.reply = {
             content: 'この投稿は既に削除されています'
           }
         }
       }
-      if (res.link) res.content = utils.replace.link(res.content)
-      if (res.tags) res.content = utils.replace.tags(res.content)
-      if (userId !== res.owner) delete res.owner
-      delete res.addr
-      self.added('posts', res._id, res)
+      if (post.link) { post.content = utils.replace.link(post.content) }
+      // if (post.tags) { post.content = utils.replace.tags(post.content) }
+      if (userId !== post.ownerId) {
+        delete post.ownerId
+      }
+      self.added('posts', post._id, post)
     },
-    changed (res) {
-      if (res.reply) {
-        const reply = collections.posts.findOne(res.reply)
+    changed (post) {
+      if (post.reply) {
+        const reply = collections.posts.findOne(post.reply)
         if (reply) {
-          res.reply = reply
+          post.reply = reply
         } else {
-          res.reply = {
+          post.reply = {
             content: 'この投稿は既に削除されています'
           }
         }
       }
-      if (res.link) res.content = utils.replace.link(res.content)
-      if (res.tags) res.content = utils.replace.tags(res.content)
-      if (userId !== res.owner) delete res.owner
-      delete res.addr
-      self.changed('posts', res._id, res)
+      if (post.link) { post.content = utils.replace.link(post.content) }
+      // if (post.tags) { post.content = utils.replace.tags(post.content) }
+      if (userId !== post.ownerId) { delete post.ownerId }
+      self.changed('posts', post._id, post)
     },
-    removed (res) {
-      self.removed('posts', res._id)
+    removed (post) {
+      self.removed('posts', post._id)
     }
   })
+
   self.ready()
+
   self.onStop(() => { cursor.stop() })
 })

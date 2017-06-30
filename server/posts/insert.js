@@ -10,8 +10,6 @@ import utils from '/lib/utils'
 
 Meteor.methods({
   async 'posts.insert' (req) {
-    const address = this.connection.clientAddress || '127.0.0.1'
-
     check(req.isPublic, Boolean)
     check(req.content, String)
 
@@ -27,7 +25,6 @@ Meteor.methods({
 
     const url = utils.match.url(req.content)
 
-    // ↓ oEmbed
     let service = null
     if (url) {
       if (url.match(new RegExp('youtube.com'))) {
@@ -56,7 +53,6 @@ Meteor.methods({
     }
 
     const data = {
-      addr: address,
       content: req.content,
       reactions: [],
       replies: [],
@@ -68,18 +64,14 @@ Meteor.methods({
     const tags = utils.match.tags(req.content)
     if (tags) data.tags = tags
 
-    data.owner = {}
-
-    if (this.userId) {
-      data.owner._id = this.userId
-    }
+    data.ownerId = this.userId
 
     if (req.isPublic) {
       if (!this.userId) throw new Meteor.Error('not-authorized')
       const user = Meteor.users.findOne(this.userId)
-      data.owner.username = user.username
-      data.owner.name = user.profile.name
-      data.owner.icon = ''
+      data.owner = {
+        username: user.username
+      }
     }
 
     if (req.images) {
@@ -110,7 +102,6 @@ Meteor.methods({
       })
     }
 
-    // ↓ タグの更新
     if (tags) {
       tags.filter(tag => tag !== '').forEach(hashtag => {
         const tag = collections.tags.findOne({name: hashtag})
@@ -134,8 +125,7 @@ Meteor.methods({
 
     return collections.posts.findOne(postId, {
       fields: {
-        owner: 0,
-        addr: 0
+        ownerId: 0
       }
     })
   }
