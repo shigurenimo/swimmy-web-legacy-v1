@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import collections from '/collections'
-import utils from '/utils'
+import utils from '/lib/utils'
 
 Meteor.methods({
   'posts.find' (selector, options) {

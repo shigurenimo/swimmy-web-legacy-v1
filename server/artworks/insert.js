@@ -3,7 +3,7 @@ import { check } from 'meteor/check'
 import { Random } from 'meteor/random'
 import { unlink, writeFileSync } from 'fs'
 import Jimp from 'jimp'
-import upload from '/utils/server/google/upload'
+import upload from '/lib/utils/server/google/upload'
 import collections from '/collections'
 
 // 挿入する

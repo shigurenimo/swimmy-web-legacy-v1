@@ -15,7 +15,7 @@ import Layout from '../components/ui-layout'
 import Sheet from '../components/ui-sheet'
 import SheetActions from '../components/ui-sheet-actions'
 import SheetContent from '../components/ui-sheet-content'
-import utils from '/utils'
+import utils from '/lib/utils'
 
 @inject('artworks', 'snackbar', 'accounts') @observer
 export default class ArtworkNew extends Component {

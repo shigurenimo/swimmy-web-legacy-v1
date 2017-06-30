@@ -4,9 +4,9 @@ import { HTTP } from 'meteor/http'
 import { Random } from 'meteor/random'
 import { unlink, writeFileSync } from 'fs'
 import Jimp from 'jimp'
-import upload from '/utils/server/google/upload'
+import upload from '/lib/utils/server/google/upload'
 import collections from '/collections'
-import utils from '/utils'
+import utils from '/lib/utils'
 
 Meteor.methods({
   async 'posts.insert' (req) {
@@ -44,8 +44,6 @@ Meteor.methods({
         service = 'http://www.slideshare.net/api/oembed/2'
       } else if (url.match(new RegExp('soundcloud.com'))) {
         service = 'http://soundcloud.com/oembed'
-      } else if (url.match(new RegExp('vine.co'))) {
-        service = 'https://vine.co/oembed.json'
       }
     }
 
@@ -60,7 +58,7 @@ Meteor.methods({
     const data = {
       addr: address,
       content: req.content,
-      reactions: {'スキ': []},
+      reactions: [],
       replies: [],
       from: 'swimmy',
       createdAt: date,
@@ -70,16 +68,18 @@ Meteor.methods({
     const tags = utils.match.tags(req.content)
     if (tags) data.tags = tags
 
-    if (this.userId) data.owner = this.userId
+    data.owner = {}
+
+    if (this.userId) {
+      data.owner._id = this.userId
+    }
 
     if (req.isPublic) {
       if (!this.userId) throw new Meteor.Error('not-authorized')
       const user = Meteor.users.findOne(this.userId)
-      data.public = {
-        username: user.username,
-        name: user.profile.name,
-        icon: ''
-      }
+      data.owner.username = user.username
+      data.owner.name = user.profile.name
+      data.owner.icon = ''
     }
 
     if (req.images) {
@@ -101,8 +101,8 @@ Meteor.methods({
     if (web) data.web = web
     if (oEmbed) data.oEmbed = oEmbed
 
-    // ↓ 更新
     const postId = collections.posts.insert(data)
+
     if (req.reply) {
       collections.posts.update(req.reply, {
         $push: {replies: postId},
@@ -241,8 +241,6 @@ async function uploadImage (date, base64) {
   unlink(x512, err => err)
 
   unlink(temp, err => err)
-
-  // await makePublic(bucketName, [filePath.full, filePath.x256, filePath.x512])
 
   return {
     full: fileName.full,

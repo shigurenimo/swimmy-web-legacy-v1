@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Random } from 'meteor/random'
 import collections from '/collections'
-import utils from '/utils'
+import utils from '/lib/utils'
 
 Meteor.methods({
   'artworks.find' (selector, options) {
