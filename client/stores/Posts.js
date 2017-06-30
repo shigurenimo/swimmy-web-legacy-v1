@@ -155,7 +155,7 @@ export default class {
         network: null,
         isStatic: true,
         selector: {
-          owner: user._id
+          ownerId: user._id
         },
         options: {
           limit: 50
@@ -243,7 +243,7 @@ export default class {
   }
 
   findFromUserId (userId) {
-    const selector = {owner: userId}
+    const selector = {ownerId: userId}
     const options = {
       limit: 50,
       sort: {createdAt: -1}

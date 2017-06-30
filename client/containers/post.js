@@ -99,20 +99,21 @@ export default class Post extends Component {
             </Sheet>
           </SheetContent>}
           {/* reaction */}
+          {this.props.reactions.slice()[0] &&
           <SheetActions>
             <div className={classes.reactionRoot}>
-              {Object.keys(this.props.reactions).map(name =>
+              {this.props.reactions.map(({name, owners}) =>
                 <Button dense background
                   key={name}
                   className={classes.reaction}
                   selected={!!this.props.accounts.isLogged &&
-                  this.props.reactions[name].includes(this.props.accounts.one._id)}
+                  owners.includes(this.props.accounts.one._id)}
                   onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
-                  {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
+                  {name + (owners.length > 0 ? ' ' + owners.length : '')}
                 </Button>
               )}
             </div>
-          </SheetActions>
+          </SheetActions>}
           {/* more */}
           {this.props.accounts.isLogged &&
           <Button dense className={classes.more} onClick={this.onOpenReply}>
@@ -135,7 +136,7 @@ export default class Post extends Component {
           <SheetActions align='right'>
             {this.props.accounts.isLogged &&
             this.state.isReply &&
-            (this.props.owner === this.props.accounts.one._id) &&
+            (this.props.ownerId === this.props.accounts.one._id) &&
             <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete</Button>}
             <Button onClick={this.onSubmitNewReaction}>push</Button>
           </SheetActions>
