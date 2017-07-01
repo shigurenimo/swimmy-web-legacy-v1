@@ -3,7 +3,9 @@ import { check } from 'meteor/check'
 import { HTTP } from 'meteor/http'
 import { Random } from 'meteor/random'
 import { unlink, writeFileSync } from 'fs'
+import { join } from 'path'
 import Jimp from 'jimp'
+import cheerio from 'cheerio'
 import upload from '/lib/utils/server/google/upload'
 import collections from '/collections'
 import utils from '/lib/utils'
@@ -44,12 +46,14 @@ Meteor.methods({
       }
     }
 
+    console.log(url)
+
     let oEmbed = null
-    let web = null
+    let meta = null
     if (service) {
       oEmbed = oEmbedAsync(url, service)
     } else if (url) {
-      web = webAsync(url)
+      meta = metaAsync(url)
     }
 
     const data = {
@@ -89,9 +93,18 @@ Meteor.methods({
       data.network = req.network
     }
 
-    if (url) data.url = url
-    if (web) data.web = web
-    if (oEmbed) data.oEmbed = oEmbed
+    if (url || meta || oEmbed) {
+      data.extension = {web: {}}
+    }
+    if (url) {
+      data.extension.web.url = url
+    }
+    if (meta) {
+      data.extension.web.meta = meta
+    }
+    if (oEmbed) {
+      data.extension.web.oEmbed = oEmbed
+    }
 
     const postId = collections.posts.insert(data)
 
@@ -143,8 +156,7 @@ const oEmbedAsync = Meteor.wrapAsync((url, service, resolve) => {
   })
 })
 
-const webAsync = Meteor.wrapAsync((url, resolve) => {
-  const cheerio = require('cheerio')
+const metaAsync = Meteor.wrapAsync((url, resolve) => {
   HTTP.get(url, (err, res) => {
     if (err) {
       resolve(null, null)
@@ -179,7 +191,7 @@ async function uploadImage (date, base64) {
   const ext = '.jpg'
   const name = Random.id()
 
-  const temp = require('path').join(process.env.PWD, '.temp', name + ext)
+  const temp = join(process.env.PWD, '.temp', name + ext)
 
   writeFileSync(temp, buf)
 
@@ -200,16 +212,16 @@ async function uploadImage (date, base64) {
   ].join('/')
 
   const filePath = {
-    full: require('path').join(datePath, fileName.full),
-    x256: require('path').join(datePath, fileName.x256),
-    x512: require('path').join(datePath, fileName.x512),
-    x1024: require('path').join(datePath, fileName.x1024)
+    full: join(datePath, fileName.full),
+    x256: join(datePath, fileName.x256),
+    x512: join(datePath, fileName.x512),
+    x1024: join(datePath, fileName.x1024)
   }
 
   await upload(bucketName, temp, filePath.full)
 
   // x256
-  const x256 = require('path').join(process.env.PWD, '.temp', fileName.x256)
+  const x256 = join(process.env.PWD, '.temp', fileName.x256)
   const x256Ref = await Jimp.read(temp)
   x256Ref.resize(512, Jimp.AUTO)
   .exifRotate()
@@ -220,7 +232,7 @@ async function uploadImage (date, base64) {
   unlink(x256, err => err)
 
   // x512
-  const x512 = require('path').join(process.env.PWD, '.temp', fileName.x512)
+  const x512 = join(process.env.PWD, '.temp', fileName.x512)
   const x512Ref = await Jimp.read(temp)
   x512Ref.resize(512, Jimp.AUTO)
   .exifRotate()

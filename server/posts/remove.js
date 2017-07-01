@@ -4,16 +4,21 @@ import collections from '/collections'
 Meteor.methods({
   'posts.remove' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
+
     const post = collections.posts.findOne(req.postId)
+
     if (!post) return 200
-    if (post.owner !== this.userId) return 409
-    collections.posts.remove(req.postId)
+
+    if (post.ownerId !== this.userId) return 409
+
+    collections.posts.remove(post._id)
+
     if (post.reply) {
       collections.posts.update(post.reply, {
         $pull: {replies: post._id}
       })
     }
-    // ↓ ハッシュタグの削除
+
     if (post.tags) {
       post.tags.filter(tag => tag !== '').forEach(hashtag => {
         const tag = collections.tags.findOne({name: hashtag})
@@ -26,6 +31,7 @@ Meteor.methods({
         }
       })
     }
+
     return 200
   }
 })
