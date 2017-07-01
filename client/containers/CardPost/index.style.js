@@ -15,8 +15,7 @@ export default createStyleSheet('Post', theme => {
       right: '10px'
     },
     username: {
-      fontWeight: 'bold',
-      color: theme.palette.primary[500]
+      color: Meteor.settings.public.color.primary
     },
     photoImage: {
       display: 'block',

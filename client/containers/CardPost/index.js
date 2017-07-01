@@ -2,17 +2,17 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import utils from '/lib/utils'
 import { withStyles } from 'material-ui/styles'
 import IconKeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import IconKeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
-import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
 import Button from '../../components/Button'
 import Image from '../../components/UI-Image'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
-import utils from '/lib/utils'
+import Typography from '../../components/Typography'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
@@ -24,19 +24,20 @@ export default class Post extends Component {
       <div>
         <Sheet hover onTouchTap={this.onOpenThread}>
           {/* username */}
-          {this.props.public &&
+          {this.props.owner && this.props.owner.username &&
           <SheetContent>
-            <Typography className={classes.username} component='a' href={'/' + this.props.public.username}>
-              @{this.props.public.username}
+            <Typography className={classes.username} component='a' href={'/' + this.props.owner.username}>
+              @{this.props.owner.username}
             </Typography>
           </SheetContent>}
           {/* content */}
           <SheetContent>
-            <Typography
+            <Typography inline
               className={classes.content}
-              dangerouslySetInnerHTML={{__html: this.props.content}}
               component='a'
+              dangerouslySetInnerHTML={{__html: this.props.content}}
               href={'/thread/' + (this.props.reply ? this.props.reply._id : this.props._id)} />
+            <Typography inline type='caption' component='span'> - {utils.date.since(this.props.createdAt)}</Typography>
           </SheetContent>
           {/* photo */}
           {this.props.images && this.props.images.slice()[0] &&
@@ -77,10 +78,6 @@ export default class Post extends Component {
               {this.props.extension.web.meta.title}
             </Typography>
           </SheetContent>}
-          {/* date */}
-          <SheetContent>
-            <Typography type='caption'> - {utils.date.since(this.props.createdAt)}</Typography>
-          </SheetContent>
           {/* reply */}
           {this.props.reply &&
           <SheetContent>
