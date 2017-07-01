@@ -27,8 +27,7 @@ export default class Thread extends Component {
     }
     return (
       <Layout>
-        {this.props.posts.networkInfo &&
-        <NetworkInfo />}
+        {this.props.posts.networkId && <NetworkInfo />}
         {this.props.posts.one.replies &&
         this.props.posts.one.replies.length > 0 &&
         this.props.posts.one.replies.map(item => <PostRes key={item._id} {...item} />)}

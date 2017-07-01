@@ -80,9 +80,9 @@ Meteor.methods({
       data.images = [image]
     }
 
-    if (req.network) {
-      check(req.network, String)
-      data.network = req.network
+    if (req.networkId) {
+      check(req.networkId, String)
+      data.networkId = req.networkId
     }
 
     data.extension = {}

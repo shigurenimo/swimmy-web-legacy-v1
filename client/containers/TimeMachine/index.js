@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import IconNext from 'material-ui-icons/NavigateNext'
 import IconBefore from 'material-ui-icons/NavigateBefore'
 import Button from 'material-ui/Button'
+import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Block from '../../components/UI-Block'
 import Layout from '../../components/UI-Layout'
@@ -30,11 +31,11 @@ export default class TimeMachine extends Component {
               <InlineTypography>{this.state.currentYear}</InlineTypography>
               <InlineTypography type='display1'>{'・'}</InlineTypography>
               <InlineTypography type='display1'>{this.state.currentMonth}</InlineTypography>
-              <Button dense className={classes.prev} onClick={this.onBeforeMonth}>
+              <IconButton className={classes.prev} onClick={this.onBeforeMonth}>
                 <IconBefore className={classes.icon} />
-              </Button>
-              <Button dense className={classes.next} onClick={this.onNextMonth}>
-                <IconNext className={classes.icon} /></Button>
+              </IconButton>
+              <IconButton className={classes.next} onClick={this.onNextMonth}>
+                <IconNext className={classes.icon} /></IconButton>
             </Block>
           </SheetContent>
         </Sheet>
@@ -44,12 +45,12 @@ export default class TimeMachine extends Component {
               <Typography type='title'>
                 {this.state.currentDay}
               </Typography>
-              <Button dense className={classes.prev} onClick={this.onBeforeDay}>
+              <IconButton className={classes.prev} onClick={this.onBeforeDay}>
                 <IconBefore className={classes.icon} />
-              </Button>
-              <Button dense className={classes.next} onClick={this.onNextDay}>
+              </IconButton>
+              <IconButton className={classes.next} onClick={this.onNextDay}>
                 <IconNext className={classes.icon} />
-              </Button>
+              </IconButton>
             </Block>
           </SheetContent>
         </Sheet>

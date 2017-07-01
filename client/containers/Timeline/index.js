@@ -14,7 +14,7 @@ export default class Timeline extends Component {
   render () {
     return (
       <Layout>
-        {this.props.posts.networkInfo &&
+        {this.props.posts.networkId &&
         <NetworkInfo />}
         {this.forPosts()}
       </Layout>

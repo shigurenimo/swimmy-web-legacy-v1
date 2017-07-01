@@ -4,7 +4,6 @@ import Dropzone from 'react-dropzone'
 import classNames from 'classnames'
 import utils from '/lib/utils'
 import { withStyles } from 'material-ui/styles'
-import Divider from 'material-ui/Divider'
 import Button from '../../components/Button'
 import Image from '../../components/UI-Image'
 import styleSheet from './index.style'
@@ -35,7 +34,7 @@ export default class InputPost extends Component {
         <div className={classes.tools}>
           <Button dense
             className={classes.spacing}
-            selected={this.props.posts.networkInfo}
+            selected={this.props.posts.networkId}
             onClick={this.openNetworkInfo}>
             {this.timelineName}
           </Button>
@@ -97,8 +96,8 @@ export default class InputPost extends Component {
 
   get timelineName () {
     if (this.props.router.page === 'thread') {
-      if (this.props.posts.one.networkInfo) {
-        return this.props.posts.one.networkInfo.name
+      if (this.props.posts.one.networkId) {
+        return this.props.posts.one.network.name
       } else {
         return 'レス'
       }
@@ -110,7 +109,7 @@ export default class InputPost extends Component {
     const networkId = this.props.posts.timeline.network ||
       (this.props.router.page === 'thread' && this.props.posts.one.network)
     if (!networkId) return
-    if (this.props.posts.networkInfo) {
+    if (this.props.posts.networkId) {
       this.props.posts.closeNetworkInfo()
     } else {
       this.props.networks.findOneFromId(networkId)

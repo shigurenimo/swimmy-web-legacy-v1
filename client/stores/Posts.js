@@ -284,7 +284,7 @@ export default class {
         req.images = next.images
       }
       if (this.timeline.network) {
-        req.network = this.timeline.network
+        req.networkId = this.timeline.networkId
       }
       Meteor.call('posts.insert', req, (err, res) => {
         if (err) {
