@@ -20,6 +20,9 @@ export default types.model('User', {
       })
     )
   ),
+  config: types.maybe(
+    types.model({})
+  ),
   createdAt: types.maybe(types.Date),
   services: types.maybe(types.model({}))
 }, {})

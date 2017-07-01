@@ -79,6 +79,9 @@ export default class Content extends Component {
   }
 
   router () {
+    if (this.props.accounts.isLoggingIn) {
+      return <Loading key='loading' />
+    }
     if (this.props.router.page === null) {
       return <Loading key='loading' />
     }

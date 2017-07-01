@@ -1,7 +1,6 @@
 import Artworks from './Artworks'
 import InputPost from './InputPost'
 import Layout from './Layout'
-import Navigation from './Navigation'
 import Networks from './Networks'
 import Posts from './Posts'
 import PostsSocket from './PostsSocket'
@@ -22,7 +21,6 @@ export default {
   artworks: new Artworks(),
   inputPost,
   layout,
-  navigation: new Navigation(),
   networks: new Networks(),
   posts: new Posts(),
   postsSocket: new PostsSocket(),

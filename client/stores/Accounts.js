@@ -26,12 +26,13 @@ export default types.model('Accounts', {
     model.profile.code = model.profile.code.split('')
     this.one = model
     this.followsIds = model.profile.follows.map(item => item._id)
-    this.loginState = 'isLoggedIn'
+    if (model.config) { this.loginState = 'isLoggedIn' }
   },
   changed (model) {
     model.profile.code = model.profile.code.split('')
     this.one = model
     this.followsIds = model.profile.follows.map(item => item._id)
+    if (model.config) { this.loginState = 'isLoggedIn' }
   },
   onLogin () {
     Meteor.subscribe('users')
