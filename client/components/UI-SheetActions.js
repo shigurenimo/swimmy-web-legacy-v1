@@ -6,7 +6,6 @@ const styleSheet = createStyleSheet('UISheetActions', theme => {
   return {
     container: {
       display: 'block',
-      paddingTop: '10px',
       width: '100%'
     },
     alignRight: {

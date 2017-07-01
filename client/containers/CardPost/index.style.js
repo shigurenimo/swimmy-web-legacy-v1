@@ -52,8 +52,9 @@ export default createStyleSheet('Post', theme => {
         left: 0
       }
     },
-    reactionRoot: {
-      width: 'calc(100% - 50px)'
+    reactionList: {
+      width: 'calc(100% - 50px)',
+      display: 'flex'
     },
     reaction: {
       marginBottom: '5px'

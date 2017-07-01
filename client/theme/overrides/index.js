@@ -1,5 +1,6 @@
 export MuiButton from './button'
 export MuiCard from './card'
+export MuiChip from './chip'
 export MuiInput from './input'
 export MuiListItemText from './list-item-text'
 export MuiPaper from './paper'

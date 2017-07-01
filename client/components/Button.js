@@ -13,10 +13,6 @@ export const styleSheet = createStyleSheet('UIButton', theme => {
       '&:hover': {
         background: theme.palette.primary[200]
       }
-    },
-    minimal: {
-      fontSize: 12,
-      height: '25px'
     }
   }
 })

@@ -4,7 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 const styleSheet = createStyleSheet('UISheetContent', theme => {
   return {
     container: {
-      paddingTop: '10px',
+      paddingBottom: '5px',
       position: 'relative',
       display: 'block',
       width: '100%',

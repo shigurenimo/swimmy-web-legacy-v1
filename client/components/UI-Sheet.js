@@ -15,10 +15,10 @@ const styleSheet = createStyleSheet('UISheet', theme => {
       textDecoration: 'none'
     },
     padding: {
-      padding: '10px 10px 20px 10px'
+      padding: '20px 10px 15px 10px'
     },
     paddingDense: {
-      padding: '0px 10px 10px 10px'
+      padding: '10px 10px 5px 10px'
     },
     hover: {
       '&:hover': {

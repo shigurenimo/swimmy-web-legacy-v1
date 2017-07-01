@@ -10,6 +10,8 @@ export default {
     letterSpacing: '1px'
   },
   dense: {
-    minWidth: 32
+    fontSize: '12px',
+    minWidth: '32px',
+    minHeight: '30px'
   }
 }

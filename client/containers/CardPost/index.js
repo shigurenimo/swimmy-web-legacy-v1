@@ -6,6 +6,8 @@ import utils from '/lib/utils'
 import { withStyles } from 'material-ui/styles'
 import IconKeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import IconKeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
+import Avatar from 'material-ui/Avatar'
+import Chip from 'material-ui/Chip'
 import TextField from 'material-ui/TextField'
 import Button from '../../components/Button'
 import Image from '../../components/UI-Image'
@@ -92,16 +94,17 @@ export default class Post extends Component {
           {/* reaction */}
           {this.props.reactions.slice()[0] &&
           <SheetActions>
-            <div className={classes.reactionRoot}>
+            <div className={classes.reactionList}>
               {this.props.reactions.map(({name, owners}) =>
-                <Button dense background
+                <Chip
                   key={name}
-                  className={classes.reaction}
-                  selected={!!this.props.accounts.isLogged &&
-                  owners.includes(this.props.accounts.one._id)}
-                  onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
-                  {name + (owners.length > 0 ? ' ' + owners.length : '')}
-                </Button>
+                  label={name + ' ' + (owners.length > 0 ? owners.length : '')}
+                  onRequestDelete={
+                    !!this.props.accounts.isLogged &&
+                    owners.includes(this.props.accounts.one._id) ?
+                    this.onUpdateReaction.bind(this, this.props._id, name) : null
+                  }
+                  onClick={this.onUpdateReaction.bind(this, this.props._id, name)} />
               )}
             </div>
           </SheetActions>}
@@ -157,9 +160,7 @@ export default class Post extends Component {
       return (
         <Sheet dense background>
           <SheetActions>
-            <Typography type='subheading'>
-              {data.title}
-            </Typography>
+            <Typography type='subheading'>{data.title}</Typography>
             <Button onClick={this.onOpenIframe}>
               タップして{data.provider_name}を読み込む
             </Button>
