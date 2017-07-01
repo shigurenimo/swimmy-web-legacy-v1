@@ -1,4 +1,3 @@
-import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
@@ -204,7 +203,7 @@ export default class NetworkNew extends Component {
     })
     .then(data => {
       this.props.networks.pushIndex(data)
-      FlowRouter.go('/network')
+      this.props.router.go('/network')
       this.props.posts.resetTimelines()
       this.props.snackbar.show('新しいリストを作成しました')
       this.process = false

@@ -1,4 +1,3 @@
-import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
@@ -174,7 +173,7 @@ export default class PostRes extends Component {
     const nodeName = event.target.nodeName
     if (nodeName === 'INPUT' || nodeName === 'BUTTON' || nodeName === 'IMG' || nodeName === 'svg' ||
       nodeName === 'path' || nodeName === 'A') return
-    FlowRouter.go('/thread/' + this.props._id)
+    this.props.router.go('/thread/' + this.props._id)
   }
 
   onOpenThread = ::this.onOpenThread

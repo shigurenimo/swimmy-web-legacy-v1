@@ -1,4 +1,3 @@
-import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
@@ -189,9 +188,9 @@ export default class Post extends Component {
       nodeName === 'svg' ||
       nodeName === 'path' || nodeName === 'A') return
     if (this.props.replyId) {
-      FlowRouter.go('/thread/' + this.props.replyId)
+      this.props.router.go('/thread/' + this.props.replyId)
     } else {
-      FlowRouter.go('/thread/' + this.props._id)
+      this.props.router.go('/thread/' + this.props._id)
     }
   }
 

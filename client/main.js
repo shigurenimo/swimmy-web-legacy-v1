@@ -6,16 +6,15 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import App from './containers/App'
 import theme from '/client/theme'
 import stores from './stores'
-import './router'
 
 injectTapEventPlugin()
 
 render(
-  <Provider {...stores}>
-    <MuiThemeProvider theme={theme}>
+  <MuiThemeProvider theme={theme}>
+    <Provider {...stores}>
       <App />
-    </MuiThemeProvider>
-  </Provider>,
+    </Provider>
+  </MuiThemeProvider>,
   document.querySelector('.root\\:app')
 )
 

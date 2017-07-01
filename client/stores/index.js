@@ -7,7 +7,6 @@ import Posts from './Posts'
 import PostsSocket from './PostsSocket'
 import Process from './Process'
 import Reports from './Reports'
-import Router from './Router'
 import Snackbar from './Snackbar'
 import Tags from './Tags'
 import Threads from './Threads'
@@ -24,7 +23,6 @@ export default {
   postsSocket: new PostsSocket(),
   process: new Process(),
   reports: new Reports(),
-  router: new Router(),
   snackbar: new Snackbar(),
   tags: new Tags(),
   threads: new Threads(),

@@ -1,4 +1,3 @@
-import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
@@ -17,7 +16,7 @@ import SheetImage from '../../components/UI-SheetImage'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('artworks', 'accounts', 'snackbar') @observer
+@inject('artworks', 'accounts', 'router', 'snackbar') @observer
 export default class ArtworkDetail extends Component {
   render () {
     const {classes} = this.props
@@ -242,7 +241,7 @@ export default class ArtworkDetail extends Component {
     const postId = this.props.artworks.one._id
     this.props.artworks.remove(postId)
     .then(postId => {
-      FlowRouter.go('/artwork')
+      this.props.router.go('/artwork')
       this.props.artworks.pullIndex(postId)
     })
     .catch(err => {

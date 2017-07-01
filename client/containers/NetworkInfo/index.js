@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor'
-import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
@@ -112,7 +111,7 @@ export default class NetworkInfo extends Component {
     this.props.networks.remove(networkId)
     .then(data => {
       this.props.networks.pullIndex(networkId)
-      FlowRouter.go('/network')
+      this.props.router.go('/network')
       this.props.posts.resetTempTimelines()
       this.props.posts.resetTimelines()
       this.props.snackbar.show('リストを削除しました')
