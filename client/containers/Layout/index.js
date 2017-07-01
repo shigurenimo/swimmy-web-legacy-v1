@@ -40,9 +40,9 @@ export default class Layout extends Component {
     event.preventDefault()
     if (deltaY < -80 || deltaY > 30) return
     if (deltaX < -20) {
-      this.props.layout.toLeft()
+      this.props.layout.setLeft()
     } else if (deltaX > 50) {
-      this.props.layout.toMain()
+      this.props.layout.setMain()
     }
   }
 

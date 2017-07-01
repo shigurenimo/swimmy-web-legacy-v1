@@ -6,10 +6,9 @@ Accounts.onCreateUser(function (options, user) {
   code[Math.floor(Math.random() * 25)] = 3
   user.config = {}
   user.profile = options.profile || {}
+  user.profile.name = user.username
   user.profile.description = ''
-  user.profile.icon = null
   user.profile.follows = []
-  user.profile.tags = []
   user.profile.code = code.join('')
   user.profile.networks = []
   user.profile.from = 'swimmy'

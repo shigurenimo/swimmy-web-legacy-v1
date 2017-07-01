@@ -33,11 +33,7 @@ Meteor.methods({
     }
     return Accounts.createUser({
       username: req.username,
-      password: req.password,
-      profile: {
-        name: req.username,
-        channel: 'tokyo'
-      }
+      password: req.password
     })
   }
 })

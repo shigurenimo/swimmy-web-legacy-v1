@@ -13,10 +13,15 @@ import Threads from './Threads'
 import Accounts from './Accounts'
 import UsersProfile from './UsersProfile'
 
+const accounts = Accounts.create({})
+const inputPost = InputPost.create({})
+const layout = Layout.create({})
+
 export default {
+  accounts,
   artworks: new Artworks(),
-  inputPost: new InputPost(),
-  layout: new Layout(),
+  inputPost,
+  layout,
   navigation: new Navigation(),
   networks: new Networks(),
   posts: new Posts(),
@@ -26,6 +31,5 @@ export default {
   snackbar: new Snackbar(),
   tags: new Tags(),
   threads: new Threads(),
-  accounts: new Accounts(),
   usersProfile: new UsersProfile()
 }

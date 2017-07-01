@@ -1,75 +1,58 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
-import { action, observable, toJS } from 'mobx'
+import { types } from 'mobx-state-tree'
+import User from './User'
 
-export default class {
-  @observable one = {}
-
-  @observable followsIds = []
-
-  @observable loginState = null
-
-  cursor = null
-
-  address = null
-
-  unique = null
-
-  // 未ログインのときtrueを返す
-  get isNotLoggedIn () {
-    return this.loginState === 'isNotLoggedIn'
-  }
-
-  // ログイン中のときtrueを返す
-  get isLoggingIn () {
-    return this.loginState === 'isLoggingIn'
-  }
-
-  // ログイン済みのときtrueを返す
-  get isLogged () {
-    return this.loginState === 'isLoggedIn'
-  }
-
-  constructor () {
+export default types.model('Accounts', {
+  one: types.maybe(User),
+  loginState: types.maybe(types.string),
+  get isNotLoggedIn () { return this.loginState === 'isNotLoggedIn' },
+  get isLoggingIn () { return this.loginState === 'isLoggingIn' },
+  get isLogged () { return this.loginState === 'isLoggedIn' }
+}, {
+  afterCreate () {
+    this.followsIds = []
+    this.cursor = null
     if (Meteor.loggingIn()) {
       this.loginState = 'isLoggingIn'
     } else {
       this.loginState = 'isNotLoggedIn'
     }
+    // if (Meteor.userId()) { this.subscribe() }
     Accounts.onLogin(this.onLogin.bind(this))
     Accounts.onLogout(this.onLogout.bind(this))
-  }
-
-  // ログインする
-  @action
+  },
+  added (model) {
+    model.profile.code = model.profile.code.split('')
+    this.one = model
+    this.followsIds = model.profile.follows.map(item => item._id)
+    this.loginState = 'isLoggedIn'
+  },
+  changed (model) {
+    model.profile.code = model.profile.code.split('')
+    this.one = model
+    this.followsIds = model.profile.follows.map(item => item._id)
+  },
   onLogin () {
-    const self = this
     Meteor.subscribe('users')
-    if (self.cursor) {
-      self.cursor.stop()
-      self.cursor = null
+    if (this.cursor) {
+      this.cursor.stop()
+      this.cursor = null
     }
+    const self = this
     const userId = Meteor.userId()
-    self.cursor = Meteor.users.find(userId).observe({
-      added (user) {
-        user.profile.code = user.profile.code.split('')
-        self.one = user
-        self.followsIds = user.profile.follows.map(item => item._id)
-        setTimeout(() => { self.loginState = 'isLoggedIn' }, 200)
+    this.cursor = Meteor.users.find(userId).observe({
+      added (model) {
+        self.added(model)
       },
-      changed (user) {
-        user.profile.code = user.profile.code.split('')
-        self.one = user
-        self.followsIds = user.profile.follows.map(item => item._id)
+      changed (model) {
+        self.changed(model)
       }
     })
-  }
-
-  @action
+  },
   onLogout () {
     this.loginState = 'isNotLoggedIn'
-  }
-
+  },
   insert ({username, password}) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.insert', {username, password}, (err, res) => {
@@ -80,8 +63,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   // フォローを更新する
   updateFollow (userId) {
     return new Promise((resolve, reject) => {
@@ -93,8 +75,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   // ネームを更新する
   updateName (name) {
     return new Promise((resolve, reject) => {
@@ -106,8 +87,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   // ユーザネームを更新する
   updateUsername (username) {
     return new Promise((resolve, reject) => {
@@ -119,8 +99,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updateChannel (channel) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateChannel', {
@@ -133,8 +112,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updatePassword (oldPassword, newPassword) {
     return new Promise((resolve, reject) => {
       Accounts.changePassword(oldPassword, newPassword, err => {
@@ -145,8 +123,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updatePushEmail (email) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updatePushEmail', {email}, err => {
@@ -157,8 +134,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updatePullEmail (email) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updatePullEmail', {email}, err => {
@@ -169,8 +145,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updateServicesTwitter () {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateServicesTwitter', (err, res) => {
@@ -181,8 +156,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updateRemoveServicesTwitter () {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateRemoveServicesTwitter', (err, res) => {
@@ -193,8 +167,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updateConfigTwitter (name, value) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateConfigTwitter', {name, value}, (err, res) => {
@@ -205,8 +178,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   checkExistUsername (username) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.checkExistUsername', username, (err, res) => {
@@ -217,8 +189,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   // ログアウトする
   logout () {
     return new Promise((resolve, reject) => {
@@ -231,4 +202,4 @@ export default class {
       })
     })
   }
-}
+})

@@ -9,7 +9,7 @@ export default {
     async action ({params}, stores) {
       stores.posts.closeNetworkInfo()
       stores.routes.setRoute('timeline')
-      stores.layout.toMain()
+      stores.layout.setMain()
       if (params[0]) {
         stores.posts.setTimelineFromUnique(params[0])
       } else {
@@ -54,7 +54,7 @@ export default {
       stores.posts.setTimelineFromDate(params.y, params.m, params.d)
       const timeline = stores.posts.timeline
       stores.routes.setRoute('timemachine')
-      stores.layout.toMain()
+      stores.layout.setMain()
       stores.process.checkin()
       const {selector, options} = timeline
       stores.posts.find(selector, options)
@@ -77,7 +77,7 @@ export default {
   '/thread': {
     async action (context, stores) {
       stores.routes.setRoute('thread-list')
-      stores.layout.toMain()
+      stores.layout.setMain()
       stores.threads.find()
       .then(posts => {
         stores.threads.pushIndex(posts)
@@ -105,7 +105,7 @@ export default {
           content = content.substr(0, 20) + '..'
         }
         stores.routes.setRoute('thread')
-        stores.layout.toMain()
+        stores.layout.setMain()
         document.title = content + ' | ' + documentTitleShort
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
@@ -120,7 +120,7 @@ export default {
   '/artwork/(default|self|follows)?': {
     async action ({params}, stores) {
       stores.routes.setRoute('artwork')
-      stores.layout.toMain()
+      stores.layout.setMain()
       if (params[0]) {
         stores.artworks.setTimelineFromUnique(params[0])
       } else {
@@ -146,7 +146,7 @@ export default {
   '/artwork/new': {
     async action (context, stores) {
       stores.routes.setRoute('artwork-new')
-      stores.layout.toMain()
+      stores.layout.setMain()
       document.title = '新しいアートワーク | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -180,7 +180,7 @@ export default {
   '/network/(default|net|univ|channel)?': {
     async action ({params}, stores) {
       stores.routes.setRoute('network-list')
-      stores.layout.toMain()
+      stores.layout.setMain()
       if (params[0]) {
         stores.networks.setTimelineFromUnique(params[0])
       } else {
@@ -204,7 +204,7 @@ export default {
   '/network/new': {
     async action ({params}, stores) {
       stores.routes.setRoute('network-new')
-      stores.layout.toMain()
+      stores.layout.setMain()
       document.title = '新しいリスト | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -233,7 +233,7 @@ export default {
           stores.posts.closeNetworkInfo()
         }
         stores.routes.setRoute('timeline')
-        stores.layout.toMain()
+        stores.layout.setMain()
         document.title = network.name + ' | ' + documentTitleShort
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
@@ -282,7 +282,7 @@ export default {
   '/admin': {
     async action (context, stores) {
       stores.routes.setRoute('admin')
-      stores.layout.toMain()
+      stores.layout.setMain()
       document.title = 'マイページ | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -295,7 +295,7 @@ export default {
   '/config': {
     async action (context, stores) {
       stores.routes.setRoute('config')
-      stores.layout.toMain()
+      stores.layout.setMain()
       document.title = '各種設定 | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -308,7 +308,7 @@ export default {
   '/release': {
     async action (context, stores) {
       stores.routes.setRoute('release')
-      stores.layout.toMain()
+      stores.layout.setMain()
       document.title = 'リリースノート | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -324,7 +324,7 @@ export default {
       .then(report => {
         stores.reports.setIndex(report)
         stores.routes.setRoute('report')
-        stores.layout.toMain()
+        stores.layout.setMain()
         document.title = 'レポート | ' + documentTitle
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
@@ -339,7 +339,7 @@ export default {
   '/twitter': {
     async action ({params}, stores) {
       stores.routes.setRoute('twitter')
-      stores.layout.toMain()
+      stores.layout.setMain()
       document.title = 'twitter' + ' | ' + documentTitleShort
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
