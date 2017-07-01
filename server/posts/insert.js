@@ -46,8 +46,6 @@ Meteor.methods({
       }
     }
 
-    console.log(url)
-
     let oEmbed = null
     let meta = null
     if (service) {

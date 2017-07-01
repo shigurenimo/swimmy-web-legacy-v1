@@ -1,1 +1,1 @@
-export UISheet from './ui-sheet'
+export UISheet from './UI-Sheet'
