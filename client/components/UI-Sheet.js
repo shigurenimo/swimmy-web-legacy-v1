@@ -17,7 +17,7 @@ const styleSheet = createStyleSheet('UISheet', theme => {
     padding: {
       padding: '10px 10px 20px 10px'
     },
-    paddingMinimal: {
+    paddingDense: {
       padding: '0px 10px 10px 10px'
     },
     hover: {
@@ -37,7 +37,7 @@ export default class UILayout extends Component {
     const {
       classes,
       hover,
-      minimal,
+      dense,
       background,
       href,
       ...more
@@ -47,8 +47,8 @@ export default class UILayout extends Component {
         <Typography
           {...more}
           className={classNames(classes.container, {
-            [classes.paddingMinimal]: minimal,
-            [classes.padding]: !minimal,
+            [classes.paddingDense]: dense,
+            [classes.padding]: !dense,
             [classes.hover]: hover,
             [classes.background]: background
           })}
@@ -62,8 +62,8 @@ export default class UILayout extends Component {
         <div
           {...more}
           className={classNames(classes.container, {
-            [classes.paddingMinimal]: minimal,
-            [classes.padding]: !minimal,
+            [classes.paddingDense]: dense,
+            [classes.padding]: !dense,
             [classes.hover]: hover,
             [classes.background]: background
           })}>

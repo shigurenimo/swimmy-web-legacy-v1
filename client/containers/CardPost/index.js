@@ -38,9 +38,6 @@ export default class Post extends Component {
               component='a'
               href={'/thread/' + (this.props.reply ? this.props.reply._id : this.props._id)} />
           </SheetContent>
-          <SheetContent>
-            <Typography type='caption'> - {utils.date.since(this.props.createdAt)}</Typography>
-          </SheetContent>
           {/* photo */}
           {this.props.images && this.props.images.slice()[0] &&
           <SheetContent>
@@ -53,49 +50,46 @@ export default class Post extends Component {
             </div>
           </SheetContent>}
           {/* oEmbed */}
-          {this.props.oEmbed &&
+          {this.props.extension.web &&
+          this.props.extension.web.oEmbed &&
           <SheetContent>
-            {this.props.oEmbed && this.embed(this.props.oEmbed)}
+            {this.embed(this.props.extension.web.oEmbed)}
           </SheetContent>}
           {/* web meta */}
-          {this.props.web && this.props.web.meta['og:image'] &&
+          {this.props.extension.web &&
+          this.props.extension.web.meta &&
+          this.props.extension.web.meta['og:image'] &&
           <SheetContent>
-            <a href={this.props.url} target='_blank'>
-              <Image src={this.props.web.meta['og:image']} />
+            <a href={this.props.extension.web.url} target='_blank'>
+              <Image src={this.props.extension.web.meta['og:image']} />
             </a>
           </SheetContent>}
           {/* web title */}
-          {this.props.web && this.props.web.title &&
+          {this.props.extension.web &&
+          this.props.extension.web.meta &&
+          this.props.extension.web.meta.title &&
           <SheetContent>
             <Typography
               type='subheading'
               component='a'
-              href={this.props.url}
+              href={this.props.extension.web.url}
               target='_blank'>
-              {this.props.web.title}
+              {this.props.extension.web.meta.title}
             </Typography>
           </SheetContent>}
+          {/* date */}
+          <SheetContent>
+            <Typography type='caption'> - {utils.date.since(this.props.createdAt)}</Typography>
+          </SheetContent>
           {/* reply */}
           {this.props.reply &&
           <SheetContent>
             <Sheet dense hover background>
-              {/* username */}
-              {this.props.reply.public &&
-              <SheetContent>
-                <Typography component='a' href={'/' + this.props.reply.public.username}>
-                  {this.props.reply.public.name}@{this.props.reply.public.username}
-                </Typography>
-              </SheetContent>}
-              {/* content */}
               <SheetContent href={'/thread/' + this.props.reply._id}>
                 <Typography
                   className={classes.content}
                   dangerouslySetInnerHTML={{__html: this.props.reply.content}} />
               </SheetContent>
-              {this.props.reply.createdAt &&
-              <SheetContent>
-                <Typography type='caption'> - {utils.date.since(this.props.reply.createdAt)}</Typography>
-              </SheetContent>}
             </Sheet>
           </SheetContent>}
           {/* reaction */}
@@ -164,7 +158,7 @@ export default class Post extends Component {
     const {classes} = this.props
     if (!this.state.iframe) {
       return (
-        <Sheet minimal hover>
+        <Sheet dense background>
           <SheetActions>
             <Typography type='subheading'>
               {data.title}

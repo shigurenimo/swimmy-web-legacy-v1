@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor'
 import { FlowRouter } from 'meteor/kadira:flow-router'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
@@ -27,8 +26,8 @@ export default class PostRes extends Component {
           {/* username */}
           {this.props.public &&
           <SheetContent>
-            <Typography component='a' href={'/' + this.props.public.username}>
-              {this.props.public.name}@{this.props.public.username}
+            <Typography className={classes.username} component='a' href={'/' + this.props.public.username}>
+              @{this.props.public.username}
             </Typography>
           </SheetContent>}
           {/* content */}
@@ -36,9 +35,6 @@ export default class PostRes extends Component {
             <Typography
               className={classes.content}
               dangerouslySetInnerHTML={{__html: this.props.content}} />
-          </SheetContent>
-          <SheetContent>
-            <Typography type='caption'> - {utils.date.since(this.props.createdAt)}</Typography>
           </SheetContent>
           {/* photo */}
           {this.props.images && this.props.images.slice()[0] &&
@@ -52,41 +48,53 @@ export default class PostRes extends Component {
             </div>
           </SheetContent>}
           {/* oEmbed */}
-          {this.props.oEmbed &&
+          {this.props.extension.web &&
+          this.props.extension.web.oEmbed &&
           <SheetContent>
-            {this.props.oEmbed && this.embed(this.props.oEmbed)}
+            {this.embed(this.props.extension.web.oEmbed)}
           </SheetContent>}
           {/* web meta */}
-          {this.props.web && this.props.web.meta['og:image'] &&
+          {this.props.extension.web &&
+          this.props.extension.web.meta &&
+          this.props.extension.web.meta['og:image'] &&
           <SheetContent>
-            <a href={this.props.url} target='_blank'>
-              <Image src={this.props.web.meta['og:image']} />
+            <a href={this.props.extension.web.url} target='_blank'>
+              <Image src={this.props.extension.web.meta['og:image']} />
             </a>
           </SheetContent>}
           {/* web title */}
-          {this.props.web && this.props.web.title &&
+          {this.props.extension.web &&
+          this.props.extension.web.meta &&
+          this.props.extension.web.meta.title &&
           <SheetContent>
             <Typography
               type='subheading'
               component='a'
-              href={this.props.url}
+              href={this.props.extension.web.url}
               target='_blank'>
-              {this.props.web.title}
+              {this.props.extension.web.meta.title}
             </Typography>
           </SheetContent>}
+          {/* date */}
+          <SheetContent>
+            <Typography type='caption'> - {utils.date.since(this.props.createdAt)}</Typography>
+          </SheetContent>
           {/* reaction */}
+          {this.props.reactions.slice()[0] &&
           <SheetActions>
-            {Object.keys(this.props.reactions).map(name =>
-              <Button dense background
-                key={name}
-                className={classes.reaction}
-                selected={!!this.props.accounts.isLogged &&
-                this.props.reactions[name].includes(this.props.accounts.one._id)}
-                onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
-                {name + (this.props.reactions[name].length > 0 ? ' ' + this.props.reactions[name].length : '')}
-              </Button>
-            )}
-          </SheetActions>
+            <div className={classes.reactionRoot}>
+              {this.props.reactions.map(({name, owners}) =>
+                <Button dense background
+                  key={name}
+                  className={classes.reaction}
+                  selected={!!this.props.accounts.isLogged &&
+                  owners.includes(this.props.accounts.one._id)}
+                  onClick={this.onUpdateReaction.bind(this, this.props._id, name)}>
+                  {name + (owners.length > 0 ? ' ' + owners.length : '')}
+                </Button>
+              )}
+            </div>
+          </SheetActions>}
           {/* more */}
           {this.props.accounts.isLogged &&
           <Button dense className={classes.more} onClick={this.onOpenReply}>
@@ -109,7 +117,7 @@ export default class PostRes extends Component {
           <SheetActions align='right'>
             {this.props.accounts.isLogged &&
             this.state.isReply &&
-            (this.props.owner === this.props.accounts.one._id) &&
+            (this.props.ownerId === this.props.accounts.one._id) &&
             <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete</Button>}
             <Button onClick={this.onSubmitNewReaction}>push</Button>
           </SheetActions>
@@ -136,7 +144,7 @@ export default class PostRes extends Component {
     const {classes} = this.props
     if (!this.state.iframe) {
       return (
-        <Sheet minimal hover>
+        <Sheet dense background>
           <SheetActions>
             <Typography type='subheading'>
               {data.title}

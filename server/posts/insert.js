@@ -91,8 +91,10 @@ Meteor.methods({
       data.network = req.network
     }
 
+    data.extension = {}
+
     if (url || meta || oEmbed) {
-      data.extension = {web: {}}
+      data.extension.web = {}
     }
     if (url) {
       data.extension.web.url = url

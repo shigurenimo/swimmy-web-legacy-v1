@@ -13,7 +13,8 @@ Meteor.methods({
 
     const post = collections.posts.findOne(req.postId)
 
-    const reaction = post.reactions.find(item => item.name === req.name)
+    const index = post.reactions.findIndex(item => item.name === req.name)
+    const reaction = index !== -1 ? post.reactions[index] : null
 
     if (!reaction) {
       collections.posts.update(req.postId, {
@@ -27,15 +28,15 @@ Meteor.methods({
     }
 
     if (reaction && reaction.owners.length <= 1) {
-      const index = reaction.owners.findIndex(item => item === this.userId)
-      if (index === -1) {
+      const hasOwner = reaction.owners.find(item => item === this.userId)
+      if (!hasOwner) {
         collections.posts.update(req.postId, {
           $push: {
             ['reactions.' + index + '.owners']: this.userId
           }
         })
       }
-      if (index !== -1) {
+      if (hasOwner) {
         collections.posts.update(req.postId, {
           $pull: {
             reactions: {name: req.name}
@@ -45,15 +46,15 @@ Meteor.methods({
     }
 
     if (reaction && reaction.owners.length > 1) {
-      const index = reaction.owners.findIndex(item => item === this.userId)
-      if (index === -1) {
+      const hasOwner = reaction.owners.find(item => item === this.userId)
+      if (!hasOwner) {
         collections.posts.update(req.postId, {
           $push: {
             ['reactions.' + index + '.owners']: this.userId
           }
         })
       }
-      if (index !== -1) {
+      if (hasOwner) {
         collections.posts.update(req.postId, {
           $pull: {
             ['reactions.' + index + '.owners']: this.userId
