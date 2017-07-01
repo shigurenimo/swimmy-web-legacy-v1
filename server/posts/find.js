@@ -15,7 +15,7 @@ Meteor.methods({
 
     return collections.posts.find(selector, options).fetch()
     .map(post => {
-      if (post.reply) {
+      if (post.replyId) {
         const reply = collections.posts.findOne(post.reply)
         if (reply) {
           post.reply = reply

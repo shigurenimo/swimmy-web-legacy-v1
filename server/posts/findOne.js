@@ -8,7 +8,7 @@ Meteor.methods({
 
     if (!post) return null
 
-    if (post.reply) {
+    if (post.replyId) {
       const reply = collections.posts.findOne(post.reply)
       if (reply) {
         post.reply = reply
@@ -24,19 +24,17 @@ Meteor.methods({
       post.replies = collections.posts.find({
         _id: {$in: post.replies}
       }, {
-        sort: {createdAt: 1}
+        sort: {createdAt: -1}
       }).fetch()
       .map(reply => {
-        if (reply.public) {
+        if (reply.ownerId) {
           if (!users[reply.ownerId]) {
             users[reply.ownerId] = Meteor.users.findOne(reply.ownerId)
           }
           const user = users[reply.ownerId]
           if (user) {
-            reply.public = {
-              username: user.username,
-              name: user.profile.name,
-              icon: user.icon
+            reply.owner = {
+              username: user.username
             }
           }
         }

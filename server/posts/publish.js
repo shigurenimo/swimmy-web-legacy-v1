@@ -10,8 +10,8 @@ Meteor.publish('posts', function (selector, options) {
 
   const cursor = collections.posts.find(selector, options).observe({
     addedAt (post) {
-      if (post.reply) {
-        const reply = collections.posts.findOne(post.reply)
+      if (post.replyId) {
+        const reply = collections.posts.findOne(post.replyId)
         if (reply) {
           post.reply = reply
         } else {
@@ -28,7 +28,7 @@ Meteor.publish('posts', function (selector, options) {
       self.added('posts', post._id, post)
     },
     changed (post) {
-      if (post.reply) {
+      if (post.replyId) {
         const reply = collections.posts.findOne(post.reply)
         if (reply) {
           post.reply = reply

@@ -21,14 +21,17 @@ import styleSheet from './index.style'
 @inject('router', 'accounts', 'posts', 'snackbar') @observer
 export default class Post extends Component {
   render () {
-    const {router, classes} = this.props
+    const {classes} = this.props
     return (
       <div>
         <Sheet hover onTouchTap={this.onOpenThread}>
           {/* username */}
           {this.props.owner && this.props.owner.username &&
           <SheetContent>
-            <Typography inline className={classes.username} component='a' href={'/' + this.props.owner.username}>
+            <Typography inline
+              className={classes.username}
+              component='a'
+              href={'/' + this.props.owner.username}>
               @{this.props.owner.username}
             </Typography>
           </SheetContent>}
@@ -79,7 +82,7 @@ export default class Post extends Component {
             </Typography>
           </SheetContent>}
           {/* reply */}
-          {this.props.reply &&
+          {this.props.replyId &&
           <SheetContent>
             <Sheet dense hover background>
               <SheetContent href={'/thread/' + this.props.reply._id}>
@@ -185,7 +188,11 @@ export default class Post extends Component {
     if (nodeName === 'INPUT' || nodeName === 'SPAN' || nodeName === 'BUTTON' || nodeName === 'IMG' ||
       nodeName === 'svg' ||
       nodeName === 'path' || nodeName === 'A') return
-    FlowRouter.go('/thread/' + this.props._id)
+    if (this.props.replyId) {
+      FlowRouter.go('/thread/' + this.props.replyId)
+    } else {
+      FlowRouter.go('/thread/' + this.props._id)
+    }
   }
 
   onOpenThread = ::this.onOpenThread

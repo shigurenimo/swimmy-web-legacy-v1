@@ -29,10 +29,10 @@ export default class Thread extends Component {
       <Layout>
         {this.props.posts.networkInfo &&
         <NetworkInfo />}
-        <Post isReply {...this.props.posts.one} />
         {this.props.posts.one.replies &&
         this.props.posts.one.replies.length > 0 &&
         this.props.posts.one.replies.map(item => <PostRes key={item._id} {...item} />)}
+        <Post isReply {...this.props.posts.one} />
       </Layout>
     )
   }

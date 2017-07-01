@@ -276,7 +276,7 @@ export default class InputPost extends Component {
       this.props.posts.insert({
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
-        reply: replyId
+        replyId
       })
       .then(posts => {
         this.props.posts.pushIndex(posts)

@@ -80,11 +80,6 @@ Meteor.methods({
       data.images = [image]
     }
 
-    if (req.reply) {
-      check(req.reply, String)
-      data.reply = req.reply
-    }
-
     if (req.network) {
       check(req.network, String)
       data.network = req.network
@@ -105,10 +100,21 @@ Meteor.methods({
       data.extension.web.oEmbed = oEmbed
     }
 
+    console.log(req.replyId)
+
+    if (req.replyId) {
+      check(req.replyId, String)
+      const reply = collections.posts.findOne(req.replyId)
+      if (reply) {
+        data.replyId = reply._id
+      } else {
+        data.replyId = req.replyId
+      }
+    }
     const postId = collections.posts.insert(data)
 
-    if (req.reply) {
-      collections.posts.update(req.reply, {
+    if (data.replyId) {
+      collections.posts.update(data.replyId, {
         $push: {replies: postId},
         $set: {updatedAt: date}
       })

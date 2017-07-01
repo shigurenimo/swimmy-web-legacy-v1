@@ -84,7 +84,7 @@ export default class {
       post.imagePath =
         Meteor.settings.public.storage.images +
         utils.createPathFromDate(post.createdAt)
-      post.reply = this.ids[postId].reply
+      post.replyId = this.ids[postId].replyId
       this.ids[postId] = post
       this.index[i] = post
       break
@@ -277,8 +277,8 @@ export default class {
         isPublic: next.isPublic,
         content: next.content
       }
-      if (next.reply) {
-        req.reply = next.reply
+      if (next.replyId) {
+        req.replyId = next.replyId
       }
       if (next.images) {
         req.images = next.images
