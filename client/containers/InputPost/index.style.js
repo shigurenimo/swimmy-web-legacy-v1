@@ -16,8 +16,9 @@ export default createStyleSheet('InputPost', theme => {
     oneColumn: {
       top: 0,
       right: 0,
-      padding: '10px 10px 10px 10px',
-      width: '50%'
+      padding: '10px 10px 0 10px',
+      width: '50%',
+      borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
     },
     twoColumn: {
       top: 0,
@@ -25,14 +26,14 @@ export default createStyleSheet('InputPost', theme => {
       width: 'calc(100% - 250px)',
       padding: '10px 10px 0 0'
     },
-    timelineName: {
-      height: '32px',
+    tools: {
       overflow: 'hidden',
-      textAlign: 'right'
+      textAlign: 'right',
+      paddingBottom: '5px'
     },
     message: {
       position: 'relative',
-      paddingTop: '5px'
+      paddingBottom: '5px'
     },
     postContent: {
       width: '100%',
@@ -61,14 +62,16 @@ export default createStyleSheet('InputPost', theme => {
     postPublic: {
       width: 'auto',
       display: 'block',
-      paddingTop: '10px',
       marginRight: '0',
+      paddingBottom: '10px',
       textAlign: 'right'
     },
     openImage: {
-      display: 'inline-block',
-      width: 'auto',
-      paddingTop: '3px'
+      display: 'inline-block'
+    },
+    spacing: {
+      marginTop: 0,
+      marginBottom: 0
     }
   }
 })

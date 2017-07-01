@@ -1,23 +1,30 @@
-import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 import classNames from 'classnames'
 import utils from '/lib/utils'
 import { withStyles } from 'material-ui/styles'
-import IconAdd from 'material-ui-icons/Add'
+import Divider from 'material-ui/Divider'
 import Button from '../../components/Button'
 import Image from '../../components/UI-Image'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('inputPost', 'layout', 'networks', 'posts', 'snackbar', 'router', 'accounts') @observer
+@inject(stores => {
+  return {
+    inputPost: stores.inputPost,
+    layout: stores.layout,
+    networks: stores.networks,
+    posts: stores.posts,
+    snackbar: stores.snackbar,
+    router: stores.router,
+    accounts: stores.accounts
+  }
+})
+@observer
 export default class InputPost extends Component {
   render () {
-    const {
-      classes,
-      layout
-    } = this.props
+    const {classes, layout} = this.props
     return (
       <div
         className={classNames(classes.container, {
@@ -25,8 +32,14 @@ export default class InputPost extends Component {
           [classes.twoColumn]: !layout.oneColumn
         })}>
         {/* 匿名 */}
-        <div className={classes.timelineName}>
-          <Button background dense
+        <div className={classes.tools}>
+          <Dropzone
+            className={classes.openImage}
+            onDrop={this.onDropImage.bind(this)}>
+            <Button dense className={classes.spacing}>image</Button>
+          </Dropzone>
+          <Button dense
+            className={classes.spacing}
             selected={this.props.posts.networkInfo}
             onClick={this.openNetworkInfo}>
             {this.timelineName}
@@ -48,30 +61,24 @@ export default class InputPost extends Component {
           </div>}
         </div>
         <div className={classes.postPublic}>
-          <Button dense>
-            <Dropzone
-              className={classes.openImage}
-              onDrop={this.onDropImage.bind(this)}>
-              <IconAdd style={{width: 25, height: 25}}
-                color={Meteor.settings.public.color.primary} />
-            </Dropzone>
-          </Button>
           {this.props.accounts.isLogged &&
           <Button dense
+            className={classes.spacing}
             selected={this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, true)}>
             {this.props.accounts.one.username}
           </Button>}
           {this.props.accounts.isLogged &&
           <Button dense
+            className={classes.spacing}
             selected={!this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, false)}>
             secret
           </Button>}
           {/* 送信ボタン */}
           {!this.state.errorImage &&
-          <Button dense onClick={this.onSubmit}>
-            push
+          <Button dense className={classes.spacing} onClick={this.onSubmit}>
+            send
           </Button>}
         </div>
       </div>

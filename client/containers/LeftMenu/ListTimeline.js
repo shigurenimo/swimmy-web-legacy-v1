@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import SubjectIcon from 'material-ui-icons/Subject'
 import Collapse from 'material-ui/transitions/Collapse'
 import { withStyles } from 'material-ui/styles'
-import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
+import List, { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
@@ -23,11 +23,6 @@ export default class LeftMenuTimeline extends Component {
           component='a'
           href='/thread'>
           <ListItemText primary='thread' />
-          <ListItemSecondaryAction>
-            <IconButton component='a' href='/thread'>
-              <SubjectIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
         </ListItem>
         <ListItem button dense
           className={classNames({

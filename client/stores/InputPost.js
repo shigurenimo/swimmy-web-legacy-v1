@@ -9,7 +9,7 @@ export default class {
 
   get paddingTop () {
     const image = this.postImage ? 200 : 0
-    return 90 + image + this.postContentHeight
+    return 101 + image + this.postContentHeight
   }
 
   setPostContent (value) {
