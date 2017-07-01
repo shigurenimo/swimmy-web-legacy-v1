@@ -33,11 +33,6 @@ export default class InputPost extends Component {
         })}>
         {/* 匿名 */}
         <div className={classes.tools}>
-          <Dropzone
-            className={classes.openImage}
-            onDrop={this.onDropImage.bind(this)}>
-            <Button dense className={classes.spacing}>image</Button>
-          </Dropzone>
           <Button dense
             className={classes.spacing}
             selected={this.props.posts.networkInfo}
@@ -75,7 +70,13 @@ export default class InputPost extends Component {
             onClick={this.onChangePublic.bind(this, false)}>
             secret
           </Button>}
-          {/* 送信ボタン */}
+          {/* image */}
+          <Dropzone
+            className={classes.openImage}
+            onDrop={this.onDropImage}>
+            <Button dense className={classes.spacing}>image</Button>
+          </Dropzone>
+          {/* send */}
           {!this.state.errorImage &&
           <Button dense className={classes.spacing} onClick={this.onSubmit}>
             send
@@ -171,6 +172,8 @@ export default class InputPost extends Component {
     this.props.inputPost.setPostImage(true)
     this.process = false
   }
+
+  onDropImage = ::this.onDropImage
 
   // 画像を削除する
   onCloseImage () {

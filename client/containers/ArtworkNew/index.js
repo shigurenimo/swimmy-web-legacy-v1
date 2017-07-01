@@ -3,21 +3,18 @@ import { HTTP } from 'meteor/http'
 import { Random } from 'meteor/random'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import IconAdd from 'material-ui-icons/Add'
-import IconClear from 'material-ui-icons/Clear'
-import CheckBox from 'material-ui/CheckBox'
 import Typography from 'material-ui/Typography'
-import Avatar from 'material-ui/Avatar'
-import TextField from 'material-ui/TextField'
-import UIDropzone from '../../components/UI-Dropzone'
 import Button from '../../components/Button'
+import TextField from '../../components/TextField'
+import UIDropzone from '../../components/UI-Dropzone'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
 import utils from '/lib/utils'
 
-@inject('artworks', 'snackbar', 'accounts') @observer
+@inject('artworks', 'snackbar', 'accounts')
+@observer
 export default class ArtworkNew extends Component {
   render () {
     return (
@@ -39,7 +36,7 @@ export default class ArtworkNew extends Component {
         <Sheet>
           {/* title */}
           <SheetActions>
-            <TextField
+            <TextField fullWidth
               label='title'
               value={this.state.inputTitle}
               maxLength='100'
@@ -49,33 +46,35 @@ export default class ArtworkNew extends Component {
         <Sheet>
           {/* ノート */}
           <SheetActions>
-            <TextField multiline
+            <TextField multiline fullWidth
               label='note'
               onChange={this.onInputNote}
               maxLength='1000'
               value={this.state.inputNote} />
           </SheetActions>
         </Sheet>
-        <Sheet>
-          {/* カラー */}
-          <SheetActions>
-            {utils.colors.cmyk.map(code =>
-              <CheckBox
-                key={code}
-                checked={this.state.inputColors.includes(code)}
-                onChange={this.onSelectColor.bind(this, code)}
-                icon={
-                  <Avatar style={{color: '#' + code, background: 'rgba(0, 0, 0, 0.05)'}}>
-                    <IconAdd />
-                  </Avatar>
-                }
-                checkedIcon={
-                  <Avatar style={{background: '#' + code}}>
-                    <IconClear />
-                  </Avatar>
-                } />)}
-          </SheetActions>
-        </Sheet>
+        {/* color */}
+        {/*
+         <Sheet>
+         <SheetActions>
+         {utils.colors.cmyk.map(code =>
+         <CheckBox
+         key={code}
+         checked={this.state.inputColors.includes(code)}
+         onChange={this.onSelectColor.bind(this, code)}
+         icon={
+         <Avatar style={{color: '#' + code, background: 'rgba(0, 0, 0, 0.05)'}}>
+         <IconAdd />
+         </Avatar>
+         }
+         checkedIcon={
+         <Avatar style={{background: '#' + code}}>
+         <IconClear />
+         </Avatar>
+         } />)}
+         </SheetActions>
+         </Sheet>
+         */}
         {/* レーティング */}
         {/*
          <div className='block:post-rate'>
@@ -100,29 +99,31 @@ export default class ArtworkNew extends Component {
         <Sheet>
           <SheetActions>
             <Button
-              selected={!this.state.isPublic}
-              onClick={this.onChangePublic.bind(this, false)}>anonymous</Button>
-            <Button
               selected={this.state.isPublic}
               onClick={this.onChangePublic.bind(this, true)}>{this.props.accounts.one.username}</Button>
+            <Button
+              selected={!this.state.isPublic}
+              onClick={this.onChangePublic.bind(this, false)}>secret</Button>
           </SheetActions>
         </Sheet>
         {/* タイムラインの表示 */}
-        <Sheet>
-          <SheetActions>
-            <Button
-              selected={this.state.isSecret}
-              onClick={this.onChangeSecret.bind(this, true)}>show timeline</Button>
-            <Button
-              selected={!this.state.isSecret}
-              onClick={this.onChangeSecret.bind(this, false)}>hide</Button>
-          </SheetActions>
-        </Sheet>
+        {/*
+         <Sheet>
+         <SheetActions>
+         <Button
+         selected={this.state.isSecret}
+         onClick={this.onChangeSecret.bind(this, true)}>show timeline</Button>
+         <Button
+         selected={!this.state.isSecret}
+         onClick={this.onChangeSecret.bind(this, false)}>hide</Button>
+         </SheetActions>
+         </Sheet>
+         */}
         <Sheet>
           {/* 送信ボタン */}
           {!this.state.errorImage &&
           <SheetActions align='right'>
-            <Button onClick={this.onSubmit}>push</Button>
+            <Button onClick={this.onSubmit}>send</Button>
           </SheetActions>}
         </Sheet>
       </Layout>

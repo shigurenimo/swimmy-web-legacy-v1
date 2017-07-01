@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { isNumeric } from 'validator'
 import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
+import TextField from '../../components/TextField'
 import Block from '../../components/UI-Block'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
@@ -21,7 +21,7 @@ export default class NetworkNew extends Component {
           {/* name */}
           <Sheet>
             <SheetContent>
-              <TextField required
+              <TextField required fullWidth
                 value={this.state.networkName}
                 label='リストの名前'
                 maxLength='100'
@@ -32,7 +32,7 @@ export default class NetworkNew extends Component {
           <Sheet>
             <SheetContent>
               <Block width={400}>
-                <TextField multiline
+                <TextField multiline fullWidth
                   value={this.state.networkDescription}
                   label='リストの説明'
                   maxLength={400}
@@ -45,29 +45,18 @@ export default class NetworkNew extends Component {
             <Sheet>
               {/* SNS:Webサイト */}
               <SheetContent>
-                <TextField
+                <TextField fullWidth
                   value={this.state.networkSite}
-                  label='web site url'
+                  label='サイトのURL'
                   InputProps={{placeholder: 'https://swimmy.io'}}
                   maxLength='20'
                   onChange={this.onInputNetworkSite} />
               </SheetContent>
             </Sheet>
-            {/* SNS:Twitter */}
-            <Sheet>
-              <SheetContent>
-                <TextField
-                  value={this.state.networkTwitter}
-                  label='twitter'
-                  InputProps={{placeholder: 'username'}}
-                  maxLength='20'
-                  onChange={this.onInputNetworkTwitter} />
-              </SheetContent>
-            </Sheet>
             <Sheet>
               {/* 大学 */}
               <SheetContent>
-                <TextField
+                <TextField fullWidth
                   value={this.state.networkUniversity}
                   label='関係する学校'
                   helperText='サークルなどの場合'

@@ -3,13 +3,13 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import Typography from 'material-ui/Typography'
-import TextField from 'material-ui/TextField'
+import Button from '../../components/Button'
+import TextField from '../../components/TextField'
 import Block from '../../components/UI-Block'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
-import Button from '../../components/Button'
 
 @inject('snackbar', 'accounts') @observer
 export default class ConfigAccount extends Component {
@@ -17,35 +17,12 @@ export default class ConfigAccount extends Component {
     return (
       <Layout>
         <Block width={400}>
-          {/* ディスプレイネーム */}
-          <Sheet>
-            <SheetActions align='right'>
-              <TextField
-                value={this.state.name}
-                label='ユーザの表示名'
-                maxLength={20}
-                onChange={this.onInputName}
-                onBlur={this.onCheckName} />
-            </SheetActions>
-            {this.state.nameError &&
-            <SheetActions>
-              <Typography>
-                {this.state.nameError}
-              </Typography>
-            </SheetActions>}
-            <SheetActions align='right'>
-              <Button onClick={this.onSubmitName}>
-                update
-              </Button>
-            </SheetActions>
-          </Sheet>
-          {/* ユーザネーム */}
+          {/* username */}
           <Sheet>
             <SheetActions>
-              <TextField
+              <TextField fullWidth
                 value={this.state.username}
                 label='ユーザネーム'
-                helperText='ログイン時に使用します'
                 maxLength={10}
                 onChange={this.onInputUsername}
                 onBlur={this.onCheckUsername} />
@@ -62,16 +39,39 @@ export default class ConfigAccount extends Component {
               </Button>
             </SheetActions>
           </Sheet>
-          {/* パスワード */}
+          {/* display name */}
           <Sheet>
             <SheetActions>
-              <TextField
+              <TextField fullWidth
+                value={this.state.name}
+                label='ユーザの表示名'
+                helperText='プロフィールに表示されます'
+                maxLength={20}
+                onChange={this.onInputName}
+                onBlur={this.onCheckName} />
+            </SheetActions>
+            {this.state.nameError &&
+            <SheetActions>
+              <Typography>
+                {this.state.nameError}
+              </Typography>
+            </SheetActions>}
+            <SheetActions align='right'>
+              <Button onClick={this.onSubmitName}>
+                update
+              </Button>
+            </SheetActions>
+          </Sheet>
+          {/* password */}
+          <Sheet>
+            <SheetActions>
+              <TextField fullWidth
                 value={this.state.oldPassword}
                 label='現在のパスワード'
                 onChange={this.onInputOldPassword} />
             </SheetActions>
             <SheetActions>
-              <TextField
+              <TextField fullWidth
                 value={this.state.newPassword}
                 label='新しいパスワード'
                 onChange={this.onInputNewPassword} />
