@@ -3,12 +3,14 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
-import IconKeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
-import IconKeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
+import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
+import KeyboardArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
 import Typography from 'material-ui/Typography'
-import TextField from 'material-ui/TextField'
+import Chip from 'material-ui/Chip'
+import IconButton from 'material-ui/IconButton'
 import Button from '../../components/Button'
 import Image from '../../components/UI-Image'
+import TextField from '../../components/TextField'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
@@ -26,7 +28,7 @@ export default class PostRes extends Component {
           {/* username */}
           {this.props.public &&
           <SheetContent>
-            <Typography className={classes.username} component='a' href={'/' + this.props.public.username}>
+            <Typography inline className={classes.username} component='a' href={'/' + this.props.public.username}>
               @{this.props.public.username}
             </Typography>
           </SheetContent>}
@@ -88,41 +90,44 @@ export default class PostRes extends Component {
                   key={name}
                   label={name + ' ' + (owners.length > 0 ? owners.length : '')}
                   onRequestDelete={
-                    !!this.props.accounts.isLogged &&
-                    owners.includes(this.props.accounts.one._id) ?
-                    this.onUpdateReaction.bind(this, this.props._id, name) : null
+                    (!!this.props.accounts.isLogged && owners.includes(this.props.accounts.one._id))
+                      ? this.onUpdateReaction.bind(this, this.props._id, name)
+                      : null
                   }
                   onClick={this.onUpdateReaction.bind(this, this.props._id, name)} />
               )}
             </div>
           </SheetActions>}
           {/* more */}
-          {this.props.accounts.isLogged &&
-          <Button dense className={classes.more} onClick={this.onOpenReply}>
-            {this.state.isReply
-              ? <IconKeyboardArrowUp className={classes.icon} />
-              : <IconKeyboardArrowDown className={classes.icon} />}
-          </Button>}
+          {this.props.accounts.isLogged && (
+            <IconButton className={classes.more} onClick={this.onOpenReply}>
+              {this.state.isReply
+                ? <KeyboardArrowUpIcon className={classes.icon} />
+                : <KeyboardArrowDownIcon className={classes.icon} />}
+            </IconButton>
+          )}
         </Sheet>
         {/* reaction */}
-        {this.state.isReply &&
-        <Sheet>
-          <SheetActions>
-            <TextField
-              value={this.state.inputNewReaction}
-              label='new reaction'
-              InputProps={{placeholder: this.reactionPlaceholder}}
-              maxLength='10'
-              onChange={this.onInputNewReaction} />
-          </SheetActions>
-          <SheetActions align='right'>
-            {this.props.accounts.isLogged &&
-            this.state.isReply &&
-            (this.props.ownerId === this.props.accounts.one._id) &&
-            <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete</Button>}
-            <Button onClick={this.onSubmitNewReaction}>push</Button>
-          </SheetActions>
-        </Sheet>}
+        {this.state.isReply && (
+          <Sheet>
+            <SheetActions>
+              <TextField fullWidth
+                value={this.state.inputNewReaction}
+                label='new reaction'
+                InputProps={{placeholder: this.reactionPlaceholder}}
+                maxLength='10'
+                onChange={this.onInputNewReaction} />
+            </SheetActions>
+            {this.props.accounts.isLogged && (
+              <SheetActions dense align='right'>
+                {this.props.ownerId === this.props.accounts.one._id && (
+                  <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete post</Button>
+                )}
+                <Button onClick={this.onSubmitNewReaction}>add reaction</Button>
+              </SheetActions>
+            )}
+          </Sheet>
+        )}
       </div>
     )
   }

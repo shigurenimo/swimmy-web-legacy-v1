@@ -56,7 +56,7 @@ Meteor.methods({
     post.content = utils.replace.link(post.content)
     // post.content = utils.replace.tags(post.content)
 
-    if (this.userId !== post.owner) {
+    if (this.userId !== post.ownerId) {
       delete post.ownerId
     }
 

@@ -6,6 +6,7 @@ const styleSheet = createStyleSheet('UISheetActions', theme => {
   return {
     container: {
       display: 'block',
+      marginBottom: '5px',
       width: '100%'
     },
     alignRight: {
@@ -13,6 +14,9 @@ const styleSheet = createStyleSheet('UISheetActions', theme => {
     },
     flexDisplay: {
       display: 'flex'
+    },
+    dense: {
+      marginBottom: 0
     }
   }
 })
@@ -24,11 +28,16 @@ export default class UILayout extends Component {
       classes,
       className,
       align,
-      flex
+      flex,
+      dense
     } = this.props
     return (
       <div
-        className={classNames(className, classes.container)}
+        className={classNames(
+          className,
+          classes.container, {
+            [classes.dense]: dense
+          })}
         style={{
           display: flex ? 'flex' : 'inline-block',
           textAlign: align || 'left'

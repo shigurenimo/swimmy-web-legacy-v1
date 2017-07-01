@@ -11,8 +11,11 @@ export default createStyleSheet('Post', theme => {
     },
     more: {
       position: 'absolute',
-      bottom: '10px',
-      right: '10px'
+      bottom: '4px',
+      right: '4px',
+      width: '30px',
+      height: '30px',
+      zIndex: 10
     },
     username: {
       color: Meteor.settings.public.color.primary

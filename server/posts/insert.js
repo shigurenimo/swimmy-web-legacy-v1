@@ -67,13 +67,12 @@ Meteor.methods({
     if (tags) data.tags = tags
 
     data.ownerId = this.userId
+    data.owner = {}
 
     if (req.isPublic) {
       if (!this.userId) throw new Meteor.Error('not-authorized')
       const user = Meteor.users.findOne(this.userId)
-      data.owner = {
-        username: user.username
-      }
+      data.owner.username = user.username
     }
 
     if (req.images) {
