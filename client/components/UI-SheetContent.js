@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 const styleSheet = createStyleSheet('UISheetContent', theme => {
   return {
     container: {
-      paddingBottom: '5px',
+      paddingBottom: '10px',
       position: 'relative',
       display: 'block',
       width: '100%',
@@ -18,6 +19,7 @@ export default class UILayout extends Component {
   render () {
     const {
       classes,
+      className,
       align,
       href,
       ...more
@@ -26,7 +28,7 @@ export default class UILayout extends Component {
     return (
       <Component
         {...more}
-        className={classes.container}
+        className={classNames(className, classes.container)}
         style={{
           textAlign: align || 'left'
         }}

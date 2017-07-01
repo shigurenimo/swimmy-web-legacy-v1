@@ -66,6 +66,9 @@ export default createStyleSheet('Post', theme => {
       width: '30px',
       height: '30px',
       color: Meteor.settings.public.color.primary
+    },
+    reply: {
+      width: 'calc(100% - 30px)'
     }
   }
 })
