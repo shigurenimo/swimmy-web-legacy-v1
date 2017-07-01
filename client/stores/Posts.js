@@ -49,16 +49,10 @@ export default class {
     if (!posts) return
     if (Array.isArray(posts)) {
       posts.forEach(post => {
-        post.imagePath =
-          Meteor.settings.public.storage.images +
-          utils.createPathFromDate(post.createdAt)
         this.ids[post._id] = post
         this.index.push(post)
       })
     } else {
-      posts.imagePath =
-        Meteor.settings.public.storage.images +
-        utils.createPathFromDate(posts.createdAt)
       this.ids[posts._id] = posts
       this.index.push(posts)
     }

@@ -3,7 +3,7 @@ import InputPost from './InputPost'
 import Layout from './Layout'
 import Networks from './Networks'
 import Posts from './Posts'
-import PostsSocket from './PostsSocket'
+import SocketPosts from './PostsSocket'
 import Process from './Process'
 import Reports from './Reports'
 import Snackbar from './Snackbar'
@@ -15,6 +15,7 @@ import UsersProfile from './UsersProfile'
 const accounts = Accounts.create({})
 const inputPost = InputPost.create({})
 const layout = Layout.create({})
+const postsSocket = SocketPosts.create({})
 
 export default {
   accounts,
@@ -23,7 +24,7 @@ export default {
   layout,
   networks: new Networks(),
   posts: new Posts(),
-  postsSocket: new PostsSocket(),
+  postsSocket,
   process: new Process(),
   reports: new Reports(),
   snackbar: new Snackbar(),

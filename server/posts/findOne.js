@@ -23,9 +23,23 @@ Meteor.methods({
       post.replies = collections.posts.find({
         _id: {$in: post.replies}
       }, {
+        fields: {
+          _id: 1,
+          content: 1,
+          owner: 1,
+          reactions: 1,
+          extension: 1,
+          createdAt: 1,
+          updatedAt: 1
+        },
         sort: {createdAt: -1}
       }).fetch()
       .map(reply => {
+        if (reply.images) {
+          reply.imagePath =
+            Meteor.settings.public.storage.images +
+            utils.createPathFromDate(reply.createdAt)
+        }
         reply.content = utils.replace.link(reply.content)
         reply.content = utils.replace.tags(reply.content)
         if (this.userId !== reply.ownerId) {
@@ -33,6 +47,12 @@ Meteor.methods({
         }
         return reply
       })
+    }
+
+    if (post.images) {
+      post.imagePath =
+        Meteor.settings.public.storage.images +
+        utils.createPathFromDate(post.createdAt)
     }
 
     if (post.networkId) {

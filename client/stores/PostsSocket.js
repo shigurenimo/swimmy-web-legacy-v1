@@ -1,48 +1,90 @@
 import { Meteor } from 'meteor/meteor'
-import { action, observable, toJS } from 'mobx'
+import { toJS } from 'mobx'
+import { destroy, types } from 'mobx-state-tree'
 import collections from '/collections'
-import utils from '/lib/utils'
+import Post from './Post'
 
-export default class {
-  @observable index = []
-
-  @observable isFetching = false
-
-  ids = {}
-
-  subscription = null
-
-  cursor = null
-
-  uniqueCache = '' // 前回のタイムライン
-
-  isModified (timeline) {
-    if (this.uniqueCache && this.uniqueCache === timeline.unique) {
-      return false
+export default types.model('SocketPosts', {
+  one: types.maybe(Post),
+  index: types.optional(types.array(Post), []),
+  ref: types.maybe(types.reference(Post)),
+  isFetching: false
+}, {
+  afterCreate () {
+    this.ids = {}
+    this.cursor = null
+    this.selector = null
+    this.options = null
+    this.uniqueCache = null
+    this.subscription = null
+  },
+  pushIndex (models) {
+    if (Array.isArray(models)) {
+      models.forEach(model => {
+        this.ids[model._id] = model
+        this.index.push(model)
+      })
+    } else {
+      const model = models
+      this.ids[model._id] = model
+      this.index.push(model)
     }
-    this.uniqueCache = timeline.unique
-    return true
-  }
-
-  @action
-  setIndex (stocks) {
-    stocks.forEach(stock => {
-      const id = stock._id
-      if (this.ids[id]) return
-      stock.imagePath =
-        Meteor.settings.public.storage.images +
-        utils.createPathFromDate(stock.createdAt)
-      this.ids[stock._id] = stock
-      this.index.push(stock)
-    })
-    this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  }
-
-  @action
+    this.index = this.index.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+  },
+  replaceIndex (model) {
+    this.ids[model._id] = model
+    this.ref = model._id
+    this.ref = model
+  },
+  spliceIndex (model) {
+    this.ids[model._id] = null
+    this.ref = model._id
+    destroy(this.ref)
+  },
+  setFetchState (state) {
+    this.isFetching = state
+  },
   subscribe (timeline) {
-    const self = this
-    if (!this.isModified(timeline)) return
-    this.isFetching = true
+    const {selector, options} = toJS(timeline)
+    if (this.cursor) {
+      const equal = {
+        selector: JSON.stringify(this.selector) === JSON.stringify(selector),
+        options: JSON.stringify(this.options) === JSON.stringify(options)
+      }
+      if (equal.selector && equal.options) return
+    }
+    this.selector = selector
+    this.options = options
+    this.unsubscribe()
+    setTimeout(() => {
+      this.setFetchState(false)
+    }, 5000)
+    this.subscription = Meteor.subscribe('posts', selector, options, {
+      onReady: () => {
+        let task = false
+        let stocks = []
+        this.cursor = collections.posts.find().observe({
+          addedAt: (res) => {
+            stocks.push(res)
+            if (task !== false) clearTimeout(task)
+            task = setTimeout(() => {
+              this.pushIndex(stocks)
+              this.setFetchState(false)
+              task = null
+              stocks = []
+            }, 10)
+          },
+          changed (model) {
+            this.replaceIndex(model)
+          },
+          removed (model) {
+            this.spliceIndex(model)
+          }
+        })
+      }
+    })
+  },
+  unsubscribe () {
     if (this.cursor) {
       this.cursor.stop()
       this.cursor = null
@@ -52,47 +94,5 @@ export default class {
     if (this.subscription) {
       this.subscription.stop()
     }
-    const {selector, options} = toJS(timeline)
-    setTimeout(() => {
-      this.isFetching = false
-    }, 5000)
-    this.subscription = Meteor.subscribe('posts', selector, options, {
-      onReady () {
-        let time = false
-        let stocks = []
-        self.cursor = collections.posts.find().observe({
-          addedAt (res) {
-            stocks.push(res)
-            if (time !== false) clearTimeout(time)
-            time = setTimeout(() => {
-              self.setIndex(stocks)
-              self.isFetching = false
-              stocks = []
-            }, 10)
-          },
-          changed (res) {
-            const id = res._id
-            self.ids[id] = res
-            for (let i = 0, len = self.index.length; i < len; ++i) {
-              if (self.index[i]._id !== id) continue
-              res.imagePath =
-                Meteor.settings.public.storage.images +
-                utils.createPathFromDate(res.createdAt)
-              self.index[i] = res
-              break
-            }
-          },
-          removed (res) {
-            const id = res._id
-            self.ids[id] = null
-            for (let i = 0, len = self.index.length; i < len; ++i) {
-              if (self.index[i]._id !== id) continue
-              self.index.splice(i, 1)
-              break
-            }
-          }
-        })
-      }
-    })
   }
-}
+})

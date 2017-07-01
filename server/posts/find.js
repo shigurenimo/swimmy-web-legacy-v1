@@ -16,7 +16,18 @@ Meteor.methods({
     return collections.posts.find(selector, options).fetch()
     .map(post => {
       if (post.replyId) {
-        const reply = collections.posts.findOne(post.replyId)
+        const options = {
+          fields: {
+            _id: 1,
+            content: 1,
+            owner: 1,
+            reactions: 1,
+            extension: 1,
+            createdAt: 1,
+            updatedAt: 1
+          }
+        }
+        const reply = collections.posts.findOne(post.replyId, options)
         if (reply) {
           post.reply = reply
         } else {
@@ -24,6 +35,11 @@ Meteor.methods({
             content: 'この投稿は既に削除されています'
           }
         }
+      }
+      if (post.images) {
+        post.imagePath =
+          Meteor.settings.public.storage.images +
+          utils.createPathFromDate(post.createdAt)
       }
 
       if (post.link) post.content = utils.replace.link(post.content)

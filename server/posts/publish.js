@@ -7,11 +7,25 @@ Meteor.publish('posts', function (selector, options) {
   const userId = this.userId
 
   options.sort = {createdAt: -1}
+  options.fields = {
+    replies: 0
+  }
 
   const cursor = collections.posts.find(selector, options).observe({
     addedAt (post) {
       if (post.replyId) {
-        const reply = collections.posts.findOne(post.replyId)
+        const options = {
+          fields: {
+            _id: 1,
+            content: 1,
+            owner: 1,
+            reactions: 1,
+            extension: 1,
+            createdAt: 1,
+            updatedAt: 1
+          }
+        }
+        const reply = collections.posts.findOne(post.replyId, options)
         if (reply) {
           post.reply = reply
         } else {
@@ -19,6 +33,11 @@ Meteor.publish('posts', function (selector, options) {
             content: 'この投稿は既に削除されています'
           }
         }
+      }
+      if (post.images) {
+        post.imagePath =
+          Meteor.settings.public.storage.images +
+          utils.createPathFromDate(post.createdAt)
       }
       if (post.link) { post.content = utils.replace.link(post.content) }
       // if (post.tags) { post.content = utils.replace.tags(post.content) }
