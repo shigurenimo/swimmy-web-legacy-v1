@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
-import Typography from 'material-ui/Typography'
 import Chip from 'material-ui/Chip'
 import IconButton from 'material-ui/IconButton'
 import Button from '../../components/Button'
@@ -14,6 +13,7 @@ import TextField from '../../components/TextField'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
+import Typography from '../../components/Typography'
 import utils from '/lib/utils'
 import styleSheet from './index.style'
 
@@ -34,9 +34,10 @@ export default class PostRes extends Component {
           </SheetContent>}
           {/* content */}
           <SheetContent>
-            <Typography
+            <Typography inline
               className={classes.content}
               dangerouslySetInnerHTML={{__html: this.props.content}} />
+            <Typography inline type='caption' component='span'> - {utils.date.since(this.props.createdAt)}</Typography>
           </SheetContent>
           {/* photo */}
           {this.props.images && this.props.images.slice()[0] &&
@@ -77,10 +78,6 @@ export default class PostRes extends Component {
               {this.props.extension.web.meta.title}
             </Typography>
           </SheetContent>}
-          {/* date */}
-          <SheetContent>
-            <Typography type='caption'> - {utils.date.since(this.props.createdAt)}</Typography>
-          </SheetContent>
           {/* reaction */}
           {this.props.reactions.slice()[0] &&
           <SheetActions>
@@ -172,6 +169,7 @@ export default class PostRes extends Component {
   }
 
   onOpenThread (event) {
+    if (this.props.router.page === 'thread') return
     event.persist()
     const nodeName = event.target.nodeName
     if (nodeName === 'INPUT' || nodeName === 'BUTTON' || nodeName === 'IMG' || nodeName === 'svg' ||

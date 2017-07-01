@@ -21,7 +21,7 @@ import styleSheet from './index.style'
 @inject('router', 'accounts', 'posts', 'snackbar') @observer
 export default class Post extends Component {
   render () {
-    const {classes} = this.props
+    const {router, classes} = this.props
     return (
       <div>
         <Sheet hover onTouchTap={this.onOpenThread}>
@@ -36,9 +36,7 @@ export default class Post extends Component {
           <SheetContent>
             <Typography inline
               className={classes.content}
-              component='a'
-              dangerouslySetInnerHTML={{__html: this.props.content}}
-              href={'/thread/' + (this.props.reply ? this.props.reply._id : this.props._id)} />
+              dangerouslySetInnerHTML={{__html: this.props.content}} />
             <Typography inline type='caption' component='span'> - {utils.date.since(this.props.createdAt)}</Typography>
           </SheetContent>
           {/* photo */}
@@ -130,8 +128,7 @@ export default class Post extends Component {
             </SheetActions>
             {this.props.accounts.isLogged && (
               <SheetActions dense align='right'>
-                {this.props.router.page === 'thread' &&
-                this.props.ownerId === this.props.accounts.one._id && (
+                {this.props.ownerId === this.props.accounts.one._id && (
                   <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete post</Button>
                 )}
                 <Button onClick={this.onSubmitNewReaction}>add reaction</Button>
@@ -149,7 +146,7 @@ export default class Post extends Component {
   ][Math.floor(Math.random() * 9)]
 
   state = {
-    isReply: this.props.isReply || false,
+    isReply: false,
     selectImage: false,
     isInputReaction: null,
     inputNewReaction: '',
