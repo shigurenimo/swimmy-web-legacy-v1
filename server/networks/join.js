@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import collections from '/collections'
+import collections from '/lib/collections'
 
 Meteor.methods({
   'networks.updateMember' (req) {

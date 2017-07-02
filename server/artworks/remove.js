@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { HTTP } from 'meteor/http'
-import collections from '/collections'
+import collections from '/lib/collections'
 
 // 削除する
 Meteor.methods({

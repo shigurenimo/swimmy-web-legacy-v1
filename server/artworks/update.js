@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import collections from '/collections'
+import collections from '/lib/collections'
 
 // 更新する
 Meteor.methods({

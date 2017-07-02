@@ -7,7 +7,7 @@ import { join } from 'path'
 import Jimp from 'jimp'
 import cheerio from 'cheerio'
 import upload from '/lib/utils/server/google/upload'
-import collections from '/collections'
+import collections from '/lib/collections'
 import utils from '/lib/utils'
 
 Meteor.methods({

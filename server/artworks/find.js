@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Random } from 'meteor/random'
-import collections from '/collections'
+import collections from '/lib/collections'
 import utils from '/lib/utils'
 
 Meteor.methods({

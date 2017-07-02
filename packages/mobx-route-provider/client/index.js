@@ -1,6 +1,7 @@
 import { PropTypes, Provider } from 'mobx-react'
 import React, { Component } from 'react'
 import page from 'page'
+import qs from 'qs'
 import Model from './model'
 
 let model = null
@@ -39,6 +40,7 @@ export function createRouter (routes) {
       page(path, (context, next) => {
         const route = routes[path]
         mobxStores.routes = model
+        context.query = qs.parse(context.querystring)
         const asyncFuntion = route.action(context, mobxStores, next)
         if (asyncFuntion.then) {
           asyncFuntion

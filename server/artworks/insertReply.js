@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { Random } from 'meteor/random'
-import collections from '/collections'
+import collections from '/lib/collections'
 
 // リプライを挿入する
 Meteor.methods({

@@ -1,5 +1,5 @@
 import { Restivus } from 'meteor/nimble:restivus'
-import collections from '/collections'
+import collections from '/lib/collections'
 import utils from '/lib/utils'
 
 const api = new Restivus({

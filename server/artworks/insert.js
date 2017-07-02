@@ -4,7 +4,7 @@ import { Random } from 'meteor/random'
 import { unlink, writeFileSync } from 'fs'
 import Jimp from 'jimp'
 import upload from '/lib/utils/server/google/upload'
-import collections from '/collections'
+import collections from '/lib/collections'
 
 // 挿入する
 Meteor.methods({
