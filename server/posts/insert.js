@@ -58,7 +58,7 @@ Meteor.methods({
       content: req.content,
       reactions: [],
       replies: [],
-      networkId: req.networkId,
+      networkId: req.networkId || '',
       artwork: null,
       createdAt: date,
       updatedAt: date,
@@ -82,11 +82,6 @@ Meteor.methods({
     if (req.images) {
       const image = await uploadImage(date, req.images[0])
       data.images = [image]
-    }
-
-    if (req.networkId) {
-      check(req.networkId, String)
-      data.networkId = req.networkId
     }
 
     data.extension = {}

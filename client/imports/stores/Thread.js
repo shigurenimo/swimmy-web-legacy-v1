@@ -3,9 +3,11 @@ import { types } from 'mobx-state-tree'
 export default types.model('Post', {
   _id: types.identifier(types.string),
   content: types.string,
-  owner: types.model({
-    username: types.maybe(types.string)
-  }),
+  owner: types.maybe(
+    types.model({
+      username: types.maybe(types.string)
+    })
+  ),
   reactions: types.array(
     types.model({
       name: types.string,

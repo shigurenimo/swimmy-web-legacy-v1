@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import { destroy, getSnapshot, types } from 'mobx-state-tree'
+import { destroy, types } from 'mobx-state-tree'
 import Post from './Post'
 
 export default types.model('Posts', {
@@ -60,7 +60,13 @@ export default types.model('Posts', {
     if (!post) {
       this.one = null
     }
-    this.one = post
+    console.log(post)
+    try {
+      this.one = post
+    } catch (err) {
+      console.info(err)
+    }
+    console.log(this.one.toJSON())
   },
   find (selector, options) {
     return new Promise((resolve, reject) => {

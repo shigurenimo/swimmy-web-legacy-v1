@@ -18,12 +18,18 @@ export default types.model('Threads', {
     this.ids = {}
   },
   setIndex (models = []) {
+    console.log(models)
     this.index = []
     models.forEach(model => {
       this.ids[model._id] = model
       // this.index.push(model)
     })
-    this.index = models
+    try {
+      this.index = models
+    } catch (err) {
+      console.info(err)
+    }
+    console.log(this.index)
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   },
   setFetchState (state) {

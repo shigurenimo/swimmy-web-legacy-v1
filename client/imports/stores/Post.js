@@ -22,6 +22,7 @@ export default types.model('Post', {
   tags: types.array(types.string),
   replyId: types.maybe(types.string),
   reply: types.maybe(Reply),
+  replies: types.maybe(types.array(Reply)),
   createdAt: types.maybe(types.Date),
   updatedAt: types.maybe(types.Date)
 })

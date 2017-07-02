@@ -84,7 +84,7 @@ export default class Post extends Component {
           {this.props.replyId &&
           <SheetContent className={classes.reply}>
             <Sheet dense hover background>
-              <SheetContent href={'/thread/' + this.props.reply._id}>
+              <SheetContent href={'/thread/' + this.props.replyId}>
                 <Typography
                   className={classes.content}
                   dangerouslySetInnerHTML={{__html: this.props.reply.content}} />

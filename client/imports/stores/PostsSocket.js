@@ -4,7 +4,6 @@ import collections from '/lib/collections'
 import Post from './Post'
 
 export default types.model('SocketPosts', {
-  one: types.maybe(Post),
   index: types.optional(types.array(Post), []),
   ref: types.maybe(types.reference(Post)),
   fetchState: false
