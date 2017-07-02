@@ -44,8 +44,7 @@ export default types.model('SocketPosts', {
   setFetchState (state) {
     this.isFetching = state
   },
-  subscribe (timeline) {
-    const {selector, options} = toJS(timeline)
+  subscribe (selector, options) {
     if (this.cursor) {
       const equal = {
         selector: JSON.stringify(this.selector) === JSON.stringify(selector),

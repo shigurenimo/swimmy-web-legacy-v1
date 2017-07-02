@@ -4,12 +4,15 @@ import utils from '/lib/utils'
 
 Meteor.methods({
   'posts.find' (selector, options) {
-    selector.thread = {$exists: false}
+    /*
     if (selector.ownerId) {
       if (selector.ownerId !== this.userId) {
         selector.public = {$exists: true}
       }
     }
+    */
+    console.log(selector)
+    console.log(options)
 
     options.sort = {createdAt: -1}
 

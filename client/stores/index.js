@@ -15,6 +15,7 @@ import UsersProfile from './UsersProfile'
 const accounts = Accounts.create({})
 const inputPost = InputPost.create({})
 const layout = Layout.create({})
+const posts = Posts.create({})
 const postsSocket = SocketPosts.create({})
 
 export default {
@@ -23,7 +24,7 @@ export default {
   inputPost,
   layout,
   networks: new Networks(),
-  posts: new Posts(),
+  posts,
   postsSocket,
   process: new Process(),
   reports: new Reports(),

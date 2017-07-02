@@ -27,7 +27,7 @@ export default class Timeline extends Component {
       ? this.props.posts.index.slice()
       : this.props.postsSocket.index.slice()
     const isFetching = timeline.isStatic
-      ? this.props.posts.isFetching
+      ? this.props.posts.fetchState
       : this.props.postsSocket.isFetching
     if (index.length < 1) {
       return (

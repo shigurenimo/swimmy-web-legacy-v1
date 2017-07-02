@@ -1,50 +1,41 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
-import { action, observable, toJS } from 'mobx'
-import utils from '/lib/utils'
+import { destroy, getSnapshot, types } from 'mobx-state-tree'
+import Post from './Post'
+import Timeline from './Timeline'
 
-export default class {
-  @observable index = []
-
-  @observable one = null
-
-  @observable isFetching = false
-
-  @observable timelines = []
-
-  @observable networkTimelines = []
-
-  @observable timeline = null
-
-  @observable networkInfo = false
-
-  ids = {}
-
-  tempTimeline = null
-
-  constructor () {
+export default types.model('Posts', {
+  one: types.maybe(Post),
+  index: types.optional(types.array(Post), []),
+  ref: types.maybe(types.reference(Post)),
+  fetchState: types.optional(types.boolean, false),
+  timeline: types.maybe(types.reference(Timeline)),
+  tempTimeline: types.maybe(Timeline),
+  timelines: types.optional(types.array(Timeline), []),
+  networkTimelines: types.optional(types.array(Timeline), []),
+  networkInfo: types.optional(types.boolean, false)
+}, {
+  afterCreate () {
+    this.ids = {}
+    this.cursor = null
+    this.selector = null
+    this.options = null
     this.resetTimelines()
     Accounts.onLogin(this.onLogin.bind(this))
     Accounts.onLogout(this.onLogout.bind(this))
-  }
-
+  },
   onLogin () {
     this.resetTimelines()
-  }
-
+  },
   onLogout () {
     this.resetTimelines()
-  }
-
+  },
   openNetworkInfo () {
     this.networkInfo = true
-  }
-
+  },
   closeNetworkInfo () {
     this.networkInfo = false
-  }
-
-  @action
+  },
   pushIndex (posts) {
     if (!posts) return
     if (Array.isArray(posts)) {
@@ -57,60 +48,47 @@ export default class {
       this.index.push(posts)
     }
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  }
-
-  @action
-  pullIndex (postId) {
-    if (!this.ids[postId]) return
-    for (let i = 0, len = this.index.length; i < len; ++i) {
-      if (postId !== this.index[i]._id) continue
-      this.index.splice(i, 1)
-      this.ids[postId] = null
-      break
+  },
+  pullIndex (model) {
+    if (typeof model === 'string') {
+      const modelId = model
+      this.ids[modelId] = null
+      this.ref = modelId
+      destroy(this.ref)
+    } else {
+      this.ids[model._id] = null
+      this.ref = model._id
+      destroy(this.ref)
     }
-  }
-
-  @action
-  replaceIndex (postId, post) {
-    if (!this.ids[postId]) return
-    for (let i = 0, len = this.index.length; i < len; ++i) {
-      if (postId !== this.index[i]._id) continue
-      post.imagePath =
-        Meteor.settings.public.storage.images +
-        utils.createPathFromDate(post.createdAt)
-      post.replyId = this.ids[postId].replyId
-      this.ids[postId] = post
-      this.index[i] = post
-      break
-    }
-  }
-
+  },
+  spliceIndex (model) {
+    this.ids[model._id] = null
+    this.ref = model._id
+    destroy(this.ref)
+  },
+  setFetchState (state) {
+    this.fetchState = state
+  },
   replaceOne (post) {
     if (!post) {
       this.one = null
     }
-    post.imagePath =
-      Meteor.settings.public.storage.images +
-      utils.createPathFromDate(post.createdAt)
     this.one = post
-  }
-
+  },
   // タイムラインを変更する
   setTimeline (timeline) {
-    this.timeline = timeline
-    return toJS(timeline)
-  }
-
+    this.timeline = timeline.unique
+    return getSnapshot(timeline)
+  },
   setTimelineFromUnique (unique) {
-    const timelines = this.timelines.slice()
+    console.log('setTimelineFromUnique')
+    const timelines = this.timelines
     for (let i = 0, len = timelines.length; i < len; ++i) {
       if (timelines[i].unique !== unique) continue
-      this.timeline = timelines[i]
+      this.timeline = timelines[i].unique
       break
     }
-    return toJS(this.timeline)
-  }
-
+  },
   setTimelineFromDate (y, m, d) {
     this.timeline = {
       name: y + '.' + m + '.' + d,
@@ -123,12 +101,9 @@ export default class {
       options: {},
       other: {y, m, d}
     }
-    return toJS(this.timeline)
-  }
-
-  @action
+    return getSnapshot(this.timeline)
+  },
   resetTimelines () {
-    const user = Meteor.user()
     const timeline = {
       name: '全ての書き込み',
       unique: 'default',
@@ -137,11 +112,12 @@ export default class {
       selector: {},
       options: {limit: 50}
     }
+    const timelines = [timeline]
     if (!this.timeline) {
-      this.timeline = timeline
+      this.timeline = timeline.unique
     }
-    this.timelines = [timeline]
     this.networkTimelines = []
+    const user = Meteor.user()
     if (user) {
       [{
         name: '自分の書き込み',
@@ -160,13 +136,13 @@ export default class {
         network: null,
         isStatic: false,
         selector: {
-          'public.username': {$in: user.profile.follows.map(item => item.username)}
+          'owner.username': {$in: user.profile.follows.map(item => item.username)}
         },
         options: {
           limit: 50
         }
       }].forEach(item => {
-        this.timelines.push(item)
+        timelines.push(item)
       })
       user.profile.networks.forEach(item => {
         this.networkTimelines.push({
@@ -192,14 +168,15 @@ export default class {
         this.networkTimelines.push(this.tempTimeline)
       }
     }
+    console.log('下 これ？')
+    this.timelines = timelines
+    console.log('上 これ？')
     return this.timelines
-  }
-
+  },
   setTempTimeline (timeline) {
     this.tempTimeline = timeline
     return timeline
-  }
-
+  },
   setTempTimelineFromNetwork (network) {
     const timeline = {
       name: network.name,
@@ -211,31 +188,26 @@ export default class {
     }
     this.tempTimeline = timeline
     return timeline
-  }
-
+  },
   resetTempTimelines () {
     this.tempTimeline = null
-  }
-
+  },
   // データを取得する
   find (selector, options) {
     return new Promise((resolve, reject) => {
-      this.isFetching = true
+      this.setFetchState(true)
       this.index = []
       this.ids = {}
-      selector = toJS(selector)
-      options = toJS(options)
       Meteor.call('posts.find', selector, options, (err, res) => {
-        this.isFetching = false
         if (err) {
           reject(err)
         } else {
           resolve(res)
         }
+        this.setFetchState(false)
       })
     })
-  }
-
+  },
   findFromUserId (userId) {
     const selector = {ownerId: userId}
     const options = {
@@ -243,12 +215,10 @@ export default class {
       sort: {createdAt: -1}
     }
     return this.find(selector, options)
-  }
-
+  },
   findOne (selector, options) {
     return new Promise((resolve, reject) => {
-      selector = toJS(selector)
-      options = toJS(options)
+      const {selector, options} = getSnapshot(this.timeline)
       Meteor.call('posts.findOne', selector, options, (err, res) => {
         if (err) {
           reject(err)
@@ -257,14 +227,12 @@ export default class {
         }
       })
     })
-  }
-
+  },
   findOneFromId (postId) {
     const selector = {_id: postId}
     const options = {}
     return this.findOne(selector, options)
-  }
-
+  },
   insert (next) {
     return new Promise((resolve, reject) => {
       const req = {
@@ -288,8 +256,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   remove (postId) {
     return new Promise((resolve, reject) => {
       Meteor.call('posts.remove', {
@@ -302,8 +269,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updateReaction (postId, name) {
     return new Promise((resolve, reject) => {
       Meteor.call('posts.updateReaction', {
@@ -318,4 +284,4 @@ export default class {
       })
     })
   }
-}
+})

@@ -18,7 +18,7 @@ export default class Thread extends Component {
           <Sheet>
             <SheetContent>
               <Typography>
-                {this.props.posts.isFetching ? '読み込み中 ..' : 'データが見つかりませんでした、'}
+                {this.props.posts.fetchState ? '読み込み中 ..' : 'データが見つかりませんでした、'}
               </Typography>
             </SheetContent>
           </Sheet>

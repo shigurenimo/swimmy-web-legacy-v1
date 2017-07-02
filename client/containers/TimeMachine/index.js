@@ -20,9 +20,7 @@ import styleSheet from './index.style'
 @observer
 export default class TimeMachine extends Component {
   render () {
-    const {
-      classes
-    } = this.props
+    const {classes} = this.props
     return (
       <Layout>
         <Sheet>

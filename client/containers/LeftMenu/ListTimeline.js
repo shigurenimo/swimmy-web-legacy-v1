@@ -1,11 +1,9 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import SubjectIcon from 'material-ui-icons/Subject'
 import Collapse from 'material-ui/transitions/Collapse'
 import { withStyles } from 'material-ui/styles'
-import List, { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
-import IconButton from 'material-ui/IconButton'
+import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 

@@ -32,7 +32,7 @@ export default class LeftMenuNetworks extends Component {
             <IconButtonMoreExpand isExpand={this.state.isExpand} onClick={this.onExpand} />
           </ListItemSecondaryAction>
         </ListItem>
-        <Collapse in={this.state.isExpand} transitionDuration='auto' unmountOnExit>
+        <Collapse in={this.state.isExpand} transitionDuration='auto'>
           <ListItem button dense
             className={classNames({
               [classes.select]: this.props.router.page === 'network' &&

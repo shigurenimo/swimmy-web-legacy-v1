@@ -16,19 +16,16 @@ export default {
         stores.posts.setTimelineFromUnique('default')
       }
       const timeline = stores.posts.timeline
+      const selector = stores.posts.timeline.getSelector()
+      const options = stores.posts.timeline.getOptions()
       if (timeline.isStatic) {
-        stores.process.checkin()
-        const {selector, options} = timeline
         stores.posts.find(selector, options)
         .then(posts => {
-          if (posts) {
-            stores.posts.pushIndex(posts)
-          }
-          stores.process.checkout()
+          if (posts) { stores.posts.pushIndex(posts) }
         })
         .catch(err => { stores.snackbar.error(err) })
       } else {
-        stores.postsSocket.subscribe(timeline)
+        stores.postsSocket.subscribe(selector, options)
       }
       document.title = documentTitle
       if (Meteor.isProduction) {
@@ -52,17 +49,15 @@ export default {
         params.d = parseInt(params.d)
       }
       stores.posts.setTimelineFromDate(params.y, params.m, params.d)
-      const timeline = stores.posts.timeline
       stores.routes.setRoute('timemachine')
       stores.layout.setMain()
-      stores.process.checkin()
-      const {selector, options} = timeline
+      const selector = stores.posts.timeline.getSelector()
+      const options = stores.posts.timeline.getOptions()
       stores.posts.find(selector, options)
       .then(posts => {
         if (posts) {
           stores.posts.pushIndex(posts)
         }
-        stores.process.checkout()
       })
       .catch(err => { stores.snackbar.error(err) })
       document.title = documentTitle
