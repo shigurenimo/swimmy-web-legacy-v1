@@ -7,7 +7,7 @@ import WhatshotIcon from 'material-ui-icons/Whatshot'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
-import Textfiled from 'material-ui/TextField'
+import TextFiled from '../../components/TextField'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
@@ -32,7 +32,7 @@ export default class Login extends Component {
         <Sheet key='login'>
           <Block width={400} align='center'>
             <SheetActions>
-              <Textfiled
+              <TextFiled fullWidth
                 name='username'
                 label={this.state.error === 'username' ? this.state.errorMessage : 'username'}
                 onChange={this.onInputUsername}
@@ -42,7 +42,7 @@ export default class Login extends Component {
                 maxLength='40' />
             </SheetActions>
             <SheetActions>
-              <Textfiled
+              <TextFiled fullWidth
                 type='password'
                 name='password'
                 label={this.state.error === 'password' ? this.state.errorMessage : 'password'}

@@ -9,8 +9,6 @@ Meteor.methods({
       selector.owner = {$exists: true}
     }
 
-    console.log(selector)
-
     options.sort = {createdAt: -1}
 
     return collections.posts.find(selector, options).fetch()

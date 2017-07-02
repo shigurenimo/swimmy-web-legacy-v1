@@ -21,7 +21,6 @@ export default types.model('Threads', {
     this.index = []
     models.forEach(model => {
       this.ids[model._id] = model
-      // this.index.push(model)
     })
     try {
       this.index = models

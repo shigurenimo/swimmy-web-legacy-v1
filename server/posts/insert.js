@@ -97,8 +97,6 @@ Meteor.methods({
       data.extension.web.oEmbed = oEmbed
     }
 
-    console.log(req.replyId)
-
     if (req.replyId) {
       check(req.replyId, String)
       const reply = collections.posts.findOne(req.replyId)
