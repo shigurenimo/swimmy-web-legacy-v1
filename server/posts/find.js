@@ -11,8 +11,6 @@ Meteor.methods({
       }
     }
     */
-    console.log(selector)
-    console.log(options)
 
     options.sort = {createdAt: -1}
 

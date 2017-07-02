@@ -81,7 +81,6 @@ export default types.model('Posts', {
     return getSnapshot(timeline)
   },
   setTimelineFromUnique (unique) {
-    console.log('setTimelineFromUnique')
     const timelines = this.timelines
     for (let i = 0, len = timelines.length; i < len; ++i) {
       if (timelines[i].unique !== unique) continue
@@ -168,9 +167,7 @@ export default types.model('Posts', {
         this.networkTimelines.push(this.tempTimeline)
       }
     }
-    console.log('下 これ？')
     this.timelines = timelines
-    console.log('上 これ？')
     return this.timelines
   },
   setTempTimeline (timeline) {

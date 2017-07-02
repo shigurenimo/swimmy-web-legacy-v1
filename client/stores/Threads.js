@@ -1,44 +1,54 @@
 import { Meteor } from 'meteor/meteor'
-import { action, observable } from 'mobx'
+import { types } from 'mobx-state-tree'
+import Thread from './Thread'
 
-export default class {
-  @observable index = []
-
-  @observable isFetching = false
-
-  tabs = []
-
-  ids = {}
-
-  @action
-  pushIndex (posts) {
-    this.index = []
-    if (Array.isArray(posts)) {
-      posts.forEach(post => {
-        this.ids[post._id] = post
-        this.index.push(post)
+export default types.model('Threads', {
+  one: types.maybe(Thread),
+  index: types.optional(types.array(Thread), []),
+  ref: types.maybe(types.reference(Thread)),
+  fetchState: types.optional(types.boolean, false),
+  get isEmpty () {
+    return this.index.length === 0
+  },
+  get isNotEmpty () {
+    return this.index.length !== 0
+  }
+}, {
+  afterCreate () {
+    this.ids = {}
+  },
+  pushIndex (models) {
+    if (!models) return
+    if (Array.isArray(models)) {
+      models.forEach(model => {
+        this.ids[model._id] = model
+        // this.index.push(model)
       })
+      this.index = models
     } else {
-      this.ids[posts._id] = posts
-      this.index.push(posts)
+      const model = models
+      this.ids[model._id] = model
+      this.index.push(model)
     }
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  }
-
-  @action
-  find () {
-    this.isFetching = true
-    const selector = {}
-    const options = {limit: 50}
+  },
+  setFetchState (state) {
+    this.fetchState = state
+  },
+  find (selector = {}, options = {}) {
+    if (!options.limit) {
+      options.limit = 50
+    }
+    this.setFetchState(true)
     return new Promise((resolve, reject) => {
       Meteor.call('threads.find', selector, options, (err, res) => {
-        this.isFetching = false
         if (err) {
           reject(err)
         } else {
           resolve(res)
         }
+        this.setFetchState(false)
       })
     })
   }
-}
+})

@@ -17,6 +17,7 @@ const inputPost = InputPost.create({})
 const layout = Layout.create({})
 const posts = Posts.create({})
 const postsSocket = SocketPosts.create({})
+const threads = Threads.create({})
 
 export default {
   accounts,
@@ -30,6 +31,6 @@ export default {
   reports: new Reports(),
   snackbar: new Snackbar(),
   tags: new Tags(),
-  threads: new Threads(),
+  threads,
   usersProfile: new UsersProfile()
 }

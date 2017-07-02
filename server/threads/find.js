@@ -6,9 +6,13 @@ Meteor.methods({
     selector.content = {$ne: ''}
     selector['replies.0'] = {$exists: true}
     options.fields = {
-      'owner': 0,
-      'addr': 0,
-      'channel': 0
+      _id: 1,
+      content: 1,
+      owner: 1,
+      reactions: 1,
+      replies: 1,
+      createdAt: 1,
+      updatedAt: 1
     }
     options.sort = {updatedAt: -1}
     return collections.posts.find(selector, options).fetch()
