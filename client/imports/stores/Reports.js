@@ -1,13 +1,29 @@
 import { Meteor } from 'meteor/meteor'
-import { observable } from 'mobx'
+import { types } from 'mobx-state-tree'
 
-export default class {
-  @observable index = null
-
-  setIndex (data) {
-    this.index = data
-  }
-
+export default types.model('Reports', {
+  one: types.maybe(
+    types.union(
+      types.model({
+        total: types.model({
+          posts: types.number,
+          tags: types.number,
+          users: types.number
+        }),
+        user: types.maybe(types.model({
+          posts: types.number
+        }))
+      })
+    )
+  )
+}, {
+  setOne (data) {
+    try {
+      this.one = data
+    } catch (err) {
+      console.info('stores/Reports.setOne', err)
+    }
+  },
   find () {
     return new Promise((resolve, reject) => {
       Meteor.call('report:main', (err, res) => {
@@ -19,4 +35,4 @@ export default class {
       })
     })
   }
-}
+})

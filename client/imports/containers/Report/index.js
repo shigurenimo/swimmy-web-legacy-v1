@@ -19,7 +19,7 @@ export default class Report extends Component {
         <Sheet hover>
           <SheetContent>
             <Typography className={classes.number} type='display1'>
-              {this.props.reports.index.total.users}
+              {this.props.reports.one.total.users}
             </Typography>
           </SheetContent>
           <SheetContent>
@@ -29,43 +29,22 @@ export default class Report extends Component {
         <Sheet hover>
           <SheetContent>
             <Typography className={classes.number} type='display1'>
-              {this.props.reports.index.total.posts}
+              {this.props.reports.one.total.posts}
             </Typography>
           </SheetContent>
           <SheetContent>
             <Typography>書き込み</Typography>
           </SheetContent>
         </Sheet>
+        {this.props.reports.one.user &&
         <Sheet hover>
           <SheetContent>
             <Typography className={classes.number} type='display1'>
-              {this.props.reports.index.total.artworks}
-            </Typography>
-          </SheetContent>
-          <SheetContent>
-            <Typography>アートワーク</Typography>
-          </SheetContent>
-        </Sheet>
-        {this.props.reports.index.user &&
-        <Sheet hover>
-          <SheetContent>
-            <Typography className={classes.number} type='display1'>
-              {this.props.reports.index.user.posts}
+              {this.props.reports.one.user.posts}
             </Typography>
           </SheetContent>
           <SheetContent>
             <Typography>あなたの書き込み</Typography>
-          </SheetContent>
-        </Sheet>}
-        {this.props.reports.index.user &&
-        <Sheet hover>
-          <SheetContent>
-            <Typography className={classes.number} type='display1'>
-              {this.props.reports.index.user.artworks}
-            </Typography>
-          </SheetContent>
-          <SheetContent>
-            <Typography>あなたのアートワーク</Typography>
           </SheetContent>
         </Sheet>}
       </Layout>

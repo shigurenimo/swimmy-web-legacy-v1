@@ -18,6 +18,7 @@ const inputPost = InputPost.create({})
 const layout = Layout.create({})
 const posts = Posts.create({})
 const postsSocket = SocketPosts.create({})
+const reports = Reports.create({})
 const snackbar = Snackbar.create({})
 const tags = Tags.create({})
 const threads = Threads.create({})
@@ -31,7 +32,7 @@ export default {
   networks: new Networks(),
   posts,
   postsSocket,
-  reports: new Reports(),
+  reports,
   snackbar,
   tags,
   threads,

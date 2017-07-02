@@ -314,11 +314,11 @@ export default {
   '/report': {
     async action (context, stores) {
       stores.reports.find()
-      .then(report => {
-        stores.reports.setIndex(report)
+      .then(model => {
+        stores.reports.setOne(model)
         stores.routes.setRoute('report')
         stores.layout.setMain()
-        document.title = 'レポート | ' + documentTitle
+        document.title = '統計データ | ' + documentTitle
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
             page: '/report',
@@ -326,7 +326,6 @@ export default {
           })
         }
       })
-      .catch(err => this.props.snackbar.error(err.reason))
     }
   },
   '/twitter': {
