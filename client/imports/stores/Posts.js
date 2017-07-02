@@ -48,6 +48,20 @@ export default types.model('Posts', {
       destroy(this.ref)
     }
   },
+  replaceIndex (model) {
+    this.ids[model._id] = model
+    try {
+      for (let i = 0, len = this.index.length; i < len; ++i) {
+        if (this.index[i]._id !== model._id) continue
+        this.index[i] = model
+        break
+      }
+    } catch (err) {
+      console.info('Posts.replaceIndex')
+      console.info(...arguments)
+      console.info(err)
+    }
+  },
   spliceIndex (model) {
     this.ids[model._id] = null
     this.ref = model._id
@@ -63,6 +77,8 @@ export default types.model('Posts', {
     try {
       this.one = post
     } catch (err) {
+      console.info('Posts.replaceOne')
+      console.info(...arguments)
       console.info(err)
     }
   },

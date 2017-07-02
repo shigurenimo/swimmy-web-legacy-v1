@@ -40,14 +40,13 @@ export default types.model('Accounts', {
       this.cursor.stop()
       this.cursor = null
     }
-    const self = this
     const userId = Meteor.userId()
     this.cursor = Meteor.users.find(userId).observe({
-      added (model) {
-        self.added(model)
+      added: model => {
+        this.added(model)
       },
-      changed (model) {
-        self.changed(model)
+      changed: model => {
+        this.changed(model)
       }
     })
   },

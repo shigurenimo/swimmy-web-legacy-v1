@@ -11,25 +11,27 @@ Meteor.publish('posts', function (selector, options) {
     replies: 0
   }
 
+  const replyOptions = {
+    fields: {
+      _id: 1,
+      content: 1,
+      owner: 1,
+      reactions: 1,
+      extension: 1,
+      createdAt: 1,
+      updatedAt: 1
+    }
+  }
+
   const cursor = collections.posts.find(selector, options).observe({
     addedAt (post) {
       if (post.replyId) {
-        const options = {
-          fields: {
-            _id: 1,
-            content: 1,
-            owner: 1,
-            reactions: 1,
-            extension: 1,
-            createdAt: 1,
-            updatedAt: 1
-          }
-        }
-        const reply = collections.posts.findOne(post.replyId, options)
+        const reply = collections.posts.findOne(post.replyId, replyOptions)
         if (reply) {
           post.reply = reply
         } else {
           post.reply = {
+            _id: post.replyId,
             content: 'この投稿は既に削除されています'
           }
         }
@@ -41,18 +43,17 @@ Meteor.publish('posts', function (selector, options) {
       }
       if (post.link) { post.content = utils.replace.link(post.content) }
       // if (post.tags) { post.content = utils.replace.tags(post.content) }
-      if (userId !== post.ownerId) {
-        delete post.ownerId
-      }
+      if (userId !== post.ownerId) { delete post.ownerId }
       self.added('posts', post._id, post)
     },
     changed (post) {
       if (post.replyId) {
-        const reply = collections.posts.findOne(post.reply)
+        const reply = collections.posts.findOne(post.replyId, replyOptions)
         if (reply) {
           post.reply = reply
         } else {
           post.reply = {
+            _id: post.replyId,
             content: 'この投稿は既に削除されています'
           }
         }

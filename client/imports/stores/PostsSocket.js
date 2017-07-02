@@ -32,10 +32,15 @@ export default types.model('SocketPosts', {
   replaceIndex (model) {
     this.ids[model._id] = model
     try {
-      this.ref = model._id
-      this.ref = model
+      for (let i = 0, len = this.index.length; i < len; ++i) {
+        if (this.index[i]._id !== model._id) continue
+        this.index[i] = model
+        break
+      }
     } catch (err) {
-      console.error(err)
+      console.log(model)
+      console.info('PostsSocket.replaceIndex')
+      console.info(err)
     }
   },
   spliceIndex (model) {
@@ -65,8 +70,8 @@ export default types.model('SocketPosts', {
         let task = false
         let stocks = []
         this.cursor = collections.posts.find().observe({
-          addedAt: (res) => {
-            stocks.push(res)
+          addedAt: model => {
+            stocks.push(model)
             if (task !== false) clearTimeout(task)
             task = setTimeout(() => {
               this.pushIndex(stocks)
@@ -75,10 +80,10 @@ export default types.model('SocketPosts', {
               stocks = []
             }, 10)
           },
-          changed (model) {
+          changed: model => {
             this.replaceIndex(model)
           },
-          removed (model) {
+          removed: model => {
             this.spliceIndex(model)
           }
         })

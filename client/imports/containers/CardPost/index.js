@@ -253,11 +253,13 @@ export default class Post extends Component {
     }
     this.props.posts.updateReaction(postId, name)
     .then(post => {
+      console.log(post)
       this.props.posts.replaceOne(post)
-      this.props.posts.replaceIndex(post._id, post)
+      console.log('replaceOne')
+      this.props.posts.replaceIndex(post)
+      console.log('replaceIndex')
       this.setState({isReply: false, isInputReaction: false, inputNewReaction: ''})
     })
-    .catch(err => this.props.snackbar.error(err.reason))
   }
 
   // 新しいリアクションを送信する

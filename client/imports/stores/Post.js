@@ -9,13 +9,13 @@ export default types.model('Post', {
       username: types.maybe(types.string)
     })
   ),
-  reactions: types.array(
+  reactions: types.maybe(types.array(
     types.model({
       name: types.string,
       owners: types.array(types.string)
     })
-  ),
-  networkId: types.string,
+  )),
+  networkId: types.maybe(types.string),
   extension: types.model({}),
   artwork: types.maybe(types.model({})),
   imagePath: types.maybe(types.string),
