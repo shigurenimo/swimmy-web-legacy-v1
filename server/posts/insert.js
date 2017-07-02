@@ -59,7 +59,6 @@ Meteor.methods({
       reactions: [],
       replies: [],
       networkId: req.networkId || '',
-      artwork: null,
       createdAt: date,
       updatedAt: date,
       from: 'swimmy'
@@ -69,7 +68,6 @@ Meteor.methods({
     if (tags) data.tags = tags
 
     data.ownerId = this.userId
-    data.owner = null
 
     if (req.isPublic) {
       if (!this.userId) throw new Meteor.Error('not-authorized')

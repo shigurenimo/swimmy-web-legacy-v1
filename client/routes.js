@@ -343,7 +343,7 @@ export default {
     }
   },
   '/:username': {
-    action ({params}, stores) {
+    async action ({params}, stores) {
       const username = params.username
       stores.usersProfile.findOneFromUsername(username)
       .then(user => {
@@ -353,9 +353,8 @@ export default {
         return stores.posts.findFromUserId(user._id)
       })
       .then(posts => {
-        stores.posts.pushIndex(posts)
+        stores.posts.setIndex(posts)
       })
-      .catch(err => this.props.snackbar.error(err.reason))
     }
   }
 }

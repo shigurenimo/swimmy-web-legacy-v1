@@ -60,18 +60,15 @@ export default types.model('Posts', {
     if (!post) {
       this.one = null
     }
-    console.log(post)
     try {
       this.one = post
     } catch (err) {
       console.info(err)
     }
-    console.log(this.one.toJSON())
   },
   find (selector, options) {
     return new Promise((resolve, reject) => {
       this.setFetchState(true)
-      this.index = []
       this.ids = {}
       Meteor.call('posts.find', selector, options, (err, res) => {
         if (err) {

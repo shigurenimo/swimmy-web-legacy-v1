@@ -30,6 +30,7 @@ export default types.model('SocketPosts', {
     this.index = this.index.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
   },
   replaceIndex (model) {
+    console.log(model)
     this.ids[model._id] = model
     this.ref = model._id
     this.ref = model
