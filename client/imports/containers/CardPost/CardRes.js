@@ -25,10 +25,13 @@ export default class PostRes extends Component {
       <div>
         <Sheet hover onTouchTap={this.onOpenThread}>
           {/* username */}
-          {this.props.public &&
+          {this.props.owner && this.props.owner.username &&
           <SheetContent>
-            <Typography inline className={classes.username} component='a' href={'/' + this.props.public.username}>
-              @{this.props.public.username}
+            <Typography inline
+              className={classes.username}
+              component='a'
+              href={'/' + this.props.owner.username}>
+              @{this.props.owner.username}
             </Typography>
           </SheetContent>}
           {/* content */}
