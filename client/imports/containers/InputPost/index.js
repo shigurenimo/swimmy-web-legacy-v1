@@ -108,20 +108,18 @@ export default class InputPost extends Component {
   }
 
   openNetworkInfo () {
-    const networkId = this.props.posts.timeline.network ||
-      (this.props.router.page === 'thread' && this.props.posts.one.network)
+    const networkId = this.props.timelines.one.networkId ||
+      (this.props.router.page === 'thread' && this.props.posts.one.networkId)
     if (!networkId) return
-    if (this.props.posts.networkId) {
-      this.props.posts.closeNetworkInfo()
+    if (this.props.info.isOpen) {
+      this.props.info.close()
     } else {
       this.props.networks.findOneFromId(networkId)
       .then(network => {
+        this.props.info.setNetwork(network)
         this.props.networks.replaceOne(network)
-        this.props.posts.openNetworkInfo()
       })
-      .catch(err => {
-        this.props.snackbar.error(err)
-      })
+      .catch(err => this.props.snackbar.error(err.reason))
     }
   }
 

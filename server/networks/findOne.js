@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import collections from '/lib/collections'
 
-// ひとつを取得
 Meteor.methods({
   'networks.findOne' (selector, options) {
     const network = collections.networks.findOne(selector, options)

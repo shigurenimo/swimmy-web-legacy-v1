@@ -8,13 +8,13 @@ import SheetContent from '../../components/UI-SheetContent'
 import NetworkInfo from '../NetworkInfo'
 import Post from '../CardPost'
 
-@inject('networks', 'posts', 'postsSocket', 'timelines')
+@inject('networks', 'posts', 'postsSocket', 'timelines', 'info')
 @observer
 export default class Timeline extends Component {
   render () {
     return (
       <Layout>
-        {false && <NetworkInfo />}
+        {this.props.info.network && <NetworkInfo />}
         {this.forPosts()}
       </Layout>
     )

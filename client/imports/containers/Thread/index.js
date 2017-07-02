@@ -9,7 +9,7 @@ import NetworkInfo from '../NetworkInfo'
 import Post from '../CardPost'
 import PostRes from '../CardPost/CardRes'
 
-@inject('posts', 'accounts') @observer
+@inject('posts', 'accounts', 'info') @observer
 export default class Thread extends Component {
   render () {
     if (!this.props.posts.one) {
@@ -27,7 +27,7 @@ export default class Thread extends Component {
     }
     return (
       <Layout>
-        {this.props.posts.networkId && <NetworkInfo />}
+        {this.props.info.network && <NetworkInfo />}
         {this.props.posts.one.replies &&
         this.props.posts.one.replies.length > 0 &&
         this.props.posts.one.replies.map(item => <PostRes key={item._id} {...item} />)}
