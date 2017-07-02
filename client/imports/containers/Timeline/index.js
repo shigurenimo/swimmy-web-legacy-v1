@@ -33,7 +33,7 @@ export default class Timeline extends Component {
         <Sheet>
           <SheetContent>
             <Typography>
-              {fetchState ? '読み込み中 ..' : 'まだ書き込みがありません'}
+              {fetchState ? '読み込み中 ..' : ''}
             </Typography>
           </SheetContent>
         </Sheet>

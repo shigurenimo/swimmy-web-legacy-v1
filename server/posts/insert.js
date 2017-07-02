@@ -58,21 +58,25 @@ Meteor.methods({
       content: req.content,
       reactions: [],
       replies: [],
-      from: 'swimmy',
+      networkId: req.networkId,
+      artwork: null,
       createdAt: date,
-      updatedAt: date
+      updatedAt: date,
+      from: 'swimmy'
     }
 
     const tags = utils.match.tags(req.content)
     if (tags) data.tags = tags
 
     data.ownerId = this.userId
-    data.owner = {}
+    data.owner = null
 
     if (req.isPublic) {
       if (!this.userId) throw new Meteor.Error('not-authorized')
       const user = Meteor.users.findOne(this.userId)
-      data.owner.username = user.username
+      data.owner = {
+        username: user.username
+      }
     }
 
     if (req.images) {

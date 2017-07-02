@@ -98,7 +98,7 @@ export default class InputPost extends Component {
 
   get timelineName () {
     if (this.props.router.page === 'thread') {
-      if (this.props.posts.timelines.one.network) {
+      if (this.props.timelines.one.networkId) {
         return this.props.timelines.one.name
       } else {
         return 'レス'

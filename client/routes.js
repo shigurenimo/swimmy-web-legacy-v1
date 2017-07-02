@@ -7,9 +7,6 @@ const documentTitleShort = 'swimmy'
 export default {
   '/(default|self|follows)?': {
     async action ({params}, stores) {
-      stores.info.close()
-      stores.layout.setMain()
-      stores.routes.setRoute('timeline')
       if (stores.accounts.isLogged) {
         stores.timelines.setFromUnique(params[0])
       } else {
@@ -25,6 +22,9 @@ export default {
       } else {
         stores.postsSocket.subscribe(selector, options)
       }
+      stores.routes.setRoute('timeline')
+      stores.layout.setMain()
+      stores.info.close()
       document.title = documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -47,8 +47,6 @@ export default {
         params.d = parseInt(params.d)
       }
       stores.timelines.setFromDate(params.y, params.m, params.d)
-      stores.routes.setRoute('logs')
-      stores.layout.setMain()
       const selector = stores.timelines.one.getSelector()
       const options = stores.timelines.one.getOptions()
       stores.posts.find(selector, options)
@@ -57,6 +55,8 @@ export default {
           stores.posts.setIndex(posts)
         }
       })
+      stores.routes.setRoute('logs')
+      stores.layout.setMain()
       document.title = documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -68,13 +68,13 @@ export default {
   },
   '/thread': {
     async action (context, stores) {
-      stores.routes.setRoute('thread-list')
-      stores.layout.setMain()
       stores.threads.find()
       .then(posts => {
         stores.threads.setIndex(posts)
         document.title = 'thread | ' + documentTitle
       })
+      stores.routes.setRoute('thread-list')
+      stores.layout.setMain()
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
           page: '/thread',
@@ -87,9 +87,7 @@ export default {
     async action ({params}, stores) {
       stores.posts.findOneFromId(params._id)
       .then(post => {
-        if (!post) {
-          return notFound()
-        }
+        if (!post) { return notFound() }
         stores.posts.replaceOne(post)
         let content = post.content
         if (content.length > 20) {
@@ -105,7 +103,6 @@ export default {
           })
         }
       })
-      .catch(err => this.props.snackbar.error(err.reason))
     }
   },
   '/artwork/(default|self|follows)?': {

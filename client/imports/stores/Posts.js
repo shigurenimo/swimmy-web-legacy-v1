@@ -87,7 +87,6 @@ export default types.model('Posts', {
   },
   findOne (selector, options) {
     return new Promise((resolve, reject) => {
-      const {selector, options} = getSnapshot(this.timeline)
       Meteor.call('posts.findOne', selector, options, (err, res) => {
         if (err) {
           reject(err)
@@ -102,7 +101,7 @@ export default types.model('Posts', {
     const options = {}
     return this.findOne(selector, options)
   },
-  insert (next, networkId) {
+  insert (next) {
     return new Promise((resolve, reject) => {
       const req = {
         isPublic: next.isPublic,
@@ -114,8 +113,8 @@ export default types.model('Posts', {
       if (next.images) {
         req.images = next.images
       }
-      if (networkId) {
-        req.networkId = networkId
+      if (next.networkId) {
+        req.networkId = next.networkId
       }
       Meteor.call('posts.insert', req, (err, res) => {
         if (err) {

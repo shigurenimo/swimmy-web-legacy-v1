@@ -25,7 +25,8 @@ import utils from '/lib/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'inputPost', 'router', 'accounts') @observer
+@inject('layout', 'inputPost', 'router', 'accounts')
+@observer
 export default class Content extends Component {
   render () {
     const {classes, layout} = this.props
@@ -97,7 +98,7 @@ export default class Content extends Component {
       case 'profile':
         return <Profile key='profile' />
       case 'timeline':
-        return <Timeline key='timeline' />
+        return <Timeline key={'timeline'} />
       case 'logs':
         return <TimeMachine key='logs' />
       case 'thread':
