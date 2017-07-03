@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
-import Post from './Post'
+import Post from '../../../../lib/imports/models/Post'
 
 export default types.model('Posts', {
   one: types.maybe(Post),

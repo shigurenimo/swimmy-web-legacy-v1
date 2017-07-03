@@ -13,7 +13,7 @@ import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
 import Typography from '../../components/Typography'
-import utils from '/lib/utils'
+import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)

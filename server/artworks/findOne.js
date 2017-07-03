@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import collections from '/lib/collections'
-import utils from '/lib/utils'
+import utils from '/lib/imports/utils'
 
 Meteor.methods({
   'artworks.findOne' (selector, options) {

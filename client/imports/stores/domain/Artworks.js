@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Accounts } from 'meteor/accounts-base'
 import { action, observable, toJS } from 'mobx'
-import utils from '/lib/utils/index'
+import utils from '/lib/imports/utils/index'
 
 export default class {
   @observable index = []

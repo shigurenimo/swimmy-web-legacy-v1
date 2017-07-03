@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
-import Thread from './Thread'
+import Thread from '../../../../lib/imports/models/Thread'
 
 export default types.model('Threads', {
   one: types.maybe(Thread),

@@ -6,7 +6,7 @@ import { withStyles } from 'material-ui/styles'
 import Content from '../Content'
 import InputAction from '../InputAction'
 import LeftMenu from '../LeftMenu'
-import utils from '/lib/utils'
+import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)

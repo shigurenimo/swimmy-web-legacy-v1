@@ -9,7 +9,7 @@ import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
 import SheetBackgroundImage from '../../components/UI-SheetBackgroundImage'
-import utils from '/lib/utils'
+import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)

@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { destroy, types } from 'mobx-state-tree'
 import collections from '/lib/collections'
-import Post from './Post'
+import Post from '../../../../lib/imports/models/Post'
 
 export default types.model('SocketPosts', {
   index: types.optional(types.array(Post), []),

@@ -11,7 +11,7 @@ import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
-import utils from '/lib/utils'
+import utils from '/lib/imports/utils'
 
 @inject('artworks', 'snackbar', 'accounts')
 @observer

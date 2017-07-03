@@ -21,7 +21,7 @@ import TimeMachine from '../TimeMachine'
 import Timeline from '../Timeline'
 import Twitter from '../ConfigTwitter'
 import TwitterLogin from '../ConfigTwitterLogin'
-import utils from '/lib/utils'
+import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)

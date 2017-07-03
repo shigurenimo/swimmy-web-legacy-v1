@@ -6,9 +6,9 @@ import { unlink, writeFileSync } from 'fs'
 import { join } from 'path'
 import Jimp from 'jimp'
 import cheerio from 'cheerio'
-import upload from '/lib/utils/server/google/upload'
+import upload from '/lib/imports/utils/server/google/upload'
 import collections from '/lib/collections'
-import utils from '/lib/utils'
+import utils from '/lib/imports/utils'
 
 Meteor.methods({
   async 'posts.insert' (req) {

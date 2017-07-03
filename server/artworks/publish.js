@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { Random } from 'meteor/random'
 import collections from '/lib/collections'
-import utils from '/lib/utils'
+import utils from '/lib/imports/utils'
 
 Meteor.publish('artworks', function (selector, options) {
   const self = this
