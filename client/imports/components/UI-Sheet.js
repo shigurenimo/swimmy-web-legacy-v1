@@ -15,7 +15,7 @@ const styleSheet = createStyleSheet('UISheet', theme => {
       textDecoration: 'none'
     },
     padding: {
-      padding: '15px 10px 5px 10px'
+      padding: '20px 10px 10px 10px'
     },
     paddingDense: {
       padding: '10px 10px 5px 10px'
