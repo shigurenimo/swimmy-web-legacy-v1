@@ -13,14 +13,14 @@ import Post from '../CardPost'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('posts', 'snackbar', 'accounts', 'usersProfile')
+@inject('posts', 'snackbar', 'accounts', 'users')
 @observer
 export default class Profile extends Component {
   render () {
     const {
       posts: {index},
       accounts,
-      usersProfile: {one: user},
+      users: {one: user},
       classes
     } = this.props
     return (
@@ -74,8 +74,7 @@ export default class Profile extends Component {
   }
 
   onFollow () {
-    const {usersProfile} = this.props
-    this.props.account.updateFollow(usersProfile.one._id)
+    this.props.account.updateFollow(this.props.users.one._id)
     .then(() => {
       this.props.snackbar.show('フォローを更新しました')
     })

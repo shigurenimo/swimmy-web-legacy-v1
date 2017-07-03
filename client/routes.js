@@ -344,10 +344,10 @@ export default {
   '/:username': {
     async action ({params}, stores) {
       const username = params.username
-      stores.usersProfile.findOneFromUsername(username)
+      stores.users.findOneFromUsername(username)
       .then(user => {
         if (!user) return notFound()
-        stores.usersProfile.setOne(user)
+        stores.users.setOne(user)
         stores.routes.setRoute('profile')
         return stores.posts.findFromUserId(user._id)
       })

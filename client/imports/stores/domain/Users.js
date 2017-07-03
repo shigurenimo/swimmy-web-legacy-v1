@@ -1,13 +1,13 @@
 import { Meteor } from 'meteor/meteor'
-import { observable } from 'mobx'
+import { types } from 'mobx-state-tree'
+import User from '/lib/imports/models/User'
 
-export default class {
-  @observable one = {}
-
+export default types.model('Users', {
+  one: types.maybe(User)
+}, {
   setOne (user) {
     this.one = user
-  }
-
+  },
   findOne (selector, options) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.findProfile', selector, options, (err, res) => {
@@ -21,9 +21,8 @@ export default class {
         }
       })
     })
-  }
-
+  },
   findOneFromUsername (username) {
     return this.findOne({username}, {})
   }
-}
+})
