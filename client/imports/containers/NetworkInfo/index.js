@@ -14,7 +14,7 @@ import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('networks', 'posts', 'snackbar', 'accounts') @observer
+@inject('networks', 'snackbar', 'accounts', 'timelines') @observer
 export default class NetworkInfo extends Component {
   render () {
     const {
@@ -83,7 +83,7 @@ export default class NetworkInfo extends Component {
     .then(data => {
       this.props.networks.replaceOne(data)
       this.props.networks.replaceIndex(data._id, data)
-      this.props.posts.resetTimelines()
+      this.props.timelines.resetIndex()
       this.props.snackbar.show('リストを追加しました')
     })
   }
@@ -97,7 +97,7 @@ export default class NetworkInfo extends Component {
     .then(data => {
       this.props.networks.replaceOne(data)
       this.props.networks.replaceIndex(data._id, data)
-      this.props.posts.resetTimelines()
+      this.props.timelines.resetIndex()
       this.props.snackbar.show('リストを外しました')
     })
   }
@@ -112,8 +112,8 @@ export default class NetworkInfo extends Component {
     .then(data => {
       this.props.networks.pullIndex(networkId)
       this.props.router.go('/network')
-      this.props.posts.resetTempTimelines()
-      this.props.posts.resetTimelines()
+      this.props.timelines.resetTemp()
+      this.props.timelines.resetIndex()
       this.props.snackbar.show('リストを削除しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))

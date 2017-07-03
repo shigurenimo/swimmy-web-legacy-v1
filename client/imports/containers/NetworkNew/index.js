@@ -10,7 +10,7 @@ import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
 import TypographyError from '../../components/UI-TypographyError'
 
-@inject('networks', 'posts', 'router', 'snackbar')
+@inject('networks', 'router', 'snackbar', 'timelines')
 @observer
 export default class NetworkNew extends Component {
   render () {
@@ -204,7 +204,7 @@ export default class NetworkNew extends Component {
     .then(data => {
       this.props.networks.pushIndex(data)
       this.props.router.go('/network')
-      this.props.posts.resetTimelines()
+      this.props.timelines.resetIndex()
       this.props.snackbar.show('新しいリストを作成しました')
       this.process = false
     })

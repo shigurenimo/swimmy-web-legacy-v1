@@ -164,7 +164,7 @@ export default types.model('Timelines', {
   setTempFromNetwork (networkId) {
     this.temp = networkId
   },
-  resetTempTimelines () {
+  resetTemp () {
     this.temp = null
   }
 })
