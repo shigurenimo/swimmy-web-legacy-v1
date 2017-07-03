@@ -44,9 +44,7 @@ Meteor.methods({
 
       // if (post.tags) post.content = utils.replace.tags(post.content)
 
-      if (this.userId !== post.ownerId) {
-        delete post.ownerId
-      }
+      if (this.userId !== post.ownerId) { delete post.ownerId }
 
       return post
     })

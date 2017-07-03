@@ -38,8 +38,8 @@ export default types.model('SocketPosts', {
         break
       }
     } catch (err) {
-      console.log(model)
       console.info('PostsSocket.replaceIndex')
+      console.log(...arguments)
       console.info(err)
     }
   },

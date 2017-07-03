@@ -16,10 +16,7 @@ export default types.model('Reply', {
   )),
   extension: types.maybe(types.model({})),
   imagePath: types.maybe(types.string),
-  tags: types.optional(
-    types.array(types.string),
-    []
-  ),
+  tags: types.maybe(types.array(types.string)),
   createdAt: types.maybe(types.Date),
   updatedAt: types.maybe(types.Date)
 })

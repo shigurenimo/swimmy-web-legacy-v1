@@ -63,11 +63,27 @@ Meteor.methods({
       }
     }
 
-    return collections.posts.findOne(req.postId, {
+    const next = collections.posts.findOne(req.postId, {
       fields: {
-        ownerId: 0,
-        addr: 0
+        ownerId: 0
       }
     })
+    if (next.replyId) {
+      const reply = collections.posts.findOne(post.replyId, {
+        fields: {
+          _id: 1,
+          content: 1
+        }
+      })
+      if (reply) {
+        next.reply = reply
+      } else {
+        next.reply = {
+          _id: next.replyId,
+          content: 'この投稿は既に削除されています'
+        }
+      }
+    }
+    return next
   }
 })

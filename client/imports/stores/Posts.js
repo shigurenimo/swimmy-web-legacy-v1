@@ -1,11 +1,10 @@
 import { Meteor } from 'meteor/meteor'
-import { destroy, types } from 'mobx-state-tree'
+import { types } from 'mobx-state-tree'
 import Post from './Post'
 
 export default types.model('Posts', {
   one: types.maybe(Post),
   index: types.optional(types.array(Post), []),
-  ref: types.maybe(types.reference(Post)),
   fetchState: types.optional(types.boolean, false),
   get isEmpty () { return this.index.length === 0 }
 }, {
@@ -15,12 +14,17 @@ export default types.model('Posts', {
     this.selector = null
     this.options = null
   },
-  setIndex (posts = []) {
-    this.index = []
-    posts.forEach(post => {
-      this.ids[post._id] = post
-      this.index.push(post)
+  setIndex (models = []) {
+    models.forEach(model => {
+      this.ids[model._id] = model
     })
+    try {
+      this.index.replace(models)
+    } catch (err) {
+      console.info('Posts.setIndex')
+      console.info(models)
+      console.info(err)
+    }
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   },
   pushIndex (posts) {
@@ -40,32 +44,23 @@ export default types.model('Posts', {
     if (typeof model === 'string') {
       const modelId = model
       this.ids[modelId] = null
-      this.ref = modelId
-      destroy(this.ref)
+      const index = this.index.findIndex(item => item._id === model._id)
+      this.index.splice(index, 1)
     } else {
       this.ids[model._id] = null
-      this.ref = model._id
-      destroy(this.ref)
+      this.index.remove(model)
     }
   },
   replaceIndex (model) {
     this.ids[model._id] = model
+    const index = this.index.findIndex(item => item._id === model._id)
     try {
-      for (let i = 0, len = this.index.length; i < len; ++i) {
-        if (this.index[i]._id !== model._id) continue
-        this.index[i] = model
-        break
-      }
+      this.index[index] = model
     } catch (err) {
       console.info('Posts.replaceIndex')
       console.info(...arguments)
       console.info(err)
     }
-  },
-  spliceIndex (model) {
-    this.ids[model._id] = null
-    this.ref = model._id
-    destroy(this.ref)
   },
   setFetchState (state) {
     this.fetchState = state

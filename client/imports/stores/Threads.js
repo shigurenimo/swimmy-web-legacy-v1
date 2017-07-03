@@ -18,7 +18,6 @@ export default types.model('Threads', {
     this.ids = {}
   },
   setIndex (models = []) {
-    this.index = []
     models.forEach(model => {
       this.ids[model._id] = model
     })
