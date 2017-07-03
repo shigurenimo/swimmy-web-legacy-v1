@@ -65,15 +65,15 @@ export default types.model('Posts', {
   setFetchState (state) {
     this.fetchState = state
   },
-  replaceOne (post) {
-    if (!post) {
+  replaceOne (model) {
+    if (!model) {
       this.one = null
     }
     try {
-      this.one = post
+      this.one = model
     } catch (err) {
       console.info('Posts.replaceOne')
-      console.info(...arguments)
+      console.info(model)
       console.info(err)
     }
   },

@@ -253,9 +253,8 @@ export default class Post extends Component {
     }
     this.props.posts.updateReaction(postId, name)
     .then(post => {
-      // todo
-      // this.props.posts.replaceOne(post)
       this.props.posts.replaceIndex(post)
+      this.props.posts.replaceOne(post)
       this.setState({isReply: false, isInputReaction: false, inputNewReaction: ''})
     })
   }

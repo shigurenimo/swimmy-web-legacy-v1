@@ -23,6 +23,13 @@ export default types.model('Post', {
   replyId: types.maybe(types.string),
   reply: types.maybe(Reply),
   replies: types.maybe(types.array(types.union(Reply, types.string))),
-  createdAt: types.maybe(types.Date),
-  updatedAt: types.maybe(types.Date)
+  createdAt: types.maybe(types.string)
+}, {
+  preProcessSnapshot (snapshot) {
+    if (!snapshot) return snapshot
+    if (snapshot.createdAt) {
+      snapshot.createdAt = snapshot.createdAt.toString()
+    }
+    return snapshot
+  }
 })
