@@ -21,10 +21,10 @@ export default class LeftMenuTimeline extends Component {
             [classes.select]: this.props.router.page.includes('thread')
           })}
           component='a'
-          href='/threads'>
+          href='/thread'>
           <ListItemText primary='thread' />
           <ListItemSecondaryAction>
-            <IconButton component='a' href='/threads'>
+            <IconButton component='a' href='/thread'>
               <BookmarkBorderIcon />
             </IconButton>
           </ListItemSecondaryAction>
