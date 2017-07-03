@@ -5,6 +5,7 @@ import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
 import LeftMenuAdmin from './ListAdmin'
 import LeftMenuEtc from './ListEtc'
+import LeftMenuNetworks from './ListNetworks'
 import LeftMenuTimeline from './ListTimeline'
 
 export default class LeftMenuDefault extends Component {
@@ -14,6 +15,8 @@ export default class LeftMenuDefault extends Component {
         <LeftMenuAdmin />
         <Divider light />
         <LeftMenuTimeline />
+        <Divider light />
+        <LeftMenuNetworks />
         <Divider light />
         <LeftMenuEtc />
         <Sheet>

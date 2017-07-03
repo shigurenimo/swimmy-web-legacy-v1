@@ -2,11 +2,10 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import AddIcon from 'material-ui-icons/Add'
-import Collapse from 'material-ui/transitions/Collapse'
+import SearchIcon from 'material-ui-icons/Search'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
-import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
@@ -19,39 +18,17 @@ export default class LeftMenuNetworks extends Component {
       <List>
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page === 'network' && (
-              this.props.artworks.timeline.unique === 'net' ||
-              this.props.artworks.timeline.unique === 'univ' ||
-              this.props.artworks.timeline.unique === 'channel'
-            )
+            [classes.select]: this.props.router.page === 'network'
           })}
           component='a'
           href={'/network/default'}>
-          <ListItemText primary={'lists'} />
+          <ListItemText primary={'explore'} />
           <ListItemSecondaryAction>
-            <IconButtonMoreExpand isExpand={this.state.isExpand} onClick={this.onExpand} />
+            <IconButton component='a' href='/network/default'>
+              <SearchIcon />
+            </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
-        <Collapse in={this.state.isExpand} transitionDuration='auto'>
-          <ListItem button dense
-            className={classNames({
-              [classes.select]: this.props.router.page === 'network' &&
-              this.props.networks.timeline.unique === 'net'
-            })}
-            component='a'
-            href={'/network/net'}>
-            <ListItemText inset primary={'internet'} />
-          </ListItem>
-          <ListItem button dense
-            className={classNames({
-              [classes.select]: this.props.router.page === 'network' &&
-              this.props.networks.timeline.unique === 'univ'
-            })}
-            component='a'
-            href={'/network/univ'}>
-            <ListItemText inset primary={'univ'} />
-          </ListItem>
-        </Collapse>
         {this.props.accounts.isLogged &&
         <ListItem button dense
           className={classNames({
@@ -59,7 +36,7 @@ export default class LeftMenuNetworks extends Component {
           })}
           component='a'
           href='/network/new'>
-          <ListItemText primary='new list' />
+          <ListItemText primary='create new list' />
           <ListItemSecondaryAction>
             <IconButton component='a' href='/network/new'>
               <AddIcon />

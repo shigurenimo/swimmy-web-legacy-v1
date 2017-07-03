@@ -1,9 +1,11 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
+import BookmarkBorderIcon from 'material-ui-icons/BookmarkBorder'
 import Collapse from 'material-ui/transitions/Collapse'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
+import IconButton from 'material-ui/IconButton'
 import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
@@ -19,8 +21,13 @@ export default class LeftMenuTimeline extends Component {
             [classes.select]: this.props.router.page.includes('thread')
           })}
           component='a'
-          href='/thread'>
+          href='/threads'>
           <ListItemText primary='thread' />
+          <ListItemSecondaryAction>
+            <IconButton component='a' href='/threads'>
+              <BookmarkBorderIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
         </ListItem>
         <ListItem button dense
           className={classNames({
