@@ -10,6 +10,9 @@ const MethodModel = types.model('MethodModel', {
   selector: null,
   options: null
 }, {
+  setFetchState (state) {
+    this.fetchState = state
+  },
   pushIndex (models) {
     if (Array.isArray(models)) {
       models.forEach(model => {
@@ -52,6 +55,7 @@ const MethodModel = types.model('MethodModel', {
     return new Promise((resolve, reject) => {
       this.subscription = Meteor.subscribe(this.publish, selector, options, this.name, {
         onReady: () => {
+          console.info(this.publish + '.subscribe')
           let models = []
           let ref = null
           resolve()
@@ -102,6 +106,7 @@ const MethodModel = types.model('MethodModel', {
     }
     if (this.subscription) {
       this.subscription.stop()
+      console.info(this.publish + '.unsubscribe')
     }
   },
   subscribeOne (selector = {}, options = {}) {
@@ -122,6 +127,7 @@ const MethodModel = types.model('MethodModel', {
       }
       this.subscription = Meteor.subscribe(this.publish, selector, options, 'one', {
         onReady: () => {
+          console.info(this.publish + '.subscribeOne')
           const cursor = new Mongo.Collection(this.publish + '.one').find({}).observe({
             added: (model) => {
               this.setOne(model)

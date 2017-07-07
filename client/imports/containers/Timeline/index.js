@@ -8,7 +8,7 @@ import SheetContent from '../../components/UI-SheetContent'
 import NetworkInfo from '../NetworkInfo'
 import Post from '../CardPost'
 
-@inject('networks', 'posts', 'postsSocket', 'timelines', 'info')
+@inject('networks', 'posts', 'timelines', 'info')
 @observer
 export default class Timeline extends Component {
   render () {

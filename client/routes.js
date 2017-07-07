@@ -29,11 +29,8 @@ export default {
   },
   '/thread': {
     async action (context, stores) {
-      stores.threads.find()
-      .then(posts => {
-        stores.threads.setIndex(posts)
-        document.title = 'thread | ' + documentTitle
-      })
+      stores.threads.subscribe()
+      document.title = 'thread | ' + documentTitle
       stores.routes.setRoute('thread-list')
       stores.layout.setMain()
       if (Meteor.isProduction) {
