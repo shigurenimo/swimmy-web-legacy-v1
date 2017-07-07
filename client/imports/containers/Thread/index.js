@@ -9,16 +9,16 @@ import NetworkInfo from '../NetworkInfo'
 import Post from '../CardPost'
 import PostRes from '../CardPost/CardRes'
 
-@inject('posts', 'accounts', 'info') @observer
+@inject('threads', 'accounts', 'info') @observer
 export default class Thread extends Component {
   render () {
-    if (!this.props.posts.one) {
+    if (!this.props.threads.one) {
       return (
         <Layout>
           <Sheet>
             <SheetContent>
               <Typography>
-                {this.props.posts.fetchState ? '読み込み中 ..' : 'データが見つかりませんでした、'}
+                {this.props.threads.fetchState ? '読み込み中 ..' : 'データが見つかりませんでした、'}
               </Typography>
             </SheetContent>
           </Sheet>
@@ -28,10 +28,12 @@ export default class Thread extends Component {
     return (
       <Layout>
         {this.props.info.network && <NetworkInfo />}
-        {this.props.posts.one.replies &&
-        this.props.posts.one.replies.length > 0 &&
-        this.props.posts.one.replies.map(item => <PostRes key={item._id} {...item} />)}
-        <Post isReply {...this.props.posts.one} />
+        {this.props.threads.one.replies &&
+        this.props.threads.one.replies.length > 0 &&
+        this.props.threads.one.replies.map(item => {
+          return <PostRes key={item._id} {...item} />
+        })}
+        <Post isReply {...this.props.threads.one} />
       </Layout>
     )
   }

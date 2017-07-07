@@ -43,13 +43,12 @@ export default {
   },
   '/thread/:_id': {
     async action ({params}, stores) {
-      stores.posts.findOneFromId(params._id)
+      stores.threads.subscribeOne({_id: params._id})
       .then(post => {
         if (!post) { return notFound() }
-        stores.posts.replaceOne(post)
         let content = post.content
         if (content.length > 20) {
-          content = content.substr(0, 20) + '..'
+          content = content.substr(0, 15) + '..'
         }
         stores.routes.setRoute('thread')
         stores.layout.setMain()

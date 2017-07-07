@@ -153,10 +153,14 @@ const MethodModel = types.model('MethodModel', {
   },
   findOne (selector = {}, options = {}) {
     return new Promise((resolve, reject) => {
-      const subscription = Meteor.subscribe(this.publish, selector, options, this.one, {
+      console.log(this.publish, selector, options)
+      const subscription = Meteor.subscribe(this.publish, selector, options, 'one', {
         onReady: () => {
-          const app = new Mongo.Collection(this.publish + '.one').findOne({})
-          if (app) { resolve(app) } else { reject(app) }
+          const model = new Mongo.Collection(this.publish + '.one').findOne({})
+          if (model) {
+            this.setOne(model)
+            resolve(model)
+          } else { reject(model) }
           subscription.stop()
         }
       })

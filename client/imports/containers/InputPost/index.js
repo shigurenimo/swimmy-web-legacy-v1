@@ -15,6 +15,7 @@ import styleSheet from './index.style'
     layout: stores.layout,
     networks: stores.networks,
     posts: stores.posts,
+    threads: stores.threads,
     snackbar: stores.snackbar,
     router: stores.router,
     accounts: stores.accounts,
@@ -221,7 +222,6 @@ export default class InputPost extends Component {
         })
       })
       .then(post => {
-        this.props.posts.pushIndex(post)
         this.props.snackbar.show('投稿が完了しました')
         this.process = false
       })
@@ -236,7 +236,6 @@ export default class InputPost extends Component {
         networkId: this.props.timelines.networkId
       })
       .then(post => {
-        this.props.posts.pushIndex(post)
         this.props.inputPost.reset()
         this.ref.style.height = 'auto'
         this.props.snackbar.show('送信しました')
@@ -261,7 +260,7 @@ export default class InputPost extends Component {
         this.props.inputPost.reset()
         this.setState({errorImage: null, inputImage: null})
         this.ref.style.height = 'auto'
-        const replyId = this.props.posts.one._id
+        const replyId = this.props.threads.one._id
         return this.props.posts.insert({
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
@@ -270,34 +269,23 @@ export default class InputPost extends Component {
         })
       })
       .then(post => {
-        this.props.posts.pushIndex(post)
         this.props.snackbar.show('投稿が完了しました')
-        const replyId = this.props.posts.one._id
-        return this.props.posts.findOneFromId(replyId)
-      })
-      .then(post => {
-        this.props.posts.replaceOne(post)
       })
       .catch(err => {
         this.props.snackbar.error(err)
         this.process = false
       })
     } else {
-      const replyId = this.props.posts.one._id
+      const replyId = this.props.threads.one._id
       this.props.posts.insert({
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
         replyId
       })
       .then(posts => {
-        this.props.posts.pushIndex(posts)
         this.props.inputPost.reset()
         this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
-        return this.props.posts.findOneFromId(replyId)
-      })
-      .then(post => {
-        this.props.posts.replaceOne(post)
       })
       .catch(err => {
         this.props.snackbar.error(err)
