@@ -7,19 +7,12 @@ export default types.model('Timelines', {
   index: types.optional(types.array(Timeline), []),
   networkIndex: types.optional(types.array(Timeline), []),
   one: types.maybe(types.reference(Timeline)),
-  temp: types.maybe(types.reference(Timeline))
+  temp: types.maybe(types.reference(Timeline)),
+  name: types.maybe(types.string),
+  networkId: types.maybe(types.string),
+  useSocket: types.maybe(types.boolean),
+  unique: types.maybe(types.string)
 }, {
-  afterCreate () {
-    this.resetIndex()
-    Accounts.onLogin(this.onLogin.bind(this))
-    Accounts.onLogout(this.onLogout.bind(this))
-  },
-  onLogin () {
-    this.resetIndex()
-  },
-  onLogout () {
-    this.resetIndex()
-  },
   pushIndex (posts) {
     if (!posts) return
     if (Array.isArray(posts)) {
@@ -158,13 +151,35 @@ export default types.model('Timelines', {
     }
     this.index = timelines
   },
-  setTemp (timeline) {
-    this.temp = timeline.unique
+  setTemp (network) {
+    this.temp = {
+      name: network.name,
+      unique: network._id,
+      isStatic: false,
+      selector: {},
+      options: {}
+    }
   },
   setTempFromNetwork (networkId) {
     this.temp = networkId
   },
   resetTemp () {
     this.temp = null
+  },
+  setCurrent ({networkId, useSocket, unique}) {
+    switch (unique) {
+      case 'self':
+        this.name = '自分の書き込み'
+        break
+      case 'follows':
+        this.name = 'ユーザの書き込み'
+        break
+      default:
+        this.name = '全国の書き込み'
+        break
+    }
+    this.networkId = networkId
+    this.useSocket = useSocket
+    this.unique = unique
   }
 })

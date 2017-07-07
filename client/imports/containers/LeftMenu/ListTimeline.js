@@ -32,10 +32,10 @@ export default class LeftMenuTimeline extends Component {
         <ListItem button dense
           className={classNames({
             [classes.select]: this.props.router.page === 'timeline' && (
-              this.props.timelines.one.unique === 'default' ||
-              this.props.timelines.one.unique === 'follows' ||
-              this.props.timelines.one.unique === 'self' ||
-              this.props.timelines.one.unique === 'timemachine'
+              this.props.timelines.unique === 'default' ||
+              this.props.timelines.unique === 'follows' ||
+              this.props.timelines.unique === 'self' ||
+              this.props.timelines.unique === 'timemachine'
             )
           })}
           component='a'
@@ -46,44 +46,48 @@ export default class LeftMenuTimeline extends Component {
           </ListItemSecondaryAction>
         </ListItem>
         <Collapse in={this.state.isExpand} transitionDuration='auto' unmountOnExit>
+          {/* default */}
+          <ListItem button dense
+            className={classNames({
+              [classes.select]: this.props.router.page === 'timeline' &&
+              this.props.timelines.unique === 'default'
+            })}
+            component='a'
+            href={'/'}>
+            <ListItemText inset primary={'default'} />
+          </ListItem>
+          {/* follows */}
           {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]: this.props.router.page === 'timeline' &&
-              this.props.timelines.one.unique === 'follows'
+              this.props.timelines.unique === 'follows'
             })}
             component='a'
             href={'/follows'}>
             <ListItemText inset primary={'follows'} />
           </ListItem>}
+          {/* self */}
           {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
               [classes.select]: this.props.router.page === 'timeline' &&
-              this.props.timelines.one.unique === 'self'
+              this.props.timelines.unique === 'self'
             })}
             component='a'
             href={'/self'}>
             <ListItemText inset primary={'self'} />
           </ListItem>}
-          <ListItem button dense
-            className={classNames({
-              [classes.select]: this.props.router.page === 'timemachine'
-            })}
-            component='a'
-            href={'/logs'}>
-            <ListItemText inset primary='logs' />
-          </ListItem>
         </Collapse>
         {this.props.timelines.networkIndex.map(item =>
           <ListItem button dense
             key={item.unique}
             className={classNames({
               [classes.select]: this.props.router.page === 'timeline' &&
-              this.props.timelines.one.unique === item.unique
+              this.props.timelines.unique === item.unique
             })}
             component='a'
-            href={'/room/' + item.networkId}>
+            href={'/channel/' + item.networkId}>
             <ListItemText primary={item.name} />
           </ListItem>)}
       </List>

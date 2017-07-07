@@ -7,56 +7,17 @@ const documentTitleShort = 'swimmy'
 export default {
   '/(default|self|follows)?': {
     async action ({params}, stores) {
-      if (stores.accounts.isLogged) {
-        stores.timelines.setFromUnique(params[0])
-      } else {
-        stores.timelines.setFromUnique()
-      }
-      const selector = stores.timelines.one.getSelector()
-      const options = stores.timelines.one.getOptions()
-      if (stores.timelines.one.isStatic) {
-        stores.posts.find(selector, options)
-        .then(posts => {
-          stores.posts.setIndex(posts)
-        })
-      } else {
-        stores.postsSocket.subscribe(selector, options)
-      }
+      const unique = params[0] || 'default'
+      stores.posts.define(unique)
+      stores.posts[unique].subscribeFromUnique()
+      stores.timelines.setCurrent({
+        useSocket: true,
+        networkId: null,
+        unique: unique
+      })
       stores.routes.setRoute('timeline')
       stores.layout.setMain()
       stores.info.close()
-      document.title = documentTitle
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {
-          page: '/',
-          title: document.title
-        })
-      }
-    }
-  },
-  '/logs/:y?/:m?/:d?': {
-    async action ({params}, stores) {
-      if (params.d === undefined) {
-        const date = new Date()
-        params.y = date.getFullYear()
-        params.m = date.getMonth() + 1
-        params.d = date.getDate()
-      } else {
-        params.y = parseInt(params.y)
-        params.m = parseInt(params.m)
-        params.d = parseInt(params.d)
-      }
-      stores.timelines.setFromDate(params.y, params.m, params.d)
-      const selector = stores.timelines.one.getSelector()
-      const options = stores.timelines.one.getOptions()
-      stores.posts.find(selector, options)
-      .then(posts => {
-        if (posts) {
-          stores.posts.setIndex(posts)
-        }
-      })
-      stores.routes.setRoute('logs')
-      stores.layout.setMain()
       document.title = documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
@@ -165,20 +126,14 @@ export default {
       .catch(err => this.props.snackbar.error(err.reason))
     }
   },
-  '/network/(default|net|univ|channel)?': {
+  '/network/(default|net|univ)?': {
     async action ({params}, stores) {
-      stores.routes.setRoute('network-list')
       stores.layout.setMain()
-      if (params[0]) {
-        stores.networks.setTimelineFromUnique(params[0])
-      } else {
-        stores.networks.setTimelineFromUnique('default')
-      }
-      const {selector, options} = stores.networks.timeline
-      stores.networks.find(selector, options)
+      stores.routes.setRoute('network-list')
+      stores.networks.findFromTemplate(params[0])
       .then(data => {
         stores.networks.pushIndex(data)
-        document.title = 'リスト | ' + documentTitle
+        document.title = 'channel | ' + documentTitle
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
             page: '/network',
@@ -193,7 +148,7 @@ export default {
     async action ({params}, stores) {
       stores.routes.setRoute('network-new')
       stores.layout.setMain()
-      document.title = '新しいリスト | ' + documentTitle
+      document.title = 'new channel | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
           page: '/network/new',
@@ -202,35 +157,32 @@ export default {
       }
     }
   },
-  '/room/:networkId': {
+  '/channel/:networkId': {
     async action ({params, query}, stores) {
       const networkId = params.networkId
       stores.networks.findOne({_id: networkId}, {})
       .then(network => {
-        if (!network) {
-          return notFound()
-        }
+        if (!network) { return notFound() }
         stores.networks.replaceOne(network)
-        stores.timelines.setTemp(network._id)
-        stores.timelines.setFromUnique(network._id)
-        const selector = stores.timelines.one.getSelector()
-        const options = stores.timelines.one.getOptions()
-        stores.postsSocket.subscribe(selector, options)
-        try {
-          if (query.preview === 'true') {
-            stores.info.open()
-          } else {
-            stores.info.close()
-          }
-          stores.routes.setRoute('timeline')
-          stores.layout.setMain()
-        } catch (err) {
-          console.log(err)
-        }
+        stores.postsSocket.subscribeFromNetworkId(networkId)
+        stores.timelines.setCurrent({
+          useSocket: true,
+          networkId: networkId
+        })
+        console.log(stores.timelines)
+        /*
+         if (query.preview === 'true') {
+         stores.info.open()
+         } else {
+         stores.info.close()
+         }
+         */
+        stores.routes.setRoute('timeline')
+        stores.layout.setMain()
         document.title = network.name + ' | ' + documentTitleShort
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
-            page: '/room/' + networkId,
+            page: '/channel/' + networkId,
             title: document.title
           })
         }

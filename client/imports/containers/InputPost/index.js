@@ -36,7 +36,7 @@ export default class InputPost extends Component {
         <div className={classes.tools}>
           <Button dense
             className={classes.spacing}
-            selected={this.props.timelines.one.network}
+            selected={this.props.timelines.networkId}
             onClick={this.openNetworkInfo}>
             {this.timelineName}
           </Button>
@@ -98,17 +98,17 @@ export default class InputPost extends Component {
 
   get timelineName () {
     if (this.props.router.page === 'thread') {
-      if (this.props.timelines.one.networkId) {
-        return this.props.timelines.one.name
+      if (this.props.timelines.networkId) {
+        return this.props.timelines.name
       } else {
         return 'レス'
       }
     }
-    return this.props.timelines.one.name
+    return this.props.timelines.name
   }
 
   openNetworkInfo () {
-    const networkId = this.props.timelines.one.networkId ||
+    const networkId = this.props.timelines.networkId ||
       (this.props.router.page === 'thread' && this.props.posts.one.networkId)
     if (!networkId) return
     if (this.props.info.isOpen) {
@@ -217,7 +217,7 @@ export default class InputPost extends Component {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
           images: [base64],
-          networkId: this.props.timelines.one.networkId
+          networkId: this.props.timelines.networkId
         })
       })
       .then(post => {
@@ -233,7 +233,7 @@ export default class InputPost extends Component {
       this.props.posts.insert({
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
-        networkId: this.props.timelines.one.networkId
+        networkId: this.props.timelines.networkId
       })
       .then(post => {
         this.props.posts.pushIndex(post)

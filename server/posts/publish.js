@@ -2,9 +2,16 @@ import { Meteor } from 'meteor/meteor'
 import collections from '/lib/collections'
 import utils from '/lib/imports/utils'
 
-Meteor.publish('posts', function (selector, options) {
-  const self = this
-  const userId = this.userId
+Meteor.publish('posts', function (selector = {}, options = {}, name) {
+  switch (name) {
+    case 'self':
+      selector.ownerId = this.userId
+      break
+    case 'follows':
+      const user = Meteor.users.findOne(this.userId)
+      selector['ownerId'] = {$in: user.profile.follows}
+      break
+  }
 
   options.sort = {createdAt: -1}
   options.fields = {
@@ -23,8 +30,10 @@ Meteor.publish('posts', function (selector, options) {
     }
   }
 
+  const namespace = name ? 'posts.' + name : 'posts'
+
   const cursor = collections.posts.find(selector, options).observe({
-    addedAt (post) {
+    addedAt: (post) => {
       if (post.replyId) {
         const reply = collections.posts.findOne(post.replyId, replyOptions)
         if (reply) {
@@ -43,10 +52,10 @@ Meteor.publish('posts', function (selector, options) {
       }
       if (post.link) { post.content = utils.replace.link(post.content) }
       // if (post.tags) { post.content = utils.replace.tags(post.content) }
-      if (userId !== post.ownerId) { delete post.ownerId }
-      self.added('posts', post._id, post)
+      if (this.userId !== post.ownerId) { delete post.ownerId }
+      this.added(namespace, post._id, post)
     },
-    changed (post) {
+    changed: (post) => {
       if (post.replyId) {
         const reply = collections.posts.findOne(post.replyId, replyOptions)
         if (reply) {
@@ -60,15 +69,15 @@ Meteor.publish('posts', function (selector, options) {
       }
       if (post.link) { post.content = utils.replace.link(post.content) }
       // if (post.tags) { post.content = utils.replace.tags(post.content) }
-      if (userId !== post.ownerId) { delete post.ownerId }
-      self.changed('posts', post._id, post)
+      if (this.userId !== post.ownerId) { delete post.ownerId }
+      this.changed(namespace, post._id, post)
     },
-    removed (post) {
-      self.removed('posts', post._id)
+    removed: (post) => {
+      this.removed(namespace, post._id)
     }
   })
 
-  self.ready()
+  this.ready()
 
-  self.onStop(() => { cursor.stop() })
+  this.onStop(() => { cursor.stop() })
 })

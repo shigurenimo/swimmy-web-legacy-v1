@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor'
-import { Accounts } from 'meteor/accounts-base'
 import { action, observable, toJS } from 'mobx'
 
 export default class {
@@ -12,20 +11,6 @@ export default class {
   @observable timeline = null
 
   ids = {}
-
-  constructor () {
-    this.resetTimelines()
-    Accounts.onLogin(this.onLogin.bind(this))
-    Accounts.onLogout(this.onLogout.bind(this))
-  }
-
-  onLogin () {
-    this.resetTimelines()
-  }
-
-  onLogout () {
-    this.resetTimelines()
-  }
 
   @action
   pushIndex (data) {
@@ -64,73 +49,9 @@ export default class {
     }
   }
 
-  replaceOne (data) {
-    if (!data) {
-      this.one = null
-    }
-    this.one = data
-  }
-
-  setTimelineFromUnique (unique) {
-    const timelines = this.timelines.slice()
-    for (let i = 0, len = timelines.length; i < len; ++i) {
-      if (timelines[i].unique !== unique) continue
-      this.timeline = timelines[i]
-      break
-    }
-    return toJS(this.timeline)
-  }
-
-  @action
-  resetTimelines () {
-    const user = Meteor.user()
-    const timeline = {
-      name: '全てのリスト',
-      unique: 'default',
-      selector: {},
-      options: {
-        limit: 50,
-        sort: {updatedAt: -1}
-      }
-    }
-    if (!this.timeline) {
-      this.timeline = timeline
-    }
-    this.timelines = [timeline, {
-      name: 'インターネット',
-      unique: 'net',
-      selector: {
-        univ: {$exists: false}
-      },
-      options: {
-        limit: 50,
-        sort: {updatedAt: -1}
-      }
-    }, {
-      name: 'サークル',
-      unique: 'univ',
-      selector: {
-        univ: {$exists: true}
-      },
-      options: {
-        limit: 50,
-        sort: {updatedAt: -1}
-      }
-    }]
-    if (user) {
-      this.timelines.push({
-        name: '県内のリスト',
-        unique: 'channel',
-        selector: {
-          univ: {$exists: true},
-          channel: user.profile.channel
-        },
-        options: {
-          limit: 50,
-          sort: {updatedAt: -1}
-        }
-      })
-    }
+  replaceOne (model) {
+    if (!model) { this.one = null }
+    this.one = model
   }
 
   find (selector, options) {
@@ -138,8 +59,6 @@ export default class {
       this.isFetching = true
       this.index = []
       this.ids = {}
-      selector = toJS(selector)
-      options = toJS(options)
       Meteor.call('networks.find', selector, options, (err, res) => {
         this.isFetching = false
         if (err) {
@@ -151,16 +70,34 @@ export default class {
     })
   }
 
+  findFromTemplate (unique) {
+    switch (unique) {
+      case 'net':
+        return this.find({
+          univ: {$exists: false}
+        }, {
+          limit: 50,
+          sort: {updatedAt: -1}
+        })
+      case 'univ':
+        return this.find({
+          univ: {$exists: true}
+        }, {
+          limit: 50,
+          sort: {updatedAt: -1}
+        })
+      default:
+        return this.find({}, {
+          limit: 50,
+          sort: {updatedAt: -1}
+        })
+    }
+  }
+
   findOne (selector, options) {
     return new Promise((resolve, reject) => {
-      selector = toJS(selector)
-      options = toJS(options)
       Meteor.call('networks.findOne', selector, options, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
+        if (err) { reject(err) } else { resolve(res) }
       })
     })
   }

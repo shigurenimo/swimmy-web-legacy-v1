@@ -1,42 +1,8 @@
 import { getSnapshot, types } from 'mobx-state-tree'
 
 export default types.model('Timeline', {
-  unique: types.identifier(types.string),
   name: types.string,
   networkId: types.maybe(types.string),
-  isStatic: types.optional(types.boolean, false),
-  selector: types.union(snapshot => {
-    const model = {}
-    Object.keys(snapshot).forEach(name => {
-      switch (name) {
-        case 'networkId':
-          model.networkId = types.string
-          break
-        case 'createdAt':
-          model.createdAt = types.model({
-            $gte: types.Date,
-            $lt: types.Date
-          })
-          break
-        case 'owner.username':
-          model['owner.username'] = types.model({
-            $in: types.array(types.string)
-          })
-      }
-    })
-    return types.model(model)
-  }),
-  options: types.union(snapshot => {
-    const model = {}
-    Object.keys(snapshot).forEach(name => {
-      switch (name) {
-        case 'limit':
-          model.limit = snapshot.limit
-          break
-      }
-    })
-    return types.model(model)
-  }),
   other: types.maybe(
     types.union(
       types.model({

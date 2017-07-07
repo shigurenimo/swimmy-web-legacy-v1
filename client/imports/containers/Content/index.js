@@ -17,7 +17,6 @@ import Release from '../Release'
 import Report from '../Report'
 import Thread from '../Thread'
 import ThreadList from '../ThreadList'
-import TimeMachine from '../TimeMachine'
 import Timeline from '../Timeline'
 import Twitter from '../ConfigTwitter'
 import TwitterLogin from '../ConfigTwitterLogin'
@@ -99,8 +98,6 @@ export default class Content extends Component {
         return <Profile key='profile' />
       case 'timeline':
         return <Timeline key={'timeline'} />
-      case 'logs':
-        return <TimeMachine key='logs' />
       case 'thread':
         return <Thread key='thread' />
       case 'thread-list':

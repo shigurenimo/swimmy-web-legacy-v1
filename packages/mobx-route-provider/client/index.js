@@ -39,8 +39,12 @@ export function createRouter (routes) {
     paths.forEach(path => {
       page(path, (context, next) => {
         const route = routes[path]
+        const query = qs.parse(context.querystring)
         mobxStores.routes = model
-        context.query = qs.parse(context.querystring)
+        mobxStores.routes.setQuery(query)
+        mobxStores.routes.setPath(context.path)
+        mobxStores.routes.setParams(context.params)
+        context.query = query
         const asyncFuntion = route.action(context, mobxStores, next)
         if (asyncFuntion.then) {
           asyncFuntion
