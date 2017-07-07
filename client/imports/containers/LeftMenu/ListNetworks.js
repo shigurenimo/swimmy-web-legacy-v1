@@ -22,9 +22,9 @@ export default class LeftMenuNetworks extends Component {
           })}
           component='a'
           href={'/network/default'}>
-          <ListItemText primary={'explore'} />
+          <ListItemText primary={'explore channel'} />
           <ListItemSecondaryAction>
-            <IconButton component='a' href='/network/default'>
+            <IconButton component={'a'} href={'/network/default'}>
               <SearchIcon />
             </IconButton>
           </ListItemSecondaryAction>
@@ -34,11 +34,11 @@ export default class LeftMenuNetworks extends Component {
           className={classNames({
             [classes.select]: this.props.router.page.includes('network-new')
           })}
-          component='a'
-          href='/network/new'>
-          <ListItemText primary='create new list' />
+          component={'a'}
+          href={'/network/new'}>
+          <ListItemText primary={'create new'} />
           <ListItemSecondaryAction>
-            <IconButton component='a' href='/network/new'>
+            <IconButton component={'a'} href={'/network/new'}>
               <AddIcon />
             </IconButton>
           </ListItemSecondaryAction>
