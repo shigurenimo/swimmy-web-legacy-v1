@@ -25,9 +25,8 @@ export default class NetworkList extends Component {
 
   forNetworks () {
     const {classes} = this.props
-    const index = this.props.networks.index.slice()
     const isFetching = this.props.networks.isFetching
-    if (index.length < 1) {
+    if (this.props.networks.index.length === 0) {
       return (
         <Sheet>
           <SheetContent>
@@ -38,7 +37,7 @@ export default class NetworkList extends Component {
         </Sheet>
       )
     }
-    return index.map(item =>
+    return this.props.networks.index.map(item =>
       <Sheet hover key={item._id} href={'/channel/' + item._id + '/?preview=true'}>
         {item.univ &&
         <SheetContent type='caption'>

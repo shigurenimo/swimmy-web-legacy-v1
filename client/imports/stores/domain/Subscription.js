@@ -13,6 +13,13 @@ const MethodModel = types.model('MethodModel', {
   setFetchState (state) {
     this.fetchState = state
   },
+  setIndex (models) {
+    if (Array.isArray(models)) {
+      this.index = models
+    } else {
+      this.index = [models]
+    }
+  },
   pushIndex (models) {
     if (Array.isArray(models)) {
       models.forEach(model => {
@@ -153,15 +160,20 @@ const MethodModel = types.model('MethodModel', {
   },
   findOne (selector = {}, options = {}) {
     return new Promise((resolve, reject) => {
-      console.log(this.publish, selector, options)
-      const subscription = Meteor.subscribe(this.publish, selector, options, 'one', {
-        onReady: () => {
-          const model = new Mongo.Collection(this.publish + '.one').findOne({})
-          if (model) {
-            this.setOne(model)
-            resolve(model)
-          } else { reject(model) }
-          subscription.stop()
+      Meteor.call(this.publish + '.findOne', selector, options, (err, model) => {
+        if (err) { reject(err) } else {
+          this.setOne(model)
+          resolve(model)
+        }
+      })
+    })
+  },
+  find (selector = {}, options = {}) {
+    return new Promise((resolve, reject) => {
+      Meteor.call(this.publish + '.find', selector, options, (err, models) => {
+        if (err) { reject(err) } else {
+          this.setIndex(models)
+          resolve(models)
         }
       })
     })

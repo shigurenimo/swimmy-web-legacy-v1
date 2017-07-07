@@ -124,11 +124,11 @@ export default {
   },
   '/network/(default|net|univ)?': {
     async action ({params}, stores) {
+      const unique = params[0] || 'default'
       stores.layout.setMain()
       stores.routes.setRoute('network-list')
-      stores.networks.findFromTemplate(params[0])
-      .then(data => {
-        stores.networks.pushIndex(data)
+      stores.networks.findFromUnique(unique)
+      .then(model => {
         document.title = 'channel | ' + documentTitle
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
@@ -153,19 +153,20 @@ export default {
       }
     }
   },
-  '/channel/:networkId': {
+  '/channel/:channelId': {
     async action ({params, query}, stores) {
-      const networkId = params.networkId
-      stores.networks.findOne({_id: networkId}, {})
-      .then(network => {
-        if (!network) { return notFound() }
-        stores.networks.replaceOne(network)
-        stores.postsSocket.subscribeFromNetworkId(networkId)
+      const channelId = params.channelId
+      stores.networks.findOne({_id: channelId})
+      .then(model => {
+        if (!model) { return notFound() }
+        stores.posts.define(channelId)
+        stores.posts[channelId].subscribe({channelId})
         stores.timelines.setCurrent({
           useSocket: true,
-          networkId: networkId
+          networkId: channelId,
+          unique: channelId
         })
-        console.log(stores.timelines)
+        document.title = model.name + ' | ' + documentTitleShort
         /*
          if (query.preview === 'true') {
          stores.info.open()
@@ -175,10 +176,9 @@ export default {
          */
         stores.routes.setRoute('timeline')
         stores.layout.setMain()
-        document.title = network.name + ' | ' + documentTitleShort
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
-            page: '/channel/' + networkId,
+            page: '/channel/' + channelId,
             title: document.title
           })
         }

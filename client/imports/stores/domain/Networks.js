@@ -1,135 +1,34 @@
 import { Meteor } from 'meteor/meteor'
-import { action, observable, toJS } from 'mobx'
+import { types } from 'mobx-state-tree'
+import { IndexModel, Model } from './Subscription'
 
-export default class {
-  @observable index = []
+const Channel = types.model({
+  _id: types.string,
+  ownerId: types.string,
+  name: types.string,
+  description: types.string,
+  member: types.array(types.string),
+  region: types.string,
+  createdAt: types.Date,
+  updatedAt: types.Date
+})
 
-  @observable one = null
+const ChannelIndex = types.compose('ChannelIndex', IndexModel, {
+  one: types.maybe(Channel),
+  index: types.optional(types.array(Channel), [])
+})
 
-  @observable timelines = []
-
-  @observable timeline = null
-
-  ids = {}
-
-  @action
-  pushIndex (data) {
-    if (!data) return
-    if (Array.isArray(data)) {
-      data.forEach(post => {
-        this.ids[post._id] = post
-        this.index.push(post)
-      })
-    } else {
-      this.ids[data._id] = data
-      this.index.push(data)
-    }
-    this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  }
-
-  @action
-  pullIndex (dataId) {
-    if (!this.ids[dataId]) return
-    for (let i = 0, len = this.index.length; i < len; ++i) {
-      if (dataId !== this.index[i]._id) continue
-      this.ids[dataId] = null
-      this.index.splice(i, 1)
-      break
-    }
-  }
-
-  @action
-  replaceIndex (dataId, data) {
-    if (!this.ids[dataId]) return
-    for (let i = 0, len = this.index.length; i < len; ++i) {
-      if (dataId !== this.index[i]._id) continue
-      this.ids[dataId] = data
-      this.index[i] = data
-      break
-    }
-  }
-
-  replaceOne (model) {
-    if (!model) { this.one = null }
-    this.one = model
-  }
-
-  find (selector, options) {
-    return new Promise((resolve, reject) => {
-      this.isFetching = true
-      this.index = []
-      this.ids = {}
-      Meteor.call('networks.find', selector, options, (err, res) => {
-        this.isFetching = false
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  findFromTemplate (unique) {
+export default types.compose('Channels', Model, {
+  map: types.maybe(types.map(ChannelIndex)),
+  one: types.maybe(Channel),
+  index: types.optional(types.array(Channel), [])
+}, {
+  findFromUnique (unique) {
     switch (unique) {
-      case 'net':
-        return this.find({
-          univ: {$exists: false}
-        }, {
-          limit: 50,
-          sort: {updatedAt: -1}
-        })
-      case 'univ':
-        return this.find({
-          univ: {$exists: true}
-        }, {
-          limit: 50,
-          sort: {updatedAt: -1}
-        })
       default:
-        return this.find({}, {
-          limit: 50,
-          sort: {updatedAt: -1}
-        })
+        return this.find({})
     }
-  }
-
-  findOne (selector, options) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('networks.findOne', selector, options, (err, res) => {
-        if (err) { reject(err) } else { resolve(res) }
-      })
-    })
-  }
-
-  findOneFromId (_id) {
-    return this.findOne({_id}, {})
-  }
-
-  insert (next) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('networks.insert', next, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
-  remove (networkId) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('networks.remove', {networkId}, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
-      })
-    })
-  }
-
+  },
   updateBasic (networkId, name, next) {
     return new Promise((resolve, reject) => {
       let req = {networkId}
@@ -142,8 +41,7 @@ export default class {
         }
       })
     })
-  }
-
+  },
   updateMember (networkId) {
     return new Promise((resolve, reject) => {
       Meteor.call('networks.updateMember', {networkId}, (err, res) => {
@@ -155,4 +53,4 @@ export default class {
       })
     })
   }
-}
+})

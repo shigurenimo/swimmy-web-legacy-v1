@@ -14,6 +14,7 @@ import Users from './domain/Users'
 const accounts = Accounts.create({})
 const info = Info.create({})
 const inputPost = InputPost.create({})
+const networks = Networks.create({publish: 'networks'})
 const layout = Layout.create({})
 const posts = Posts.create({publish: 'posts'})
 const reports = Reports.create({})
@@ -28,7 +29,7 @@ export default {
   info,
   inputPost,
   layout,
-  networks: new Networks(),
+  networks,
   posts,
   reports,
   snackbar,

@@ -233,7 +233,7 @@ export default class InputPost extends Component {
       this.props.posts.insert({
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
-        networkId: this.props.timelines.networkId
+        channelId: this.props.timelines.networkId
       })
       .then(post => {
         this.props.inputPost.reset()
