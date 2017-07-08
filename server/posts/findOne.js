@@ -55,8 +55,8 @@ Meteor.methods({
         utils.createPathFromDate(post.createdAt)
     }
 
-    if (post.networkId) {
-      post.network = collections.networks.findOne(post.networkId, {fields: {name: 1}})
+    if (post.channelId) {
+      post.channel = collections.channels.findOne(post.channelId, {fields: {name: 1}})
     }
 
     post.content = utils.replace.link(post.content)

@@ -16,7 +16,7 @@ import Post from '../CardPost'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('networks', 'posts', 'timelines')
+@inject('channels', 'posts', 'timelines')
 @observer
 export default class TimeMachine extends Component {
   render () {

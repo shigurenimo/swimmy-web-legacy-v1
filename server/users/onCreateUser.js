@@ -10,7 +10,7 @@ Accounts.onCreateUser(function (options, user) {
   user.profile.description = ''
   user.profile.follows = []
   user.profile.code = code.join('')
-  user.profile.networks = []
+  user.profile.channels = []
   user.profile.from = 'swimmy'
   return user
 })

@@ -1,7 +1,7 @@
 import InputPost from './ui/InputPost'
 import Info from './ui/info'
 import Layout from './ui/Layout'
-import Networks from './domain/Networks'
+import Channels from './domain/Channels'
 import Posts from './domain/Posts'
 import Reports from './domain/Reports'
 import Snackbar from './ui/Snackbar'
@@ -14,7 +14,7 @@ import Users from './domain/Users'
 const accounts = Accounts.create({})
 const info = Info.create({})
 const inputPost = InputPost.create({})
-const networks = Networks.create({publish: 'networks'})
+const channels = Channels.create({publish: 'channels'})
 const layout = Layout.create({})
 const posts = Posts.create({publish: 'posts'})
 const reports = Reports.create({})
@@ -29,7 +29,7 @@ export default {
   info,
   inputPost,
   layout,
-  networks,
+  channels,
   posts,
   reports,
   snackbar,

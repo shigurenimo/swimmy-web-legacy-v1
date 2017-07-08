@@ -79,7 +79,7 @@ export default class LeftMenuTimeline extends Component {
             <ListItemText inset primary={'self'} />
           </ListItem>}
         </Collapse>
-        {this.props.timelines.networkIndex.map(item =>
+        {this.props.timelines.channelIndex.map(item =>
           <ListItem button dense
             key={item.unique}
             className={classNames({
@@ -87,7 +87,7 @@ export default class LeftMenuTimeline extends Component {
               this.props.timelines.unique === item.unique
             })}
             component='a'
-            href={'/channel/' + item.networkId}>
+            href={'/channel/' + item.channelId}>
             <ListItemText primary={item.name} />
           </ListItem>)}
       </List>

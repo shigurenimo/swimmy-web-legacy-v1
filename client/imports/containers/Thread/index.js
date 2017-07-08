@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
-import NetworkInfo from '../NetworkInfo'
+import ChannelInfo from '../ChannelInfo'
 import Post from '../CardPost'
 import PostRes from '../CardPost/CardRes'
 
@@ -27,7 +27,7 @@ export default class Thread extends Component {
     }
     return (
       <Layout>
-        {this.props.info.network && <NetworkInfo />}
+        {this.props.info.channel && <ChannelInfo />}
         {this.props.threads.one.replies &&
         this.props.threads.one.replies.length > 0 &&
         this.props.threads.one.replies.map(item => {

@@ -13,20 +13,20 @@ import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('networks', 'accounts') @observer
-export default class NetworkList extends Component {
+@inject('channels', 'accounts') @observer
+export default class ChannelList extends Component {
   render () {
     return (
       <Layout>
-        {this.forNetworks()}
+        {this.forChannels()}
       </Layout>
     )
   }
 
-  forNetworks () {
+  forChannels () {
     const {classes} = this.props
-    const isFetching = this.props.networks.isFetching
-    if (this.props.networks.index.length === 0) {
+    const isFetching = this.props.channels.isFetching
+    if (this.props.channels.index.length === 0) {
       return (
         <Sheet>
           <SheetContent>
@@ -37,7 +37,7 @@ export default class NetworkList extends Component {
         </Sheet>
       )
     }
-    return this.props.networks.index.map(item =>
+    return this.props.channels.index.map(item =>
       <Sheet hover key={item._id} href={'/channel/' + item._id + '/?preview=true'}>
         {item.univ &&
         <SheetContent type='caption'>
@@ -53,7 +53,7 @@ export default class NetworkList extends Component {
         {item.header &&
         <SheetBackgroundImage src={
           item.header &&
-          Meteor.settings.public.assets.network.root + item._id + '/' + item.header
+          Meteor.settings.public.assets.channel.root + item._id + '/' + item.header
         } />}
         <Block width={600}>
           <SheetContent>

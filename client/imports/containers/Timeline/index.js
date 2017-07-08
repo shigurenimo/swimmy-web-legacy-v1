@@ -5,16 +5,16 @@ import Typography from 'material-ui/Typography'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
-import NetworkInfo from '../NetworkInfo'
+import ChannelInfo from '../ChannelInfo'
 import Post from '../CardPost'
 
-@inject('networks', 'posts', 'timelines', 'info')
+@inject('channels', 'posts', 'timelines', 'info')
 @observer
 export default class Timeline extends Component {
   render () {
     return (
       <Layout>
-        {this.props.info.network && <NetworkInfo />}
+        {this.props.info.channel && <ChannelInfo />}
         {this.forPosts()}
       </Layout>
     )

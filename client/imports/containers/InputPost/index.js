@@ -13,7 +13,7 @@ import styleSheet from './index.style'
   return {
     inputPost: stores.inputPost,
     layout: stores.layout,
-    networks: stores.networks,
+    channels: stores.channels,
     posts: stores.posts,
     threads: stores.threads,
     snackbar: stores.snackbar,
@@ -37,8 +37,8 @@ export default class InputPost extends Component {
         <div className={classes.tools}>
           <Button dense
             className={classes.spacing}
-            selected={this.props.timelines.networkId}
-            onClick={this.openNetworkInfo}>
+            selected={this.props.timelines.channelId}
+            onClick={this.openChannelInfo}>
             {this.timelineName}
           </Button>
         </div>
@@ -99,7 +99,7 @@ export default class InputPost extends Component {
 
   get timelineName () {
     if (this.props.router.page === 'thread') {
-      if (this.props.timelines.networkId) {
+      if (this.props.timelines.channelId) {
         return this.props.timelines.name
       } else {
         return 'レス'
@@ -108,23 +108,23 @@ export default class InputPost extends Component {
     return this.props.timelines.name
   }
 
-  openNetworkInfo () {
-    const networkId = this.props.timelines.networkId ||
-      (this.props.router.page === 'thread' && this.props.posts.one.networkId)
-    if (!networkId) return
+  openChannelInfo () {
+    const channelId = this.props.timelines.channelId ||
+      (this.props.router.page === 'thread' && this.props.posts.one.channelId)
+    if (!channelId) return
     if (this.props.info.isOpen) {
       this.props.info.close()
     } else {
-      this.props.networks.findOneFromId(networkId)
-      .then(network => {
-        this.props.info.setNetwork(network)
-        this.props.networks.replaceOne(network)
+      this.props.channels.findOneFromId(channelId)
+      .then(channel => {
+        this.props.info.setChannel(channel)
+        this.props.channels.replaceOne(channel)
       })
       .catch(err => this.props.snackbar.error(err.reason))
     }
   }
 
-  openNetworkInfo = ::this.openNetworkInfo
+  openChannelInfo = ::this.openChannelInfo
 
   // 内容を入力する
   onInputContent (event) {
@@ -218,7 +218,7 @@ export default class InputPost extends Component {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
           images: [base64],
-          networkId: this.props.timelines.networkId
+          channelId: this.props.timelines.channelId
         })
       })
       .then(post => {
@@ -233,7 +233,7 @@ export default class InputPost extends Component {
       this.props.posts.insert({
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
-        channelId: this.props.timelines.networkId
+        channelId: this.props.timelines.channelId
       })
       .then(post => {
         this.props.inputPost.reset()

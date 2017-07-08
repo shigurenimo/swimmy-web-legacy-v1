@@ -11,12 +11,12 @@ import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
 
-@inject('networks', 'snackbar')
+@inject('channels', 'snackbar')
 @observer
-export default class NetworkEdit extends Component {
+export default class ChannelEdit extends Component {
   render () {
     const {
-      networks: {one: network}
+      channels: {one: channel}
     } = this.props
     return (
       <Layout>
@@ -34,7 +34,7 @@ export default class NetworkEdit extends Component {
         <Sheet>
           <SheetActions>
             <UIDropzone
-              src={Meteor.settings.public.assets.network.root + network._id + '/' + this.state.header}
+              src={Meteor.settings.public.assets.channel.root + channel._id + '/' + this.state.header}
               onDrop={this.onDropHeader} />
           </SheetActions>
         </Sheet>
@@ -91,20 +91,20 @@ export default class NetworkEdit extends Component {
   }
 
   state = {
-    name: this.props.networks.one.name,
-    header: this.props.networks.one.header,
-    number: this.props.networks.one.number,
-    description: this.props.networks.one.description || '',
-    channel: this.props.networks.one.channel,
-    place: this.props.networks.one.place || '',
-    site: this.props.networks.one.sns.site || '',
-    twitter: this.props.networks.one.sns.twitter || '',
-    email: this.props.networks.one.email || '',
-    univ: this.props.networks.one.univ || '',
+    name: this.props.channels.one.name,
+    header: this.props.channels.one.header,
+    number: this.props.channels.one.number,
+    description: this.props.channels.one.description || '',
+    channel: this.props.channels.one.channel,
+    place: this.props.channels.one.place || '',
+    site: this.props.channels.one.sns.site || '',
+    twitter: this.props.channels.one.sns.twitter || '',
+    email: this.props.channels.one.email || '',
+    univ: this.props.channels.one.univ || '',
     tags: [
-      this.props.networks.one.tags.slice()[0] || '',
-      this.props.networks.one.tags.slice()[1] || '',
-      this.props.networks.one.tags.slice()[2] || ''
+      this.props.channels.one.tags.slice()[0] || '',
+      this.props.channels.one.tags.slice()[1] || '',
+      this.props.channels.one.tags.slice()[2] || ''
     ],
     errorImageHeader: null
   }
@@ -122,12 +122,12 @@ export default class NetworkEdit extends Component {
 
   // リストの名前の更新をサーバーに送信する
   onSubmitName () {
-    if (this.props.networks.one.name === this.state.name) return
-    const networkId = this.props.networks.one._id
+    if (this.props.channels.one.name === this.state.name) return
+    const channelId = this.props.channels.one._id
     const next = this.state.name
-    this.props.networks.updateBasic(networkId, 'name', next)
+    this.props.channels.updateBasic(channelId, 'name', next)
     .then(data => {
-      this.props.networks.replaceOne(data)
+      this.props.channels.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))
@@ -160,7 +160,7 @@ export default class NetworkEdit extends Component {
     const formdata = new FormData()
     formdata.append('file', file)
     formdata.append('name_min', imageName)
-    formdata.append('id', this.props.networks.one._id)
+    formdata.append('id', this.props.channels.one._id)
     if (Meteor.isDevelopment) {
       if (!Meteor.settings.public.api || !Meteor.settings.public.api.unique) {
         this.props.snackbar.errorMessage('開発環境では画像のアップロードは利用できません')
@@ -171,7 +171,7 @@ export default class NetworkEdit extends Component {
     }
     this.setState({errorImageHeader: null})
     new Promise((resolve, reject) => {
-      HTTP.post(Meteor.settings.public.api.network.header, {content: formdata}, err => {
+      HTTP.post(Meteor.settings.public.api.channel.header, {content: formdata}, err => {
         if (err) {
           reject(err)
         } else {
@@ -180,11 +180,11 @@ export default class NetworkEdit extends Component {
       })
     })
     .then(() => {
-      const networkId = this.props.networks.one._id
-      return this.props.networks.updateBasic(networkId, 'header', imageNameCache)
+      const channelId = this.props.channels.one._id
+      return this.props.channels.updateBasic(channelId, 'header', imageNameCache)
     })
     .then(data => {
-      this.props.networks.replaceOne(data)
+      this.props.channels.replaceOne(data)
       this.props.snackbar.show('更新しました')
       this.setState({header: imageNameCache})
     })
@@ -209,12 +209,12 @@ export default class NetworkEdit extends Component {
 
   // リストの説明の更新をサーバーに送信する
   onSubmitDescription () {
-    const networkId = this.props.networks.one._id
+    const channelId = this.props.channels.one._id
     const next = this.state.description
-    if (this.props.networks.one.description === this.state.description) return
-    this.props.networks.updateBasic(networkId, 'description', next)
+    if (this.props.channels.one.description === this.state.description) return
+    this.props.channels.updateBasic(channelId, 'description', next)
     .then(data => {
-      this.props.networks.replaceOne(data)
+      this.props.channels.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))
@@ -235,12 +235,12 @@ export default class NetworkEdit extends Component {
 
   // 大学名の更新をサーバーに送信する
   onSubmitUniv () {
-    const networkId = this.props.networks.one._id
+    const channelId = this.props.channels.one._id
     const next = this.state.univ
-    if (this.props.networks.one.univ === this.state.univ) return
-    this.props.networks.updateBasic(networkId, 'univ', next)
+    if (this.props.channels.one.univ === this.state.univ) return
+    this.props.channels.updateBasic(channelId, 'univ', next)
     .then(data => {
-      this.props.networks.replaceOne(data)
+      this.props.channels.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))
@@ -259,18 +259,18 @@ export default class NetworkEdit extends Component {
 
   // テキストの更新をサーバーに送信する
   onSubmitSocial () {
-    const networkId = this.props.networks.one._id
+    const channelId = this.props.channels.one._id
     const next = {
       site: this.state.site,
       twitter: this.state.twitter,
       facebook: this.state.facebook
     }
-    if (this.props.networks.one.sns.site === this.state.site &&
-      this.props.networks.one.sns.twitter === this.state.twitter &&
-      this.props.networks.one.sns.facebook === this.state.facebook) return
-    this.props.networks.updateBasic(networkId, 'sns', next)
+    if (this.props.channels.one.sns.site === this.state.site &&
+      this.props.channels.one.sns.twitter === this.state.twitter &&
+      this.props.channels.one.sns.facebook === this.state.facebook) return
+    this.props.channels.updateBasic(channelId, 'sns', next)
     .then(data => {
-      this.props.networks.replaceOne(data)
+      this.props.channels.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))

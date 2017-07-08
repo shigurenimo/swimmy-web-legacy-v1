@@ -2,7 +2,7 @@ import { getSnapshot, types } from 'mobx-state-tree'
 
 export default types.model('Timeline', {
   name: types.string,
-  networkId: types.maybe(types.string),
+  channelId: types.maybe(types.string),
   other: types.maybe(
     types.union(
       types.model({
@@ -16,8 +16,8 @@ export default types.model('Timeline', {
   getSelector () {
     const snapshot = getSnapshot(this).selector
     const selector = {}
-    if (snapshot.networkId) {
-      selector.networkId = snapshot.networkId
+    if (snapshot.channelId) {
+      selector.channelId = snapshot.channelId
     }
     if (snapshot['owner.username']) {
       selector['owner.username'] = snapshot['owner.username']

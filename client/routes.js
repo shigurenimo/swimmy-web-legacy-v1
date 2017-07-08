@@ -12,7 +12,7 @@ export default {
       stores.posts[unique].subscribeFromUnique()
       stores.timelines.setCurrent({
         useSocket: true,
-        networkId: null,
+        channelId: null,
         unique: unique
       })
       stores.routes.setRoute('timeline')
@@ -122,17 +122,17 @@ export default {
       .catch(err => this.props.snackbar.error(err.reason))
     }
   },
-  '/network/(default|net|univ)?': {
+  '/channel/(default|net|univ)?': {
     async action ({params}, stores) {
       const unique = params[0] || 'default'
       stores.layout.setMain()
-      stores.routes.setRoute('network-list')
-      stores.networks.findFromUnique(unique)
+      stores.routes.setRoute('channel-list')
+      stores.channels.findFromUnique(unique)
       .then(model => {
         document.title = 'channel | ' + documentTitle
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
-            page: '/network',
+            page: '/channel',
             title: document.title
           })
         }
@@ -140,14 +140,14 @@ export default {
       .catch(err => this.props.snackbar.error(err.reason))
     }
   },
-  '/network/new': {
+  '/channel/new': {
     async action ({params}, stores) {
-      stores.routes.setRoute('network-new')
+      stores.routes.setRoute('channel-new')
       stores.layout.setMain()
       document.title = 'new channel | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
-          page: '/network/new',
+          page: '/channel/new',
           title: document.title
         })
       }
@@ -156,14 +156,14 @@ export default {
   '/channel/:channelId': {
     async action ({params, query}, stores) {
       const channelId = params.channelId
-      stores.networks.findOne({_id: channelId})
+      stores.channels.findOne({_id: channelId})
       .then(model => {
         if (!model) { return notFound() }
         stores.posts.define(channelId)
         stores.posts[channelId].subscribe({channelId})
         stores.timelines.setCurrent({
           useSocket: true,
-          networkId: channelId,
+          channelId: channelId,
           unique: channelId
         })
         document.title = model.name + ' | ' + documentTitleShort
@@ -186,20 +186,20 @@ export default {
       .catch(err => this.props.snackbar.error(err.reason))
     }
   },
-  '/network/:networkId/edit': {
+  '/channel/:channelId/edit': {
     async action ({params}, stores) {
-      const networkId = params.networkId
-      stores.networks.findOne({_id: networkId}, {})
+      const channelId = params.channelId
+      stores.channels.findOne({_id: channelId}, {})
       .then(data => {
         if (!data) {
           return notFound()
         }
-        stores.networks.replaceOne(data)
-        stores.routes.setRoute('network-edit')
+        stores.channels.replaceOne(data)
+        stores.routes.setRoute('channel-edit')
         document.title = '編集中 - ' + data.name + ' | ' + documentTitle
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
-            page: '/network/' + networkId,
+            page: '/channel/' + channelId,
             title: document.title
           })
         }

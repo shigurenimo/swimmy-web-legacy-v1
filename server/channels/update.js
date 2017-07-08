@@ -3,9 +3,9 @@ import { check } from 'meteor/check'
 import collections from '/lib/collections'
 
 Meteor.methods({
-  'networks.update' (req) {
+  'channels.update' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
-    check(req.networkId, String)
+    check(req.channelId, String)
     const set = {}
     const unset = {}
     if (req.name !== undefined) {
@@ -69,14 +69,14 @@ Meteor.methods({
     const query = {}
     if (Object.keys(set).length) query.$set = set
     if (Object.keys(unset).length) query.$unset = unset
-    collections.networks.update(req.networkId, query)
+    collections.channels.update(req.channelId, query)
     if (req.name !== undefined) {
-      Meteor.users.update({'profile.networks._id': req.networkId}, {
+      Meteor.users.update({'profile.channels._id': req.channelId}, {
         $set: {
-          'profile.networks.$.name': req.name
+          'profile.channels.$.name': req.name
         }
       }, {multi: true})
     }
-    return collections.networks.findOne(req.networkId)
+    return collections.channels.findOne(req.channelId)
   }
 })

@@ -29,11 +29,11 @@ export default types.compose('Channels', Model, {
         return this.find({})
     }
   },
-  updateBasic (networkId, name, next) {
+  updateBasic (channelId, name, next) {
     return new Promise((resolve, reject) => {
-      let req = {networkId}
+      let req = {channelId}
       req[name] = next
-      Meteor.call('networks.update', req, (err, res) => {
+      Meteor.call('channels.update', req, (err, res) => {
         if (err) {
           reject(err)
         } else {
@@ -42,9 +42,9 @@ export default types.compose('Channels', Model, {
       })
     })
   },
-  updateMember (networkId) {
+  updateMember (channelId) {
     return new Promise((resolve, reject) => {
-      Meteor.call('networks.updateMember', {networkId}, (err, res) => {
+      Meteor.call('channels.updateMember', {channelId}, (err, res) => {
         if (err) {
           reject(err)
         } else {

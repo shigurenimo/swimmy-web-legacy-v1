@@ -1,15 +1,14 @@
 import { Meteor } from 'meteor/meteor'
-import { Accounts } from 'meteor/accounts-base'
 import { destroy, types } from 'mobx-state-tree'
 import Timeline from './Timeline'
 
 export default types.model('Timelines', {
   index: types.optional(types.array(Timeline), []),
-  networkIndex: types.optional(types.array(Timeline), []),
+  channelIndex: types.optional(types.array(Timeline), []),
   one: types.maybe(types.reference(Timeline)),
   temp: types.maybe(types.reference(Timeline)),
   name: types.maybe(types.string),
-  networkId: types.maybe(types.string),
+  channelId: types.maybe(types.string),
   useSocket: types.maybe(types.boolean),
   unique: types.maybe(types.string)
 }, {
@@ -71,7 +70,7 @@ export default types.model('Timelines', {
     const timeline = {
       name: '全ての書き込み',
       unique: 'default',
-      networkId: null,
+      channelId: null,
       isStatic: false,
       selector: {},
       options: {limit: 50}
@@ -97,13 +96,13 @@ export default types.model('Timelines', {
       options: {},
       other: {y, m, d}
     })
-    this.networkIndex = []
+    this.channelIndex = []
     const user = Meteor.user()
     if (user) {
       [{
         name: '自分の書き込み',
         unique: 'self',
-        networkId: null,
+        channelId: null,
         isStatic: true,
         selector: {
           ownerId: user._id
@@ -114,7 +113,7 @@ export default types.model('Timelines', {
       }, {
         name: 'ユーザ',
         unique: 'follows',
-        networkId: null,
+        channelId: null,
         isStatic: false,
         selector: {
           'owner.username': {$in: user.profile.follows.map(item => item.username)}
@@ -125,14 +124,14 @@ export default types.model('Timelines', {
       }].forEach(item => {
         timelines.push(item)
       })
-      user.profile.networks.forEach(item => {
-        this.networkIndex.push({
+      user.profile.channels.forEach(item => {
+        this.channelIndex.push({
           name: item.name,
           unique: item._id,
-          networkId: item._id,
+          channelId: item._id,
           isStatic: false,
           selector: {
-            networkId: item._id
+            channelId: item._id
           },
           options: {
             limit: 50
@@ -140,33 +139,33 @@ export default types.model('Timelines', {
         })
       })
       if (this.temp) {
-        for (let i = 0, len = user.profile.networks.length; i < len; ++i) {
-          const network = user.profile.networks[i]
-          if (network._id === this.temp.unique) {
+        for (let i = 0, len = user.profile.channels.length; i < len; ++i) {
+          const channel = user.profile.channels[i]
+          if (channel._id === this.temp.unique) {
             return
           }
         }
-        this.networkIndex.push(this.temp)
+        this.channelIndex.push(this.temp)
       }
     }
     this.index = timelines
   },
-  setTemp (network) {
+  setTemp (channel) {
     this.temp = {
-      name: network.name,
-      unique: network._id,
+      name: channel.name,
+      unique: channel._id,
       isStatic: false,
       selector: {},
       options: {}
     }
   },
-  setTempFromNetwork (networkId) {
-    this.temp = networkId
+  setTempFromChannel (channelId) {
+    this.temp = channelId
   },
   resetTemp () {
     this.temp = null
   },
-  setCurrent ({networkId, useSocket, unique}) {
+  setCurrent ({channelId, useSocket, unique}) {
     switch (unique) {
       case 'self':
         this.name = '自分の書き込み'
@@ -178,7 +177,7 @@ export default types.model('Timelines', {
         this.name = '全国の書き込み'
         break
     }
-    this.networkId = networkId
+    this.channelId = channelId
     this.useSocket = useSocket
     this.unique = unique
   }

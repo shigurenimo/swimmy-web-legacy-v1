@@ -10,9 +10,9 @@ import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
 import TypographyError from '../../components/UI-TypographyError'
 
-@inject('networks', 'router', 'snackbar', 'timelines')
+@inject('channels', 'router', 'snackbar', 'timelines')
 @observer
-export default class NetworkNew extends Component {
+export default class ChannelNew extends Component {
   render () {
     return (
       <Layout>
@@ -21,10 +21,10 @@ export default class NetworkNew extends Component {
           <Sheet>
             <SheetContent>
               <TextField required fullWidth
-                value={this.state.networkName}
+                value={this.state.channelName}
                 label='リストの名前'
                 maxLength='100'
-                onChange={this.onInputNetworkName} />
+                onChange={this.onInputName} />
             </SheetContent>
           </Sheet>
           {/* リストの説明 */}
@@ -32,10 +32,10 @@ export default class NetworkNew extends Component {
             <SheetContent>
               <Block width={400}>
                 <TextField multiline fullWidth
-                  value={this.state.networkDescription}
+                  value={this.state.description}
                   label='リストの説明'
                   maxLength={400}
-                  onChange={this.onInputNetworkDescription} />
+                  onChange={this.onInputDescription} />
               </Block>
             </SheetContent>
           </Sheet>
@@ -45,22 +45,22 @@ export default class NetworkNew extends Component {
               {/* SNS:Webサイト */}
               <SheetContent>
                 <TextField fullWidth
-                  value={this.state.networkSite}
+                  value={this.state.site}
                   label='サイトのURL'
                   InputProps={{placeholder: 'https://swimmy.io'}}
                   maxLength='20'
-                  onChange={this.onInputNetworkSite} />
+                  onChange={this.onInputSite} />
               </SheetContent>
             </Sheet>
             <Sheet>
               {/* 大学 */}
               <SheetContent>
                 <TextField fullWidth
-                  value={this.state.networkUniversity}
+                  value={this.state.university}
                   label='関係する学校'
                   helperText='サークルなどの場合'
                   maxLength='40'
-                  onChange={this.onInputNetworkUniversity} />
+                  onChange={this.onInputUniversity} />
               </SheetContent>
             </Sheet>
           </div>}
@@ -92,15 +92,14 @@ export default class NetworkNew extends Component {
 
   state = {
     isDetail: false,
-    networkName: '',
-    networkDescription: '',
-    networkUniversity: '',
-    networkTags: [],
-    networkPlace: '',
-    networkChannel: 'tokyo',
-    networkSite: '',
-    networkTwitter: '',
-    networkFacebook: '',
+    name: '',
+    description: '',
+    university: '',
+    tags: [],
+    region: 'tokyo',
+    site: '',
+    twitter: '',
+    facebook: '',
     submitError: ''
   }
 
@@ -113,97 +112,67 @@ export default class NetworkNew extends Component {
   onOpenDetail = ::this.onOpenDetail
 
   // リスト名を入力する
-  onInputNetworkName (event) {
+  onInputName (event) {
     event.persist()
     const value = event.target.value
     if (value.length > 100) return
-    this.setState({networkName: value})
+    this.setState({name: value})
   }
 
-  onInputNetworkName = ::this.onInputNetworkName
+  onInputName = ::this.onInputName
 
   // リストの説明を入力する
-  onInputNetworkDescription (event) {
+  onInputDescription (event) {
     event.persist()
     const value = event.target.value
     if (value.length > 400) return
-    this.setState({networkDescription: value})
+    this.setState({description: value})
   }
 
-  onInputNetworkDescription = ::this.onInputNetworkDescription
+  onInputDescription = ::this.onInputDescription
 
   // リストの大学名を入力する
-  onInputNetworkUniversity (event) {
+  onInputUniversity (event) {
     event.persist()
     const value = event.target.value
-    this.setState({networkUniversity: value})
+    this.setState({university: value})
   }
 
-  onInputNetworkUniversity = ::this.onInputNetworkUniversity
+  onInputUniversity = ::this.onInputUniversity
 
   // リストのサイトを入力する
-  onInputNetworkSite (event) {
+  onInputSite (event) {
     event.persist()
     const value = event.target.value
     if (value.length > 100) return
-    this.setState({networkSite: value})
+    this.setState({site: value})
   }
 
-  onInputNetworkSite = ::this.onInputNetworkSite
-
-  // リストのTwitterアカウントを更新する
-  onInputNetworkTwitter (event) {
-    event.persist()
-    const value = event.target.value
-    if (value.length > 100) return
-    if (value.indexOf('@') !== -1) return
-    this.setState({networkTwitter: value})
-  }
-
-  onInputNetworkTwitter = ::this.onInputNetworkTwitter
-
-  // リストのFacebookアカウントを入力する
-  onInputNetworkFacebook (event) {
-    event.persist()
-    const value = event.target.value
-    if (value.length > 100) return
-    if (!isNumeric(value)) return
-    this.setState({networkFacebook: value})
-  }
-
-  onInputNetworkFacebook = ::this.onInputNetworkFacebook
+  onInputSite = ::this.onInputSite
 
   // リストを送信する
   onSubmit () {
     if (this.process) return
     this.process = true
-    if (!this.state.networkName) {
+    if (!this.state.name) {
       this.setState({submitError: 'サークルの名前を入力してください'})
       this.process = false
       return
     }
     this.setState({submitError: null})
     const next = {
-      name: this.state.networkName,
-      description: this.state.networkDescription,
+      name: this.state.name,
+      description: this.state.description,
       university: this.state.university,
-      channel: this.state.networkChannel,
-      place: this.state.networkPlace,
-      tags: this.state.networkTags,
+      region: this.state.region,
+      tags: this.state.tags,
       sns: {
-        site: this.state.networkSite,
-        twitter: this.state.networkTwitter,
-        facebook: this.state.networkFacebook
+        site: this.state.site,
       }
     }
-    this.props.networks.insert(next)
-    .then(() => {
-      const {selector, options} = this.props.networks.timeline
-      return this.props.networks.find(selector, options)
-    })
+    this.props.channels.insert(next)
     .then(data => {
-      this.props.networks.pushIndex(data)
-      this.props.router.go('/network')
+      this.props.router.go('/channel')
       this.props.timelines.resetIndex()
       this.props.snackbar.show('新しいリストを作成しました')
       this.process = false

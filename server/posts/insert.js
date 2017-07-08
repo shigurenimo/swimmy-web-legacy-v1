@@ -58,7 +58,7 @@ Meteor.methods({
       content: req.content,
       reactions: [],
       replies: [],
-      networkId: req.networkId || '',
+      channelId: req.channelId || '',
       createdAt: date,
       updatedAt: date,
       from: 'swimmy'

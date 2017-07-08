@@ -9,7 +9,7 @@ import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
 @inject('router', 'posts', 'accounts') @observer
-export default class LeftMenuNetworks extends Component {
+export default class LeftMenuChannels extends Component {
   render () {
     const {accounts, classes} = this.props
     return (

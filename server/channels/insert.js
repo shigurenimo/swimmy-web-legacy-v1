@@ -3,7 +3,7 @@ import { check } from 'meteor/check'
 import collections from '/lib/collections'
 
 Meteor.methods({
-  'networks.insert' (req) {
+  'channels.insert' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
     check(req.name, String)
     check(req.description, String)
@@ -25,17 +25,17 @@ Meteor.methods({
     if (req.place) {
       data.place = req.place
     }
-    const networkId = collections.networks.insert(data)
-    if (networkId) {
+    const channelId = collections.channels.insert(data)
+    if (channelId) {
       Meteor.users.update(this.userId, {
         $push: {
-          'profile.networks': {
-            _id: networkId,
+          'profile.channels': {
+            _id: channelId,
             name: req.name
           }
         }
       })
     }
-    return collections.networks.findOne(networkId)
+    return collections.channels.findOne(channelId)
   }
 })

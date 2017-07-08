@@ -42,7 +42,7 @@ export default class InputAction extends Component {
       case 'timeline':
       case 'timemachine':
       case 'thread':
-      case 'network-info':
+      case 'channel-info':
         return <InputPost key='input-post' />
       default:
         return <div className={classes.inputLine} key='default' />

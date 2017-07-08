@@ -6,9 +6,9 @@ import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import Admin from '../Admin'
 import ConfigAccount from '../ConfigAccount'
-import NetworkEdit from '../NetworkEdit'
-import NetworkList from '../NetworkList'
-import NetworkNew from '../NetworkNew'
+import ChannelEdit from '../ChannelEdit'
+import ChannelList from '../ChannelList'
+import ChannelNew from '../ChannelNew'
 import Loading from '../Loading'
 import Login from '../Login'
 import NotFound from '../NotFound'
@@ -64,7 +64,7 @@ export default class Content extends Component {
       case 'timeline':
       case 'logs':
       case 'thread':
-      case 'network-info':
+      case 'channel-info':
         return this.props.inputPost.paddingTop + fix
       default:
         if (this.props.layout.oneColumn) {
@@ -83,8 +83,8 @@ export default class Content extends Component {
       return <Loading key='loading' />
     }
     switch (this.props.router.page) {
-      case 'network-list':
-        return <NetworkList key='network-list' />
+      case 'channel-list':
+        return <ChannelList key='channel-list' />
       case 'release':
         return <Release key='release' />
       case 'not-found':
@@ -111,10 +111,10 @@ export default class Content extends Component {
         return <Admin key='admin' />
       case 'config':
         return <ConfigAccount key='config-account' />
-      case 'network-edit':
-        return <NetworkEdit key='network-edit' />
-      case 'network-new':
-        return <NetworkNew key='network-new' />
+      case 'channel-edit':
+        return <ChannelEdit key='channel-edit' />
+      case 'channel-new':
+        return <ChannelNew key='channel-new' />
       case 'twitter':
         if (this.props.accounts.one.services) {
           if (this.props.accounts.one.services.twitter) {
@@ -181,7 +181,7 @@ export default class Content extends Component {
       onScrollTop () {
         let scroll = 1
         switch (self.props.router.pageCache) {
-          case 'network-info':
+          case 'channel-info':
           case 'profile':
           case 'thread':
           case 'artwork-info':

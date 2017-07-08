@@ -84,9 +84,9 @@ export default types.model('SocketPosts', {
       }
     })
   },
-  subscribeFromNetworkId (networkId) {
+  subscribeFromChannelId (channelId) {
     return this.subscribe({
-      networkId: networkId
+      channelId: channelId
     }, {
       limit: 50
     })

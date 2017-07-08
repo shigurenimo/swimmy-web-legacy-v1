@@ -23,7 +23,7 @@ const MethodModel = types.model('MethodModel', {
   pushIndex (models) {
     if (Array.isArray(models)) {
       models.forEach(model => {
-        this.index.push(model)
+        this.index.unshift(model)
       })
     } else {
       this.index.push(models)
@@ -41,8 +41,7 @@ const MethodModel = types.model('MethodModel', {
     try {
       this.one = model
     } catch (err) {
-      console.info('Subscription.setOne')
-      console.info(err)
+      console.info('Subscription.setOne', err)
     }
   },
   unsetOne (model) {
@@ -71,6 +70,7 @@ const MethodModel = types.model('MethodModel', {
               models.push(model)
               if (ref !== null) clearTimeout(ref)
               ref = setTimeout(() => {
+                models = models.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 this.pushIndex(models)
                 models = []
                 ref = null

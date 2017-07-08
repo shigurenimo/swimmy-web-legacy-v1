@@ -20,9 +20,9 @@ export default types.compose('Posts', Model, {
   one: types.maybe(Post),
   index: types.optional(types.array(Post), [])
 }, {
-  subscribeFromNetworkId (networkId) {
+  subscribeFromChannelId (channelId) {
     return this.subscribe({
-      networkId: networkId
+      channelId: channelId
     }, {
       limit: 50
     })
@@ -59,8 +59,8 @@ export default types.compose('Posts', Model, {
       if (next.images) {
         req.images = next.images
       }
-      if (next.networkId) {
-        req.networkId = next.networkId
+      if (next.channelId) {
+        req.channelId = next.channelId
       }
       Meteor.call('posts.insert', req, (err, res) => {
         if (err) { reject(err) } else { resolve(res) }

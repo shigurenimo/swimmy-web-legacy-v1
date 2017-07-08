@@ -2,7 +2,7 @@ import { types } from 'mobx-state-tree'
 
 export default types.model('Info', {
   isOpen: types.optional(types.boolean, false),
-  network: types.maybe(
+  channel: types.maybe(
     types.model({
       _id: types.string,
       name: types.string,
@@ -12,10 +12,10 @@ export default types.model('Info', {
 }, {
   close () {
     this.isOpen = false
-    this.network = null
+    this.channel = null
   },
-  setNetwork (network) {
+  setChannel (channel) {
     this.isOpen = true
-    this.network = network
+    this.channel = channel
   }
 })

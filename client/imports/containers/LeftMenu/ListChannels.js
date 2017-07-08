@@ -11,20 +11,20 @@ import styleSheet from './ListDefault.style'
 @withStyles(styleSheet)
 @inject('router', 'posts', 'accounts')
 @observer
-export default class LeftMenuNetworks extends Component {
+export default class LeftMenuChannels extends Component {
   render () {
     const {classes} = this.props
     return (
       <List>
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page === 'network'
+            [classes.select]: this.props.router.page === 'channel'
           })}
           component='a'
-          href={'/network/default'}>
+          href={'/channel/default'}>
           <ListItemText primary={'explore channel'} />
           <ListItemSecondaryAction>
-            <IconButton component={'a'} href={'/network/default'}>
+            <IconButton component={'a'} href={'/channel/default'}>
               <SearchIcon />
             </IconButton>
           </ListItemSecondaryAction>
@@ -32,13 +32,13 @@ export default class LeftMenuNetworks extends Component {
         {this.props.accounts.isLogged &&
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page.includes('network-new')
+            [classes.select]: this.props.router.page.includes('channel-new')
           })}
           component={'a'}
-          href={'/network/new'}>
+          href={'/channel/new'}>
           <ListItemText primary={'create new'} />
           <ListItemSecondaryAction>
-            <IconButton component={'a'} href={'/network/new'}>
+            <IconButton component={'a'} href={'/channel/new'}>
               <AddIcon />
             </IconButton>
           </ListItemSecondaryAction>

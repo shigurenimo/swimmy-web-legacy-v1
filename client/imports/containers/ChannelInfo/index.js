@@ -14,62 +14,62 @@ import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('networks', 'snackbar', 'accounts', 'timelines') @observer
-export default class NetworkInfo extends Component {
+@inject('channels', 'snackbar', 'accounts', 'timelines') @observer
+export default class ChannelInfo extends Component {
   render () {
     const {
-      networks: {one: network},
+      channels: {one: channel},
       classes
     } = this.props
     return (
       <Layout>
-        {network.header &&
+        {channel.header &&
         <Sheet>
           <SheetBackgroundImage src={
-            network.header &&
-            Meteor.settings.public.assets.network.root + network._id + '/' +
-            network.header
+            channel.header &&
+            Meteor.settings.public.assets.channel.root + channel._id + '/' +
+            channel.header
           } />
         </Sheet>}
         <Sheet>
-          {network.univ &&
+          {channel.univ &&
           <SheetContent>
             <Typography>
-              {utils.regions[network.channel].name.jp}・{network.univ}
+              {utils.regions[channel.channel].name.jp}・{channel.univ}
             </Typography>
           </SheetContent>}
           <SheetContent>
             <Typography type='headline'>
-              {network.name}
+              {channel.name}
             </Typography>
           </SheetContent>
           <SheetContent>
             <Typography className={classes.content}>
-              {network.description || '説明がありません'}
+              {channel.description || '説明がありません'}
             </Typography>
           </SheetContent>
           {this.props.accounts.isLogged &&
           <SheetActions align='right'>
-            {network.member.includes(this.props.accounts.one._id) ? (
-              <Button onTouchTap={this.onLeaveNetwork}>
+            {channel.member.includes(this.props.accounts.one._id) ? (
+              <Button onTouchTap={this.onLeaveChannel}>
                 チェックアウト
               </Button>
             ) : (
-              <Button onTouchTap={this.onJoinNetwork}>
+              <Button onTouchTap={this.onJoinChannel}>
                 チェックイン
               </Button>
             )}
           </SheetActions>}
         </Sheet>
         {this.props.accounts.isLogged &&
-        this.props.accounts.one._id === network.owner &&
+        this.props.accounts.one._id === channel.owner &&
         <Sheet>
           <SheetActions>
             <Button onClick={this.onRemoveList}>
               このリストを削除する
             </Button>
-            {network.member.includes(this.props.accounts.one._id) &&
-            <Button component='a' href={'/network/' + network._id + '/edit'}>アップデート</Button>}
+            {channel.member.includes(this.props.accounts.one._id) &&
+            <Button component='a' href={'/channel/' + channel._id + '/edit'}>アップデート</Button>}
           </SheetActions>
         </Sheet>}
       </Layout>
@@ -77,41 +77,41 @@ export default class NetworkInfo extends Component {
   }
 
   // リストを追加する
-  onJoinNetwork () {
-    const networkId = this.props.networks.one._id
-    this.props.networks.updateMember(networkId)
+  onJoinChannel () {
+    const channelId = this.props.channels.one._id
+    this.props.channels.updateMember(channelId)
     .then(data => {
-      this.props.networks.replaceOne(data)
-      this.props.networks.replaceIndex(data._id, data)
+      this.props.channels.replaceOne(data)
+      this.props.channels.replaceIndex(data._id, data)
       this.props.timelines.resetIndex()
       this.props.snackbar.show('リストを追加しました')
     })
   }
 
-  onJoinNetwork = ::this.onJoinNetwork
+  onJoinChannel = ::this.onJoinChannel
 
   // リストを外す
-  onLeaveNetwork () {
-    const networkId = this.props.networks.one._id
-    this.props.networks.updateMember(networkId)
+  onLeaveChannel () {
+    const channelId = this.props.channels.one._id
+    this.props.channels.updateMember(channelId)
     .then(data => {
-      this.props.networks.replaceOne(data)
-      this.props.networks.replaceIndex(data._id, data)
+      this.props.channels.replaceOne(data)
+      this.props.channels.replaceIndex(data._id, data)
       this.props.timelines.resetIndex()
       this.props.snackbar.show('リストを外しました')
     })
   }
 
-  onLeaveNetwork = ::this.onLeaveNetwork
+  onLeaveChannel = ::this.onLeaveChannel
 
   onRemoveList () {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
-    const networkId = this.props.networks.one._id
-    this.props.networks.remove(networkId)
+    const channelId = this.props.channels.one._id
+    this.props.channels.remove(channelId)
     .then(data => {
-      this.props.networks.pullIndex(networkId)
-      this.props.router.go('/network')
+      this.props.channels.pullIndex(channelId)
+      this.props.router.go('/channel')
       this.props.timelines.resetTemp()
       this.props.timelines.resetIndex()
       this.props.snackbar.show('リストを削除しました')
