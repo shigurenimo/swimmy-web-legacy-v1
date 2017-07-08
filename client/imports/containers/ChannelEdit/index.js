@@ -42,8 +42,8 @@ export default class ChannelEdit extends Component {
         <Sheet>
           <SheetActions>
             <TextField multiline
-              label='リストの説明'
-              placeholder='リストの簡単な説明'
+              label='チャンネルの説明'
+              placeholder='チャンネルの簡単な説明'
               value={this.state.description}
               maxLength='100'
               onChange={this.onInputDescription}
@@ -109,7 +109,7 @@ export default class ChannelEdit extends Component {
     errorImageHeader: null
   }
 
-  // リストの名前を更新する
+  // チャンネルの名前を更新する
   onChangeName (event) {
     event.persist()
     const value = event.target.value
@@ -120,7 +120,7 @@ export default class ChannelEdit extends Component {
 
   onChangeName = ::this.onChangeName
 
-  // リストの名前の更新をサーバーに送信する
+  // チャンネルの名前の更新をサーバーに送信する
   onSubmitName () {
     if (this.props.channels.one.name === this.state.name) return
     const channelId = this.props.channels.one._id
@@ -196,7 +196,7 @@ export default class ChannelEdit extends Component {
 
   onDropHeader = ::this.onDropHeader
 
-  // リストの説明を更新する
+  // チャンネルの説明を更新する
   onInputDescription (event) {
     event.persist()
     const value = event.target.value
@@ -207,7 +207,7 @@ export default class ChannelEdit extends Component {
 
   onInputDescription = ::this.onInputDescription
 
-  // リストの説明の更新をサーバーに送信する
+  // チャンネルの説明の更新をサーバーに送信する
   onSubmitDescription () {
     const channelId = this.props.channels.one._id
     const next = this.state.description

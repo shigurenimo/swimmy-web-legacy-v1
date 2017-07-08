@@ -66,7 +66,7 @@ export default class ChannelInfo extends Component {
         <Sheet>
           <SheetActions>
             <Button onClick={this.onRemoveList}>
-              このリストを削除する
+              このチャンネルを削除する
             </Button>
             {channel.member.includes(this.props.accounts.one._id) &&
             <Button component='a' href={'/channel/' + channel._id + '/edit'}>アップデート</Button>}
@@ -76,7 +76,7 @@ export default class ChannelInfo extends Component {
     )
   }
 
-  // リストを追加する
+  // チャンネルを追加する
   onJoinChannel () {
     const channelId = this.props.channels.one._id
     this.props.channels.updateMember(channelId)
@@ -84,13 +84,13 @@ export default class ChannelInfo extends Component {
       this.props.channels.replaceOne(data)
       this.props.channels.replaceIndex(data._id, data)
       this.props.timelines.resetIndex()
-      this.props.snackbar.show('リストを追加しました')
+      this.props.snackbar.show('チャンネルを追加しました')
     })
   }
 
   onJoinChannel = ::this.onJoinChannel
 
-  // リストを外す
+  // チャンネルを外す
   onLeaveChannel () {
     const channelId = this.props.channels.one._id
     this.props.channels.updateMember(channelId)
@@ -98,7 +98,7 @@ export default class ChannelInfo extends Component {
       this.props.channels.replaceOne(data)
       this.props.channels.replaceIndex(data._id, data)
       this.props.timelines.resetIndex()
-      this.props.snackbar.show('リストを外しました')
+      this.props.snackbar.show('チャンネルを外しました')
     })
   }
 
@@ -114,7 +114,7 @@ export default class ChannelInfo extends Component {
       this.props.router.go('/channel')
       this.props.timelines.resetTemp()
       this.props.timelines.resetIndex()
-      this.props.snackbar.show('リストを削除しました')
+      this.props.snackbar.show('チャンネルを削除しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))
   }

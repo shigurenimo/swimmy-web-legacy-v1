@@ -22,18 +22,18 @@ export default class ChannelNew extends Component {
             <SheetContent>
               <TextField required fullWidth
                 value={this.state.channelName}
-                label='リストの名前'
+                label='チャンネルの名前'
                 maxLength='100'
                 onChange={this.onInputName} />
             </SheetContent>
           </Sheet>
-          {/* リストの説明 */}
+          {/* チャンネルの説明 */}
           <Sheet>
             <SheetContent>
               <Block width={400}>
                 <TextField multiline fullWidth
                   value={this.state.description}
-                  label='リストの説明'
+                  label='チャンネルの説明'
                   maxLength={400}
                   onChange={this.onInputDescription} />
               </Block>
@@ -111,7 +111,7 @@ export default class ChannelNew extends Component {
 
   onOpenDetail = ::this.onOpenDetail
 
-  // リスト名を入力する
+  // チャンネル名を入力する
   onInputName (event) {
     event.persist()
     const value = event.target.value
@@ -121,7 +121,7 @@ export default class ChannelNew extends Component {
 
   onInputName = ::this.onInputName
 
-  // リストの説明を入力する
+  // チャンネルの説明を入力する
   onInputDescription (event) {
     event.persist()
     const value = event.target.value
@@ -131,7 +131,7 @@ export default class ChannelNew extends Component {
 
   onInputDescription = ::this.onInputDescription
 
-  // リストの大学名を入力する
+  // チャンネルの大学名を入力する
   onInputUniversity (event) {
     event.persist()
     const value = event.target.value
@@ -140,7 +140,7 @@ export default class ChannelNew extends Component {
 
   onInputUniversity = ::this.onInputUniversity
 
-  // リストのサイトを入力する
+  // チャンネルのサイトを入力する
   onInputSite (event) {
     event.persist()
     const value = event.target.value
@@ -150,7 +150,7 @@ export default class ChannelNew extends Component {
 
   onInputSite = ::this.onInputSite
 
-  // リストを送信する
+  // チャンネルを送信する
   onSubmit () {
     if (this.process) return
     this.process = true
@@ -174,7 +174,7 @@ export default class ChannelNew extends Component {
     .then(data => {
       this.props.router.go('/channel')
       this.props.timelines.resetIndex()
-      this.props.snackbar.show('新しいリストを作成しました')
+      this.props.snackbar.show('新しいチャンネルを作成しました')
       this.process = false
     })
     .catch(err => {
