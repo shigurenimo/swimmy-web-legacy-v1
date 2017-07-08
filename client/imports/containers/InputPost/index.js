@@ -37,7 +37,7 @@ export default class InputPost extends Component {
         <div className={classes.tools}>
           <Button dense
             className={classes.spacing}
-            selected={this.props.timelines.channelId}
+            selected={this.props.info.isOpen}
             onClick={this.openChannelInfo}>
             {this.timelineName}
           </Button>
@@ -202,12 +202,12 @@ export default class InputPost extends Component {
 
   onSubmit = ::this.onSubmit
 
-  onSubmitPost () {
+  async onSubmitPost () {
     if (this.process) return
     this.process = true
     if (this.state.inputImage) {
       const file = this.state.inputImage
-      utils.createBase64(file)
+      await utils.createBase64(file)
       .then(base64 => {
         this.props.snackbar.show('サーバーで画像を圧縮しています')
         this.props.inputPost.reset()
@@ -222,14 +222,12 @@ export default class InputPost extends Component {
       })
       .then(post => {
         this.props.snackbar.show('投稿が完了しました')
-        this.process = false
       })
       .catch(err => {
         this.props.snackbar.error(err.reason)
-        this.process = false
       })
     } else {
-      this.props.posts.insert({
+      await this.props.posts.insert({
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
         channelId: this.props.timelines.channelId
@@ -239,27 +237,26 @@ export default class InputPost extends Component {
         this.ref.style.height = 'auto'
         this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
-        this.process = false
       })
       .catch(err => {
         this.props.snackbar.error(err.reason)
-        this.process = false
       })
     }
+    this.process = false
   }
 
-  onSubmitReply () {
+  async onSubmitReply () {
     if (this.process) return
     this.process = true
     if (this.state.inputImage) {
       const file = this.state.inputImage
-      utils.createBase64(file)
+      await utils.createBase64(file)
       .then(base64 => {
         this.props.snackbar.show('サーバーで画像を圧縮しています')
         this.props.inputPost.reset()
         this.setState({errorImage: null, inputImage: null})
         this.ref.style.height = 'auto'
-        const replyId = this.props.threads.one._id
+        const replyId = this.props.posts.thread.one._id
         return this.props.posts.insert({
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
@@ -272,11 +269,10 @@ export default class InputPost extends Component {
       })
       .catch(err => {
         this.props.snackbar.error(err)
-        this.process = false
       })
     } else {
-      const replyId = this.props.threads.one._id
-      this.props.posts.insert({
+      const replyId = this.props.posts.thread.one._id
+      await this.props.posts.insert({
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
         replyId
@@ -290,5 +286,6 @@ export default class InputPost extends Component {
         this.props.snackbar.error(err)
       })
     }
+    this.process = false
   }
 }

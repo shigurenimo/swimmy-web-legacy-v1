@@ -43,13 +43,18 @@ export default {
   },
   '/thread/:_id': {
     async action ({params}, stores) {
-      stores.threads.subscribeOne({_id: params._id})
-      .then(post => {
-        if (!post) { return notFound() }
-        let content = post.content
-        if (content.length > 20) {
-          content = content.substr(0, 15) + '..'
-        }
+      stores.posts.define('thread')
+      stores.posts.thread.findOne({_id: params._id}, {})
+      .then(model => {
+        stores.posts.thread.subscribe({
+          $or: [
+            {_id: params._id},
+            {replyId: params._id}
+          ]
+        })
+        const content = model.content.length > 20
+          ? model.content.substr(0, 15) + '..'
+          : model.content
         stores.routes.setRoute('thread')
         stores.layout.setMain()
         document.title = content + ' | ' + documentTitleShort
@@ -59,6 +64,10 @@ export default {
             title: document.title
           })
         }
+      })
+      .catch(err => {
+        console.log(err)
+        notFound(stores)
       })
     }
   },

@@ -58,7 +58,7 @@ export default class ChannelList extends Component {
         <Block width={600}>
           <SheetContent>
             <Typography className={classes.content}>
-              {item.description}
+              {item.description || 'このチャンネルには説明がありません'}
             </Typography>
           </SheetContent>
         </Block>

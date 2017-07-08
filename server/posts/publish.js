@@ -35,47 +35,47 @@ Meteor.publish('posts', function (selector = {}, options = {}, name) {
   const namespace = name ? 'posts.' + name : 'posts'
 
   const cursor = collections.posts.find(selector, options).observe({
-    addedAt: (post) => {
-      if (post.replyId) {
-        const reply = collections.posts.findOne(post.replyId, replyOptions)
+    addedAt: (model) => {
+      if (name !== 'thread' && model.replyId) {
+        const reply = collections.posts.findOne(model.replyId, replyOptions)
         if (reply) {
-          post.reply = reply
+          model.reply = reply
         } else {
-          post.reply = {
-            _id: post.replyId,
+          model.reply = {
+            _id: model.replyId,
             content: 'この投稿は既に削除されています'
           }
         }
       }
-      if (post.images) {
-        post.imagePath =
+      if (model.images) {
+        model.imagePath =
           Meteor.settings.public.storage.images +
-          utils.createPathFromDate(post.createdAt)
+          utils.createPathFromDate(model.createdAt)
       }
-      if (post.link) { post.content = utils.replace.link(post.content) }
-      // if (post.tags) { post.content = utils.replace.tags(post.content) }
-      if (this.userId !== post.ownerId) { delete post.ownerId }
-      this.added(namespace, post._id, post)
+      if (model.link) { model.content = utils.replace.link(model.content) }
+      if (model.tags) { model.content = utils.replace.tags(model.content) }
+      if (this.userId !== model.ownerId) { delete model.ownerId }
+      this.added(namespace, model._id, model)
     },
-    changed: (post) => {
-      if (post.replyId) {
-        const reply = collections.posts.findOne(post.replyId, replyOptions)
+    changed: (model) => {
+      if (model.replyId) {
+        const reply = collections.posts.findOne(model.replyId, replyOptions)
         if (reply) {
-          post.reply = reply
+          model.reply = reply
         } else {
-          post.reply = {
-            _id: post.replyId,
+          model.reply = {
+            _id: model.replyId,
             content: 'この投稿は既に削除されています'
           }
         }
       }
-      if (post.link) { post.content = utils.replace.link(post.content) }
-      // if (post.tags) { post.content = utils.replace.tags(post.content) }
-      if (this.userId !== post.ownerId) { delete post.ownerId }
-      this.changed(namespace, post._id, post)
+      if (model.link) { model.content = utils.replace.link(model.content) }
+      if (model.tags) { model.content = utils.replace.tags(model.content) }
+      if (this.userId !== model.ownerId) { delete model.ownerId }
+      this.changed(namespace, model._id, model)
     },
-    removed: (post) => {
-      this.removed(namespace, post._id)
+    removed: (model) => {
+      this.removed(namespace, model._id)
     }
   })
 

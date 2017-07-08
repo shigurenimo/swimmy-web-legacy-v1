@@ -8,7 +8,8 @@ const MethodModel = types.model('MethodModel', {
 }, {
   cursor: null,
   selector: null,
-  options: null
+  options: null,
+  collections: null
 }, {
   setFetchState (state) {
     this.fetchState = state
@@ -31,7 +32,13 @@ const MethodModel = types.model('MethodModel', {
   },
   replaceIndex (model) {
     const index = this.index.findIndex(item => item._id === model._id)
-    this.index[index] = model
+    if (index !== -1) {
+      try {
+        this.index[index] = model
+      } catch (err) {
+        console.info('Subscription.' + this.publish + '.replaceIndex', err, model)
+      }
+    }
   },
   spliceIndex (model) {
     const index = this.index.findIndex(item => item._id === model._id)
@@ -52,12 +59,20 @@ const MethodModel = types.model('MethodModel', {
   },
   subscribe (selector = {}, options = {}) {
     if (this.cursor) {
-      if (this.selector && this.selector.toString() === selector.toString()) return
-      if (this.options && this.options.toString() === options.toString()) return
+      const diff = [
+        JSON.stringify(this.selector) === JSON.stringify(selector),
+        JSON.stringify(this.options) === JSON.stringify(options)
+      ]
+      if (diff[0] && diff[1]) return
     }
     this.selector = selector
     this.options = options
     this.unsubscribe()
+    const collectionName = this.publish + '.' + this.name
+    if (!this.collections) { this.collections = new Map() }
+    if (!this.collections.has(collectionName)) {
+      this.collections.set(collectionName, new Mongo.Collection(collectionName))
+    }
     return new Promise((resolve, reject) => {
       this.subscription = Meteor.subscribe(this.publish, selector, options, this.name, {
         onReady: () => {
@@ -65,7 +80,7 @@ const MethodModel = types.model('MethodModel', {
           let models = []
           let ref = null
           resolve()
-          const cursor = new Mongo.Collection(this.publish + '.' + this.name).find({}).observe({
+          const cursor = this.collections.get(collectionName).find({}).observe({
             added: (model) => {
               models.push(model)
               if (ref !== null) clearTimeout(ref)
@@ -132,10 +147,15 @@ const MethodModel = types.model('MethodModel', {
         resolve(this.one)
         return
       }
+      const collectionName = this.publish + '.' + this.name
+      if (!this.collections) { this.collections = new Map() }
+      if (!this.collections.has(collectionName)) {
+        this.collections.set(collectionName, new Mongo.Collection(collectionName))
+      }
       this.subscription = Meteor.subscribe(this.publish, selector, options, 'one', {
         onReady: () => {
           console.info(this.publish + '.subscribeOne')
-          const cursor = new Mongo.Collection(this.publish + '.one').find({}).observe({
+          const cursor = this.collections.get(collectionName).find({}).observe({
             added: (model) => {
               this.setOne(model)
               resolve(model)
