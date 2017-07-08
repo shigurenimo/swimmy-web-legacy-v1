@@ -47,16 +47,10 @@ export default class ChannelInfo extends Component {
             </Typography>
           </SheetContent>
           {this.props.accounts.isLogged &&
-          <SheetActions align='right'>
-            {channel.member.includes(this.props.accounts.one._id) ? (
-              <Button onTouchTap={this.onLeaveChannel}>
-                checkout
-              </Button>
-            ) : (
-              <Button onTouchTap={this.onJoinChannel}>
-                checkin
-              </Button>
-            )}
+          <SheetActions align='right'>{
+            channel.member.includes(this.props.accounts.one._id)
+              ? <Button onTouchTap={this.onLeaveChannel}>checkout</Button>
+              : <Button onTouchTap={this.onJoinChannel}>checkin</Button>}
             {channel.member.includes(this.props.accounts.one._id) &&
             <Button component='a' href={'/ch/' + channel._id + '/edit'}>update</Button>}
           </SheetActions>}
@@ -70,9 +64,6 @@ export default class ChannelInfo extends Component {
     const channelId = this.props.channels.one._id
     this.props.channels.updateMember(channelId)
     .then(data => {
-      this.props.channels.replaceOne(data)
-      this.props.channels.replaceIndex(data._id, data)
-      this.props.timelines.resetIndex()
       this.props.snackbar.show('チャンネルを追加しました')
     })
   }
@@ -84,9 +75,6 @@ export default class ChannelInfo extends Component {
     const channelId = this.props.channels.one._id
     this.props.channels.updateMember(channelId)
     .then(data => {
-      this.props.channels.replaceOne(data)
-      this.props.channels.replaceIndex(data._id, data)
-      this.props.timelines.resetIndex()
       this.props.snackbar.show('チャンネルを外しました')
     })
   }

@@ -1,6 +1,3 @@
-import { Meteor } from 'meteor/meteor'
-import { HTTP } from 'meteor/http'
-import { Random } from 'meteor/random'
 import propTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
@@ -12,7 +9,7 @@ import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
 import Typograhy from '../../components/Typography'
 
-@inject('accounts', 'channels', 'snackbar')
+@inject('accounts', 'channels', 'snackbar', 'router')
 @observer
 export default class ChannelEdit extends Component {
   render () {
@@ -46,7 +43,7 @@ export default class ChannelEdit extends Component {
           this.props.accounts.one._id === channel.ownerId &&
           <Sheet>
             <SheetActions align='right'>
-              <Button onClick={this.onRemoveList}>
+              <Button onClick={this.onRemove}>
                 このチャンネルを削除する
               </Button>
             </SheetActions>
@@ -128,22 +125,19 @@ export default class ChannelEdit extends Component {
     this.setState(object)
   }
 
-  onRemoveList () {
+  onRemove () {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
     const channelId = this.props.channels.one._id
     this.props.channels.remove(channelId)
-    .then(data => {
-      this.props.channels.pullIndex(channelId)
+    .then(() => {
       this.props.router.go('/ch')
-      this.props.timelines.resetTemp()
-      this.props.timelines.resetIndex()
       this.props.snackbar.show('チャンネルを削除しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))
   }
 
-  onRemoveList = ::this.onRemoveList
+  onRemove = ::this.onRemove
 
   componentDidMount () {
     this.context.onScrollTop()

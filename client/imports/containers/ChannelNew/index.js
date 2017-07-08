@@ -110,7 +110,6 @@ export default class ChannelNew extends Component {
     this.props.channels.insert(next)
     .then(data => {
       this.props.router.go('/ch')
-      this.props.timelines.resetIndex()
       this.props.snackbar.show('新しいチャンネルを作成しました')
       this.process = false
     })

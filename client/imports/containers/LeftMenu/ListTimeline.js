@@ -88,7 +88,7 @@ export default class LeftMenuTimeline extends Component {
             href={'/ch/' + item.channelId}>
             <ListItemText primary={item.name} />
           </ListItem>)}
-        {accounts.one.profile && accounts.one.profile.channels.map(item =>
+        {accounts.isLogged && accounts.one.profile.channels.map(item =>
           <ListItem button dense
             key={item._id}
             className={classNames({
