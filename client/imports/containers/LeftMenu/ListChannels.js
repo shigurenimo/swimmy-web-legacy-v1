@@ -21,10 +21,10 @@ export default class LeftMenuChannels extends Component {
             [classes.select]: this.props.router.page === 'channel'
           })}
           component='a'
-          href={'/channel/default'}>
+          href={'/ch/default'}>
           <ListItemText primary={'explore channel'} />
           <ListItemSecondaryAction>
-            <IconButton component={'a'} href={'/channel/default'}>
+            <IconButton component={'a'} href={'/ch/default'}>
               <SearchIcon />
             </IconButton>
           </ListItemSecondaryAction>
@@ -35,10 +35,10 @@ export default class LeftMenuChannels extends Component {
             [classes.select]: this.props.router.page.includes('channel-new')
           })}
           component={'a'}
-          href={'/channel/new'}>
+          href={'/ch/new'}>
           <ListItemText primary={'create new'} />
           <ListItemSecondaryAction>
-            <IconButton component={'a'} href={'/channel/new'}>
+            <IconButton component={'a'} href={'/ch/new'}>
               <AddIcon />
             </IconButton>
           </ListItemSecondaryAction>

@@ -58,7 +58,7 @@ export default class ChannelInfo extends Component {
               </Button>
             )}
             {channel.member.includes(this.props.accounts.one._id) &&
-            <Button component='a' href={'/channel/' + channel._id + '/edit'}>update</Button>}
+            <Button component='a' href={'/ch/' + channel._id + '/edit'}>update</Button>}
           </SheetActions>}
         </Sheet>
       </Layout>

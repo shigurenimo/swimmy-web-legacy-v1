@@ -20,13 +20,6 @@ export default class ChannelEdit extends Component {
     try {
       return (
         <Layout>
-          <Sheet>
-            <SheetActions align='right'>
-              <Button component='a' href={'/ch/' + channel._id}>
-                もどる
-              </Button>
-            </SheetActions>
-          </Sheet>
           {/* name */}
           <Sheet>
             <SheetContent>
@@ -100,67 +93,6 @@ export default class ChannelEdit extends Component {
 
   onSubmitName = ::this.onSubmitName
 
-  // 画像をアップロードしてサーバーに送信する
-  onDropHeader (acceptedFiles) {
-    const file = acceptedFiles[0]
-    const type = file.type
-    const nameArray = file.name.split('.')
-    const extension = nameArray[nameArray.length - 1].toLowerCase()
-    if (type.indexOf('image') === -1) {
-      this.setState({errorImageHeader: 'アップロードできるのはイメージデータのみです'})
-      setTimeout(() => {
-        this.setState({errorImageHeader: null})
-      }, 4000)
-      return
-    }
-    if (file.size > 5000000) {
-      this.setState({errorImageHeader: 'サイズが5MBを超えています'})
-      setTimeout(() => {
-        this.setState({errorImageHeader: null})
-      }, 4000)
-      return
-    }
-    const imageName = 'header.' + extension
-    const imageNameCache = imageName + '?uuid=' + Random.id()
-    const formdata = new FormData()
-    formdata.append('file', file)
-    formdata.append('name_min', imageName)
-    formdata.append('id', this.props.channels.one._id)
-    if (Meteor.isDevelopment) {
-      if (!Meteor.settings.public.api || !Meteor.settings.public.api.unique) {
-        this.props.snackbar.errorMessage('開発環境では画像のアップロードは利用できません')
-        this.process = false
-        return
-      }
-      formdata.append('unique', Meteor.settings.public.api.unique)
-    }
-    this.setState({errorImageHeader: null})
-    new Promise((resolve, reject) => {
-      HTTP.post(Meteor.settings.public.api.channel.header, {content: formdata}, err => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
-    })
-    .then(() => {
-      const channelId = this.props.channels.one._id
-      return this.props.channels.updateBasic(channelId, 'header', imageNameCache)
-    })
-    .then(data => {
-      this.props.channels.replaceOne(data)
-      this.props.snackbar.show('更新しました')
-      this.setState({header: imageNameCache})
-    })
-    .catch(err => {
-      this.props.snackbar.error(err)
-      this.process = false
-    })
-  }
-
-  onDropHeader = ::this.onDropHeader
-
   // チャンネルの説明を更新する
   onInputDescription (event) {
     event.persist()
@@ -203,7 +135,7 @@ export default class ChannelEdit extends Component {
     this.props.channels.remove(channelId)
     .then(data => {
       this.props.channels.pullIndex(channelId)
-      this.props.router.go('/channel')
+      this.props.router.go('/ch')
       this.props.timelines.resetTemp()
       this.props.timelines.resetIndex()
       this.props.snackbar.show('チャンネルを削除しました')

@@ -38,7 +38,7 @@ export default class ChannelList extends Component {
       )
     }
     return this.props.channels.index.map(item =>
-      <Sheet hover key={item._id} href={'/channel/' + item._id + '/?preview=true'}>
+      <Sheet hover key={item._id} href={'/ch/' + item._id + '/?preview=true'}>
         {item.univ &&
         <SheetContent type='caption'>
           <Typography>

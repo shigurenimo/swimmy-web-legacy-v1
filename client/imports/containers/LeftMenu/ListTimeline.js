@@ -85,7 +85,7 @@ export default class LeftMenuTimeline extends Component {
               [classes.select]: this.props.timelines.unique === item.unique
             })}
             component='a'
-            href={'/channel/' + item.channelId}>
+            href={'/ch/' + item.channelId}>
             <ListItemText primary={item.name} />
           </ListItem>)}
         {accounts.one.profile && accounts.one.profile.channels.map(item =>
@@ -95,7 +95,7 @@ export default class LeftMenuTimeline extends Component {
               [classes.select]: this.props.timelines.channelId === item._id
             })}
             component='a'
-            href={'/channel/' + item._id}>
+            href={'/ch/' + item._id}>
             <ListItemText primary={item.name} />
           </ListItem>
         )}

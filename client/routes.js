@@ -131,7 +131,7 @@ export default {
       .catch(err => this.props.snackbar.error(err.reason))
     }
   },
-  '/channel/(default|net|univ)?': {
+  '/ch/(default|net|univ)?': {
     async action ({params}, stores) {
       const unique = params[0] || 'default'
       stores.layout.setMain()
@@ -141,7 +141,7 @@ export default {
         document.title = 'channel | ' + documentTitle
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
-            page: '/channel',
+            page: '/ch',
             title: document.title
           })
         }
@@ -149,20 +149,20 @@ export default {
       .catch(err => this.props.snackbar.error(err.reason))
     }
   },
-  '/channel/new': {
+  '/ch/new': {
     async action ({params}, stores) {
       stores.routes.setRoute('channel-new')
       stores.layout.setMain()
       document.title = 'new channel | ' + documentTitle
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
-          page: '/channel/new',
+          page: '/ch/new',
           title: document.title
         })
       }
     }
   },
-  '/channel/:channelId': {
+  '/ch/:channelId': {
     async action ({params, query}, stores) {
       const channelId = params.channelId
       stores.channels.findOne({_id: channelId})
@@ -186,7 +186,7 @@ export default {
         stores.layout.setMain()
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
-            page: '/channel/' + channelId,
+            page: '/ch/' + channelId,
             title: document.title
           })
         }
@@ -194,7 +194,7 @@ export default {
       .catch(err => this.props.snackbar.error(err.reason))
     }
   },
-  '/channel/:channelId/edit': {
+  '/ch/:channelId/edit': {
     async action ({params}, stores) {
       const channelId = params.channelId
       stores.channels.findOne({_id: channelId}, {})
@@ -204,7 +204,7 @@ export default {
         document.title = '編集中 - ' + data.name + ' | ' + documentTitle
         if (Meteor.isProduction) {
           window.ga('send', 'pageview', {
-            page: '/channel/' + channelId,
+            page: '/ch/' + channelId,
             title: document.title
           })
         }
