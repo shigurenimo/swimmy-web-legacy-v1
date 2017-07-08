@@ -14,7 +14,7 @@ export default class Timeline extends Component {
   render () {
     return (
       <Layout>
-        {this.props.info.channel && <ChannelInfo />}
+        {this.props.info.isOpen && <ChannelInfo />}
         {this.forPosts()}
       </Layout>
     )

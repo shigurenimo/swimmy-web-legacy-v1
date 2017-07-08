@@ -165,7 +165,7 @@ export default types.model('Timelines', {
   resetTemp () {
     this.temp = null
   },
-  setCurrent ({channelId, useSocket, unique}) {
+  setCurrent ({channelId, useSocket, unique, name = ''}) {
     switch (unique) {
       case 'self':
         this.name = '自分の書き込み'
@@ -177,6 +177,7 @@ export default types.model('Timelines', {
         this.name = '全国の書き込み'
         break
     }
+    if (name) { this.name = name }
     this.channelId = channelId
     this.useSocket = useSocket
     this.unique = unique

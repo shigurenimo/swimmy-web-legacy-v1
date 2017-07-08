@@ -14,7 +14,8 @@ import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('channels', 'snackbar', 'accounts', 'timelines') @observer
+@inject('channels', 'snackbar', 'accounts', 'timelines')
+@observer
 export default class ChannelInfo extends Component {
   render () {
     const {

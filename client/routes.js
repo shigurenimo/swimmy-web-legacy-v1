@@ -164,16 +164,15 @@ export default {
         stores.timelines.setCurrent({
           useSocket: true,
           channelId: channelId,
-          unique: channelId
+          unique: channelId,
+          name: model.name
         })
         document.title = model.name + ' | ' + documentTitleShort
-        /*
-         if (query.preview === 'true') {
-         stores.info.open()
-         } else {
-         stores.info.close()
-         }
-         */
+        if (query.preview === 'true') {
+          stores.info.open()
+        } else {
+          stores.info.close()
+        }
         stores.routes.setRoute('timeline')
         stores.layout.setMain()
         if (Meteor.isProduction) {

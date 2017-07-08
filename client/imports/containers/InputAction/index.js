@@ -33,10 +33,10 @@ export default class InputAction extends Component {
   router () {
     const {classes} = this.props
     if (this.props.router.page === null) {
-      return null
+      return <div />
     }
     if (this.props.accounts.isLoggingIn) {
-      return null
+      return <div />
     }
     switch (this.props.router.page) {
       case 'timeline':

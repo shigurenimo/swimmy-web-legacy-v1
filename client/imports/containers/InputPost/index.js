@@ -116,9 +116,8 @@ export default class InputPost extends Component {
       this.props.info.close()
     } else {
       this.props.channels.findOneFromId(channelId)
-      .then(channel => {
-        this.props.info.setChannel(channel)
-        this.props.channels.replaceOne(channel)
+      .then(() => {
+        this.props.info.open()
       })
       .catch(err => this.props.snackbar.error(err.reason))
     }
