@@ -39,31 +39,6 @@ export default class ChannelNew extends Component {
               </Block>
             </SheetContent>
           </Sheet>
-          {this.state.isDetail &&
-          <div>
-            <Sheet>
-              {/* SNS:Webサイト */}
-              <SheetContent>
-                <TextField fullWidth
-                  value={this.state.site}
-                  label='サイトのURL'
-                  InputProps={{placeholder: 'https://swimmy.io'}}
-                  maxLength='20'
-                  onChange={this.onInputSite} />
-              </SheetContent>
-            </Sheet>
-            <Sheet>
-              {/* 大学 */}
-              <SheetContent>
-                <TextField fullWidth
-                  value={this.state.university}
-                  label='関係する学校'
-                  helperText='サークルなどの場合'
-                  maxLength='40'
-                  onChange={this.onInputUniversity} />
-              </SheetContent>
-            </Sheet>
-          </div>}
           {/* エラー */}
           {this.state.submitError &&
           <Sheet>
@@ -76,10 +51,6 @@ export default class ChannelNew extends Component {
           {/* 送信 */}
           <Sheet>
             <SheetContent align='right'>
-              {!this.state.isDetail &&
-              <Button onClick={this.onOpenDetail}>
-                more
-              </Button>}
               <Button onClick={this.onSubmit}>
                 create
               </Button>
@@ -91,25 +62,14 @@ export default class ChannelNew extends Component {
   }
 
   state = {
-    isDetail: false,
     name: '',
     description: '',
-    university: '',
     tags: [],
     region: 'tokyo',
-    site: '',
-    twitter: '',
-    facebook: '',
     submitError: ''
   }
 
   process = false
-
-  onOpenDetail () {
-    this.setState({isDetail: true})
-  }
-
-  onOpenDetail = ::this.onOpenDetail
 
   // チャンネル名を入力する
   onInputName (event) {
@@ -131,31 +91,12 @@ export default class ChannelNew extends Component {
 
   onInputDescription = ::this.onInputDescription
 
-  // チャンネルの大学名を入力する
-  onInputUniversity (event) {
-    event.persist()
-    const value = event.target.value
-    this.setState({university: value})
-  }
-
-  onInputUniversity = ::this.onInputUniversity
-
-  // チャンネルのサイトを入力する
-  onInputSite (event) {
-    event.persist()
-    const value = event.target.value
-    if (value.length > 100) return
-    this.setState({site: value})
-  }
-
-  onInputSite = ::this.onInputSite
-
   // チャンネルを送信する
   onSubmit () {
     if (this.process) return
     this.process = true
     if (!this.state.name) {
-      this.setState({submitError: 'サークルの名前を入力してください'})
+      this.setState({submitError: 'チャンネルの名前を入力してください'})
       this.process = false
       return
     }
@@ -163,12 +104,8 @@ export default class ChannelNew extends Component {
     const next = {
       name: this.state.name,
       description: this.state.description,
-      university: this.state.university,
       region: this.state.region,
-      tags: this.state.tags,
-      sns: {
-        site: this.state.site,
-      }
+      tags: this.state.tags
     }
     this.props.channels.insert(next)
     .then(data => {

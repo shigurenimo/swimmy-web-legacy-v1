@@ -4,108 +4,73 @@ import { Random } from 'meteor/random'
 import propTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import TextField from 'material-ui/TextField'
-import UIDropzone from '../../components/UI-Dropzone'
+import Button from 'material-ui/Button'
+import TextField from '../../components/TextField'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
+import Typograhy from '../../components/Typography'
 
-@inject('channels', 'snackbar')
+@inject('accounts', 'channels', 'snackbar')
 @observer
 export default class ChannelEdit extends Component {
   render () {
-    const {
-      channels: {one: channel}
-    } = this.props
-    return (
-      <Layout>
-        {/* name */}
-        <Sheet>
-          <SheetContent>
-            <TextField
-              value={this.state.name}
-              maxLength={50}
-              onChange={this.onChangeName}
-              onBlur={this.onSubmitName} />
-          </SheetContent>
-        </Sheet>
-        {/* header */}
-        <Sheet>
-          <SheetActions>
-            <UIDropzone
-              src={Meteor.settings.public.assets.channel.root + channel._id + '/' + this.state.header}
-              onDrop={this.onDropHeader} />
-          </SheetActions>
-        </Sheet>
-        {/* description */}
-        <Sheet>
-          <SheetActions>
-            <TextField multiline
-              label='チャンネルの説明'
-              placeholder='チャンネルの簡単な説明'
-              value={this.state.description}
-              maxLength='100'
-              onChange={this.onInputDescription}
-              onBlur={this.onSubmitDescription} />
-          </SheetActions>
-        </Sheet>
-        {/* sns : web site */}
-        <Sheet>
-          <SheetContent>
-            <TextField
-              value={this.state.site || ''}
-              label='web site'
-              placeholder='https://swimmy.io'
-              maxLength='20'
-              onChange={this.onInputSocial.bind(this, 'site')}
-              onBlur={this.onSubmitSocial} />
-          </SheetContent>
-        </Sheet>
-        {/* sns : twitter */}
-        <Sheet>
-          <SheetContent>
-            <TextField
-              value={this.state.twitter || ''}
-              label='twitter'
-              placeholder='username'
-              maxLength='20'
-              onChange={this.onInputSocial.bind(this, 'twitter')}
-              onBlur={this.onSubmitSocial} />
-          </SheetContent>
-        </Sheet>
-        {/* school */}
-        <Sheet>
-          <SheetContent>
-            <TextField
-              value={this.state.univ}
-              label='学校名'
-              placeholder={'名桜大学'}
-              maxLength='40'
-              onChange={this.onInputUniv}
-              onBlur={this.onSubmitUniv} />
-          </SheetContent>
-        </Sheet>
-      </Layout>
-    )
+    const {channels: {one: channel}} = this.props
+    try {
+      return (
+        <Layout>
+          <Sheet>
+            <SheetActions align='right'>
+              <Button component='a' href={'/ch/' + channel._id}>
+                もどる
+              </Button>
+            </SheetActions>
+          </Sheet>
+          {/* name */}
+          <Sheet>
+            <SheetContent>
+              <TextField fullWidth
+                label='チャンネルの名前'
+                value={this.state.name}
+                maxLength={50}
+                onChange={this.onChangeName}
+                onBlur={this.onSubmitName} />
+            </SheetContent>
+          </Sheet>
+          {/* description */}
+          <Sheet>
+            <SheetActions>
+              <TextField multiline fullWidth
+                label='チャンネルの説明'
+                value={this.state.description}
+                maxLength='100'
+                onChange={this.onInputDescription}
+                onBlur={this.onSubmitDescription} />
+            </SheetActions>
+          </Sheet>
+          {this.props.accounts.isLogged &&
+          this.props.accounts.one._id === channel.ownerId &&
+          <Sheet>
+            <SheetActions align='right'>
+              <Button onClick={this.onRemoveList}>
+                このチャンネルを削除する
+              </Button>
+            </SheetActions>
+          </Sheet>}
+        </Layout>
+      )
+    } catch (err) {
+      console.error(err)
+      return <Typograhy>エラーが発生しました</Typograhy>
+    }
   }
 
   state = {
     name: this.props.channels.one.name,
     header: this.props.channels.one.header,
-    number: this.props.channels.one.number,
     description: this.props.channels.one.description || '',
-    channel: this.props.channels.one.channel,
-    place: this.props.channels.one.place || '',
-    site: this.props.channels.one.sns.site || '',
-    twitter: this.props.channels.one.sns.twitter || '',
-    email: this.props.channels.one.email || '',
-    univ: this.props.channels.one.univ || '',
-    tags: [
-      this.props.channels.one.tags.slice()[0] || '',
-      this.props.channels.one.tags.slice()[1] || '',
-      this.props.channels.one.tags.slice()[2] || ''
-    ],
+    region: this.props.channels.one.region,
     errorImageHeader: null
   }
 
@@ -222,32 +187,6 @@ export default class ChannelEdit extends Component {
 
   onSubmitDescription = ::this.onSubmitDescription
 
-  // 大学名を更新する
-  onInputUniv (event) {
-    event.persist()
-    const value = event.target.value
-    if (value > 100) return
-    if (value < 0) return
-    this.setState({univ: value})
-  }
-
-  onInputUniv = ::this.onInputUniv
-
-  // 大学名の更新をサーバーに送信する
-  onSubmitUniv () {
-    const channelId = this.props.channels.one._id
-    const next = this.state.univ
-    if (this.props.channels.one.univ === this.state.univ) return
-    this.props.channels.updateBasic(channelId, 'univ', next)
-    .then(data => {
-      this.props.channels.replaceOne(data)
-      this.props.snackbar.show('更新しました')
-    })
-    .catch(err => this.props.snackbar.error(err.reason))
-  }
-
-  onSubmitUniv = ::this.onSubmitUniv
-
   // テキストを入力する
   onInputSocial (name, event) {
     event.persist()
@@ -257,26 +196,22 @@ export default class ChannelEdit extends Component {
     this.setState(object)
   }
 
-  // テキストの更新をサーバーに送信する
-  onSubmitSocial () {
+  onRemoveList () {
+    const confirm = window.confirm('削除してもいいですか？')
+    if (!confirm) return
     const channelId = this.props.channels.one._id
-    const next = {
-      site: this.state.site,
-      twitter: this.state.twitter,
-      facebook: this.state.facebook
-    }
-    if (this.props.channels.one.sns.site === this.state.site &&
-      this.props.channels.one.sns.twitter === this.state.twitter &&
-      this.props.channels.one.sns.facebook === this.state.facebook) return
-    this.props.channels.updateBasic(channelId, 'sns', next)
+    this.props.channels.remove(channelId)
     .then(data => {
-      this.props.channels.replaceOne(data)
-      this.props.snackbar.show('更新しました')
+      this.props.channels.pullIndex(channelId)
+      this.props.router.go('/channel')
+      this.props.timelines.resetTemp()
+      this.props.timelines.resetIndex()
+      this.props.snackbar.show('チャンネルを削除しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))
   }
 
-  onSubmitSocial = ::this.onSubmitSocial
+  onRemoveList = ::this.onRemoveList
 
   componentDidMount () {
     this.context.onScrollTop()

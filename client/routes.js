@@ -199,10 +199,7 @@ export default {
       const channelId = params.channelId
       stores.channels.findOne({_id: channelId}, {})
       .then(data => {
-        if (!data) {
-          return notFound()
-        }
-        stores.channels.replaceOne(data)
+        if (!data) { return notFound() }
         stores.routes.setRoute('channel-edit')
         document.title = '編集中 - ' + data.name + ' | ' + documentTitle
         if (Meteor.isProduction) {

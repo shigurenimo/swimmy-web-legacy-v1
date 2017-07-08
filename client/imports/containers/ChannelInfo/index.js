@@ -18,10 +18,7 @@ import styleSheet from './index.style'
 @observer
 export default class ChannelInfo extends Component {
   render () {
-    const {
-      channels: {one: channel},
-      classes
-    } = this.props
+    const {channels: {one: channel}, classes} = this.props
     return (
       <Layout>
         {channel.header &&
@@ -53,26 +50,17 @@ export default class ChannelInfo extends Component {
           <SheetActions align='right'>
             {channel.member.includes(this.props.accounts.one._id) ? (
               <Button onTouchTap={this.onLeaveChannel}>
-                チェックアウト
+                checkout
               </Button>
             ) : (
               <Button onTouchTap={this.onJoinChannel}>
-                チェックイン
+                checkin
               </Button>
             )}
+            {channel.member.includes(this.props.accounts.one._id) &&
+            <Button component='a' href={'/channel/' + channel._id + '/edit'}>update</Button>}
           </SheetActions>}
         </Sheet>
-        {this.props.accounts.isLogged &&
-        this.props.accounts.one._id === channel.owner &&
-        <Sheet>
-          <SheetActions>
-            <Button onClick={this.onRemoveList}>
-              このチャンネルを削除する
-            </Button>
-            {channel.member.includes(this.props.accounts.one._id) &&
-            <Button component='a' href={'/channel/' + channel._id + '/edit'}>アップデート</Button>}
-          </SheetActions>
-        </Sheet>}
       </Layout>
     )
   }
@@ -104,23 +92,6 @@ export default class ChannelInfo extends Component {
   }
 
   onLeaveChannel = ::this.onLeaveChannel
-
-  onRemoveList () {
-    const confirm = window.confirm('削除してもいいですか？')
-    if (!confirm) return
-    const channelId = this.props.channels.one._id
-    this.props.channels.remove(channelId)
-    .then(data => {
-      this.props.channels.pullIndex(channelId)
-      this.props.router.go('/channel')
-      this.props.timelines.resetTemp()
-      this.props.timelines.resetIndex()
-      this.props.snackbar.show('チャンネルを削除しました')
-    })
-    .catch(err => this.props.snackbar.error(err.reason))
-  }
-
-  onRemoveList = ::this.onRemoveList
 
   componentDidMount () {
     this.context.onScrollTop()
