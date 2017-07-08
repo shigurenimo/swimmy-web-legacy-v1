@@ -1,4 +1,11 @@
 export default [{
+  version: '1.4.0',
+  date: '2017.7.8',
+  content: [
+    'データ取得の改善',
+    'listをchannelに変更'
+  ]
+}, {
   version: '1.3.1',
   date: '2017.6.27',
   content: [
