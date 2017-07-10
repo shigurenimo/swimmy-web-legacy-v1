@@ -8,7 +8,6 @@ import Block from '../../components/UI-Block'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
-import SheetBackgroundImage from '../../components/UI-SheetBackgroundImage'
 import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
@@ -39,22 +38,11 @@ export default class ChannelList extends Component {
     }
     return this.props.channels.index.map(item =>
       <Sheet hover key={item._id} href={'/ch/' + item._id + '/?preview=true'}>
-        {item.univ &&
-        <SheetContent type='caption'>
-          <Typography>
-            {utils.regions[item.channel].name.jp}・{item.univ}
-          </Typography>
-        </SheetContent>}
         <SheetContent>
           <Typography type='subheading'>
             {item.name}
           </Typography>
         </SheetContent>
-        {item.header &&
-        <SheetBackgroundImage src={
-          item.header &&
-          Meteor.settings.public.assets.channel.root + item._id + '/' + item.header
-        } />}
         <Block width={600}>
           <SheetContent>
             <Typography className={classes.content}>
