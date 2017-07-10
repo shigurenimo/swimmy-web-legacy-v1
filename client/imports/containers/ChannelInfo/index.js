@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
@@ -9,7 +8,6 @@ import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
-import SheetBackgroundImage from '../../components/UI-SheetBackgroundImage'
 import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
@@ -21,14 +19,6 @@ export default class ChannelInfo extends Component {
     const {channels: {one: channel}, classes} = this.props
     return (
       <Layout>
-        {channel.header &&
-        <Sheet>
-          <SheetBackgroundImage src={
-            channel.header &&
-            Meteor.settings.public.assets.channel.root + channel._id + '/' +
-            channel.header
-          } />
-        </Sheet>}
         <Sheet>
           {channel.univ &&
           <SheetContent>

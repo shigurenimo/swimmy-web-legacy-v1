@@ -1,28 +1,15 @@
 {
   "public": {
-    "version": "1.0.0",
-    "api": {},
-    "assets": {
-      "network": {
-        "header": "https://",
-        "root": "https://"
-      },
-      "post": {
-        "image": "https://"
-      },
-      "thread": {
-        "image": "https://"
-      },
-      "work": {
-        "root": "https://",
-        "illust": "https://",
-        "photo": "https://"
-      }
+    "version": "1.4.2",
+    "storage": {
+      "images": "https://storage.googleapis.com/swimmy-images/",
+      "artwork": "https://storage.googleapis.com/swimmy/"
     },
     "color": {
       "base": "#f3f3f3",
-      "primary": "#00afcc",
-      "secondary": "#4496d3"
+      "text": "#000000",
+      "primary": "#327BF6",
+      "secondary": "#00afcc"
     },
     "reservedWord": [
       "swimmy",
@@ -48,13 +35,18 @@
     "twitter": {
       "consumerKey": "",
       "secret": ""
+    },
+    "googleCloud": {
+      "projectId": "",
+      "keyFilename": "xxxx.json",
+      "keyFilePath": ".temp/xxxx.json"
     }
   },
   "galaxy.meteor.com": {
     "env": {
       "ROOT_URL": "https://swimmy.io",
       "MONGO_URL": "mongodb://",
-      "MONGO_OPLOG_URL": "mongodb://",
+      "MONGO_OPLOG_URL": "",
       "MAIL_URL": "smtp://"
     }
   }

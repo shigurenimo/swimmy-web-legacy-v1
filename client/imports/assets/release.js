@@ -1,4 +1,17 @@
 export default [{
+  version: '1.4.2',
+  date: '2017.7.10',
+  content: [
+    'UIデザインの改善'
+  ]
+}, {
+  version: '1.4.1',
+  date: '2017.7.8',
+  content: [
+    'アートワークの投稿機能のサクジィ',
+    'listをchannelに変更'
+  ]
+}, {
   version: '1.4.0',
   date: '2017.7.8',
   content: [
