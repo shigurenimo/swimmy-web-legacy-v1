@@ -7,8 +7,13 @@ const MethodModel = types.model('MethodModel', {
   publish: types.string
 }, {
   cursor: null,
+  subscription: null,
   selector: null,
   options: null,
+  indexCursor: null,
+  indexSelector: null,
+  indexOptions: null,
+  indexSubscription: null,
   collections: null
 }, {
   setFetchState (state) {
@@ -24,7 +29,11 @@ const MethodModel = types.model('MethodModel', {
   pushIndex (models) {
     if (Array.isArray(models)) {
       models.forEach(model => {
-        this.index.unshift(model)
+        try {
+          this.index.unshift(model)
+        } catch (err) {
+          console.info('Subscription.' + this.publish + '.pushIndex', err, model)
+        }
       })
     } else {
       this.index.push(models)
@@ -57,24 +66,27 @@ const MethodModel = types.model('MethodModel', {
   setCursor (cursor) {
     this.cursor = cursor
   },
+  setIndexCursor (cursor) {
+    this.indexCursor = cursor
+  },
   subscribe (selector = {}, options = {}) {
-    if (this.cursor) {
+    if (this.indexCursor) {
       const diff = [
-        JSON.stringify(this.selector) === JSON.stringify(selector),
-        JSON.stringify(this.options) === JSON.stringify(options)
+        JSON.stringify(this.indexSelector) === JSON.stringify(selector),
+        JSON.stringify(this.indexOptions) === JSON.stringify(options)
       ]
       if (diff[0] && diff[1]) return
     }
-    this.selector = selector
-    this.options = options
-    this.unsubscribe()
+    this.indexSelector = selector
+    this.indexOptions = options
+    this.unsubscribeIndex()
     const collectionName = this.publish + '.' + this.name
     if (!this.collections) { this.collections = new Map() }
     if (!this.collections.has(collectionName)) {
       this.collections.set(collectionName, new Mongo.Collection(collectionName))
     }
     return new Promise((resolve, reject) => {
-      this.subscription = Meteor.subscribe(this.publish, selector, options, this.name, {
+      this.indexSubscription = Meteor.subscribe(this.publish, selector, options, this.name, {
         onReady: () => {
           console.info(this.publish + '.subscribe')
           let models = []
@@ -98,7 +110,7 @@ const MethodModel = types.model('MethodModel', {
               this.spliceIndex(model)
             }
           })
-          this.setCursor(cursor)
+          this.setIndexCursor(cursor)
         }
       })
       if (!this.index.length) {
@@ -120,41 +132,40 @@ const MethodModel = types.model('MethodModel', {
     selector.ownerId = _id
     this.subscribe(selector, options)
   },
-  unsubscribe () {
-    if (this.cursor) {
-      this.cursor.stop()
-      this.cursor = null
+  unsubscribeIndex () {
+    if (this.indexCursor) {
+      this.indexCursor.stop()
+      this.indexCursor = null
       this.index = []
     }
-    if (this.subscription) {
-      this.subscription.stop()
+    if (this.indexSubscription) {
+      this.indexSubscription.stop()
       console.info(this.publish + '.unsubscribe')
     }
   },
   subscribeOne (selector = {}, options = {}) {
-    /*
-     if (this.cursor) {
-     if (this.selector && this.selector.toString() === selector.toString()) return
-     if (this.options && this.options.toString() === options.toString()) return
-     }
-     this.selector = selector
-     this.options = options
-     this.unsubscribe()
-     */
-    options.limit = 1
     return new Promise((resolve, reject) => {
-      if (this.one) {
-        resolve(this.one)
-        return
+      if (this.cursor) {
+        const diff = [
+          JSON.stringify(this.selector) === JSON.stringify(selector),
+          JSON.stringify(this.options) === JSON.stringify(options)
+        ]
+        if (diff[0] && diff[1]) {
+          resolve(this.one)
+          return
+        }
       }
-      const collectionName = this.publish + '.' + this.name
+      this.selector = selector
+      this.options = options
+      this.unsubscribe()
+      options.limit = 1
+      const collectionName = this.publish + '.one'
       if (!this.collections) { this.collections = new Map() }
       if (!this.collections.has(collectionName)) {
         this.collections.set(collectionName, new Mongo.Collection(collectionName))
       }
       this.subscription = Meteor.subscribe(this.publish, selector, options, 'one', {
         onReady: () => {
-          console.info(this.publish + '.subscribeOne')
           const cursor = this.collections.get(collectionName).find({}).observe({
             added: (model) => {
               this.setOne(model)
@@ -177,6 +188,17 @@ const MethodModel = types.model('MethodModel', {
         }
       }, 2000)
     })
+  },
+  unsubscribe () {
+    if (this.cursor) {
+      this.cursor.stop()
+      this.cursor = null
+      this.one = null
+    }
+    if (this.subscription) {
+      this.subscription.stop()
+      console.info(this.publish + '.unsubscribeOne')
+    }
   },
   findOne (selector = {}, options = {}) {
     return new Promise((resolve, reject) => {
