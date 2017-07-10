@@ -24,7 +24,7 @@ import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'inputPost', 'router', 'accounts')
+@inject('layout', 'inputPost', 'routes', 'accounts')
 @observer
 export default class Content extends Component {
   render () {
@@ -60,7 +60,7 @@ export default class Content extends Component {
 
   get paddingTop () {
     const fix = this.props.layout.oneColumn ? 0 : 0
-    switch (this.props.router.page) {
+    switch (this.props.routes.page) {
       case 'timeline':
       case 'logs':
       case 'thread':
@@ -79,10 +79,10 @@ export default class Content extends Component {
     if (this.props.accounts.isLoggingIn) {
       return <Loading key='loading' />
     }
-    if (this.props.router.page === null) {
+    if (this.props.routes.page === null) {
       return <Loading key='loading' />
     }
-    switch (this.props.router.page) {
+    switch (this.props.routes.page) {
       case 'channel-list':
         return <ChannelList key='channel-list' />
       case 'release':
@@ -93,7 +93,7 @@ export default class Content extends Component {
       case 'report':
         return <Report key='report' />
     }
-    switch (this.props.router.page) {
+    switch (this.props.routes.page) {
       case 'profile':
         return <Profile key='profile' />
       case 'timeline':
@@ -106,7 +106,7 @@ export default class Content extends Component {
     if (this.props.accounts.isNotLoggedIn) {
       return <Login key='login' />
     }
-    switch (this.props.router.page) {
+    switch (this.props.routes.page) {
       case 'admin':
         return <Admin key='admin' />
       case 'config':
@@ -180,12 +180,12 @@ export default class Content extends Component {
     return {
       onScrollTop () {
         let scroll = 1
-        switch (self.props.router.pageCache) {
+        switch (self.props.routes.pageCache) {
           case 'channel-info':
           case 'profile':
           case 'thread':
           case 'artwork-info':
-            scroll = self.props.router.scrollCache
+            scroll = self.props.routes.scrollCache
         }
         setTimeout(() => {
           const element = self.ref

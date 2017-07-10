@@ -6,7 +6,7 @@ import InputPost from '../InputPost'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('router', 'accounts') @observer
+@inject('routes', 'accounts') @observer
 export default class InputAction extends Component {
   render () {
     const {classes} = this.props
@@ -32,13 +32,13 @@ export default class InputAction extends Component {
 
   router () {
     const {classes} = this.props
-    if (this.props.router.page === null) {
+    if (this.props.routes.page === null) {
       return <div />
     }
     if (this.props.accounts.isLoggingIn) {
       return <div />
     }
-    switch (this.props.router.page) {
+    switch (this.props.routes.page) {
       case 'timeline':
       case 'timemachine':
       case 'thread':

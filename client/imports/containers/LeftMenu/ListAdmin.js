@@ -8,7 +8,7 @@ import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
-@inject('router', 'posts', 'accounts') @observer
+@inject('routes', 'posts', 'accounts') @observer
 export default class LeftMenuChannels extends Component {
   render () {
     const {accounts, classes} = this.props
@@ -16,7 +16,7 @@ export default class LeftMenuChannels extends Component {
       <List>
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page.includes('admin')
+            [classes.select]: this.props.routes.page.includes('admin')
           })}
           component='a'
           href='/admin'>
@@ -34,7 +34,7 @@ export default class LeftMenuChannels extends Component {
           {this.props.accounts.isLogged &&
           <ListItem button dense
             className={classNames({
-              [classes.select]: this.props.router.page.includes('config')
+              [classes.select]: this.props.routes.page.includes('config')
             })}
             component='a'
             href='/config'>

@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'snackbar', 'router')
+@inject('layout', 'snackbar', 'routes')
 @observer
 export default class Snackbar extends Component {
   render () {
@@ -33,7 +33,7 @@ export default class Snackbar extends Component {
 
   // ヘッダーが最小化されているかどうか
   get isMinimal () {
-    switch (this.props.router.page) {
+    switch (this.props.routes.page) {
       case 'home':
         return false
     }

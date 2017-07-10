@@ -1,18 +1,14 @@
-import { createRouter, RoutesProvider } from 'meteor/uufish:mobx-route-provider'
 import React, { Component } from 'react'
 import Snackbar from '../Snackbar'
 import Layout from '../Layout'
-import paths from '../../../routes'
-
-const routes = createRouter(paths)
 
 export default class App extends Component {
   render () {
     return (
-      <RoutesProvider routes={routes}>
+      <div>
         <Layout />
         <Snackbar />
-      </RoutesProvider>
+      </div>
     )
   }
 }

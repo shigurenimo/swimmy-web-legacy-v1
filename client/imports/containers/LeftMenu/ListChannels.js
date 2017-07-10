@@ -9,7 +9,7 @@ import IconButton from 'material-ui/IconButton'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
-@inject('router', 'posts', 'accounts')
+@inject('routes', 'posts', 'accounts')
 @observer
 export default class LeftMenuChannels extends Component {
   render () {
@@ -18,7 +18,7 @@ export default class LeftMenuChannels extends Component {
       <List>
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page === 'channel'
+            [classes.select]: this.props.routes.page === 'channel'
           })}
           component='a'
           href={'/ch/default'}>
@@ -32,7 +32,7 @@ export default class LeftMenuChannels extends Component {
         {this.props.accounts.isLogged &&
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page.includes('channel-new')
+            [classes.select]: this.props.routes.page.includes('channel-new')
           })}
           component={'a'}
           href={'/ch/new'}>

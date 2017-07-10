@@ -6,16 +6,16 @@ import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
 
-@inject('router')
+@inject('routes')
 @observer
 export default class Verify extends Component {
   onClose = ::this.onClose
 
   get verifyMessage () {
-    if (this.props.router.verifyError === null) {
+    if (this.props.routes.verifyError === null) {
       return '読み込み中..'
     }
-    if (this.props.router.verifyError) {
+    if (this.props.routes.verifyError) {
       return 'エラーが発生しました'
     } else {
       return '本人確認できました'

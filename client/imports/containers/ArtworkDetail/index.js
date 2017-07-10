@@ -16,7 +16,7 @@ import SheetImage from '../../components/UI-SheetImage'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('artworks', 'accounts', 'router', 'snackbar') @observer
+@inject('artworks', 'accounts', 'routes', 'snackbar') @observer
 export default class ArtworkDetail extends Component {
   render () {
     const {classes} = this.props
@@ -241,7 +241,7 @@ export default class ArtworkDetail extends Component {
     const postId = this.props.artworks.one._id
     this.props.artworks.remove(postId)
     .then(postId => {
-      this.props.router.go('/artwork')
+      this.props.routes.go('/artwork')
       this.props.artworks.pullIndex(postId)
     })
     .catch(err => this.props.snackbar.error(err.reason))

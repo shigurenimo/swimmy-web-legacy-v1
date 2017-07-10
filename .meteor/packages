@@ -31,5 +31,3 @@ dynamic-import
 nimble:restivus
 
 bozhao:link-accounts
-
-uufish:mobx-route-provider

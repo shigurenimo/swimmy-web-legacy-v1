@@ -17,7 +17,7 @@ import styleSheet from './index.style'
     posts: stores.posts,
     threads: stores.threads,
     snackbar: stores.snackbar,
-    router: stores.router,
+    routes: stores.routes,
     accounts: stores.accounts,
     timelines: stores.timelines,
     info: stores.info
@@ -98,7 +98,7 @@ export default class InputPost extends Component {
   process = false
 
   get timelineName () {
-    if (this.props.router.page === 'thread') {
+    if (this.props.routes.page === 'thread') {
       if (this.props.timelines.channelId) {
         return this.props.timelines.name
       } else {
@@ -110,7 +110,7 @@ export default class InputPost extends Component {
 
   openChannelInfo () {
     const channelId = this.props.timelines.channelId ||
-      (this.props.router.page === 'thread' && this.props.posts.one.channelId)
+      (this.props.routes.page === 'thread' && this.props.posts.one.channelId)
     if (!channelId) return
     if (this.props.info.isOpen) {
       this.props.info.close()
@@ -195,7 +195,7 @@ export default class InputPost extends Component {
   onSubmitKeyDown = ::this.onSubmitKeyDown
 
   onSubmit () {
-    this.props.router.page === 'thread'
+    this.props.routes.page === 'thread'
       ? this.onSubmitReply()
       : this.onSubmitPost()
   }

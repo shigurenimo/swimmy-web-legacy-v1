@@ -10,7 +10,7 @@ import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
-@inject('router', 'artworks', 'accounts') @observer
+@inject('routes', 'artworks', 'accounts') @observer
 export default class LeftMenuArtworks extends Component {
   render () {
     const {accounts, classes} = this.props
@@ -18,7 +18,7 @@ export default class LeftMenuArtworks extends Component {
       <List>
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page === 'artwork' && (
+            [classes.select]: this.props.routes.page === 'artwork' && (
               this.props.artworks.timeline.unique === 'default' ||
               this.props.artworks.timeline.unique === 'follows' ||
               this.props.artworks.timeline.unique === 'self'
@@ -36,7 +36,7 @@ export default class LeftMenuArtworks extends Component {
           {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
-              [classes.select]: this.props.router.page === 'artwork' &&
+              [classes.select]: this.props.routes.page === 'artwork' &&
               this.props.artworks.timeline.unique === 'follows'
             })}
             component='a'
@@ -46,7 +46,7 @@ export default class LeftMenuArtworks extends Component {
           {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
-              [classes.select]: this.props.router.page === 'artwork' &&
+              [classes.select]: this.props.routes.page === 'artwork' &&
               this.props.artworks.timeline.unique === 'self'
             })}
             component='a'
@@ -57,7 +57,7 @@ export default class LeftMenuArtworks extends Component {
         {this.props.accounts.isLogged &&
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page.includes('artwork-new')
+            [classes.select]: this.props.routes.page.includes('artwork-new')
           })}
           component='a'
           href='/artwork/new'>

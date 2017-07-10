@@ -10,7 +10,7 @@ import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
-@inject('accounts', 'router', 'posts', 'timelines') @observer
+@inject('accounts', 'routes', 'posts', 'timelines') @observer
 export default class LeftMenuTimeline extends Component {
   render () {
     const {accounts, classes} = this.props
@@ -19,7 +19,7 @@ export default class LeftMenuTimeline extends Component {
         {/* threads */}
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page.includes('thread')
+            [classes.select]: this.props.routes.page.includes('thread')
           })}
           component='a'
           href='/thread'>
@@ -33,7 +33,7 @@ export default class LeftMenuTimeline extends Component {
         {/* timelines */}
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.router.page === 'timeline' && (
+            [classes.select]: this.props.routes.page === 'timeline' && (
               this.props.timelines.unique === 'default' ||
               this.props.timelines.unique === 'follows' ||
               this.props.timelines.unique === 'self' ||

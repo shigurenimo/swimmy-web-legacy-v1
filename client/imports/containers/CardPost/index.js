@@ -17,7 +17,7 @@ import Typography from '../../components/Typography'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('router', 'accounts', 'posts', 'snackbar') @observer
+@inject('routes', 'accounts', 'posts', 'snackbar') @observer
 export default class Post extends Component {
   render () {
     const {classes} = this.props
@@ -181,16 +181,16 @@ export default class Post extends Component {
   }
 
   onOpenThread (event) {
-    if (this.props.router.page === 'thread') return
+    if (this.props.routes.page === 'thread') return
     event.persist()
     const nodeName = event.target.nodeName
     if (nodeName === 'INPUT' || nodeName === 'SPAN' || nodeName === 'BUTTON' || nodeName === 'IMG' ||
       nodeName === 'svg' ||
       nodeName === 'path' || nodeName === 'A') return
     if (this.props.replyId) {
-      this.props.router.go('/thread/' + this.props.replyId)
+      this.props.routes.go('/thread/' + this.props.replyId)
     } else {
-      this.props.router.go('/thread/' + this.props._id)
+      this.props.routes.go('/thread/' + this.props._id)
     }
   }
 
@@ -237,7 +237,7 @@ export default class Post extends Component {
       this.props.snackbar.requireLogin()
       return
     }
-    if (this.props.router.page === 'thread') {
+    if (this.props.routes.page === 'thread') {
       this.props.posts.updateReaction(postId, name)
       .then(post => {
         this.setState({isInputReaction: false, inputNewReaction: ''})

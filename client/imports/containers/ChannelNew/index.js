@@ -10,7 +10,7 @@ import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
 import TypographyError from '../../components/UI-TypographyError'
 
-@inject('channels', 'router', 'snackbar', 'timelines')
+@inject('channels', 'routes', 'snackbar', 'timelines')
 @observer
 export default class ChannelNew extends Component {
   render () {
@@ -109,7 +109,7 @@ export default class ChannelNew extends Component {
     }
     this.props.channels.insert(next)
     .then(data => {
-      this.props.router.go('/ch')
+      this.props.routes.go('/ch')
       this.props.snackbar.show('新しいチャンネルを作成しました')
       this.process = false
     })

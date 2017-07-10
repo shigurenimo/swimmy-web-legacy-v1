@@ -9,7 +9,7 @@ import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
 import Typograhy from '../../components/Typography'
 
-@inject('accounts', 'channels', 'snackbar', 'router')
+@inject('accounts', 'channels', 'snackbar', 'routes')
 @observer
 export default class ChannelEdit extends Component {
   render () {
@@ -131,7 +131,7 @@ export default class ChannelEdit extends Component {
     const channelId = this.props.channels.one._id
     this.props.channels.remove(channelId)
     .then(() => {
-      this.props.router.go('/ch')
+      this.props.routes.go('/ch')
       this.props.snackbar.show('チャンネルを削除しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))
