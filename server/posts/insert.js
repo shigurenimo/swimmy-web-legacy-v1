@@ -105,6 +105,9 @@ Meteor.methods({
       } else {
         data.replyId = req.replyId
       }
+      if (reply.channelId) {
+        data.channelId = reply.channelId
+      }
     }
     const postId = collections.posts.insert(data)
 
