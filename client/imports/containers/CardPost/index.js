@@ -241,10 +241,6 @@ export default class Post extends Component {
       this.props.posts.updateReaction(postId, name)
       .then(post => {
         this.setState({isInputReaction: false, inputNewReaction: ''})
-        return this.props.posts.findOneFromId(postId)
-      })
-      .then(post => {
-        this.props.posts.replaceOne(post)
       })
       .catch(err => {
         this.props.snackbar.error(err)
@@ -253,8 +249,6 @@ export default class Post extends Component {
     }
     this.props.posts.updateReaction(postId, name)
     .then(post => {
-      this.props.posts.replaceIndex(post)
-      this.props.posts.replaceOne(post)
       this.setState({isReply: false, isInputReaction: false, inputNewReaction: ''})
     })
   }
@@ -273,9 +267,7 @@ export default class Post extends Component {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
     this.props.posts.remove(postId)
-    .then(() => {
-      this.props.posts.pullIndex(postId)
-    })
+    .then(() => {})
     .catch(err => this.props.snackbar.error(err.reason))
   }
 }

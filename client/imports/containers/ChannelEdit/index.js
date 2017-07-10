@@ -82,7 +82,6 @@ export default class ChannelEdit extends Component {
     const next = this.state.name
     this.props.channels.updateBasic(channelId, 'name', next)
     .then(data => {
-      this.props.channels.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))
@@ -108,7 +107,6 @@ export default class ChannelEdit extends Component {
     if (this.props.channels.one.description === this.state.description) return
     this.props.channels.updateBasic(channelId, 'description', next)
     .then(data => {
-      this.props.channels.replaceOne(data)
       this.props.snackbar.show('更新しました')
     })
     .catch(err => this.props.snackbar.error(err.reason))

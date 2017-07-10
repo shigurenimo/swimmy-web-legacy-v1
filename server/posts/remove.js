@@ -5,22 +5,22 @@ Meteor.methods({
   'posts.remove' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
 
-    const post = collections.posts.findOne(req.postId)
+    const model = collections.posts.findOne(req._id)
 
-    if (!post) return 200
+    if (!model) return 200
 
-    if (post.ownerId !== this.userId) return 409
+    if (model.ownerId !== this.userId) return 409
 
-    collections.posts.remove(post._id)
+    collections.posts.remove(model._id)
 
-    if (post.reply) {
-      collections.posts.update(post.reply, {
-        $pull: {replies: post._id}
+    if (model.reply) {
+      collections.posts.update(model.reply, {
+        $pull: {replies: model._id}
       })
     }
 
-    if (post.tags) {
-      post.tags.filter(tag => tag !== '').forEach(hashtag => {
+    if (model.tags) {
+      model.tags.filter(tag => tag !== '').forEach(hashtag => {
         const tag = collections.tags.findOne({name: hashtag})
         if (tag) {
           if (tag.count < 2) {

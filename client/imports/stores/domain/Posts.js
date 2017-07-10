@@ -67,15 +67,6 @@ export default types.compose('Posts', Model, {
       })
     })
   },
-  remove (postId) {
-    return new Promise((resolve, reject) => {
-      Meteor.call('posts.remove', {
-        postId: postId
-      }, err => {
-        if (err) { reject(err) } else { resolve() }
-      })
-    })
-  },
   updateReaction (postId, name) {
     return new Promise((resolve, reject) => {
       Meteor.call('posts.updateReaction', {

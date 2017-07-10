@@ -228,12 +228,7 @@ export default class PostRes extends Component {
     }
     this.props.posts.updateReaction(postId, name)
     .then(post => {
-      this.props.posts.pushIndex(post)
       this.setState({isReply: false, isInputReaction: false, inputNewReaction: ''})
-      return this.props.posts.findOneFromId(replyId)
-    })
-    .then(post => {
-      this.props.posts.replaceOne(post)
     })
     .catch(err => this.props.snackbar.error(err.reason))
   }
@@ -249,17 +244,10 @@ export default class PostRes extends Component {
 
   // 投稿を削除する
   onRemovePost (postId) {
-    const replyId = this.props.posts.one._id
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
     this.props.posts.remove(postId)
-    .then(() => {
-      this.props.posts.pullIndex(postId)
-      return this.props.posts.findOneFromId(replyId)
-    })
-    .then(post => {
-      this.props.posts.replaceOne(post)
-    })
+    .then(() => {})
     .catch(err => this.props.snackbar.error(err.reason))
   }
 }

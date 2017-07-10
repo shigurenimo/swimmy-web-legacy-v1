@@ -30,12 +30,12 @@ Meteor.methods({
       throw new Meteor.Error('not', 'そのユーザネームは既に存在します')
     }
     Accounts.setUsername(this.userId, req.username)
-    collections.posts.update({'owner': this.userId, 'public': {$exists: true}}, {
+    collections.posts.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
       $set: {
         'public.username': req.username
       }
     }, {multi: true})
-    collections.artworks.update({'owner': this.userId, 'public': {$exists: true}}, {
+    collections.artworks.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
       $set: {
         'public.username': req.username
       }
