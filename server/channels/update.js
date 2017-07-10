@@ -77,6 +77,5 @@ Meteor.methods({
         }
       }, {multi: true})
     }
-    return collections.channels.findOne(req.channelId)
   }
 })

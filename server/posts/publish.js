@@ -13,8 +13,6 @@ Meteor.publish('posts', function (selector = {}, options = {}, name) {
       break
   }
 
-  console.log(selector, options, name)
-
   options.sort = {createdAt: -1}
   options.fields = {
     replies: 0

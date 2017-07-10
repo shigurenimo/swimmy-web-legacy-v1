@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Typography from 'material-ui/Typography'

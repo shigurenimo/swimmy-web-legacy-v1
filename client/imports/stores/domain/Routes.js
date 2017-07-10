@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor'
-import { Accounts } from 'meteor/accounts-base'
 import { Router } from '/client/imports/packages/routes'
 
 const documentTitle = document.title
@@ -274,7 +273,6 @@ Routes.setRoute('/:username', {
 
 function notFound (stores) {
   stores.routes.setRoute('not-found')
-  document.title = '404 | ' + documentTitle
   if (Meteor.isProduction) {
     window.ga('send', 'pageview', {
       page: '/404',

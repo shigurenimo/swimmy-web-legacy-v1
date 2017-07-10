@@ -1,7 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import { isNumeric } from 'validator'
 import Button from 'material-ui/Button'
 import TextField from '../../components/TextField'
 import Block from '../../components/UI-Block'
