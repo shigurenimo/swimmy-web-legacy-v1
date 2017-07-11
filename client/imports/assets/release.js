@@ -1,4 +1,12 @@
 export default [{
+  version: '1.4.4',
+  date: '2017.7.10',
+  content: [
+    'レスでリアクションできないバグの回収（報告thanks）',
+    '空の書き込みができるバグの回収（報告thanks）',
+    '過去の書き込みの復旧'
+  ]
+}, {
   version: '1.4.3',
   date: '2017.7.10',
   content: [
