@@ -227,6 +227,7 @@ export default class InputPost extends Component {
         this.props.snackbar.error(err.reason)
       })
     } else {
+      if (this.props.inputPost.postContent === '') return
       await this.props.posts.insert({
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
@@ -271,6 +272,7 @@ export default class InputPost extends Component {
         this.props.snackbar.error(err)
       })
     } else {
+      if (this.props.inputPost.postContent === '') return
       const replyId = this.props.posts.thread.one._id
       await this.props.posts.insert({
         isPublic: this.state.inputIsPublic,

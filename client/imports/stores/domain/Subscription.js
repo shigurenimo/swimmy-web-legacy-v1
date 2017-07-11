@@ -25,6 +25,7 @@ const MethodModel = types.model('MethodModel', {
     } else {
       this.index = [models]
     }
+    this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   },
   pushIndex (models) {
     if (Array.isArray(models)) {
@@ -38,6 +39,7 @@ const MethodModel = types.model('MethodModel', {
     } else {
       this.index.push(models)
     }
+    this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   },
   replaceIndex (model) {
     const index = this.index.findIndex(item => item._id === model._id)
@@ -97,7 +99,6 @@ const MethodModel = types.model('MethodModel', {
               models.push(model)
               if (ref !== null) clearTimeout(ref)
               ref = setTimeout(() => {
-                models = models.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 this.pushIndex(models)
                 models = []
                 ref = null

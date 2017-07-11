@@ -95,12 +95,12 @@ export default class Post extends Component {
           {this.props.reactions.slice()[0] &&
           <SheetActions>
             <div className={classes.reactionList}>
-              {this.props.reactions.map(({name, owners}) =>
+              {this.props.reactions.map(({name, ownerIds}) =>
                 <Chip
                   key={name}
-                  label={name + ' ' + (owners.length > 0 ? owners.length : '')}
+                  label={name + ' ' + (ownerIds.length > 0 ? ownerIds.length : '')}
                   onRequestDelete={
-                    (!!this.props.accounts.isLogged && owners.includes(this.props.accounts.one._id))
+                    (!!this.props.accounts.isLogged && ownerIds.includes(this.props.accounts.one._id))
                       ? this.onUpdateReaction.bind(this, this.props._id, name)
                       : null
                   }

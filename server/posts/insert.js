@@ -15,6 +15,8 @@ Meteor.methods({
     check(req.isPublic, Boolean)
     check(req.content, String)
 
+    if (req.content === '') return
+
     if (req.images) {
       check(req.images, Array)
     }
