@@ -58,26 +58,26 @@ export default class PostRes extends Component {
           <SheetContent>
             {this.embed(this.props.extension.web.oEmbed)}
           </SheetContent>}
-          {/* web meta */}
+          {/* web html */}
           {this.props.extension.web &&
-          this.props.extension.web.meta &&
-          this.props.extension.web.meta['og:image'] &&
+          this.props.extension.web.html &&
+          this.props.extension.web.html['og:image'] &&
           <SheetContent>
             <a href={this.props.extension.web.url} target='_blank'>
-              <Image src={this.props.extension.web.meta['og:image']} />
+              <Image src={this.props.extension.web.html['og:image']} />
             </a>
           </SheetContent>}
           {/* web title */}
           {this.props.extension.web &&
-          this.props.extension.web.meta &&
-          this.props.extension.web.meta.title &&
+          this.props.extension.web.html &&
+          this.props.extension.web.html.title &&
           <SheetContent>
             <Typography
               type='subheading'
               component='a'
               href={this.props.extension.web.url}
               target='_blank'>
-              {this.props.extension.web.meta.title}
+              {this.props.extension.web.html.title}
             </Typography>
           </SheetContent>}
           {/* reaction */}

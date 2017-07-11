@@ -49,11 +49,11 @@ Meteor.methods({
     }
 
     let oEmbed = null
-    let meta = null
+    let html = null
     if (service) {
       oEmbed = oEmbedAsync(url, service)
     } else if (url) {
-      meta = metaAsync(url)
+      html = metaAsync(url)
     }
 
     const data = {
@@ -86,14 +86,14 @@ Meteor.methods({
 
     data.extension = {}
 
-    if (url || meta || oEmbed) {
+    if (url || html || oEmbed) {
       data.extension.web = {}
     }
     if (url) {
       data.extension.web.url = url
     }
-    if (meta) {
-      data.extension.web.meta = meta
+    if (html) {
+      data.extension.web.html = html
     }
     if (oEmbed) {
       data.extension.web.oEmbed = oEmbed
