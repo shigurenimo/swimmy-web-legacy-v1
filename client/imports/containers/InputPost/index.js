@@ -236,7 +236,6 @@ export default class InputPost extends Component {
       .then(post => {
         this.props.inputPost.reset()
         this.ref.style.height = 'auto'
-        this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
       })
       .catch(err => {
@@ -281,7 +280,6 @@ export default class InputPost extends Component {
       })
       .then(posts => {
         this.props.inputPost.reset()
-        this.props.snackbar.show('送信しました')
         this.setState({errorImage: null, inputImage: null})
       })
       .catch(err => {

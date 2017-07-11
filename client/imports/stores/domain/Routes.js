@@ -263,10 +263,6 @@ Routes.setRoute('/:username', {
       if (!user) return notFound()
       stores.users.setOne(user)
       stores.routes.setRoute('profile')
-      return stores.posts.findFromUserId(user._id)
-    })
-    .then(posts => {
-      stores.posts.setIndex(posts)
     })
   }
 })

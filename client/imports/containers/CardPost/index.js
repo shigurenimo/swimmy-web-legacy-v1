@@ -270,4 +270,16 @@ export default class Post extends Component {
     .then(() => {})
     .catch(err => this.props.snackbar.error(err.reason))
   }
+
+  componentWillMount () {
+    this.forceUpdater = setInterval(() => {
+      this.forceUpdate()
+    }, 5000)
+  }
+
+  componentWillUnmount () {
+    if (this.forceUpdater) {
+      clearInterval(this.forceUpdater)
+    }
+  }
 }

@@ -9,16 +9,14 @@ import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
-import Post from '../CardPost'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('posts', 'snackbar', 'accounts', 'users')
+@inject('snackbar', 'accounts', 'users')
 @observer
 export default class Profile extends Component {
   render () {
     const {
-      posts: {index},
       accounts,
       users: {one: user},
       classes
@@ -67,8 +65,6 @@ export default class Profile extends Component {
             </Button>
           </SheetActions>
         </Sheet>}
-        {/* 投稿 */}
-        {index.map(item => <Post key={item._id} {...item} />)}
       </Layout>
     )
   }
