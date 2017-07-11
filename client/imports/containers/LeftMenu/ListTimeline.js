@@ -10,7 +10,8 @@ import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
-@inject('accounts', 'routes', 'posts', 'timelines') @observer
+@inject('accounts', 'routes', 'posts', 'timelines')
+@observer
 export default class LeftMenuTimeline extends Component {
   render () {
     const {accounts, classes} = this.props
@@ -23,7 +24,7 @@ export default class LeftMenuTimeline extends Component {
           })}
           component='a'
           href='/thread'>
-          <ListItemText primary='threads' />
+          <ListItemText primary='thread' />
           <ListItemSecondaryAction>
             <IconButton component='a' href='/thread'>
               <BookmarkBorderIcon />
@@ -57,16 +58,6 @@ export default class LeftMenuTimeline extends Component {
             href={'/'}>
             <ListItemText inset primary={'default'} />
           </ListItem>
-          {/* follows */}
-          {accounts.isLogged &&
-          <ListItem button dense
-            className={classNames({
-              [classes.select]: this.props.timelines.unique === 'follows'
-            })}
-            component='a'
-            href={'/follows'}>
-            <ListItemText inset primary={'follows'} />
-          </ListItem>}
           {/* self */}
           {accounts.isLogged &&
           <ListItem button dense
@@ -75,7 +66,7 @@ export default class LeftMenuTimeline extends Component {
             })}
             component='a'
             href={'/self'}>
-            <ListItemText inset primary={'self'} />
+            <ListItemText inset primary={accounts.one.username || 'self'} />
           </ListItem>}
         </Collapse>
         {this.props.timelines.channelIndex.map(item =>

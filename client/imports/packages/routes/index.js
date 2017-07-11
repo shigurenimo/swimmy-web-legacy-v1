@@ -1,5 +1,6 @@
 import page from 'page'
 import Model from './model'
+import qs from 'qs'
 
 const Router = {
   create () {
@@ -42,6 +43,7 @@ export class RouterClass {
     this.routes.forEach(route => {
       page(route.path, (context, next) => {
         context.next = next
+        context.query = qs.parse(context.querystring)
         const asyncFuntion = route.action(stores, context, next)
         if (!asyncFuntion.then) return
         asyncFuntion

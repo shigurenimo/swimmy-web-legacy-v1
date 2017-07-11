@@ -6,7 +6,8 @@ import LeftMenuDefault from './ListDefault'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'routes', 'accounts') @observer
+@inject('layout', 'routes', 'accounts')
+@observer
 export default class LeftMenu extends Component {
   render () {
     const {classes, layout, routes, accounts} = this.props

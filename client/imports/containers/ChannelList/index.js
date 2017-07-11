@@ -8,7 +8,6 @@ import Block from '../../components/UI-Block'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
-import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
@@ -24,13 +23,12 @@ export default class ChannelList extends Component {
 
   forChannels () {
     const {classes} = this.props
-    const isFetching = this.props.channels.isFetching
     if (this.props.channels.index.length === 0) {
       return (
         <Sheet>
           <SheetContent>
             <Typography>
-              {isFetching ? '読み込み中 ..' : 'データが見つかりませんでした'}
+              {this.props.channels.fetchState ? '読み込み中 ..' : 'データが見つかりませんでした'}
             </Typography>
           </SheetContent>
         </Sheet>

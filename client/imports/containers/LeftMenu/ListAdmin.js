@@ -8,7 +8,8 @@ import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
-@inject('routes', 'posts', 'accounts') @observer
+@inject('routes', 'posts', 'accounts')
+@observer
 export default class LeftMenuChannels extends Component {
   render () {
     const {accounts, classes} = this.props
@@ -29,7 +30,7 @@ export default class LeftMenuChannels extends Component {
         <Collapse in={this.state.isExpand} transitionDuration='auto' unmountOnExit>
           {this.props.accounts.isLogged &&
           <ListItem button dense component='a' href='/twitter'>
-            <ListItemText inset primary='twitter' />
+            <ListItemText inset primary='Twitter' />
           </ListItem>}
           {this.props.accounts.isLogged &&
           <ListItem button dense

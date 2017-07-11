@@ -12,7 +12,7 @@ Meteor.methods({
     }
     if (this.userId) {
       report.user = {
-        posts: collections.posts.find({owner: this.userId}).count()
+        posts: collections.posts.find({ownerId: this.userId}).count()
       }
     }
     return report

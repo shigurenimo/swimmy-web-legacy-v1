@@ -120,7 +120,7 @@ const MethodModel = types.model('MethodModel', {
             const error = new Error('not-found')
             reject(error)
           }
-        }, 2000)
+        }, 5000)
       }
     })
   },
@@ -167,7 +167,8 @@ const MethodModel = types.model('MethodModel', {
       }
       this.subscription = Meteor.subscribe(this.publish, selector, options, 'one', {
         onReady: () => {
-          const cursor = this.collections.get(collectionName).find({}).observe({
+          const cursor = this.collections.get(collectionName)
+          .find({}).observe({
             added: (model) => {
               this.setOne(model)
               resolve(model)
@@ -187,7 +188,7 @@ const MethodModel = types.model('MethodModel', {
           const error = new Error('not-found')
           reject(error)
         }
-      }, 2000)
+      }, 5000)
     })
   },
   unsubscribe () {

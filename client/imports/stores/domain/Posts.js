@@ -7,12 +7,19 @@ const PostIndex = types.compose('PostIndex', IndexModel, {
   one: types.maybe(Post),
   index: types.optional(types.array(Post), [])
 }, {
-  subscribeFromUnique () {
-    return this.subscribe({
-    }, {
-      limit: 50
-    })
-  }
+  subscribeFromUnique (unique) {
+    switch (unique) {
+      case 'self':
+        const userId = Meteor.userId()
+        return this.subscribe({ownerId: userId}, {
+          limit: 50
+        })
+      default:
+        return this.subscribe({}, {
+          limit: 50
+        })
+    }
+  },
 })
 
 export default types.compose('Posts', Model, {
@@ -28,10 +35,21 @@ export default types.compose('Posts', Model, {
     })
   },
   subscribeFromUnique (unique) {
+    console.log('subscribeFromUnique', unique)
     switch (unique) {
+      case 'follows':
+        const user = Meteor.users()
+        console.log(user)
+        return this.subscribe({}, {
+          limit: 50
+        })
+      case 'self':
+        const userId = Meteor.userId()
+        return this.subscribe({ownerId: userId}, {
+          limit: 50
+        })
       default:
-        return this.subscribe({
-        }, {
+        return this.subscribe({}, {
           limit: 50
         })
     }

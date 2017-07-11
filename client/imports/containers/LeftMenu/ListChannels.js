@@ -22,7 +22,7 @@ export default class LeftMenuChannels extends Component {
           })}
           component='a'
           href={'/ch/default'}>
-          <ListItemText primary={'explore channel'} />
+          <ListItemText primary={'channels'} />
           <ListItemSecondaryAction>
             <IconButton component={'a'} href={'/ch/default'}>
               <SearchIcon />
@@ -36,7 +36,7 @@ export default class LeftMenuChannels extends Component {
           })}
           component={'a'}
           href={'/ch/new'}>
-          <ListItemText primary={'create new'} />
+          <ListItemText primary={'new channel'} />
           <ListItemSecondaryAction>
             <IconButton component={'a'} href={'/ch/new'}>
               <AddIcon />

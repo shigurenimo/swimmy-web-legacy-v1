@@ -10,15 +10,19 @@ Routes.setRoute('/(default|self|follows)?', {
   async action (stores, {params}) {
     const unique = params[0] || 'default'
     stores.posts.define(unique)
-    stores.posts[unique].subscribeFromUnique()
-    stores.timelines.setCurrent({
-      useSocket: true,
-      channelId: null,
-      unique: unique
-    })
-    stores.routes.setRoute('timeline')
-    stores.layout.setMain()
-    stores.info.close()
+    try {
+      stores.posts[unique].subscribeFromUnique(unique)
+      stores.timelines.setCurrent({
+        useSocket: true,
+        channelId: null,
+        unique: unique
+      })
+      stores.routes.setRoute('timeline')
+      stores.layout.setMain()
+      stores.info.close()
+    } catch (err) {
+      console.log(err)
+    }
     document.title = documentTitle
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
