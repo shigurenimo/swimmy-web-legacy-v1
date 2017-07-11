@@ -112,7 +112,7 @@ export default class PostRes extends Component {
             <SheetActions>
               <TextField fullWidth
                 value={this.state.inputNewReaction}
-                label='new reaction'
+                label='new label'
                 InputProps={{placeholder: this.reactionPlaceholder}}
                 maxLength='10'
                 onChange={this.onInputNewReaction} />
@@ -122,7 +122,8 @@ export default class PostRes extends Component {
                 {this.props.ownerId === this.props.accounts.one._id && (
                   <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete post</Button>
                 )}
-                <Button onClick={this.onSubmitNewReaction}>add reaction</Button>
+                <Button onClick={this.onSubmitNewReactionLike}>like!</Button>
+                <Button onClick={this.onSubmitNewReaction}>stick on!</Button>
               </SheetActions>
             )}
           </Sheet>
@@ -240,6 +241,13 @@ export default class PostRes extends Component {
   }
 
   onSubmitNewReaction = ::this.onSubmitNewReaction
+
+  onSubmitNewReactionLike () {
+    const postId = this.props._id
+    this.onUpdateReaction(postId, 'スキ')
+  }
+
+  onSubmitNewReactionLike = ::this.onSubmitNewReactionLike
 
   // 投稿を削除する
   onRemovePost (postId) {
