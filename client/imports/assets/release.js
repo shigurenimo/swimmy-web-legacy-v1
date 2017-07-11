@@ -1,4 +1,10 @@
 export default [{
+  version: '1.4.3',
+  date: '2017.7.10',
+  content: [
+    'アップデートに失敗'
+  ]
+}, {
   version: '1.4.2',
   date: '2017.7.10',
   content: [
