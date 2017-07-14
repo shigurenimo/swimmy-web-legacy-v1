@@ -42,7 +42,7 @@ export default class Post extends Component {
             <Typography inline type='caption' component='span'> - {utils.date.since(this.props.createdAt)}</Typography>
           </SheetContent>
           {/* photo */}
-          {this.props.images && this.props.images.slice()[0] &&
+          {this.props.imagePath &&
           <SheetContent>
             <div
               className={classNames(classes.photoImage, {

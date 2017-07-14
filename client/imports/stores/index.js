@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor'
+import { connectReduxDevtools, types } from 'mobx-state-tree'
 import InputPost from './ui/InputPost'
 import Info from './ui/info'
 import Layout from './ui/Layout'
@@ -34,5 +36,26 @@ const routes = Routes.createStore()
 Routes.run()
 
 stores.routes = routes
+
+/*
+if (Meteor.isDevelopment && window.navigator.userAgent.toLowerCase().includes('chrome')) {
+  const remotedev = require('remotedev')
+  const reduxStore = types.model({
+    accounts: Accounts,
+    info: Info,
+    inputPost: InputPost,
+    channels: Channels,
+    layout: Layout,
+    posts: Posts,
+    reports: Reports,
+    snackbar: Snackbar,
+    tags: Tags,
+    threads: Threads,
+    timelines: Timelines,
+    users: Users
+  }).create(stores)
+  connectReduxDevtools(remotedev, reduxStore)
+}
+*/
 
 export default stores

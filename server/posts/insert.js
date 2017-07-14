@@ -15,10 +15,10 @@ Meteor.methods({
     check(req.isPublic, Boolean)
     check(req.content, String)
 
-    if (req.content === '') return
-
     if (req.images) {
       check(req.images, Array)
+    } else {
+      if (req.content === '') return
     }
 
     if (!req.images && req.content.length < 1) {
@@ -247,12 +247,23 @@ async function uploadImage (date, base64) {
 
   unlink(x512, err => err)
 
+  // x1024
+  const x1024 = join(process.env.PWD, '.temp', fileName.x512)
+  const x1024Ref = await Jimp.read(temp)
+  x1024Ref.resize(1024, Jimp.AUTO)
+  .exifRotate()
+  .write(x512)
+
+  await upload(bucketName, x1024, filePath.x1024)
+
+  unlink(x1024, err => err)
+
   unlink(temp, err => err)
 
   return {
     full: fileName.full,
     x256: fileName.x256,
     x512: fileName.x512,
-    x1024: fileName.x512
+    x1024: fileName.x1024
   }
 }

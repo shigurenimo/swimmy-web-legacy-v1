@@ -38,8 +38,6 @@ export default types.compose('Posts', Model, {
     console.log('subscribeFromUnique', unique)
     switch (unique) {
       case 'follows':
-        const user = Meteor.users()
-        console.log(user)
         return this.subscribe({}, {
           limit: 50
         })
