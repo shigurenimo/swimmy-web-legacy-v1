@@ -1,4 +1,11 @@
 export default [{
+  version: '1.4.6',
+  date: '2017.7.15',
+  content: [
+    'タイムラインのデザインの修正',
+    '画像が投稿できないバグの回収'
+  ]
+}, {
   version: '1.4.5',
   date: '2017.7.12',
   content: [
