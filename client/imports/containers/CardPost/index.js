@@ -98,6 +98,10 @@ export default class Post extends Component {
               {this.props.reactions.map(({name, ownerIds}) =>
                 <Chip
                   key={name}
+                  className={classNames({
+                    [classes.colorChip]: !!this.props.accounts.isLogged &&
+                    ownerIds.includes(this.props.accounts.one._id)
+                  })}
                   label={name + ' ' + (ownerIds.length > 0 ? ownerIds.length : '')}
                   onRequestDelete={
                     (!!this.props.accounts.isLogged && ownerIds.includes(this.props.accounts.one._id))

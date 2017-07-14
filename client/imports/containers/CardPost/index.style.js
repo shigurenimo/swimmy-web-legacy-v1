@@ -73,6 +73,9 @@ export default createStyleSheet('Post', theme => {
     },
     reply: {
       width: 'calc(100% - 30px)'
+    },
+    colorChip: {
+      background: theme.palette.primary[100]
     }
   }
 })
