@@ -6,6 +6,9 @@ export default createStyleSheet('Post', theme => {
     container: {
       overflow: 'hidden'
     },
+    sheet: {
+      borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
+    },
     content: {
       color: 'rgba(0, 0, 0, 0.8)'
     },

@@ -40,13 +40,14 @@ export default class UILayout extends Component {
       dense,
       background,
       href,
+      className,
       ...more
     } = this.props
     if (href) {
       return (
         <Typography
           {...more}
-          className={classNames(classes.container, {
+          className={classNames(className, classes.container, {
             [classes.paddingDense]: dense,
             [classes.padding]: !dense,
             [classes.hover]: hover,
@@ -61,7 +62,7 @@ export default class UILayout extends Component {
       return (
         <div
           {...more}
-          className={classNames(classes.container, {
+          className={classNames(className, classes.container, {
             [classes.paddingDense]: dense,
             [classes.padding]: !dense,
             [classes.hover]: hover,

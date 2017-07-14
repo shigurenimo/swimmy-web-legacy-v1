@@ -42,14 +42,14 @@ export default class PostRes extends Component {
             <Typography inline type='caption' component='span'> - {utils.date.since(this.props.createdAt)}</Typography>
           </SheetContent>
           {/* photo */}
-          {this.props.images && this.props.images.slice()[0] &&
+          {this.props.imagePath &&
           <SheetContent>
             <div
               className={classNames(classes.photoImage, {
                 [classes.photoImageOpen]: this.state.selectImage
               })}
               onTouchTap={this.onSelectImage}>
-              <Image src={this.props.imagePath + this.props.images.slice()[0].x512} />
+              <Image src={this.props.imagePath + this.props.images.slice()[0].x256} />
             </div>
           </SheetContent>}
           {/* oEmbed */}
