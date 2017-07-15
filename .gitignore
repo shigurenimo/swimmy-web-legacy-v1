@@ -13,7 +13,7 @@ node_modules
 *.zip
 *~
 
-# project
+# meteor
 settings.json
-server/private/*
 .temp/*
+private/*
