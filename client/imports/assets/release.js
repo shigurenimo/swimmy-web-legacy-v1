@@ -1,4 +1,10 @@
 export default [{
+  version: '1.4.7',
+  date: '2017.7.15',
+  content: [
+    '画像付きの書き込みができないバグの回収'
+  ]
+}, {
   version: '1.4.6',
   date: '2017.7.15',
   content: [
