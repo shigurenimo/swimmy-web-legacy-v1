@@ -36,7 +36,8 @@ Meteor.methods({
       }
       if (post.images) {
         post.imagePath =
-          Meteor.settings.public.storage.images +
+          'https://storage.googleapis.com/' +
+          Meteor.settings.private.googleCloud.bucket + '/' +
           utils.createPathFromDate(post.createdAt)
       }
 

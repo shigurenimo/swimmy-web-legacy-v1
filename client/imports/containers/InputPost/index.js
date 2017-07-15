@@ -210,15 +210,16 @@ export default class InputPost extends Component {
       await utils.createBase64(file)
       .then(base64 => {
         this.props.snackbar.show('サーバーで画像を圧縮しています')
-        this.props.inputPost.reset()
-        this.setState({errorImage: null, inputImage: null})
-        this.ref.style.height = 'auto'
-        return this.props.posts.insert({
+        const data = {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
           images: [base64],
           channelId: this.props.timelines.channelId
-        })
+        }
+        this.props.inputPost.reset()
+        this.setState({errorImage: null, inputImage: null})
+        this.ref.style.height = 'auto'
+        return this.props.posts.insert(data)
       })
       .then(post => {
         this.props.snackbar.show('投稿が完了しました')
@@ -228,16 +229,16 @@ export default class InputPost extends Component {
       })
     } else {
       if (this.props.inputPost.postContent === '') return
-      await this.props.posts.insert({
+      const data = {
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
         channelId: this.props.timelines.channelId
-      })
-      .then(post => {
-        this.props.inputPost.reset()
-        this.ref.style.height = 'auto'
-        this.setState({errorImage: null, inputImage: null})
-      })
+      }
+      this.setState({errorImage: null, inputImage: null})
+      this.props.inputPost.reset()
+      this.ref.style.height = 'auto'
+      await this.props.posts.insert(data)
+      .then(post => {})
       .catch(err => {
         this.props.snackbar.error(err.reason)
       })
@@ -253,16 +254,17 @@ export default class InputPost extends Component {
       await utils.createBase64(file)
       .then(base64 => {
         this.props.snackbar.show('サーバーで画像を圧縮しています')
-        this.props.inputPost.reset()
-        this.setState({errorImage: null, inputImage: null})
-        this.ref.style.height = 'auto'
         const replyId = this.props.posts.thread.one._id
-        return this.props.posts.insert({
+        const data = {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
           images: [base64],
           reply: replyId
-        })
+        }
+        this.props.inputPost.reset()
+        this.setState({errorImage: null, inputImage: null})
+        this.ref.style.height = 'auto'
+        return this.props.posts.insert(data)
       })
       .then(post => {
         this.props.snackbar.show('投稿が完了しました')
@@ -273,15 +275,16 @@ export default class InputPost extends Component {
     } else {
       if (this.props.inputPost.postContent === '') return
       const replyId = this.props.posts.thread.one._id
-      await this.props.posts.insert({
+      const data = {
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
         replyId
-      })
-      .then(posts => {
-        this.props.inputPost.reset()
-        this.setState({errorImage: null, inputImage: null})
-      })
+      }
+      this.props.inputPost.reset()
+      this.setState({errorImage: null, inputImage: null})
+      this.ref.style.height = 'auto'
+      await this.props.posts.insert(data)
+      .then(posts => {})
       .catch(err => {
         this.props.snackbar.error(err)
       })

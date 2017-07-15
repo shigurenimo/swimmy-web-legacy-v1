@@ -37,7 +37,8 @@ Meteor.methods({
       .map(reply => {
         if (reply.images) {
           reply.imagePath =
-            Meteor.settings.public.storage.images +
+            'https://storage.googleapis.com/' +
+            Meteor.settings.private.googleCloud.bucket + '/' +
             utils.createPathFromDate(reply.createdAt)
         }
         reply.content = utils.replace.link(reply.content)
@@ -51,7 +52,8 @@ Meteor.methods({
 
     if (post.images) {
       post.imagePath =
-        Meteor.settings.public.storage.images +
+        'https://storage.googleapis.com/' +
+        Meteor.settings.private.googleCloud.bucket + '/' +
         utils.createPathFromDate(post.createdAt)
     }
 

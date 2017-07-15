@@ -47,7 +47,8 @@ Meteor.publish('posts', function (selector = {}, options = {}, name) {
       }
       if (model.images) {
         model.imagePath =
-          Meteor.settings.public.storage.images +
+          'https://storage.googleapis.com/' +
+          Meteor.settings.private.googleCloud.bucket + '/' +
           utils.createPathFromDate(model.createdAt)
       }
       if (model.link) { model.content = utils.replace.link(model.content) }

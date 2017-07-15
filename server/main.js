@@ -12,12 +12,22 @@ Meteor.startup(() => {
     consumerKey: Meteor.settings.private.twitter.consumerKey,
     secret: Meteor.settings.private.twitter.secret
   })
+})
+
+Meteor.startup(() => {
+  const {projectId, keyFilename} = Meteor.settings.private.googleCloud
+
+  if (!projectId) return
 
   const temp = join(process.env.PWD, '.temp')
   mkdir(temp, err => err)
 
-  const {keyFilePath} = Meteor.settings.private.googleCloud
-  const keyFileData = require('./private/swimmy-5100fd52daa8.json')
-  const dist = join(process.env.PWD, keyFilePath)
-  writeFileSync(dist, JSON.stringify(keyFileData))
+  // eslint-disable-next-line no-undef
+  Assets.getText(keyFilename, (err, data) => {
+    if (err) return
+    if (data) {
+      const dist = join(process.env.PWD, '.temp', keyFilename)
+      writeFileSync(dist, data)
+    }
+  })
 })

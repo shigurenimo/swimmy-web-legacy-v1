@@ -19,7 +19,7 @@ const PostIndex = types.compose('PostIndex', IndexModel, {
           limit: 50
         })
     }
-  },
+  }
 })
 
 export default types.compose('Posts', Model, {

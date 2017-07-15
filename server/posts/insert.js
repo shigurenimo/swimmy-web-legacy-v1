@@ -208,7 +208,7 @@ async function uploadImage (date, base64) {
     x1024: name + '.x1024' + ext
   }
 
-  const bucketName = 'swimmy-images'
+  const bucketName = 'swimmy'
 
   const datePath = [
     date.getFullYear(),
