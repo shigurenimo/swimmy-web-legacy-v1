@@ -1,33 +1,12 @@
 {
   "public": {
-    "version": "1.4.2",
-    "storage": {
-      "images": "https://storage.googleapis.com/swimmy-images/",
-      "artwork": "https://storage.googleapis.com/swimmy/"
-    },
+    "version": "1.4.7",
     "color": {
-      "base": "#f3f3f3",
-      "text": "#000000",
       "primary": "#327BF6",
       "secondary": "#00afcc"
     },
     "reservedWord": [
-      "swimmy",
-      "default",
-      "self",
-      "follows",
-      "timemachine",
-      "thread",
-      "artwork",
-      "uuid",
-      "network",
-      "room",
-      "verify",
-      "verify-email",
-      "admin",
-      "config",
-      "release",
-      "report"
+      "swimmy"
     ]
   },
   "private": {
@@ -39,7 +18,7 @@
     "googleCloud": {
       "projectId": "",
       "keyFilename": "xxxx.json",
-      "keyFilePath": ".temp/xxxx.json"
+      "bucket": "swimmy"
     }
   },
   "galaxy.meteor.com": {
