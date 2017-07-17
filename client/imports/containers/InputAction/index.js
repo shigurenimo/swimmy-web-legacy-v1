@@ -1,6 +1,5 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import { withStyles } from 'material-ui/styles'
 import InputPost from '../InputPost'
 import styleSheet from './index.style'
@@ -10,33 +9,11 @@ import styleSheet from './index.style'
 export default class InputAction extends Component {
   render () {
     const {classes} = this.props
-    return (
-      <CSSTransitionGroup
-        component='div'
-        transitionName={{
-          enter: classes.transitionEnter,
-          enterActive: classes.transitionEnterActive,
-          leave: classes.transitionLeave,
-          leaveActive: classes.transitionLeaveActive,
-          appear: classes.transitionAppear,
-          appearActive: classes.transitionAppearActive
-        }}
-        transitionEnterTimeout={450}
-        transitionLeaveTimeout={150}
-        transitionAppear
-        transitionAppearTimeout={150}>
-        {this.router()}
-      </CSSTransitionGroup>
-    )
-  }
-
-  router () {
-    const {classes} = this.props
     if (this.props.routes.page === null) {
-      return <div />
+      return null
     }
     if (this.props.accounts.isLoggingIn) {
-      return <div />
+      return null
     }
     switch (this.props.routes.page) {
       case 'timeline':

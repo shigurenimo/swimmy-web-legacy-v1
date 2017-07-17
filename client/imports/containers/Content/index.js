@@ -1,6 +1,5 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import propTypes from 'prop-types'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
@@ -37,23 +36,9 @@ export default class Content extends Component {
         })}
         style={{paddingTop: this.paddingTop}}
         ref={self => { this.ref = self }}>
-        <CSSTransitionGroup
-          component='div'
-          className={classes.fixHeight}
-          transitionName={{
-            enter: classes.transitionEnter,
-            enterActive: classes.transitionEnterActive,
-            leave: classes.transitionLeave,
-            leaveActive: classes.transitionLeaveActive,
-            appear: classes.transitionAppear,
-            appearActive: classes.transitionAppearActive
-          }}
-          transitionEnterTimeout={450}
-          transitionLeaveTimeout={150}
-          transitionAppear
-          transitionAppearTimeout={150}>
+        <div className={classes.fixHeight}>
           {this.router()}
-        </CSSTransitionGroup>
+        </div>
       </div>
     )
   }
