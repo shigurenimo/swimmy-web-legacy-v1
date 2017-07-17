@@ -1,10 +1,10 @@
 {
-  "name": "swimmy",
-  "description": "web application",
+  "name": "Sw",
+  "description": "Web Application",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:swimmy-io/swimmy.io.git"
+    "url": "git@github.com:uufish/Sw.git"
   },
   "scripts": {
     "deploy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy swimmy.io --owner sankaku --settings settings.json",
