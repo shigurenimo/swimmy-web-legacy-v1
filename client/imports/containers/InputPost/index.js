@@ -1,7 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
-import classNames from 'classnames'
 import utils from '/lib/imports/utils'
 import { withStyles } from 'material-ui/styles'
 import Button from '../../components/Button'
@@ -12,7 +11,6 @@ import styleSheet from './index.style'
 @inject(stores => {
   return {
     inputPost: stores.inputPost,
-    layout: stores.layout,
     channels: stores.channels,
     posts: stores.posts,
     threads: stores.threads,
@@ -26,13 +24,10 @@ import styleSheet from './index.style'
 @observer
 export default class InputPost extends Component {
   render () {
-    const {classes, layout} = this.props
+    const {classes} = this.props
     return (
       <div
-        className={classNames(classes.container, {
-          [classes.oneColumn]: layout.oneColumn,
-          [classes.twoColumn]: !layout.oneColumn
-        })}>
+        className={classes.container}>
         {/* 匿名 */}
         <div className={classes.tools}>
           <Button dense

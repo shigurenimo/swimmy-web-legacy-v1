@@ -1,16 +1,15 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import LeftMenuDefault from './ListDefault'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'routes', 'accounts')
+@inject('routes', 'accounts')
 @observer
 export default class LeftMenu extends Component {
   render () {
-    const {classes, layout, routes, accounts} = this.props
+    const {classes, routes, accounts} = this.props
     if (accounts.isLoggingIn) {
       return null
     }
@@ -19,9 +18,7 @@ export default class LeftMenu extends Component {
     }
     return (
       <div
-        className={classNames(classes.container, {
-          [classes.oneColumn]: layout.oneColumn
-        })}>
+        className={classes.container}>
         <LeftMenuDefault />
       </div>
     )

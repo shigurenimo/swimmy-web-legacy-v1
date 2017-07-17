@@ -13,7 +13,7 @@ import SheetContent from '../../components/UI-SheetContent'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'snackbar', 'accounts') @observer
+@inject('snackbar', 'accounts') @observer
 export default class Twitter extends Component {
   render () {
     const {

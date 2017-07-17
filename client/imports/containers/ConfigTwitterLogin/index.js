@@ -9,7 +9,7 @@ import SheetActions from '../../components/UI-SheetActions'
 import styleSheet from '../ConfigTwitter/index.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'accounts') @observer
+@inject('accounts') @observer
 export default class TwitterLogin extends Component {
   render () {
     return (

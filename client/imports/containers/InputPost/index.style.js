@@ -11,20 +11,20 @@ export default createStyleSheet('InputPost', theme => {
       overflowX: 'hidden',
       backgroundColor: '#F8F7F8',
       boxSizing: 'border-box',
-      zIndex: 140
-    },
-    oneColumn: {
-      top: 0,
-      right: 0,
-      padding: '10px 10px 0 10px',
-      width: '50%',
-      borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
-    },
-    twoColumn: {
-      top: 0,
-      right: 0,
-      width: 'calc(100% - 250px)',
-      padding: '10px 10px 0 0'
+      zIndex: 140,
+      [theme.breakpoints.up('sm')]: {
+        top: 0,
+        right: 0,
+        width: 'calc(100% - 250px)',
+        padding: '10px 10px 0 0'
+      },
+      [theme.breakpoints.down('sm')]: {
+        top: 0,
+        right: 0,
+        padding: '10px 10px 0 10px',
+        width: '50%',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
+      }
     },
     tools: {
       overflow: 'hidden',

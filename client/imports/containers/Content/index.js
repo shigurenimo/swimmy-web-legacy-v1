@@ -1,7 +1,6 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import Admin from '../Admin'
 import ConfigAccount from '../ConfigAccount'
@@ -23,17 +22,14 @@ import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('layout', 'inputPost', 'routes', 'accounts')
+@inject('inputPost', 'routes', 'accounts')
 @observer
 export default class Content extends Component {
   render () {
-    const {classes, layout} = this.props
+    const {classes} = this.props
     return (
       <div
-        className={classNames(classes.container, {
-          [classes.oneColumn]: layout.oneColumn,
-          [classes.twoColumn]: !layout.oneColumn
-        })}
+        className={classes.root}
         style={{paddingTop: this.paddingTop}}
         ref={self => { this.ref = self }}>
         <div className={classes.fixHeight}>
@@ -44,19 +40,14 @@ export default class Content extends Component {
   }
 
   get paddingTop () {
-    const fix = this.props.layout.oneColumn ? 0 : 0
     switch (this.props.routes.page) {
       case 'timeline':
       case 'logs':
       case 'thread':
       case 'channel-info':
-        return this.props.inputPost.paddingTop + fix
+        return this.props.inputPost.paddingTop
       default:
-        if (this.props.layout.oneColumn) {
-          return 10
-        } else {
-          return 45
-        }
+        return 10
     }
   }
 
@@ -132,7 +123,6 @@ export default class Content extends Component {
       }, 1000)
     }
     const scrollEvent = () => {
-      this.props.layout.setScrollOver(element.scrollTop)
       if (isSmartphone) {
         if (element.scrollTop === 0) {
           // スクロール上端のバグ補正

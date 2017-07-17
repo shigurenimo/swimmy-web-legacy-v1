@@ -2,27 +2,27 @@ import { createStyleSheet } from 'material-ui/styles'
 
 export default createStyleSheet('Content', theme => {
   return {
-    container: {
+    root: {
       position: 'absolute',
       top: 0,
       height: '100%',
       boxSizing: 'border-box',
       overflowY: 'auto',
       overflowX: 'hidden',
-      transition: 'padding-top 300ms, width 300ms',
-      '-webkit-overflow-scrolling': 'touch'
-    },
-    twoColumn: {
-      right: '-20px',
-      paddingRight: (10 + 20) + 'px',
-      paddingLeft: 0,
-      width: 'calc(100% - 250px + 20px)'
-    },
-    oneColumn: {
-      right: '-20px',
-      width: 'calc(50% + 20px)',
-      paddingRight: '20px',
-      paddingLeft: 0
+      transition: 'padding-top 300ms, width 0ms',
+      '-webkit-overflow-scrolling': 'touch',
+      [theme.breakpoints.down('sm')]: {
+        right: '-20px',
+        width: 'calc(50% + 20px)',
+        paddingRight: '20px',
+        paddingLeft: 0
+      },
+      [theme.breakpoints.up('sm')]: {
+        right: '-20px',
+        paddingRight: (10 + 20) + 'px',
+        paddingLeft: 0,
+        width: 'calc(100% - 250px + 20px)'
+      }
     },
     fixHeight: {
       position: 'relative',

@@ -2,31 +2,27 @@ import { createStyleSheet } from 'material-ui/styles'
 
 export default createStyleSheet('Layout', theme => {
   return {
-    container: {
+    root: {
       position: 'fixed',
       top: 0,
       right: 0,
       height: '100%',
       overflowY: 'scroll',
-      overflowX: 'hidden'
-    },
-    twoColumn: {
-      width: '100%'
-    },
-    oneColumn: {
-      width: '200%'
+      overflowX: 'hidden',
+      [theme.breakpoints.up('sm')]: {
+        width: '100%',
+        transition: 'translateX 0'
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: '200%',
+        transition: 'transform 300ms'
+      }
     },
     left: {
       transform: 'translate3d(50%, 0, 0)'
     },
     right: {
       transform: 'translate3d(0, 0, 0)'
-    },
-    smartphone: {
-      transition: 'translate3d 300ms'
-    },
-    smartphoneNot: {
-      transition: 'translateX 0'
     }
   }
 })

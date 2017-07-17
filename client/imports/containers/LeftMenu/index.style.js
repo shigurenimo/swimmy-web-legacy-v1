@@ -11,16 +11,16 @@ export default createStyleSheet('LeftMenu', theme => {
       paddingRight: 'calc(105% - 240px)',
       width: 'calc(105%)',
       height: '100%',
-      transition: 'width 300ms',
+      // transition: 'width 300ms',
       overflowY: 'scroll',
       overflowX: 'hidden',
       boxSizing: 'border-box',
-      '-webkit-overflow-scrolling': 'touch'
-    },
-    oneColumn: {
-      width: '105%',
-      paddingRight: '55%',
-      paddingLeft: 0
+      '-webkit-overflow-scrolling': 'touch',
+      [theme.breakpoints.down('sm')]: {
+        width: '105%',
+        paddingRight: '55%',
+        paddingLeft: 0
+      }
     }
   }
 })
