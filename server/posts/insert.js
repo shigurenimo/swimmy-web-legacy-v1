@@ -27,47 +27,16 @@ Meteor.methods({
 
     const date = new Date()
 
-    const url = utils.match.url(req.content)
-
-    let service = null
-    if (url) {
-      if (url.match(new RegExp('youtube.com'))) {
-        service = 'http://www.youtube.com/oembed'
-      } else if (url.match(new RegExp('youtu.be'))) {
-        service = 'http://www.youtube.com/oembed'
-      } else if (url.match(new RegExp('flickr.com'))) {
-        service = 'http://www.flickr.com/services/oembed'
-      } else if (url.match(new RegExp('flic.kr'))) {
-        service = 'http://www.flickr.com/services/oembed'
-      } else if (url.match(new RegExp('vimeo.com'))) {
-        service = 'http://vimeo.com/api/oembed.json'
-      } else if (url.match(new RegExp('slideshare.net'))) {
-        service = 'http://www.slideshare.net/api/oembed/2'
-      } else if (url.match(new RegExp('soundcloud.com'))) {
-        service = 'http://soundcloud.com/oembed'
-      }
-    }
-
-    let oEmbed = null
-    let html = null
-    if (service) {
-      oEmbed = oEmbedAsync(url, service)
-    } else if (url) {
-      html = metaAsync(url)
-    }
-
     const data = {
       content: req.content,
       reactions: [],
       replies: [],
       channelId: req.channelId || '',
+      extension: {},
       createdAt: date,
       updatedAt: date,
       from: 'swimmy'
     }
-
-    const tags = utils.match.tags(req.content)
-    if (tags) data.tags = tags
 
     data.ownerId = this.userId
 
@@ -84,20 +53,9 @@ Meteor.methods({
       data.images = [image]
     }
 
-    data.extension = {}
+    const web = extendWeb(req.content, date)
 
-    if (url || html || oEmbed) {
-      data.extension.web = {}
-    }
-    if (url) {
-      data.extension.web.url = url
-    }
-    if (html) {
-      data.extension.web.html = html
-    }
-    if (oEmbed) {
-      data.extension.web.oEmbed = oEmbed
-    }
+    if (web) { data.extension.web = web }
 
     if (req.replyId) {
       check(req.replyId, String)
@@ -111,6 +69,7 @@ Meteor.methods({
         data.channelId = reply.channelId
       }
     }
+
     const postId = collections.posts.insert(data)
 
     if (data.replyId) {
@@ -119,35 +78,52 @@ Meteor.methods({
         $set: {updatedAt: date}
       })
     }
-
-    if (tags) {
-      tags.filter(tag => tag !== '').forEach(hashtag => {
-        const tag = collections.tags.findOne({name: hashtag})
-        if (tag) {
-          collections.tags.update(tag._id, {
-            $set: {updatedAt: date},
-            $inc: {count: 1}
-          })
-        } else {
-          collections.tags.insert({
-            name: hashtag,
-            updatedAt: date,
-            createdAt: date,
-            count: 1,
-            thread: false,
-            threads: []
-          })
-        }
-      })
-    }
-
-    return collections.posts.findOne(postId, {
-      fields: {
-        ownerId: 0
-      }
-    })
   }
 })
+
+function extendWeb (content, date) {
+  const url = utils.match.url(content)
+
+  let service = null
+
+  if (url) {
+    if (url.match(new RegExp('youtube.com'))) {
+      service = 'http://www.youtube.com/oembed'
+    } else if (url.match(new RegExp('youtu.be'))) {
+      service = 'http://www.youtube.com/oembed'
+    } else if (url.match(new RegExp('flickr.com'))) {
+      service = 'http://www.flickr.com/services/oembed'
+    } else if (url.match(new RegExp('flic.kr'))) {
+      service = 'http://www.flickr.com/services/oembed'
+    } else if (url.match(new RegExp('vimeo.com'))) {
+      service = 'http://vimeo.com/api/oembed.json'
+    } else if (url.match(new RegExp('slideshare.net'))) {
+      service = 'http://www.slideshare.net/api/oembed/2'
+    } else if (url.match(new RegExp('soundcloud.com'))) {
+      service = 'http://soundcloud.com/oembed'
+    }
+  }
+
+  let html = url ? metaAsync(url) : null
+
+  let oEmbed = service ? oEmbedAsync(url, service) : null
+
+  if (!url && !html && !oEmbed) return null
+
+  const web = {}
+
+  if (url) {
+    web.url = url
+  }
+  if (html) {
+    web.html = html
+  }
+  if (oEmbed) {
+    web.oEmbed = oEmbed
+  }
+
+  return web
+}
 
 const oEmbedAsync = Meteor.wrapAsync((url, service, resolve) => {
   HTTP.get(service, {

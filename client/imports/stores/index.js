@@ -29,7 +29,7 @@ const stores = {
 
 Routes.setStores(stores)
 
-const routes = Routes.createStore()
+const routes = Routes.create()
 
 Routes.run()
 

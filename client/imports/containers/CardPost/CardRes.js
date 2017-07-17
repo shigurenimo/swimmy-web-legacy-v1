@@ -60,6 +60,7 @@ export default class PostRes extends Component {
           </SheetContent>}
           {/* web html */}
           {this.props.extension.web &&
+          !this.props.extension.web.oEmbed &&
           this.props.extension.web.html &&
           this.props.extension.web.html['og:image'] &&
           <SheetContent>

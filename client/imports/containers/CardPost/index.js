@@ -69,6 +69,7 @@ export default class Post extends Component {
           </SheetContent>}
           {/* web title */}
           {this.props.extension.web &&
+          !this.props.extension.web.oEmbed &&
           this.props.extension.web.html &&
           this.props.extension.web.html.title &&
           <SheetContent>

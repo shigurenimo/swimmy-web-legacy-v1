@@ -4,7 +4,7 @@ import { Router } from '/client/imports/packages/routes'
 const documentTitle = document.title
 const documentTitleShort = 'swimmy'
 
-const Routes = Router.create()
+const Routes = Router.createState()
 
 Routes.setRoute('/(default|self|follows)?', {
   async action (stores, {params}) {

@@ -3,7 +3,7 @@ import Model from './model'
 import qs from 'qs'
 
 const Router = {
-  create () {
+  createState () {
     return new RouterClass()
   }
 }
@@ -72,13 +72,12 @@ export class RouterClass {
       }
     })
 
-    page()
+    page.start()
   }
 
-  createStore () {
+  create () {
     const routes = Model.create()
     this.stores.routes = routes
     return routes
-    // TODO: Model.create({page})
   }
 }
