@@ -14,13 +14,20 @@ Meteor.startup(() => {
   })
 })
 
-Meteor.startup(() => {
+Meteor.startup(async () => {
   const {projectId, keyFilename} = Meteor.settings.private.googleCloud
 
   if (!projectId) return
 
   const temp = join(process.env.PWD, '.temp')
-  mkdir(temp, err => err)
+
+  await new Promise((resolve, reject) => {
+    mkdir(temp, err => {
+      if (err) { reject(err) } else {
+        resolve()
+      }
+    })
+  })
 
   // eslint-disable-next-line no-undef
   Assets.getText(keyFilename, (err, data) => {
