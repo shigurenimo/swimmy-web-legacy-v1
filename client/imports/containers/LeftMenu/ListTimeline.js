@@ -10,7 +10,7 @@ import IconButtonMoreExpand from '../../components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
-@inject('accounts', 'routes', 'posts', 'timelines')
+@inject('accounts', 'routes', 'posts', 'timeline')
 @observer
 export default class LeftMenuTimeline extends Component {
   render () {
@@ -35,10 +35,9 @@ export default class LeftMenuTimeline extends Component {
         <ListItem button dense
           className={classNames({
             [classes.select]: this.props.routes.page === 'timeline' && (
-              this.props.timelines.unique === 'default' ||
-              this.props.timelines.unique === 'follows' ||
-              this.props.timelines.unique === 'self' ||
-              this.props.timelines.unique === 'timemachine'
+              this.props.timeline.unique === 'default' ||
+              this.props.timeline.unique === 'follows' ||
+              this.props.timeline.unique === 'self'
             )
           })}
           component='a'
@@ -52,7 +51,7 @@ export default class LeftMenuTimeline extends Component {
           {/* default */}
           <ListItem button dense
             className={classNames({
-              [classes.select]: this.props.timelines.unique === 'default'
+              [classes.select]: this.props.timeline.unique === 'default'
             })}
             component='a'
             href={'/'}>
@@ -62,28 +61,18 @@ export default class LeftMenuTimeline extends Component {
           {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
-              [classes.select]: this.props.timelines.unique === 'self'
+              [classes.select]: this.props.timeline.unique === 'self'
             })}
             component='a'
             href={'/self'}>
             <ListItemText inset primary={accounts.one.username || 'self'} />
           </ListItem>}
         </Collapse>
-        {this.props.timelines.channelIndex.map(item =>
-          <ListItem button dense
-            key={item.unique}
-            className={classNames({
-              [classes.select]: this.props.timelines.unique === item.unique
-            })}
-            component='a'
-            href={'/ch/' + item.channelId}>
-            <ListItemText primary={item.name} />
-          </ListItem>)}
         {accounts.isLogged && accounts.one.profile.channels.map(item =>
           <ListItem button dense
             key={item._id}
             className={classNames({
-              [classes.select]: this.props.timelines.channelId === item._id
+              [classes.select]: this.props.timeline.channelId === item._id
             })}
             component='a'
             href={'/ch/' + item._id}>

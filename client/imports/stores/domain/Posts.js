@@ -27,13 +27,6 @@ export default types.compose('Posts', Model, {
   one: types.maybe(Post),
   index: types.optional(types.array(Post), [])
 }, {
-  subscribeFromChannelId (channelId) {
-    return this.subscribe({
-      channelId: channelId
-    }, {
-      limit: 50
-    })
-  },
   subscribeFromUnique (unique) {
     console.log('subscribeFromUnique', unique)
     switch (unique) {
@@ -51,17 +44,6 @@ export default types.compose('Posts', Model, {
           limit: 50
         })
     }
-  },
-  setFetchState (state) {
-    this.fetchState = state
-  },
-  findFromUserId (userId) {
-    const selector = {ownerId: userId}
-    const options = {
-      limit: 50,
-      sort: {createdAt: -1}
-    }
-    return this.find(selector, options)
   },
   insert (next) {
     return new Promise((resolve, reject) => {

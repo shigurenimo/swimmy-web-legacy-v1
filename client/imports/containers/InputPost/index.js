@@ -17,7 +17,7 @@ import styleSheet from './index.style'
     snackbar: stores.snackbar,
     routes: stores.routes,
     accounts: stores.accounts,
-    timelines: stores.timelines,
+    timeline: stores.timeline,
     info: stores.info
   }
 })
@@ -94,17 +94,17 @@ export default class InputPost extends Component {
 
   get timelineName () {
     if (this.props.routes.page === 'thread') {
-      if (this.props.timelines.channelId) {
-        return this.props.timelines.name
+      if (this.props.timeline.channelId) {
+        return this.props.timeline.name
       } else {
         return 'レス'
       }
     }
-    return this.props.timelines.name
+    return this.props.timeline.name
   }
 
   openChannelInfo () {
-    const channelId = this.props.timelines.channelId ||
+    const channelId = this.props.timeline.channelId ||
       (this.props.routes.page === 'thread' && this.props.posts.one.channelId)
     if (!channelId) return
     if (this.props.info.isOpen) {
@@ -209,7 +209,7 @@ export default class InputPost extends Component {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
           images: [base64],
-          channelId: this.props.timelines.channelId
+          channelId: this.props.timeline.channelId
         }
         this.props.inputPost.reset()
         this.setState({errorImage: null, inputImage: null})
@@ -227,7 +227,7 @@ export default class InputPost extends Component {
       const data = {
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
-        channelId: this.props.timelines.channelId
+        channelId: this.props.timeline.channelId
       }
       this.setState({errorImage: null, inputImage: null})
       this.props.inputPost.reset()

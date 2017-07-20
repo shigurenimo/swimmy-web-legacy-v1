@@ -6,7 +6,6 @@ Meteor.methods({
     const report = {
       total: {
         posts: collections.posts.find().count(),
-        tags: collections.tags.find().count(),
         users: Meteor.users.find().count()
       }
     }

@@ -2,7 +2,7 @@ import propTypes from 'prop-types'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Button from 'material-ui/Button'
-import TextField from '../../components/TextField'
+import TextField from 'material-ui/TextField'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
@@ -31,7 +31,7 @@ export default class ChannelEdit extends Component {
           {/* description */}
           <Sheet>
             <SheetActions>
-              <TextField multiline fullWidth
+              <TextField fullWidth multiline
                 label='チャンネルの説明'
                 value={this.state.description}
                 maxLength='100'

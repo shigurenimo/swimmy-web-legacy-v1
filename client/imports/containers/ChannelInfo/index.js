@@ -12,7 +12,7 @@ import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('channels', 'snackbar', 'accounts', 'timelines')
+@inject('channels', 'snackbar', 'accounts')
 @observer
 export default class ChannelInfo extends Component {
   render () {

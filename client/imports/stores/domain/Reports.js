@@ -7,7 +7,6 @@ export default types.model('Reports', {
       types.model({
         total: types.model({
           posts: types.number,
-          tags: types.number,
           users: types.number
         }),
         user: types.maybe(types.model({

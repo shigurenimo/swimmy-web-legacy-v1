@@ -2,14 +2,14 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import Button from 'material-ui/Button'
-import TextField from '../../components/TextField'
+import TextField from 'material-ui/TextField'
 import Block from '../../components/UI-Block'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
 import TypographyError from '../../components/UI-TypographyError'
 
-@inject('channels', 'routes', 'snackbar', 'timelines')
+@inject('channels', 'routes', 'snackbar')
 @observer
 export default class ChannelNew extends Component {
   render () {
@@ -19,7 +19,7 @@ export default class ChannelNew extends Component {
           {/* name */}
           <Sheet>
             <SheetContent>
-              <TextField required fullWidth
+              <TextField fullWidth required
                 value={this.state.channelName}
                 label='チャンネルの名前'
                 maxLength='100'
@@ -30,7 +30,7 @@ export default class ChannelNew extends Component {
           <Sheet>
             <SheetContent>
               <Block width={400}>
-                <TextField multiline fullWidth
+                <TextField fullWidth multiline
                   value={this.state.description}
                   label='チャンネルの説明'
                   maxLength={400}

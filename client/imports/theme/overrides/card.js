@@ -1,4 +1,4 @@
-import { grey } from 'material-ui/styles/colors'
+import { grey } from 'material-ui/colors'
 
 export default {
   card: {

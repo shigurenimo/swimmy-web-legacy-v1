@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { createStyleSheet } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 import customPropTypes from 'material-ui/utils/customPropTypes'
-import { red } from 'material-ui/styles/colors'
+import { red } from 'material-ui/colors'
 import classNames from 'classnames'
 
 export const styleSheet = createStyleSheet('UITypographyError', theme => {

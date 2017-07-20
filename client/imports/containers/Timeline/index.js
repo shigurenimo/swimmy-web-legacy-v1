@@ -8,7 +8,7 @@ import SheetContent from '../../components/UI-SheetContent'
 import ChannelInfo from '../ChannelInfo'
 import Post from '../CardPost'
 
-@inject('channels', 'posts', 'timelines', 'info')
+@inject('channels', 'posts', 'timeline', 'info')
 @observer
 export default class Timeline extends Component {
   render () {
@@ -21,7 +21,7 @@ export default class Timeline extends Component {
   }
 
   forPosts () {
-    const unique = this.props.timelines.unique
+    const unique = this.props.timeline.unique
     if (this.props.posts[unique].index.length === 0) {
       return (
         <Sheet>

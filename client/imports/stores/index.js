@@ -1,16 +1,15 @@
-import Drawer from './ui/Drawer'
-import Info from './ui/info'
-import InputPost from './ui/InputPost'
+import Accounts from './domain/Accounts'
 import Channels from './domain/Channels'
 import Posts from './domain/Posts'
 import Reports from './domain/Reports'
-import Routes from './domain/Routes'
-import Snackbar from './ui/Snackbar'
-import Tags from './domain/Tags'
 import Threads from './domain/Threads'
-import Accounts from './domain/Accounts'
-import Timelines from './domain/Timelines'
 import Users from './domain/Users'
+import Routes from './libs/Routes'
+import Drawer from './ui/Drawer'
+import Info from './ui/info'
+import InputPost from './ui/InputPost'
+import Snackbar from './ui/Snackbar'
+import Timeline from './ui/Timeline'
 
 const stores = {
   accounts: Accounts.create(),
@@ -21,9 +20,8 @@ const stores = {
   posts: Posts.create({publish: 'posts'}),
   reports: Reports.create(),
   snackbar: Snackbar.create(),
-  tags: Tags.create(),
   threads: Threads.create({publish: 'threads'}),
-  timelines: Timelines.create(),
+  timeline: Timeline.create(),
   users: Users.create()
 }
 

@@ -12,7 +12,7 @@ Routes.setRoute('/(default|self|follows)?', {
     stores.posts.define(unique)
     try {
       stores.posts[unique].subscribeFromUnique(unique)
-      stores.timelines.setCurrent({
+      stores.timeline.setCurrent({
         useSocket: true,
         channelId: null,
         unique: unique
@@ -141,7 +141,7 @@ Routes.setRoute('/ch/:channelId', {
       if (!model) { return notFound() }
       stores.posts.define(channelId)
       stores.posts[channelId].subscribe({channelId})
-      stores.timelines.setCurrent({
+      stores.timeline.setCurrent({
         useSocket: true,
         channelId: channelId,
         unique: channelId,

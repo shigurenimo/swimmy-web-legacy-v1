@@ -1,5 +1,5 @@
 import { createStyleSheet } from 'material-ui/styles'
-import { red } from 'material-ui/styles/colors'
+import { red } from 'material-ui/colors'
 
 export default createStyleSheet('ThreadList', theme => {
   return {
