@@ -11,7 +11,6 @@ export default createStyleSheet('LeftMenu', theme => {
       paddingRight: 'calc(105% - 240px)',
       width: 'calc(105%)',
       height: '100%',
-      // transition: 'width 300ms',
       overflowY: 'scroll',
       overflowX: 'hidden',
       boxSizing: 'border-box',

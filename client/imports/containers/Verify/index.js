@@ -9,8 +9,6 @@ import SheetContent from '../../components/UI-SheetContent'
 @inject('routes')
 @observer
 export default class Verify extends Component {
-  onClose = ::this.onClose
-
   get verifyMessage () {
     if (this.props.routes.verifyError === null) {
       return '読み込み中..'
@@ -45,4 +43,6 @@ export default class Verify extends Component {
   onClose () {
     window.open('about:blank', '_self').close()
   }
+
+  onClose = ::this.onClose
 }

@@ -51,7 +51,7 @@ export default class ChannelInfo extends Component {
 
   // チャンネルを追加する
   onJoinChannel () {
-    const channelId = this.props.channels.one._id
+    const {_id: channelId} = this.props.channels.one
     this.props.channels.updateMember(channelId)
     .then(data => {
       this.props.snackbar.show('チャンネルを追加しました')
@@ -62,7 +62,7 @@ export default class ChannelInfo extends Component {
 
   // チャンネルを外す
   onLeaveChannel () {
-    const channelId = this.props.channels.one._id
+    const {_id: channelId} = this.props.channels.one
     this.props.channels.updateMember(channelId)
     .then(data => {
       this.props.snackbar.show('チャンネルを外しました')

@@ -16,15 +16,7 @@ import styleSheet from './index.style'
 @inject('snackbar', 'accounts') @observer
 export default class Twitter extends Component {
   render () {
-    const {
-      accounts: {
-        one: {
-          config,
-          services: {twitter}
-        }
-      },
-      classes
-    } = this.props
+    const {accounts: {one: {config, services: {twitter}}}, classes} = this.props
     return (
       <Layout>
         <Sheet>

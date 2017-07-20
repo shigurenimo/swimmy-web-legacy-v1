@@ -16,14 +16,9 @@ import styleSheet from './index.style'
 @observer
 export default class Profile extends Component {
   render () {
-    const {
-      accounts,
-      users: {one: user},
-      classes
-    } = this.props
+    const {accounts, users: {one: user}, classes} = this.props
     return (
       <Layout>
-        {/* アイコン */}
         <Sheet>
           {user.profile.icon ? (
             <SheetContent>
@@ -39,11 +34,12 @@ export default class Profile extends Component {
                     backgroundColor: i === '1'
                       ? Meteor.settings.public.color.primary
                       : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
-                  }} />)}
+                  }} />
+              )}
             </div>
           )}
         </Sheet>
-        {/* ネーム */}
+        {/* name */}
         <Sheet>
           <SheetContent>
             <Typography align='center'>

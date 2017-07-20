@@ -19,8 +19,7 @@ export default class ArtworkList extends Component {
   }
 
   forPosts () {
-    const index = this.props.artworks.index.slice()
-    const isFetching = this.props.artworks.isFetching
+    const {index, isFetching} = this.props.artworks
     if (index.length < 1) {
       return (
         <Sheet>

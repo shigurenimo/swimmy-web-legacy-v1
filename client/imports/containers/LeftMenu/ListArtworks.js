@@ -72,9 +72,7 @@ export default class LeftMenuArtworks extends Component {
     )
   }
 
-  state = {
-    isExpand: false
-  }
+  state = {isExpand: false}
 
   onExpand () {
     this.setState({isExpand: !this.state.isExpand})

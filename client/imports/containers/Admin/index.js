@@ -14,10 +14,7 @@ import styleSheet from './index.style'
 @observer
 export default class Admin extends Component {
   render () {
-    const {
-      accounts: {one: account},
-      classes
-    } = this.props
+    const {accounts: {one: account}, classes} = this.props
     return (
       <Layout>
         {/* icon */}
