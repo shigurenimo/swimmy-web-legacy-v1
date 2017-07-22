@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor'
 import collections from '/lib/collections'
 import utils from '/lib/imports/utils'
 
-Meteor.publish('posts', function (selector = {}, options = {}, name) {
-  switch (name) {
+Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
+  switch (namespace) {
     case 'self':
       selector.ownerId = this.userId
       break
@@ -30,11 +30,11 @@ Meteor.publish('posts', function (selector = {}, options = {}, name) {
     }
   }
 
-  const namespace = name ? 'posts.' + name : 'posts'
+  const _namespace = namespace ? 'posts.' + namespace : 'posts'
 
   const cursor = collections.posts.find(selector, options).observe({
     addedAt: (model) => {
-      if (name !== 'thread' && model.replyId) {
+      if (namespace !== 'thread' && model.replyId) {
         const reply = collections.posts.findOne(model.replyId, replyOptions)
         if (reply) {
           model.reply = reply
@@ -52,9 +52,8 @@ Meteor.publish('posts', function (selector = {}, options = {}, name) {
           utils.createPathFromDate(model.createdAt)
       }
       if (model.link) { model.content = utils.replace.link(model.content) }
-      if (model.tags) { model.content = utils.replace.tags(model.content) }
       if (this.userId !== model.ownerId) { delete model.ownerId }
-      this.added(namespace, model._id, model)
+      this.added(_namespace, model._id, model)
     },
     changed: (model) => {
       if (model.replyId) {
@@ -69,12 +68,11 @@ Meteor.publish('posts', function (selector = {}, options = {}, name) {
         }
       }
       if (model.link) { model.content = utils.replace.link(model.content) }
-      if (model.tags) { model.content = utils.replace.tags(model.content) }
       if (this.userId !== model.ownerId) { delete model.ownerId }
-      this.changed(namespace, model._id, model)
+      this.changed(_namespace, model._id, model)
     },
     removed: (model) => {
-      this.removed(namespace, model._id)
+      this.removed(_namespace, model._id)
     }
   })
 

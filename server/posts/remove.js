@@ -19,19 +19,6 @@ Meteor.methods({
       })
     }
 
-    if (model.tags) {
-      model.tags.filter(tag => tag !== '').forEach(hashtag => {
-        const tag = collections.tags.findOne({name: hashtag})
-        if (tag) {
-          if (tag.count < 2) {
-            collections.tags.remove(tag._id)
-          } else {
-            collections.tags.update({name: hashtag}, {$inc: {count: -1}})
-          }
-        }
-      })
-    }
-
     return 200
   }
 })

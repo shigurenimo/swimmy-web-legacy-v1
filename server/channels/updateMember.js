@@ -4,8 +4,11 @@ import collections from '/lib/collections'
 Meteor.methods({
   'channels.updateMember' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
+
     const channelId = req.channelId
+
     const channel = collections.channels.findOne(channelId)
+
     if (channel.member.includes(this.userId)) {
       collections.channels.update(channelId, {
         $pull: {
@@ -32,6 +35,5 @@ Meteor.methods({
         }
       })
     }
-    return collections.channels.findOne(req.channelId)
   }
 })

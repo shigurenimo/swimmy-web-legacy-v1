@@ -42,7 +42,6 @@ Meteor.methods({
             utils.createPathFromDate(reply.createdAt)
         }
         reply.content = utils.replace.link(reply.content)
-        reply.content = utils.replace.tags(reply.content)
         if (this.userId !== reply.ownerId) {
           delete reply.ownerId
         }
@@ -62,7 +61,6 @@ Meteor.methods({
     }
 
     post.content = utils.replace.link(post.content)
-    post.content = utils.replace.tags(post.content)
 
     if (this.userId !== post.ownerId) {
       delete post.ownerId

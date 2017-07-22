@@ -4,7 +4,9 @@ import collections from '/lib/collections'
 
 Meteor.methods({
   'channels.insert' (req) {
-    if (!this.userId) throw new Meteor.Error('not-authorized')
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized')
+    }
 
     check(req.name, String)
     check(req.description, String)
@@ -15,7 +17,6 @@ Meteor.methods({
       description: req.description,
       member: [this.userId],
       region: req.region,
-      tag: req.tag,
       extension: {},
       createdAt: new Date(),
       updatedAt: new Date()
@@ -23,17 +24,17 @@ Meteor.methods({
 
     const channelId = collections.channels.insert(data)
 
-    if (channelId) {
-      Meteor.users.update(this.userId, {
-        $push: {
-          'profile.channels': {
-            _id: channelId,
-            name: req.name
-          }
-        }
-      })
+    if (!channelId) {
+      throw new Meteor.Error('failure-insert', 'チャンネルの作成に失敗しました')
     }
 
-    return collections.channels.findOne(channelId)
+    Meteor.users.update(this.userId, {
+      $push: {
+        'profile.channels': {
+          _id: channelId,
+          name: req.name
+        }
+      }
+    })
   }
 })
