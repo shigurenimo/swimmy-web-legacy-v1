@@ -3,11 +3,11 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
+import Typography from 'material-ui/Typography'
 import Block from '../../components/UI-Block'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
-import TypographyError from '../../components/UI-TypographyError'
 
 @inject('channels', 'routes', 'snackbar')
 @observer
@@ -42,9 +42,9 @@ export default class ChannelNew extends Component {
           {this.state.submitError &&
           <Sheet>
             <SheetContent>
-              <TypographyError>
+              <Typography style={{color: 'tomato'}}>
                 {this.state.submitError}
-              </TypographyError>
+              </Typography>
             </SheetContent>
           </Sheet>}
           {/* 送信 */}

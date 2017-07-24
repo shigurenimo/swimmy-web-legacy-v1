@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { createStyleSheet } from 'material-ui/styles'
-import customPropTypes from 'material-ui/utils/customPropTypes'
-import Typography from 'material-ui/Typography'
+import { createStyleSheet, withStyles } from 'material-ui/styles'
+import MUITypography from 'material-ui/Typography'
 
 export const styleSheet = createStyleSheet('UITypography', theme => {
   return {
@@ -12,19 +11,15 @@ export const styleSheet = createStyleSheet('UITypography', theme => {
   }
 })
 
-export default class TypographyError extends Component {
+@withStyles(styleSheet)
+export default class Typography extends Component {
   render () {
-    const {className, inline, ...more} = this.props
-    const classes = this.context.styleManager.render(styleSheet)
+    const {classes, className, inline, ...other} = this.props
     return (
-      <Typography {...more}
-        className={classNames(className || '', {
+      <MUITypography {...other}
+        className={classNames(className, {
           [classes.inline]: inline
         })} />
     )
-  }
-
-  static contextTypes = {
-    styleManager: customPropTypes.muiRequired
   }
 }
