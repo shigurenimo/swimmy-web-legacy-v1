@@ -1,13 +1,10 @@
 import { Meteor } from 'meteor/meteor'
 import { createStyleSheet } from 'material-ui/styles'
 
-export default createStyleSheet('Post', theme => {
+export default createStyleSheet('CardImage', theme => {
   return {
     container: {
       overflow: 'hidden'
-    },
-    sheet: {
-      borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
     },
     content: {
       color: 'rgba(0, 0, 0, 0.8)'
@@ -26,8 +23,8 @@ export default createStyleSheet('Post', theme => {
     photoImage: {
       display: 'block',
       height: 'auto',
-      maxHeight: '400px',
-      maxWidth: '500px',
+      maxHeight: '500px',
+      maxWidth: '600px',
       borderRadius: '2px',
       overflow: 'hidden',
       cursor: 'pointer',

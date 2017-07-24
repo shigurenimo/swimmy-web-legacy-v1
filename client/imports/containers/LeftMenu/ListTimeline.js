@@ -31,6 +31,15 @@ export default class LeftMenuTimeline extends Component {
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
+        {/* storage */}
+        <ListItem button dense
+          className={classNames({
+            [classes.select]: this.props.routes.page.includes('storage')
+          })}
+          component='a'
+          href='/storage'>
+          <ListItemText primary='storage' />
+        </ListItem>
         {/* timelines */}
         <ListItem button dense
           className={classNames({

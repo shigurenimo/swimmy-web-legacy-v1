@@ -5,11 +5,11 @@ import Typography from 'material-ui/Typography'
 import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetContent from '../../components/UI-SheetContent'
-import PostArtwork from '../CardArtwork'
+import CardImage from '../CardImage'
 
-@inject('artworks')
+@inject('posts', 'timeline')
 @observer
-export default class ArtworkList extends Component {
+export default class Storage extends Component {
   render () {
     return (
       <Layout>
@@ -19,19 +19,21 @@ export default class ArtworkList extends Component {
   }
 
   forPosts () {
-    const {index, isFetching} = this.props.artworks
-    if (index.length < 1) {
+    const unique = this.props.timeline.unique
+    if (this.props.posts[unique].index.length === 0) {
       return (
         <Sheet>
           <SheetContent>
             <Typography>
-              {isFetching ? '読み込み中 ..' : 'データが見つかりませんでした'}
+              {this.props.posts[unique].fetchState ? '読み込み中 ..' : ''}
             </Typography>
           </SheetContent>
         </Sheet>
       )
     }
-    return index.map(item => <PostArtwork key={item._id} {...item} />)
+    return this.props.posts[unique].index.map(item => {
+      return <CardImage key={item._id} {...item} />
+    })
   }
 
   componentDidMount () {

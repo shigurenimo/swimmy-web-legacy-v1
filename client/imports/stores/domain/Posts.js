@@ -18,6 +18,12 @@ const PostIndex = types.compose('PostIndex', IndexModel, {
         return this.subscribe({}, {
           limit: 50
         })
+      case 'storage':
+        return this.subscribe({
+          'images': {$exists: true}
+        }, {
+          limit: 50
+        })
     }
   }
 })
@@ -28,7 +34,6 @@ export default types.compose('Posts', Model, {
   index: types.optional(types.array(Post), [])
 }, {
   subscribeFromUnique (unique) {
-    console.log('subscribeFromUnique', unique)
     switch (unique) {
       case 'follows':
         return this.subscribe({}, {
@@ -37,6 +42,12 @@ export default types.compose('Posts', Model, {
       case 'self':
         const userId = Meteor.userId()
         return this.subscribe({ownerId: userId}, {
+          limit: 50
+        })
+      case 'storage':
+        return this.subscribe({
+          'images': {$exists: true}
+        }, {
           limit: 50
         })
       default:

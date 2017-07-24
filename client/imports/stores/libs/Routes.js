@@ -78,6 +78,29 @@ Routes.setRoute('/thread/:_id', {
   }
 })
 
+Routes.setRoute('/storage', {
+  async action (stores, {params}) {
+    const unique = 'storage'
+    stores.posts.define(unique)
+    stores.posts[unique].subscribeFromUnique(unique)
+    stores.timeline.setCurrent({
+      useSocket: true,
+      channelId: null,
+      unique: unique
+    })
+    stores.routes.setRoute('storage')
+    stores.drawer.close()
+    stores.info.close()
+    document.title = documentTitle
+    if (Meteor.isProduction) {
+      window.ga('send', 'pageview', {
+        page: '/',
+        title: document.title
+      })
+    }
+  }
+})
+
 Routes.setRoute('/uuid/:_id', {
   async action (stores, {params}) {
     stores.artworks.findOneFromId(params._id)

@@ -99,7 +99,7 @@ export default class Post extends Component {
               {this.props.reactions.map(({name, ownerIds}) =>
                 <Chip
                   key={name}
-                  className={classNames({
+                  className={classNames(classes.chip, {
                     [classes.colorChip]: !!this.props.accounts.isLogged &&
                     ownerIds.includes(this.props.accounts.one._id)
                   })}

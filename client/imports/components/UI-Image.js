@@ -7,7 +7,6 @@ const styleSheet = createStyleSheet('UIImage', theme => {
     container: {
       display: 'block',
       width: '100%',
-      maxWidth: '250px',
       height: 'auto',
       '-webkit-touch-callout': 'default'
     }

@@ -13,6 +13,7 @@ import NotFound from '../NotFound'
 import Profile from '../Profile'
 import Release from '../Release'
 import Report from '../Report'
+import Storage from '../Storage'
 import Thread from '../Thread'
 import ThreadList from '../ThreadList'
 import Timeline from '../Timeline'
@@ -65,7 +66,6 @@ export default class Content extends Component {
         return <Release key='release' />
       case 'not-found':
         return <NotFound key='not-found' />
-      case 'artwork':
       case 'report':
         return <Report key='report' />
     }
@@ -78,6 +78,8 @@ export default class Content extends Component {
         return <Thread key='thread' />
       case 'thread-list':
         return <ThreadList key='thread-list' />
+      case 'storage':
+        return <Storage />
     }
     if (this.props.accounts.isNotLoggedIn) {
       return <Login key='login' />
