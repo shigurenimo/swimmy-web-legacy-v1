@@ -35,7 +35,7 @@ export default class ThreadList extends Component {
       )
     }
     return this.props.threads.index.map(item =>
-      <Sheet hover key={item._id} href={'/thread/' + item._id}>
+      <Sheet hover key={item._id} href={'/thread/' + item._id} className={classes.sheet}>
         <SheetContent>
           <Typography className={classes.content}>
             {item.content}

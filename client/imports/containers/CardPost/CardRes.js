@@ -23,7 +23,7 @@ export default class PostRes extends Component {
     const {classes} = this.props
     return (
       <div>
-        <Sheet hover onTouchTap={this.onOpenThread}>
+        <Sheet hover className={classes.sheet} onTouchTap={this.onOpenThread}>
           {/* username */}
           {this.props.owner && this.props.owner.username &&
           <SheetContent>
