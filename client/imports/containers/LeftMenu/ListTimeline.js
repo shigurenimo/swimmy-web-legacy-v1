@@ -17,29 +17,6 @@ export default class LeftMenuTimeline extends Component {
     const {accounts, classes} = this.props
     return (
       <List>
-        {/* threads */}
-        <ListItem button dense
-          className={classNames({
-            [classes.select]: this.props.routes.page.includes('thread')
-          })}
-          component='a'
-          href='/thread'>
-          <ListItemText primary='thread' />
-          <ListItemSecondaryAction>
-            <IconButton component='a' href='/thread'>
-              <BookmarkBorderIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-        {/* storage */}
-        <ListItem button dense
-          className={classNames({
-            [classes.select]: this.props.routes.page.includes('storage')
-          })}
-          component='a'
-          href='/storage'>
-          <ListItemText primary='storage' />
-        </ListItem>
         {/* timelines */}
         <ListItem button dense
           className={classNames({
@@ -51,7 +28,7 @@ export default class LeftMenuTimeline extends Component {
           })}
           component='a'
           href={'/'}>
-          <ListItemText primary={'timeline'} />
+          <ListItemText primary={'chat'} />
           <ListItemSecondaryAction>
             <IconButtonMoreExpand isExpand={this.state.isExpand} onClick={this.onExpand} />
           </ListItemSecondaryAction>
@@ -77,6 +54,29 @@ export default class LeftMenuTimeline extends Component {
             <ListItemText inset primary={accounts.one.username || 'self'} />
           </ListItem>}
         </Collapse>
+        {/* threads */}
+        <ListItem button dense
+          className={classNames({
+            [classes.select]: this.props.routes.page.includes('thread')
+          })}
+          component='a'
+          href='/thread'>
+          <ListItemText primary='thread' />
+          <ListItemSecondaryAction>
+            <IconButton component='a' href='/thread'>
+              <BookmarkBorderIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+        {/* storage */}
+        <ListItem button dense
+          className={classNames({
+            [classes.select]: this.props.routes.page.includes('storage')
+          })}
+          component='a'
+          href='/storage'>
+          <ListItemText primary='storage' />
+        </ListItem>
         {accounts.isLogged && accounts.one.profile.channels.map(item =>
           <ListItem button dense
             key={item._id}
