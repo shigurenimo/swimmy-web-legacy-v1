@@ -72,8 +72,8 @@ export default class Login extends Component {
             </SheetContent>
             <SheetContent>
               <Typography>
-                Swはとてもシンプルな電子掲示板です。<br />
-                登録にメールアドレスは必要ありません。
+                Swはとてもシンプルな完全匿名のチャットです。<br />
+                ログインしてもユーザ名を伏せて書き込みできます。
               </Typography>
             </SheetContent>
           </Block>

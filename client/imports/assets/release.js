@@ -1,4 +1,13 @@
 export default [{
+  version: '1.4.8',
+  date: '2017.7.25',
+  content: [
+    'material-ui@beta-1',
+    'storage機能の追加',
+    'threadの取得制限の追加',
+    '投稿のUIの改善 (報告thanks)'
+  ]
+}, {
   version: '1.4.7',
   date: '2017.7.15',
   content: [
@@ -23,8 +32,8 @@ export default [{
   date: '2017.7.12',
   content: [
     '過去の書き込みの復旧',
-    'レスでリアクションできないバグの回収（報告thanks）',
-    '空の書き込みができるバグの回収（報告thanks）'
+    'レスでリアクションできないバグの回収 (報告thanks)',
+    '空の書き込みができるバグの回収 (報告thanks)'
   ]
 }, {
   version: '1.4.3',
@@ -56,7 +65,7 @@ export default [{
   version: '1.3.1',
   date: '2017.6.27',
   content: [
-    'ユーザが新規作成できないバグの回収（報告thanks）'
+    'ユーザが新規作成できないバグの回収 (報告thanks)'
   ]
 }, {
   version: '1.3.0',
@@ -241,7 +250,7 @@ export default [{
   version: '0.7.2',
   content: [
     'サークル掲載ページの追加',
-    'SSL化されてないリンクが掲載できないバグの回収（報告thanks）'
+    'SSL化されてないリンクが掲載できないバグの回収 (報告thanks)'
   ]
 }, {
   version: '0.7.1',
@@ -255,7 +264,7 @@ export default [{
     'デスクトップの対応',
     'ホームのサークルの表示内容の変更',
     'iOS9の対応',
-    '404にリダイレクトされるバグの回収（報告thanks）'
+    '404にリダイレクトされるバグの回収 (報告thanks)'
   ]
 }, {
   version: '0.6.7',
