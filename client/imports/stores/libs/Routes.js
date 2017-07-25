@@ -35,7 +35,7 @@ Routes.setRoute('/(default|self|follows)?', {
 
 Routes.setRoute('/thread', {
   async action (stores, context) {
-    stores.threads.subscribe()
+    stores.threads.subscribe({}, {sort: {createdAt: -1}})
     document.title = 'thread | ' + documentTitle
     stores.routes.setRoute('thread-list')
     stores.drawer.close()

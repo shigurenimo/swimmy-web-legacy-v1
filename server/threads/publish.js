@@ -5,6 +5,8 @@ Meteor.publish('threads', function (selector = {}, options = {}, namespace) {
   selector.content = {$ne: ''}
   selector['replies.0'] = {$exists: true}
 
+  options.limit = 50
+
   const _namespace = namespace ? 'threads.' + namespace : 'threads'
 
   const cursor = collections.posts.find(selector, options).observe({
