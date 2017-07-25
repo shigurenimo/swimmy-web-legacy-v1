@@ -72,7 +72,8 @@ export default createStyleSheet('CardImage', theme => {
       width: 'calc(100% - 30px)'
     },
     chip: {
-      marginRight: '5px'
+      marginRight: '5px',
+      background: 'rgba(0, 0, 0, 0.05)'
     },
     colorChip: {
       background: theme.palette.primary[100]
