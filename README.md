@@ -8,19 +8,19 @@
  
 ```
 $ curl https://install.meteor.com/ | sh
-$ meteor npm i
+$ npm i
 $ cp temp.settings.json settings.json
-$ meteor npm start
+$ npm start
 ```
 
 ### After the second time
 
 ```
-$ meteor npm start
+$ npm start
 ```
 
 ## Deployment
 
 ```
-$ meteor npm run deploy
+$ npm run deploy
 ```
