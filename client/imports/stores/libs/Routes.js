@@ -7,22 +7,18 @@ const documentTitleShort = 'swimmy'
 const Routes = Router.createState()
 
 Routes.setRoute('/(default|self|follows)?', {
-  async action (stores, {params}) {
+  action (stores, {params}) {
     const unique = params[0] || 'default'
     stores.posts.define(unique)
-    try {
-      stores.posts[unique].subscribeFromUnique(unique)
-      stores.timeline.setCurrent({
-        useSocket: true,
-        channelId: null,
-        unique: unique
-      })
-      stores.routes.setRoute('timeline')
-      stores.drawer.close()
-      stores.info.close()
-    } catch (err) {
-      console.log(err)
-    }
+    stores.posts[unique].subscribeFromUnique(unique)
+    stores.timeline.setCurrent({
+      useSocket: true,
+      channelId: null,
+      unique: unique
+    })
+    stores.routes.setRoute('timeline')
+    stores.drawer.close()
+    stores.info.close()
     document.title = documentTitle
     if (Meteor.isProduction) {
       window.ga('send', 'pageview', {
@@ -34,7 +30,7 @@ Routes.setRoute('/(default|self|follows)?', {
 })
 
 Routes.setRoute('/thread', {
-  async action (stores, context) {
+  action (stores, context) {
     stores.threads.subscribe({}, {sort: {createdAt: -1}})
     document.title = 'thread | ' + documentTitle
     stores.routes.setRoute('thread-list')
@@ -49,7 +45,7 @@ Routes.setRoute('/thread', {
 })
 
 Routes.setRoute('/thread/:_id', {
-  async action (stores, {params}) {
+  action (stores, {params}) {
     stores.posts.define('thread')
     stores.posts.thread.findOne({_id: params._id}, {})
     .then(model => {
@@ -72,14 +68,14 @@ Routes.setRoute('/thread/:_id', {
         })
       }
     })
-    .catch(() => {
-      notFound(stores)
+    .catch(err => {
+      notFound(stores, err)
     })
   }
 })
 
 Routes.setRoute('/storage', {
-  async action (stores, {params}) {
+  action (stores, {params}) {
     const unique = 'storage'
     stores.posts.define(unique)
     stores.posts[unique].subscribeFromUnique(unique)
@@ -101,30 +97,8 @@ Routes.setRoute('/storage', {
   }
 })
 
-Routes.setRoute('/uuid/:_id', {
-  async action (stores, {params}) {
-    stores.artworks.findOneFromId(params._id)
-    .then(artwork => {
-      if (!artwork) {
-        return notFound()
-      }
-      stores.artworks.replaceOne(artwork)
-      stores.routes.setRoute('artwork-detail')
-      const title = artwork.title ? artwork.title : artwork._id
-      document.title = title + ' | ' + documentTitleShort
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {
-          page: '/uuid/' + artwork._id,
-          title: document.title
-        })
-      }
-    })
-    .catch(err => this.props.snackbar.error(err.reason))
-  }
-})
-
 Routes.setRoute('/ch/(default|net|univ)?', {
-  async action (stores, {params}) {
+  action (stores, {params}) {
     const unique = params[0] || 'default'
     stores.drawer.close()
     stores.routes.setRoute('channel-list')
@@ -138,12 +112,15 @@ Routes.setRoute('/ch/(default|net|univ)?', {
         })
       }
     })
-    .catch(err => this.props.snackbar.error(err.reason))
+    .catch(err => {
+      notFound(stores, err)
+      this.props.snackbar.error(err.reason)
+    })
   }
 })
 
 Routes.setRoute('/ch/new', {
-  async action (stores, {params}) {
+  action (stores, {params}) {
     stores.routes.setRoute('channel-new')
     stores.drawer.close()
     document.title = 'new channel | ' + documentTitle
@@ -157,11 +134,11 @@ Routes.setRoute('/ch/new', {
 })
 
 Routes.setRoute('/ch/:channelId', {
-  async action (stores, {params, query}) {
+  action (stores, {params, query}) {
     const channelId = params.channelId
     stores.channels.findOne({_id: channelId})
     .then(model => {
-      if (!model) { return notFound() }
+      if (!model) { return notFound(stores) }
       stores.posts.define(channelId)
       stores.posts[channelId].subscribe({channelId})
       stores.timeline.setCurrent({
@@ -185,16 +162,19 @@ Routes.setRoute('/ch/:channelId', {
         })
       }
     })
-    .catch(err => this.props.snackbar.error(err.reason))
+    .catch(err => {
+      notFound(stores, err)
+      this.props.snackbar.error(err.reason)
+    })
   }
 })
 
 Routes.setRoute('/ch/:channelId/edit', {
-  async action (stores, {params}) {
+  action (stores, {params}) {
     const channelId = params.channelId
     stores.channels.findOne({_id: channelId}, {})
     .then(data => {
-      if (!data) { return notFound() }
+      if (!data) { return notFound(stores) }
       stores.routes.setRoute('channel-edit')
       document.title = '編集中 - ' + data.name + ' | ' + documentTitle
       if (Meteor.isProduction) {
@@ -204,12 +184,15 @@ Routes.setRoute('/ch/:channelId/edit', {
         })
       }
     })
-    .catch(err => this.props.snackbar.error(err.reason))
+    .catch(err => {
+      notFound(stores, err)
+      this.props.snackbar.error(err.reason)
+    })
   }
 })
 
 Routes.setRoute('/admin', {
-  async action (stores, context) {
+  action (stores, context) {
     stores.routes.setRoute('admin')
     stores.drawer.close()
     document.title = 'マイページ | ' + documentTitle
@@ -223,7 +206,7 @@ Routes.setRoute('/admin', {
 })
 
 Routes.setRoute('/config', {
-  async action (stores, context) {
+  action (stores, context) {
     stores.routes.setRoute('config')
     stores.drawer.close()
     document.title = '各種設定 | ' + documentTitle
@@ -237,7 +220,7 @@ Routes.setRoute('/config', {
 })
 
 Routes.setRoute('/release', {
-  async action (stores, context) {
+  action (stores, context) {
     stores.routes.setRoute('release')
     stores.drawer.close()
     document.title = 'リリースノート | ' + documentTitle
@@ -251,7 +234,7 @@ Routes.setRoute('/release', {
 })
 
 Routes.setRoute('/report', {
-  async action (stores, context) {
+  action (stores, context) {
     stores.reports.find()
     .then(model => {
       stores.reports.setOne(model)
@@ -269,7 +252,7 @@ Routes.setRoute('/report', {
 })
 
 Routes.setRoute('/twitter', {
-  async action (stores, {params}) {
+  action (stores, {params}) {
     stores.routes.setRoute('twitter')
     stores.drawer.close()
     document.title = 'twitter' + ' | ' + documentTitleShort
@@ -283,18 +266,25 @@ Routes.setRoute('/twitter', {
 })
 
 Routes.setRoute('/:username', {
-  async action (stores, {params}) {
+  action (stores, {params}) {
     const username = params.username
     stores.users.findOneFromUsername(username)
     .then(user => {
-      if (!user) return notFound()
+      if (!user) return notFound(stores)
       stores.users.setOne(user)
       stores.routes.setRoute('profile')
     })
   }
 })
 
-function notFound (stores) {
+function notFound (stores, error) {
+  Meteor.call('logs.insert', {
+    type: 'page-not-found',
+    content: {
+      href: window.location.href,
+      message: error.message
+    }
+  })
   stores.routes.setRoute('not-found')
   if (Meteor.isProduction) {
     window.ga('send', 'pageview', {

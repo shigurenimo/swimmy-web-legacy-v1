@@ -6,7 +6,7 @@ Meteor.methods({
   'posts.findOne' (selector, options) {
     const post = collections.posts.findOne(selector, options)
 
-    if (!post) return null
+    if (!post) { throw new Meteor.Error('not-found') }
 
     if (post.replyId) {
       const reply = collections.posts.findOne(post.reply)

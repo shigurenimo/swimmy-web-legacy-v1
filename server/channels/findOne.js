@@ -5,7 +5,7 @@ Meteor.methods({
   'channels.findOne' (selector, options) {
     const channel = collections.channels.findOne(selector, options)
 
-    if (!channel) return
+    if (!channel) { throw new Meteor.Error('not-found') }
 
     channel.count = channel.member.length
 

@@ -45,7 +45,7 @@ export class RouterClass {
         context.next = next
         context.query = qs.parse(context.querystring)
         const asyncFuntion = route.action(stores, context, next)
-        if (!asyncFuntion.then) return
+        if (!asyncFuntion || !asyncFuntion.then) return
         asyncFuntion
         .catch(err => {
           if (route.catch) {
@@ -59,7 +59,7 @@ export class RouterClass {
         page.exit(route.path, (context, next) => {
           context.next = next
           const asyncFuntion = route.exit(stores, context, next)
-          if (!asyncFuntion.then) return
+          if (!asyncFuntion || !asyncFuntion.then) return
           asyncFuntion
           .catch(err => {
             if (route.catch) {
