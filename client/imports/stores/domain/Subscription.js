@@ -120,7 +120,7 @@ const MethodModel = types.model('MethodModel', {
             const error = new Error('not-found')
             reject(error)
           }
-        }, 5000)
+        }, 10000)
       }
     })
   },
@@ -188,7 +188,7 @@ const MethodModel = types.model('MethodModel', {
           const error = new Error('not-found')
           reject(error)
         }
-      }, 5000)
+      }, 10000)
     })
   },
   unsubscribe () {
