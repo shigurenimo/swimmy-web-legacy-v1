@@ -32,7 +32,8 @@ Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
 
   const _namespace = namespace ? 'posts.' + namespace : 'posts'
 
-  const cursor = collections.posts.find(selector, options).observe({
+  const cursor = collections.posts.find(selector, options)
+  .observe({
     addedAt: (model) => {
       if (namespace !== 'thread' && model.replyId) {
         const reply = collections.posts.findOne(model.replyId, replyOptions)

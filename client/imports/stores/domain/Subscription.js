@@ -27,7 +27,10 @@ const MethodModel = types.model('MethodModel', {
     }
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   },
+  pushIndexBefore () {},
+  pushIndexAfter () {},
   pushIndex (models) {
+    this.pushIndexBefore(models)
     if (Array.isArray(models)) {
       models.forEach(model => {
         try {
@@ -40,6 +43,7 @@ const MethodModel = types.model('MethodModel', {
       this.index.push(models)
     }
     this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    this.pushIndexAfter(models)
   },
   replaceIndex (model) {
     const index = this.index.findIndex(item => item._id === model._id)
@@ -96,18 +100,22 @@ const MethodModel = types.model('MethodModel', {
           resolve()
           const cursor = this.collections.get(collectionName).find({}).observe({
             added: (model) => {
+              // this.setOne(model)
               models.push(model)
               if (ref !== null) clearTimeout(ref)
               ref = setTimeout(() => {
+                models = models.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 this.pushIndex(models)
                 models = []
                 ref = null
               }, 10)
             },
             changed: (model) => {
+              // if (this.one._id === model._id) { this.setOne(model) }
               this.replaceIndex(model)
             },
             removed: (model) => {
+              // if (this.one._id === model._id) { this.unsetOne(model) }
               this.spliceIndex(model)
             }
           })
@@ -116,11 +124,11 @@ const MethodModel = types.model('MethodModel', {
       })
       if (!this.index.length) {
         setTimeout(() => {
-          if (!this.one) {
+          if (!this.index.slice()[0]) {
             const error = new Error('not-found')
             reject(error)
           }
-        }, 10000)
+        }, 5000)
       }
     })
   },
@@ -167,8 +175,7 @@ const MethodModel = types.model('MethodModel', {
       }
       this.subscription = Meteor.subscribe(this.publish, selector, options, 'one', {
         onReady: () => {
-          const cursor = this.collections.get(collectionName)
-          .find({}).observe({
+          const cursor = this.collections.get(collectionName).find({}).observe({
             added: (model) => {
               this.setOne(model)
               resolve(model)
@@ -188,7 +195,7 @@ const MethodModel = types.model('MethodModel', {
           const error = new Error('not-found')
           reject(error)
         }
-      }, 10000)
+      }, 5000)
     })
   },
   unsubscribe () {
@@ -266,4 +273,19 @@ const Model = types.compose('Model', MethodModel, {}, {
   }
 })
 
-export { IndexModel, Model }
+const subscribe = (_Model) => {
+  const AppIndex = types.compose('Index', IndexModel, {
+    one: types.maybe(_Model),
+    index: types.optional(types.array(_Model), [])
+  })
+  const subScribeModel = types.compose('SubModel', Model, {
+    map: types.maybe(types.map(AppIndex)),
+    one: types.maybe(_Model),
+    index: types.optional(types.array(_Model), [])
+  })
+  return {
+    Model: subScribeModel
+  }
+}
+
+export { IndexModel, Model, subscribe }
