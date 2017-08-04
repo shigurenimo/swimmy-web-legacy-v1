@@ -9,14 +9,13 @@
 ```
 $ curl https://install.meteor.com/ | sh
 $ npm i
-$ cp temp.settings.json settings.json
-$ npm start
+$ npm run dev
 ```
 
 ### After the second time
 
 ```
-$ npm start
+$ npm run dev
 ```
 
 ## Deployment
