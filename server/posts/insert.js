@@ -47,8 +47,11 @@ Meteor.methods({
     }
 
     if (req.images) {
-      const image = await uploadImage(date, req.images[0])
-      data.images = [image]
+      const {projectId} = Meteor.settings.private.googleCloud
+      if (projectId) {
+        const image = await uploadImage(date, req.images[0])
+        data.images = [image]
+      }
     }
 
     const web = extendWeb(req.content, date)

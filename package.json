@@ -10,6 +10,7 @@
     "deploy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy swimmy.io --owner sankaku --settings settings.json",
     "ncu": "ncu",
     "ncu:a": "ncu -a",
+    "dev": "meteor --settings settings.development.json",
     "start": "meteor --settings settings.json"
   },
   "dependencies": {
