@@ -19,11 +19,11 @@ export default class extends Component {
     const {
       classes,
       className,
-      ...more
+      ...other
     } = this.props
     return (
       <Typography
-        {...more}
+        {...other}
         className={classNames(classes.container, className)}>
         {this.props.children}
       </Typography>

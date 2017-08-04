@@ -41,12 +41,12 @@ export default class UILayout extends Component {
       background,
       href,
       className,
-      ...more
+      ...other
     } = this.props
     if (href) {
       return (
         <Typography
-          {...more}
+          {...other}
           className={classNames(className, classes.container, {
             [classes.paddingDense]: dense,
             [classes.padding]: !dense,
@@ -61,7 +61,7 @@ export default class UILayout extends Component {
     } else {
       return (
         <div
-          {...more}
+          {...other}
           className={classNames(className, classes.container, {
             [classes.paddingDense]: dense,
             [classes.padding]: !dense,

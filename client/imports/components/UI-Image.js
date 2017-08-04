@@ -21,11 +21,11 @@ export default class UIImage extends Component {
       className,
       src,
       onClick,
-      ...more
+      ...other
     } = this.props
     return (
       <img
-        {...more}
+        {...other}
         className={classNames(classes.container, {
           [className]: className
         })}
