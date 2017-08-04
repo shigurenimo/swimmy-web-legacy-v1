@@ -4,7 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 const styleSheet = createStyleSheet('UISheetContent', theme => {
   return {
-    container: {
+    root: {
       paddingBottom: '10px',
       position: 'relative',
       display: 'block',
@@ -15,20 +15,20 @@ const styleSheet = createStyleSheet('UISheetContent', theme => {
 })
 
 @withStyles(styleSheet)
-export default class UILayout extends Component {
+export default class UISheetContent extends Component {
   render () {
     const {
       classes,
       className,
       align,
       href,
-      ...more
+      ...other
     } = this.props
     const Component = href ? 'a' : 'div'
     return (
       <Component
-        {...more}
-        className={classNames(className, classes.container)}
+        {...other}
+        className={classNames(classes.root, {[className]: className})}
         style={{
           textAlign: align || 'left'
         }}

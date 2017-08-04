@@ -31,17 +31,26 @@ export default class UISheetImage extends Component {
       classes,
       href,
       className,
-      src
+      src,
+      ...other
     } = this.props
     if (href) {
       return (
-        <a className={classes.link} href={href}>
-          <img className={classNames(classes.image, classes.hover, className)} src={src} />
+        <a
+          {...other}
+          className={classes.link} href={href}>
+          <img className={classNames(classes.image, classes.hover, {
+            [className]: className
+          })} src={src} />
         </a>
       )
     } else {
       return (
-        <img className={classNames(className, classes.image)} src={src} />
+        <img
+          {...other}
+          className={classNames(classes.image, {
+            [className]: className
+          })} src={src} />
       )
     }
   }

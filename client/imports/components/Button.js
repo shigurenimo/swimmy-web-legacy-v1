@@ -25,11 +25,11 @@ export default class extends Component {
       selected,
       background,
       className,
-      ...more
+      ...other
     } = this.props
     return (
       <Button
-        {...more}
+        {...other}
         className={classNames({
           [className]: className,
           [classes.background]: background,

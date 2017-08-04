@@ -6,7 +6,6 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
     container: {
       display: 'block',
       width: '100%',
-      // maxWidth: '600px',
       borderBottom: 'none',
       transitionDuration: '200ms'
     },
@@ -18,7 +17,7 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
 })
 
 @withStyles(styleSheet)
-export default class UILayout extends Component {
+export default class UIBlock extends Component {
   render () {
     const {
       classes,
@@ -26,12 +25,12 @@ export default class UILayout extends Component {
       center,
       align = 'left',
       width,
-      ...more
+      ...other
     } = this.props
     const Component = href ? 'a' : 'div'
     return (
       <Component
-        {...more}
+        {...other}
         className={classes.container}
         href={href}>
         <div

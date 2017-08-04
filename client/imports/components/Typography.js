@@ -16,8 +16,10 @@ export default class Typography extends Component {
   render () {
     const {classes, className, inline, ...other} = this.props
     return (
-      <MUITypography {...other}
-        className={classNames(className, {
+      <MUITypography
+        {...other}
+        className={classNames({
+          [className]: className,
           [classes.inline]: inline
         })} />
     )

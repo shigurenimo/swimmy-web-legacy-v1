@@ -4,7 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 const styleSheet = createStyleSheet('UISheetActions', theme => {
   return {
-    container: {
+    root: {
       display: 'block',
       marginBottom: '5px',
       width: '100%'
@@ -29,13 +29,15 @@ export default class UILayout extends Component {
       className,
       align,
       flex,
-      dense
+      dense,
+      ...other
     } = this.props
     return (
       <div
+        {...other}
         className={classNames(
-          className,
-          classes.container, {
+          classes.root, {
+            [className]: className,
             [classes.dense]: dense
           })}
         style={{

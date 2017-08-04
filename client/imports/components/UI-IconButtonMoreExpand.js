@@ -21,9 +21,10 @@ export const styleSheet = createStyleSheet('UIIconButtonMoreExpand', theme => {
 @withStyles(styleSheet)
 export default class IconButtonMoreExpand extends Component {
   render () {
-    const {isExpand, classes} = this.props
+    const {isExpand, classes, ...other} = this.props
     return (
       <IconButton
+        {...other}
         className={classNames(
           classes.expand,
           {[classes.expandOpen]: isExpand}
