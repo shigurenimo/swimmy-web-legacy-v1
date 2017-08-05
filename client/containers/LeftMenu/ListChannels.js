@@ -2,7 +2,6 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import AddIcon from 'material-ui-icons/Add'
-import SearchIcon from 'material-ui-icons/Search'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
@@ -23,11 +22,6 @@ export default class LeftMenuChannels extends Component {
           component='a'
           href={'/ch/default'}>
           <ListItemText primary={'channels'} />
-          <ListItemSecondaryAction>
-            <IconButton component={'a'} href={'/ch/default'}>
-              <SearchIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
         </ListItem>
         {this.props.accounts.isLogged &&
         <ListItem button dense

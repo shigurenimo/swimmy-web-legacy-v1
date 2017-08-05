@@ -49,7 +49,7 @@ export default class Content extends Component {
       case 'channel-info':
         return this.props.inputPost.paddingTop
       case 'explore':
-        return 200
+        return 58
       default:
         return 10
     }
@@ -62,7 +62,6 @@ export default class Content extends Component {
     if (this.props.routes.page === null) {
       return <Loading key='loading' />
     }
-    console.log(this.props.routes.page)
     switch (this.props.routes.page) {
       case 'channel-list':
         return <ChannelList key='channel-list' />

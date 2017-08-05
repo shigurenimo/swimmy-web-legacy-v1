@@ -27,7 +27,11 @@ Routes.setRoute('/(default|self|follows)?', {
 Routes.setRoute('/explore', {
   action (stores, {path, query}) {
     stores.posts.define('explore')
-    // stores.posts['explore'].subscribe({})
+    if (query.word) {
+      stores.posts['explore'].subscribe({
+        content: '/' + query.word + '/'
+      })
+    }
     // stores.timeline.setCurrent({channelId: null, unique: unique})
     stores.routes.setRoute('explore')
     stores.drawer.close()
@@ -263,7 +267,6 @@ Routes.setRoute('/:username', {
     stores.users.findOneFromUsername(username)
     .then(user => {
       if (!user) return notFound(stores)
-      stores.users.setOne(user)
       stores.routes.setRoute('profile')
     })
   }

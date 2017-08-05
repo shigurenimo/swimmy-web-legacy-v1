@@ -13,6 +13,12 @@ Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
       break
   }
 
+  if (selector.content) {
+    if (selector.content.slice(-1) === '/' && selector.content.slice(0, 1) === '/') {
+      selector.content = new RegExp(selector.content.replace(new RegExp('/', 'g'), ''), 'g')
+    }
+  }
+
   options.sort = {createdAt: -1}
   options.fields = {
     replies: 0

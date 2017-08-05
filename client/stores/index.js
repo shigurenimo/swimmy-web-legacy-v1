@@ -6,6 +6,7 @@ import Threads from './domain/Threads'
 import Users from './domain/Users'
 import Routes from './libs/Routes'
 import Drawer from './ui/Drawer'
+import Explore from './ui/Explore'
 import Info from './ui/info'
 import InputPost from './ui/InputPost'
 import Snackbar from './ui/Snackbar'
@@ -14,6 +15,7 @@ import Timeline from './ui/Timeline'
 const stores = {
   accounts: Accounts.create(),
   drawer: Drawer.create(),
+  explore: Explore.create(),
   info: Info.create(),
   inputPost: InputPost.create(),
   channels: Channels.create({publish: 'channels'}),

@@ -2,6 +2,7 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import BookmarkBorderIcon from 'material-ui-icons/BookmarkBorder'
+import SearchIcon from 'material-ui-icons/Search'
 import Collapse from 'material-ui/transitions/Collapse'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
@@ -76,6 +77,20 @@ export default class LeftMenuTimeline extends Component {
           component='a'
           href='/storage'>
           <ListItemText primary='storage' />
+        </ListItem>
+        {/* explore */}
+        <ListItem button dense
+          className={classNames({
+            [classes.select]: this.props.routes.page.includes('explore')
+          })}
+          component='a'
+          href='/explore'>
+          <ListItemText primary='explore' />
+          <ListItemSecondaryAction>
+            <IconButton component={'a'} href={'/explore'}>
+              <SearchIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
         </ListItem>
         {accounts.isLogged && accounts.one.profile.channels.map(item =>
           <ListItem button dense

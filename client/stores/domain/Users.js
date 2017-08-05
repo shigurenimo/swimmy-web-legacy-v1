@@ -17,6 +17,7 @@ export default types.model('Users', {
           if (res) {
             res.profile.code = res.profile.code.split('')
           }
+          this.setOne(res)
           resolve(res)
         }
       })

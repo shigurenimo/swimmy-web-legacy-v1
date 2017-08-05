@@ -22,8 +22,7 @@ export default createStyleSheet('InputExplore', theme => {
         top: 0,
         right: 0,
         padding: '10px 10px 0 10px',
-        width: '50%',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
+        width: '50%'
       }
     },
     tools: {
