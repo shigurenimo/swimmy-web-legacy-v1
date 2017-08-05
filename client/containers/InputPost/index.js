@@ -223,7 +223,10 @@ export default class InputPost extends Component {
         this.props.snackbar.error(err.reason)
       })
     } else {
-      if (this.props.inputPost.postContent === '') return
+      if (this.props.inputPost.postContent === '') {
+        this.process = false
+        return
+      }
       const data = {
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
@@ -268,7 +271,10 @@ export default class InputPost extends Component {
         this.props.snackbar.error(err)
       })
     } else {
-      if (this.props.inputPost.postContent === '') return
+      if (this.props.inputPost.postContent === '') {
+        this.process = false
+        return
+      }
       const replyId = this.props.posts.thread.one._id
       const data = {
         isPublic: this.state.inputIsPublic,
