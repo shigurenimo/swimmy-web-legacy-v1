@@ -7,6 +7,7 @@ import ConfigAccount from '../ConfigAccount'
 import ChannelEdit from '../ChannelEdit'
 import ChannelList from '../ChannelList'
 import ChannelNew from '../ChannelNew'
+import Explore from '../Explore'
 import Loading from '../Loading'
 import Login from '../Login'
 import NotFound from '../NotFound'
@@ -47,6 +48,8 @@ export default class Content extends Component {
       case 'thread':
       case 'channel-info':
         return this.props.inputPost.paddingTop
+      case 'explore':
+        return 200
       default:
         return 10
     }
@@ -59,6 +62,7 @@ export default class Content extends Component {
     if (this.props.routes.page === null) {
       return <Loading key='loading' />
     }
+    console.log(this.props.routes.page)
     switch (this.props.routes.page) {
       case 'channel-list':
         return <ChannelList key='channel-list' />
@@ -70,6 +74,8 @@ export default class Content extends Component {
         return <Report key='report' />
     }
     switch (this.props.routes.page) {
+      case 'explore':
+        return <Explore key='explore' />
       case 'profile':
         return <Profile key='profile' />
       case 'timeline':

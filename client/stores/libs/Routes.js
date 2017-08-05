@@ -7,7 +7,7 @@ const documentTitleShort = 'swimmy'
 const Routes = Router.create()
 
 Routes.setRoute('/(default|self|follows)?', {
-  action (stores, {params}) {
+  action (stores, {path, params}) {
     const unique = params[0] || 'default'
     stores.posts.define(unique)
     stores.posts[unique].subscribeFrom(unique)
@@ -17,31 +17,44 @@ Routes.setRoute('/(default|self|follows)?', {
     stores.info.close()
     document.title = documentTitle
     if (Meteor.isProduction) {
-      window.ga('send', 'pageview', {
-        page: '/',
-        title: document.title
-      })
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
+    }
+  }
+})
+
+Routes.setRoute('/explore', {
+  action (stores, {path, query}) {
+    stores.posts.define('explore')
+    // stores.posts['explore'].subscribe({})
+    // stores.timeline.setCurrent({channelId: null, unique: unique})
+    stores.routes.setRoute('explore')
+    stores.drawer.close()
+    stores.info.close()
+    document.title = documentTitle
+    if (Meteor.isProduction) {
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
 
 Routes.setRoute('/thread', {
-  action (stores, context) {
+  action (stores, {path}) {
     stores.threads.subscribe({}, {sort: {createdAt: -1}})
     document.title = 'thread | ' + documentTitle
     stores.routes.setRoute('thread-list')
     stores.drawer.close()
     if (Meteor.isProduction) {
-      window.ga('send', 'pageview', {
-        page: '/thread',
-        title: document.title
-      })
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
     }
   }
 })
 
 Routes.setRoute('/thread/:_id', {
-  action (stores, {params}) {
+  action (stores, {path, params}) {
     stores.posts.define('thread')
     stores.posts.thread.findOne({_id: params._id}, {})
     .then(model => {
@@ -59,10 +72,9 @@ Routes.setRoute('/thread/:_id', {
         : model.content
       document.title = content + ' | ' + documentTitleShort
       if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {
-          page: '/',
-          title: document.title
-        })
+        if (Meteor.isProduction) {
+          window.ga('send', 'pageview', {page: path, title: document.title})
+        }
       }
     })
     .catch(err => { notFound(stores, err) })
@@ -70,7 +82,7 @@ Routes.setRoute('/thread/:_id', {
 })
 
 Routes.setRoute('/storage', {
-  action (stores, {params}) {
+  action (stores, {path, params}) {
     const unique = 'storage'
     stores.posts.define(unique)
     stores.posts[unique].subscribeFrom(unique)
@@ -80,16 +92,15 @@ Routes.setRoute('/storage', {
     stores.info.close()
     document.title = documentTitle
     if (Meteor.isProduction) {
-      window.ga('send', 'pageview', {
-        page: '/',
-        title: document.title
-      })
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
     }
   }
 })
 
 Routes.setRoute('/ch/(default|net|univ)?', {
-  action (stores, {params}) {
+  action (stores, {path, params}) {
     const unique = params[0] || 'default'
     stores.drawer.close()
     stores.routes.setRoute('channel-list')
@@ -97,10 +108,9 @@ Routes.setRoute('/ch/(default|net|univ)?', {
     .then(model => {
       document.title = 'channel | ' + documentTitle
       if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {
-          page: '/ch',
-          title: document.title
-        })
+        if (Meteor.isProduction) {
+          window.ga('send', 'pageview', {page: path, title: document.title})
+        }
       }
     })
     .catch(err => {
@@ -111,21 +121,20 @@ Routes.setRoute('/ch/(default|net|univ)?', {
 })
 
 Routes.setRoute('/ch/new', {
-  action (stores, {params}) {
+  action (stores, {path, params}) {
     stores.routes.setRoute('channel-new')
     stores.drawer.close()
     document.title = 'new channel | ' + documentTitle
     if (Meteor.isProduction) {
-      window.ga('send', 'pageview', {
-        page: '/ch/new',
-        title: document.title
-      })
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
     }
   }
 })
 
 Routes.setRoute('/ch/:channelId', {
-  action (stores, {params, query}) {
+  action (stores, {path, params, query}) {
     const channelId = params.channelId
     stores.channels.findOne({_id: channelId})
     .then(model => {
@@ -146,10 +155,9 @@ Routes.setRoute('/ch/:channelId', {
       stores.routes.setRoute('timeline')
       stores.drawer.close()
       if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {
-          page: '/ch/' + channelId,
-          title: document.title
-        })
+        if (Meteor.isProduction) {
+          window.ga('send', 'pageview', {page: path, title: document.title})
+        }
       }
     })
     .catch(err => {
@@ -160,7 +168,7 @@ Routes.setRoute('/ch/:channelId', {
 })
 
 Routes.setRoute('/ch/:channelId/edit', {
-  action (stores, {params}) {
+  action (stores, {path, params}) {
     const channelId = params.channelId
     stores.channels.findOne({_id: channelId}, {})
     .then(data => {
@@ -168,10 +176,9 @@ Routes.setRoute('/ch/:channelId/edit', {
       stores.routes.setRoute('channel-edit')
       document.title = '編集中 - ' + data.name + ' | ' + documentTitle
       if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {
-          page: '/ch/' + channelId,
-          title: document.title
-        })
+        if (Meteor.isProduction) {
+          window.ga('send', 'pageview', {page: path, title: document.title})
+        }
       }
     })
     .catch(err => {
@@ -182,49 +189,46 @@ Routes.setRoute('/ch/:channelId/edit', {
 })
 
 Routes.setRoute('/admin', {
-  action (stores, context) {
+  action (stores, {path}) {
     stores.routes.setRoute('admin')
     stores.drawer.close()
     document.title = 'マイページ | ' + documentTitle
     if (Meteor.isProduction) {
-      window.ga('send', 'pageview', {
-        page: '/admin',
-        title: document.title
-      })
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
     }
   }
 })
 
 Routes.setRoute('/config', {
-  action (stores, context) {
+  action (stores, {path}) {
     stores.routes.setRoute('config')
     stores.drawer.close()
     document.title = '各種設定 | ' + documentTitle
     if (Meteor.isProduction) {
-      window.ga('send', 'pageview', {
-        page: '/config',
-        title: document.title
-      })
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
     }
   }
 })
 
 Routes.setRoute('/release', {
-  action (stores, context) {
+  action (stores, {path}) {
     stores.routes.setRoute('release')
     stores.drawer.close()
     document.title = 'リリースノート | ' + documentTitle
     if (Meteor.isProduction) {
-      window.ga('send', 'pageview', {
-        page: '/release',
-        title: document.title
-      })
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
     }
   }
 })
 
 Routes.setRoute('/report', {
-  action (stores, context) {
+  action (stores, {path}) {
     stores.reports.find()
     .then(model => {
       stores.reports.setOne(model)
@@ -232,31 +236,29 @@ Routes.setRoute('/report', {
       stores.drawer.close()
       document.title = '統計データ | ' + documentTitle
       if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {
-          page: '/report',
-          title: document.title
-        })
+        if (Meteor.isProduction) {
+          window.ga('send', 'pageview', {page: path, title: document.title})
+        }
       }
     })
   }
 })
 
 Routes.setRoute('/twitter', {
-  action (stores, {params}) {
+  action (stores, {path, params}) {
     stores.routes.setRoute('twitter')
     stores.drawer.close()
     document.title = 'twitter' + ' | ' + documentTitleShort
     if (Meteor.isProduction) {
-      window.ga('send', 'pageview', {
-        page: '/',
-        title: document.title
-      })
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
     }
   }
 })
 
 Routes.setRoute('/:username', {
-  action (stores, {params}) {
+  action (stores, {path, params}) {
     const username = params.username
     stores.users.findOneFromUsername(username)
     .then(user => {
@@ -277,10 +279,7 @@ function notFound (stores, error) {
   })
   stores.routes.setRoute('not-found')
   if (Meteor.isProduction) {
-    window.ga('send', 'pageview', {
-      page: '/404',
-      title: document.title
-    })
+    window.ga('send', 'pageview', {page: '/404', title: document.title})
   }
 }
 

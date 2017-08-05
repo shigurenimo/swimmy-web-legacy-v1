@@ -1,6 +1,7 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
+import InputExplore from '../InputExplore'
 import InputPost from '../InputPost'
 import styleSheet from './index.style'
 
@@ -21,9 +22,11 @@ export default class InputAction extends Component {
       case 'timemachine':
       case 'thread':
       case 'channel-info':
-        return <InputPost key='input-post' />
+        return <InputPost />
+      case 'explore':
+        return <InputExplore />
       default:
-        return <div className={classes.inputLine} key='default' />
+        return <div className={classes.line} />
     }
   }
 }
