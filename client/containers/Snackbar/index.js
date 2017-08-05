@@ -13,8 +13,7 @@ export default class Snackbars extends Component {
         open={snackbar.isOpen}
         message={
           <span>{snackbar.message}</span>
-        }
-      />
+        } />
     )
   }
 }

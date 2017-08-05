@@ -8,7 +8,7 @@ import IconButtonMoreExpand from '/client/components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
 @withStyles(styleSheet)
-@inject('routes', 'posts', 'accounts')
+@inject('routes', 'accounts')
 @observer
 export default class LeftMenuChannels extends Component {
   render () {

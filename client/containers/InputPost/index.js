@@ -34,7 +34,7 @@ export default class InputPost extends Component {
             className={classes.spacing}
             selected={this.props.info.isOpen}
             onClick={this.openChannelInfo}>
-            {this.timelineName}
+            {this.props.timeline.name}
           </Button>
         </div>
         <div className={classes.message}>
@@ -92,17 +92,6 @@ export default class InputPost extends Component {
 
   process = false
 
-  get timelineName () {
-    if (this.props.routes.page === 'thread') {
-      if (this.props.timeline.channelId) {
-        return this.props.timeline.name
-      } else {
-        return 'レス'
-      }
-    }
-    return this.props.timeline.name
-  }
-
   openChannelInfo () {
     const channelId = this.props.timeline.channelId ||
       (this.props.routes.page === 'thread' && this.props.posts.one.channelId)
@@ -120,7 +109,6 @@ export default class InputPost extends Component {
 
   openChannelInfo = ::this.openChannelInfo
 
-  // 内容を入力する
   onInputContent (event) {
     const textarea = this.ref
     if (textarea.scrollHeight > 200) return
@@ -135,7 +123,6 @@ export default class InputPost extends Component {
 
   onInputContent = ::this.onInputContent
 
-  // 画像を設定する
   onDropImage (acceptedFiles) {
     if (this.process) return
     this.process = true
@@ -169,7 +156,6 @@ export default class InputPost extends Component {
 
   onDropImage = ::this.onDropImage
 
-  // 画像を削除する
   onCloseImage () {
     this.setState({errorImage: null, inputImage: null})
     this.props.inputPost.setPostImage(false)
@@ -177,7 +163,6 @@ export default class InputPost extends Component {
 
   onCloseImage = ::this.onCloseImage
 
-  // 公開・非公開を変更する
   onChangePublic (bool) {
     this.setState({inputIsPublic: bool})
   }

@@ -6,6 +6,12 @@ export default types.model('Timeline', {
   unique: types.maybe(types.string)
 }, {
   setCurrent ({channelId = null, unique = '', name = ''}) {
+    if (channelId) {
+      this.channelId = channelId
+    }
+    if (unique) {
+      this.unique = unique
+    }
     switch (unique) {
       case 'self':
         this.name = '自分の書き込み'
@@ -13,12 +19,13 @@ export default types.model('Timeline', {
       case 'follows':
         this.name = 'ユーザの書き込み'
         break
-      default:
+      case 'default':
         this.name = '全ての書き込み'
         break
+      default:
+        if (name) {
+          this.name = name
+        }
     }
-    this.name = name
-    this.channelId = channelId
-    this.unique = unique
   }
 })

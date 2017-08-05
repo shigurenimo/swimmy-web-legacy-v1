@@ -8,7 +8,7 @@ import SheetContent from '/client/components/UI-SheetContent'
 import ChannelInfo from '../ChannelInfo'
 import Post from '../CardPost'
 
-@inject('channels', 'posts', 'timeline', 'info')
+@inject('posts', 'timeline', 'info')
 @observer
 export default class Timeline extends Component {
   render () {

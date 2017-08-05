@@ -17,7 +17,7 @@ import InlineTypography from '/client/components/UI-InlineTypography'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('accounts', 'snackbar')
+@inject('accounts')
 @observer
 export default class Login extends Component {
   render () {

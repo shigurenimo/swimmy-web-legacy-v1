@@ -52,7 +52,7 @@ export default class Profile extends Component {
             </Typography>
           </SheetContent>
         </Sheet>
-        {this.props.accounts.isLogged &&
+        {accounts.isLogged &&
         user.username !== accounts.one.username &&
         <Sheet>
           <SheetActions align='center'>

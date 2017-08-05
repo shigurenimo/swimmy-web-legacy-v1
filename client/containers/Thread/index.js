@@ -8,7 +8,7 @@ import SheetContent from '/client/components/UI-SheetContent'
 import ChannelInfo from '../ChannelInfo'
 import PostRes from '../CardPost/CardRes'
 
-@inject('posts', 'accounts', 'info')
+@inject('posts', 'info')
 @observer
 export default class Thread extends Component {
   render () {

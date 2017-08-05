@@ -10,7 +10,7 @@ import SheetContent from '/client/components/UI-SheetContent'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
-@inject('channels', 'accounts')
+@inject('channels')
 @observer
 export default class ChannelList extends Component {
   render () {

@@ -51,11 +51,12 @@ Routes.setRoute('/thread/:_id', {
           {replyId: params._id}
         ]
       })
+      stores.timeline.setCurrent({name: 'スレッド'})
+      stores.routes.setRoute('thread')
+      stores.drawer.close()
       const content = model.content.length > 20
         ? model.content.substr(0, 15) + '..'
         : model.content
-      stores.routes.setRoute('thread')
-      stores.drawer.close()
       document.title = content + ' | ' + documentTitleShort
       if (Meteor.isProduction) {
         window.ga('send', 'pageview', {
