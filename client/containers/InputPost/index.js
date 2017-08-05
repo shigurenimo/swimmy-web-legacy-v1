@@ -49,7 +49,7 @@ export default class InputPost extends Component {
           <div className={classes.imagePreview}>
             <Image
               src={this.state.inputImage.preview}
-              onTouchTap={this.onCloseImage} />
+              onClick={this.onCloseImage} />
           </div>}
         </div>
         <div className={classes.postPublic}>

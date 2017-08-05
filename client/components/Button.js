@@ -34,8 +34,7 @@ export default class extends Component {
           [className]: className,
           [classes.background]: background,
           [classes.selected]: selected
-        })}
-        onClick={this.props.onClick}>
+        })}>
         {this.props.children}
       </Button>
     )

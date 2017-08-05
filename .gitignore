@@ -15,5 +15,5 @@ node_modules
 
 # meteor
 settings.json
-.temp/*
+.temp
 private/*

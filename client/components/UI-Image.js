@@ -20,7 +20,6 @@ export default class UIImage extends Component {
       classes,
       className,
       src,
-      onClick,
       ...other
     } = this.props
     return (

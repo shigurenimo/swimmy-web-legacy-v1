@@ -24,7 +24,7 @@ export default class Post extends Component {
     const {classes} = this.props
     return (
       <div>
-        <Sheet hover onTouchTap={this.onOpenThread} className={classes.sheet}>
+        <Sheet hover onClick={this.onOpenThread} className={classes.sheet}>
           {/* username */}
           {this.props.owner && this.props.owner.username &&
           <SheetContent>
@@ -49,7 +49,7 @@ export default class Post extends Component {
               className={classNames(classes.photoImage, {
                 [classes.photoImageOpen]: this.state.selectImage
               })}
-              onTouchTap={this.onSelectImage}>
+              onClick={this.onSelectImage}>
               <Image src={this.props.imagePath + this.props.images.slice()[0].x256} />
             </div>
           </SheetContent>}

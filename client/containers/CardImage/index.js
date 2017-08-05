@@ -23,7 +23,7 @@ export default class CardImage extends Component {
           <SheetContent>
             <div
               className={classes.photoImage}
-              onTouchTap={this.onOpenThread}>
+              onClick={this.onOpenThread}>
               <Image src={this.props.imagePath + this.props.images.slice()[0].x256} />
             </div>
           </SheetContent>}
