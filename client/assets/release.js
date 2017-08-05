@@ -1,4 +1,10 @@
 export default [{
+  version: '1.4.10',
+  date: '2017.8.7',
+  content: [
+    'Explore機能の追加'
+  ]
+}, {
   version: '1.4.9',
   date: '2017.8.6',
   content: [
