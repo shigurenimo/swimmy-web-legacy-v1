@@ -3,9 +3,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import App from './imports/containers/App'
-import theme from '/client/imports/theme'
-import stores from './imports/stores'
+import App from './containers/App'
+import theme from './theme'
+import stores from './stores'
 
 injectTapEventPlugin()
 
@@ -15,5 +15,5 @@ render(
       <App />
     </Provider>
   </MuiThemeProvider>,
-  document.querySelector('.root\\:app')
+  document.querySelector('div')
 )
