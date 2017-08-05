@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
-import User from '/lib/imports/models/User'
+import User from '/lib/models/User'
 
 export default types.model('Users', {
   one: types.maybe(User)

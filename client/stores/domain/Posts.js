@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
-import Post from '/lib/imports/models/Post'
+import Post from '/lib/models/Post'
 import { IndexModel, Model } from './Subscription'
 
 const PostIndex = types.compose('PostIndex', IndexModel, {

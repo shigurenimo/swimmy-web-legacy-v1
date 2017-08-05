@@ -1,5 +1,5 @@
 import { types } from 'mobx-state-tree'
-import Thread from '/lib/imports/models/Thread'
+import Thread from '/lib/models/Thread'
 import { IndexModel, Model } from './Subscription'
 
 const ThreadIndex = types.compose('ThreadIndex', IndexModel, {

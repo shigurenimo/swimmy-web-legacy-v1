@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
 import { IndexModel, Model } from './Subscription'
-import Channel from '/lib/imports/models/Channel'
+import Channel from '/lib/models/Channel'
 
 const ChannelIndex = types.compose('ChannelIndex', IndexModel, {
   one: types.maybe(Channel),
