@@ -86,7 +86,7 @@ export default class Post extends Component {
           {this.props.replyId &&
           <SheetContent className={classes.reply}>
             <Sheet dense hover background>
-              <SheetContent href={'/thread/' + this.props.replyId}>
+              <SheetContent>
                 <Typography
                   className={classes.content}
                   dangerouslySetInnerHTML={{__html: this.props.reply.content}} />
@@ -188,7 +188,6 @@ export default class Post extends Component {
   }
 
   onOpenThread (event) {
-    if (this.props.routes.page === 'thread') return
     event.persist()
     const nodeName = event.target.nodeName
     if (nodeName === 'INPUT' || nodeName === 'SPAN' || nodeName === 'BUTTON' || nodeName === 'IMG' ||

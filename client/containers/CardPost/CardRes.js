@@ -24,7 +24,7 @@ export default class PostRes extends Component {
     const {classes} = this.props
     return (
       <div>
-        <Sheet hover className={classes.sheet} onClick={this.onOpenThread}>
+        <Sheet hover className={classes.sheet}>
           {/* username */}
           {this.props.owner && this.props.owner.username &&
           <SheetContent>
@@ -176,17 +176,6 @@ export default class PostRes extends Component {
         return <div className={classes.oEmbed} dangerouslySetInnerHTML={{__html: data.html}} />
     }
   }
-
-  onOpenThread (event) {
-    if (this.props.routes.page === 'thread') return
-    event.persist()
-    const nodeName = event.target.nodeName
-    if (nodeName === 'INPUT' || nodeName === 'BUTTON' || nodeName === 'IMG' || nodeName === 'svg' ||
-      nodeName === 'path' || nodeName === 'A') return
-    this.props.routes.go('/thread/' + this.props._id)
-  }
-
-  onOpenThread = ::this.onOpenThread
 
   onOpenIframe () {
     this.setState({iframe: true})

@@ -5,14 +5,15 @@ import Typography from 'material-ui/Typography'
 
 const styleSheet = createStyleSheet('UISheet', theme => {
   return {
-    container: {
+    root: {
       position: 'relative',
       display: 'block',
       width: '100%',
       borderBottom: 'none',
       transitionDuration: '200ms',
       boxSizing: 'border-box',
-      textDecoration: 'none'
+      textDecoration: 'none',
+      '-webkit-tap-highlight-color': 'rgba(0,0,0,0)'
     },
     padding: {
       padding: '20px 10px 10px 10px'
@@ -47,7 +48,7 @@ export default class UILayout extends Component {
       return (
         <Typography
           {...other}
-          className={classNames(className, classes.container, {
+          className={classNames(className, classes.root, {
             [classes.paddingDense]: dense,
             [classes.padding]: !dense,
             [classes.hover]: hover,
@@ -62,7 +63,7 @@ export default class UILayout extends Component {
       return (
         <div
           {...other}
-          className={classNames(className, classes.container, {
+          className={classNames(className, classes.root, {
             [classes.paddingDense]: dense,
             [classes.padding]: !dense,
             [classes.hover]: hover,
