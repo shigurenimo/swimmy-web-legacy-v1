@@ -4,8 +4,6 @@
     "react"
   ],
   "plugins": [
-    "syntax-flow",
-    "transform-flow-strip-types",
     "transform-decorators-legacy",
     "transform-class-properties",
     "transform-function-bind",
