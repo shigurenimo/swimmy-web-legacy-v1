@@ -50,6 +50,13 @@
   version "6.0.85"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.85.tgz#ec02bfe54a61044f2be44f13b389c6a0e8ee05ae"
 
+"@uufish/mst-router@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@uufish/mst-router/-/mst-router-1.0.3.tgz#4ac6d61da43d128a16943ba6ee8518165e35f4e7"
+  dependencies:
+    page "^1.7.1"
+    qs "^6.5.0"
+
 Base64@~0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/Base64/-/Base64-0.2.1.tgz#ba3a4230708e186705065e66babdd4c35cf60028"

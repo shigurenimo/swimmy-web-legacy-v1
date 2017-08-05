@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor'
-import { Router } from '/client/imports/packages/routes'
+import { Router } from '@uufish/mst-router'
 
 const documentTitle = document.title
 const documentTitleShort = 'swimmy'
 
-const Routes = Router.createState()
+const Routes = Router.create()
 
 Routes.setRoute('/(default|self|follows)?', {
   action (stores, {params}) {
