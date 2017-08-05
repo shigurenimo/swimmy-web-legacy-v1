@@ -1,6 +1,6 @@
 export default [{
   version: '1.4.9',
-  date: '2017.7.25',
+  date: '2017.8.6',
   content: [
     'タップに関するバグの回収 (報告thanks)'
   ]

@@ -2,7 +2,7 @@ import { createStyleSheet } from 'material-ui/styles'
 
 export default createStyleSheet('InputPost', theme => {
   return {
-    container: {
+    root: {
       position: 'absolute',
       top: 0,
       right: 0,
@@ -38,6 +38,7 @@ export default createStyleSheet('InputPost', theme => {
     postContent: {
       width: '100%',
       height: 'auto',
+      margin: 0,
       padding: 0,
       lineHeight: '20px',
       verticalAlign: 'top',

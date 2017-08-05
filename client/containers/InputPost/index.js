@@ -26,8 +26,7 @@ export default class InputPost extends Component {
   render () {
     const {classes} = this.props
     return (
-      <div
-        className={classes.container}>
+      <div className={classes.root}>
         {/* 匿名 */}
         <div className={classes.tools}>
           <Button dense
@@ -49,7 +48,8 @@ export default class InputPost extends Component {
           <div className={classes.imagePreview}>
             <Image
               src={this.state.inputImage.preview}
-              onClick={this.onCloseImage} />
+              onClick={this.onCloseImage}
+              style={{maxHeight: '200px', width: 'auto'}} />
           </div>}
         </div>
         <div className={classes.postPublic}>
