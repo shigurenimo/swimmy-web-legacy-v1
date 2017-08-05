@@ -279,7 +279,6 @@ export default class InputPost extends Component {
       this.setState({errorImage: null, inputImage: null})
       this.ref.style.height = 'auto'
       await this.props.posts.insert(data)
-      .then(posts => {})
       .catch(err => {
         this.props.snackbar.error(err)
       })

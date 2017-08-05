@@ -42,9 +42,9 @@ Routes.setRoute('/thread', {
 
 Routes.setRoute('/thread/:_id', {
   action (stores, {params}) {
-    stores.posts.findOne({_id: params._id}, {})
+    stores.posts.define('thread')
+    stores.posts.thread.findOne({_id: params._id}, {})
     .then(model => {
-      stores.posts.define('thread')
       stores.posts.thread.subscribe({
         $or: [
           {_id: params._id},
