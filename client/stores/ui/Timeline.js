@@ -20,7 +20,7 @@ export default types.model('Timeline', {
         this.name = 'ユーザの書き込み'
         break
       case 'default':
-        this.name = '全ての書き込み'
+        this.name = 'チャット'
         break
       default:
         if (name) {
