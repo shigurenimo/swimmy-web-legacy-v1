@@ -3,10 +3,9 @@ import { types } from 'mobx-state-tree'
 export default types.model('Timeline', {
   name: types.maybe(types.string),
   channelId: types.maybe(types.string),
-  useSocket: types.maybe(types.boolean),
   unique: types.maybe(types.string)
 }, {
-  setCurrent ({channelId, useSocket, unique, name = ''}) {
+  setCurrent ({channelId = null, unique = '', name = ''}) {
     switch (unique) {
       case 'self':
         this.name = '自分の書き込み'
@@ -18,9 +17,8 @@ export default types.model('Timeline', {
         this.name = '全ての書き込み'
         break
     }
-    if (name) { this.name = name }
+    this.name = name
     this.channelId = channelId
-    this.useSocket = useSocket
     this.unique = unique
   }
 })

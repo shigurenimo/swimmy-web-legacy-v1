@@ -110,7 +110,7 @@ export default class InputPost extends Component {
     if (this.props.info.isOpen) {
       this.props.info.close()
     } else {
-      this.props.channels.findOneFromId(channelId)
+      this.props.channels.findOne({_id: channelId})
       .then(() => {
         this.props.info.open()
       })

@@ -7,92 +7,38 @@ const MethodModel = types.model('MethodModel', {
   publish: types.string
 }, {
   cursor: null,
-  subscription: null,
   selector: null,
   options: null,
-  indexCursor: null,
-  indexSelector: null,
-  indexOptions: null,
-  indexSubscription: null,
+  subscription: null,
   collections: null
 }, {
   setFetchState (state) {
     this.fetchState = state
   },
-  setIndex (models) {
-    if (Array.isArray(models)) {
-      this.index = models
-    } else {
-      this.index = [models]
-    }
-    this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  },
-  pushIndexBefore () {},
-  pushIndexAfter () {},
-  pushIndex (models) {
-    this.pushIndexBefore(models)
-    if (Array.isArray(models)) {
-      models.forEach(model => {
-        try {
-          this.index.unshift(model)
-        } catch (err) {
-          console.info('Subscription.' + this.publish + '.pushIndex', err, model)
-        }
-      })
-    } else {
-      this.index.push(models)
-    }
-    this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    this.pushIndexAfter(models)
-  },
-  replaceIndex (model) {
-    const index = this.index.findIndex(item => item._id === model._id)
-    if (index !== -1) {
-      try {
-        this.index[index] = model
-      } catch (err) {
-        console.info('Subscription.' + this.publish + '.replaceIndex', err, model)
-      }
-    }
-  },
-  spliceIndex (model) {
-    const index = this.index.findIndex(item => item._id === model._id)
-    this.index.splice(index, 1)
-  },
-  setOne (model) {
-    try {
-      this.one = model
-    } catch (err) {
-      console.info('Subscription.setOne', err)
-    }
-  },
   unsetOne (model) {
     destroy(this.one)
   },
-  setCursor (cursor) {
+  setcursor (cursor) {
     this.cursor = cursor
   },
-  setIndexCursor (cursor) {
-    this.indexCursor = cursor
-  },
   subscribe (selector = {}, options = {}) {
-    if (this.indexCursor) {
+    if (this.cursor) {
       const diff = [
-        JSON.stringify(this.indexSelector) === JSON.stringify(selector),
-        JSON.stringify(this.indexOptions) === JSON.stringify(options)
+        JSON.stringify(this.selector) === JSON.stringify(selector),
+        JSON.stringify(this.options) === JSON.stringify(options)
       ]
       if (diff[0] && diff[1]) return
     }
-    this.indexSelector = selector
-    this.indexOptions = options
-    this.unsubscribeIndex()
+    this.selector = selector
+    this.options = options
+    this.unsubscribe()
     const collectionName = this.publish + '.' + this.name
     if (!this.collections) { this.collections = new Map() }
     if (!this.collections.has(collectionName)) {
       this.collections.set(collectionName, new Mongo.Collection(collectionName))
     }
     return new Promise((resolve, reject) => {
-      this.indexSubscription = Meteor.subscribe(this.publish, selector, options, this.name, {
+      this.subscription = Meteor.subscribe(this.publish, selector, options, this.name, {
         onReady: () => {
           console.info(this.publish + '.subscribe')
           let models = []
@@ -100,26 +46,23 @@ const MethodModel = types.model('MethodModel', {
           resolve()
           const cursor = this.collections.get(collectionName).find({}).observe({
             added: (model) => {
-              // this.setOne(model)
               models.push(model)
               if (ref !== null) clearTimeout(ref)
               ref = setTimeout(() => {
                 models = models.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                this.pushIndex(models)
+                this._added(models)
                 models = []
                 ref = null
               }, 10)
             },
             changed: (model) => {
-              // if (this.one._id === model._id) { this.setOne(model) }
-              this.replaceIndex(model)
+              this._changed(model)
             },
             removed: (model) => {
-              // if (this.one._id === model._id) { this.unsetOne(model) }
-              this.spliceIndex(model)
+              this._removed(model)
             }
           })
-          this.setIndexCursor(cursor)
+          this.setcursor(cursor)
         }
       })
       if (!this.index.length) {
@@ -132,88 +75,22 @@ const MethodModel = types.model('MethodModel', {
       }
     })
   },
-  subscribeAll () {
-    const selector = {}
-    const options = {limit: 100}
-    this.subscribe(selector, options)
-  },
-  subscribeFromOwnerId (_id, selector = {}, options = {}) {
-    selector.ownerId = _id
-    this.subscribe(selector, options)
-  },
-  unsubscribeIndex () {
-    if (this.indexCursor) {
-      this.indexCursor.stop()
-      this.indexCursor = null
-      this.index = []
-    }
-    if (this.indexSubscription) {
-      this.indexSubscription.stop()
-      console.info(this.publish + '.unsubscribe')
-    }
-  },
-  subscribeOne (selector = {}, options = {}) {
-    return new Promise((resolve, reject) => {
-      if (this.cursor) {
-        const diff = [
-          JSON.stringify(this.selector) === JSON.stringify(selector),
-          JSON.stringify(this.options) === JSON.stringify(options)
-        ]
-        if (diff[0] && diff[1]) {
-          resolve(this.one)
-          return
-        }
-      }
-      this.selector = selector
-      this.options = options
-      this.unsubscribe()
-      options.limit = 1
-      const collectionName = this.publish + '.one'
-      if (!this.collections) { this.collections = new Map() }
-      if (!this.collections.has(collectionName)) {
-        this.collections.set(collectionName, new Mongo.Collection(collectionName))
-      }
-      this.subscription = Meteor.subscribe(this.publish, selector, options, 'one', {
-        onReady: () => {
-          const cursor = this.collections.get(collectionName).find({}).observe({
-            added: (model) => {
-              this.setOne(model)
-              resolve(model)
-            },
-            changed: (model) => {
-              this.setOne(model)
-            },
-            removed: (model) => {
-              this.unsetOne(model)
-            }
-          })
-          this.setCursor(cursor)
-        }
-      })
-      setTimeout(() => {
-        if (!this.one) {
-          const error = new Error('not-found')
-          reject(error)
-        }
-      }, 5000)
-    })
-  },
   unsubscribe () {
     if (this.cursor) {
       this.cursor.stop()
       this.cursor = null
-      this.one = null
+      this.index = []
     }
     if (this.subscription) {
       this.subscription.stop()
-      console.info(this.publish + '.unsubscribeOne')
+      console.info(this.publish + '.unsubscribe')
     }
   },
   findOne (selector = {}, options = {}) {
     return new Promise((resolve, reject) => {
       Meteor.call(this.publish + '.findOne', selector, options, (err, model) => {
         if (err) { reject(err) } else {
-          this.setOne(model)
+          this._findOne(model)
           resolve(model)
         }
       })
@@ -223,14 +100,11 @@ const MethodModel = types.model('MethodModel', {
     return new Promise((resolve, reject) => {
       Meteor.call(this.publish + '.find', selector, options, (err, models) => {
         if (err) { reject(err) } else {
-          this.setIndex(models)
+          this._find(models)
           resolve(models)
         }
       })
     })
-  },
-  findOneFromId (modelId) {
-    return this.findOne({_id: modelId})
   },
   insert (req) {
     return new Promise((resolve, reject) => {
@@ -245,7 +119,58 @@ const MethodModel = types.model('MethodModel', {
         if (err) { reject(err) } else { resolve(res) }
       })
     })
-  }
+  },
+  _find (models) {
+    if (Array.isArray(models)) {
+      this.index = models
+    } else {
+      this.index = [models]
+    }
+    this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  },
+  _findOne (model) {
+    this.one = model
+  },
+  _added (models) {
+    this.addedBefore(models)
+    if (Array.isArray(models)) {
+      models.forEach(model => {
+        try {
+          this.index.unshift(model)
+        } catch (err) {
+          console.info('Subscription.' + this.publish + '._added', err, model)
+        }
+      })
+    } else {
+      this.index.push(models)
+    }
+    this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    this.addedAfter(models)
+  },
+  addedBefore () {},
+  addedAfter () {},
+  _changed (model) {
+    this.changedBefore(model)
+    const index = this.index.findIndex(item => item._id === model._id)
+    if (index !== -1) {
+      try {
+        this.index[index] = model
+      } catch (err) {
+        console.info('Subscription.' + this.publish + '._changed', err, model)
+      }
+    }
+    this.changedAfter(model)
+  },
+  changedBefore () {},
+  changedAfter () {},
+  _removed (model) {
+    this.removedBefore(model)
+    const index = this.index.findIndex(item => item._id === model._id)
+    this.index.splice(index, 1)
+    this.removedAfter(model)
+  },
+  removedBefore () {},
+  removedAfter () {}
 })
 
 const IndexModel = types.compose('IndexModel', MethodModel, {

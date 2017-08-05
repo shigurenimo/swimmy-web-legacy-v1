@@ -10,12 +10,8 @@ Routes.setRoute('/(default|self|follows)?', {
   action (stores, {params}) {
     const unique = params[0] || 'default'
     stores.posts.define(unique)
-    stores.posts[unique].subscribeFromUnique(unique)
-    stores.timeline.setCurrent({
-      useSocket: true,
-      channelId: null,
-      unique: unique
-    })
+    stores.posts[unique].subscribeFrom(unique)
+    stores.timeline.setCurrent({channelId: null, unique: unique})
     stores.routes.setRoute('timeline')
     stores.drawer.close()
     stores.info.close()
@@ -46,9 +42,9 @@ Routes.setRoute('/thread', {
 
 Routes.setRoute('/thread/:_id', {
   action (stores, {params}) {
-    stores.posts.define('thread')
-    stores.posts.thread.findOne({_id: params._id}, {})
+    stores.posts.findOne({_id: params._id}, {})
     .then(model => {
+      stores.posts.define('thread')
       stores.posts.thread.subscribe({
         $or: [
           {_id: params._id},
@@ -68,9 +64,7 @@ Routes.setRoute('/thread/:_id', {
         })
       }
     })
-    .catch(err => {
-      notFound(stores, err)
-    })
+    .catch(err => { notFound(stores, err) })
   }
 })
 
@@ -78,12 +72,8 @@ Routes.setRoute('/storage', {
   action (stores, {params}) {
     const unique = 'storage'
     stores.posts.define(unique)
-    stores.posts[unique].subscribeFromUnique(unique)
-    stores.timeline.setCurrent({
-      useSocket: true,
-      channelId: null,
-      unique: unique
-    })
+    stores.posts[unique].subscribeFrom(unique)
+    stores.timeline.setCurrent({unique: unique})
     stores.routes.setRoute('storage')
     stores.drawer.close()
     stores.info.close()
@@ -142,7 +132,6 @@ Routes.setRoute('/ch/:channelId', {
       stores.posts.define(channelId)
       stores.posts[channelId].subscribe({channelId})
       stores.timeline.setCurrent({
-        useSocket: true,
         channelId: channelId,
         unique: channelId,
         name: model.name
@@ -282,7 +271,7 @@ function notFound (stores, error) {
     type: 'page-not-found',
     content: {
       href: window.location.href,
-      message: error.message
+      message: error ? error.message : ''
     }
   })
   stores.routes.setRoute('not-found')

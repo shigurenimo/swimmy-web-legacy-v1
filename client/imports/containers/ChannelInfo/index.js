@@ -8,7 +8,6 @@ import Layout from '../../components/UI-Layout'
 import Sheet from '../../components/UI-Sheet'
 import SheetActions from '../../components/UI-SheetActions'
 import SheetContent from '../../components/UI-SheetContent'
-import utils from '/lib/imports/utils'
 import styleSheet from './index.style'
 
 @withStyles(styleSheet)
@@ -20,12 +19,6 @@ export default class ChannelInfo extends Component {
     return (
       <Layout>
         <Sheet>
-          {channel.univ &&
-          <SheetContent>
-            <Typography>
-              {utils.regions[channel.channel].name.jp}・{channel.univ}
-            </Typography>
-          </SheetContent>}
           <SheetContent>
             <Typography type='headline'>
               {channel.name}
@@ -49,7 +42,6 @@ export default class ChannelInfo extends Component {
     )
   }
 
-  // チャンネルを追加する
   onJoinChannel () {
     const {_id: channelId} = this.props.channels.one
     this.props.channels.updateMember(channelId)
@@ -60,7 +52,6 @@ export default class ChannelInfo extends Component {
 
   onJoinChannel = ::this.onJoinChannel
 
-  // チャンネルを外す
   onLeaveChannel () {
     const {_id: channelId} = this.props.channels.one
     this.props.channels.updateMember(channelId)

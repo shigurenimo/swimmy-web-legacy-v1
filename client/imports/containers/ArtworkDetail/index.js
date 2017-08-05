@@ -413,7 +413,7 @@ export default class ArtworkDetail extends Component {
     }
     this.props.artworks.updateReplyReaction(postId, replyId, name)
     .then(post => {
-      return this.props.artworks.findOneFromId(post._id)
+      return this.props.artworks.findOne({_id: post._id})
     })
     .then(post => {
       this.props.artworks.replaceOne(post)
