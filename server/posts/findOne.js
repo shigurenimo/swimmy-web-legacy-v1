@@ -1,15 +1,15 @@
 import { Meteor } from 'meteor/meteor'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 import utils from '/lib/imports/utils'
 
 Meteor.methods({
   'posts.findOne' (selector, options) {
-    const post = collections.posts.findOne(selector, options)
+    const post = collection.posts.findOne(selector, options)
 
     if (!post) { throw new Meteor.Error('not-found') }
 
     if (post.replyId) {
-      const reply = collections.posts.findOne(post.reply)
+      const reply = collection.posts.findOne(post.reply)
       if (reply) {
         post.reply = reply
       } else {
@@ -20,7 +20,7 @@ Meteor.methods({
     }
 
     if (post.replies && post.replies[0]) {
-      post.replies = collections.posts.find({
+      post.replies = collection.posts.find({
         _id: {$in: post.replies}
       }, {
         fields: {
@@ -57,7 +57,7 @@ Meteor.methods({
     }
 
     if (post.channelId) {
-      post.channel = collections.channels.findOne(post.channelId, {fields: {name: 1}})
+      post.channel = collection.channels.findOne(post.channelId, {fields: {name: 1}})
     }
 
     post.content = utils.replace.link(post.content)

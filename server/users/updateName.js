@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 
 Meteor.methods({
   'users.updateName' (req) {
@@ -24,12 +24,12 @@ Meteor.methods({
         'profile.name': req.name
       }
     })
-    collections.posts.update({'owner': this.userId, 'public': {$exists: true}}, {
+    collection.posts.update({'owner': this.userId, 'public': {$exists: true}}, {
       $set: {
         'public.name': req.name
       }
     }, {multi: true})
-    collections.artworks.update({'owner': this.userId, 'public': {$exists: true}}, {
+    collection.artworks.update({'owner': this.userId, 'public': {$exists: true}}, {
       $set: {
         'public.name': req.name
       }

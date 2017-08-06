@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 import utils from '/lib/imports/utils'
 
 Meteor.methods({
@@ -11,7 +11,7 @@ Meteor.methods({
 
     options.sort = {createdAt: -1}
 
-    return collections.posts.find(selector, options).fetch()
+    return collection.posts.find(selector, options).fetch()
     .map(post => {
       if (post.replyId) {
         const options = {
@@ -25,7 +25,7 @@ Meteor.methods({
             updatedAt: 1
           }
         }
-        const reply = collections.posts.findOne(post.replyId, options)
+        const reply = collection.posts.findOne(post.replyId, options)
         if (reply) {
           post.reply = reply
         } else {

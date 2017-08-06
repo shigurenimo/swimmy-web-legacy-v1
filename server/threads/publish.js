@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 
 Meteor.publish('threads', function (selector = {}, options = {}, namespace) {
   selector.content = {$ne: ''}
@@ -9,7 +9,7 @@ Meteor.publish('threads', function (selector = {}, options = {}, namespace) {
 
   const _namespace = namespace ? 'threads.' + namespace : 'threads'
 
-  const cursor = collections.posts.find(selector, options).observe({
+  const cursor = collection.posts.find(selector, options).observe({
     addedAt: (model) => {
       if (this.userId !== model.ownerId) { delete model.ownerId }
       this.added(_namespace, model._id, model)

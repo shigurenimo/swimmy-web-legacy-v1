@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 
 Meteor.methods({
   'posts.updateReaction' (req) {
@@ -11,13 +11,13 @@ Meteor.methods({
 
     if (req.name === '') return
 
-    const post = collections.posts.findOne(req.postId)
+    const post = collection.posts.findOne(req.postId)
 
     const index = post.reactions.findIndex(item => item.name === req.name)
     const reaction = index !== -1 ? post.reactions[index] : null
 
     if (!reaction) {
-      collections.posts.update(req.postId, {
+      collection.posts.update(req.postId, {
         $push: {
           reactions: {
             name: req.name,
@@ -30,14 +30,14 @@ Meteor.methods({
     if (reaction && reaction.ownerIds.length <= 1) {
       const hasOwner = reaction.ownerIds.find(item => item === this.userId)
       if (!hasOwner) {
-        collections.posts.update(req.postId, {
+        collection.posts.update(req.postId, {
           $push: {
             ['reactions.' + index + '.ownerIds']: this.userId
           }
         })
       }
       if (hasOwner) {
-        collections.posts.update(req.postId, {
+        collection.posts.update(req.postId, {
           $pull: {
             reactions: {name: req.name}
           }
@@ -48,14 +48,14 @@ Meteor.methods({
     if (reaction && reaction.ownerIds.length > 1) {
       const hasOwner = reaction.ownerIds.find(item => item === this.userId)
       if (!hasOwner) {
-        collections.posts.update(req.postId, {
+        collection.posts.update(req.postId, {
           $push: {
             ['reactions.' + index + '.ownerIds']: this.userId
           }
         })
       }
       if (hasOwner) {
-        collections.posts.update(req.postId, {
+        collection.posts.update(req.postId, {
           $pull: {
             ['reactions.' + index + '.ownerIds']: this.userId
           }
@@ -63,13 +63,13 @@ Meteor.methods({
       }
     }
 
-    const next = collections.posts.findOne(req.postId, {
+    const next = collection.posts.findOne(req.postId, {
       fields: {
         ownerId: 0
       }
     })
     if (next.replyId) {
-      const reply = collections.posts.findOne(post.replyId, {
+      const reply = collection.posts.findOne(post.replyId, {
         fields: {
           _id: 1,
           content: 1

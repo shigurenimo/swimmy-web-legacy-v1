@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 
 Meteor.methods({
   'channels.remove' (req) {
@@ -8,13 +8,13 @@ Meteor.methods({
 
     check(req._id, String)
 
-    const channel = collections.channels.findOne(req._id)
+    const channel = collection.channels.findOne(req._id)
 
     if (this.userId !== channel.ownerId) {
       throw new Meteor.Error('reject', 'オーナーである必要があります')
     }
 
-    collections.channels.remove(req._id)
+    collection.channels.remove(req._id)
 
     Meteor.users.update(this.userId, {
       $pull: {

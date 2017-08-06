@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 
 Meteor.publish('channels', function () {
-  return collections.channels.find({})
+  return collection.channels.find({})
 })

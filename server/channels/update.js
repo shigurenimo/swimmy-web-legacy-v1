@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 
 Meteor.methods({
   'channels.update' (req) {
@@ -36,7 +36,7 @@ Meteor.methods({
 
     if (Object.keys(unset).length) query.$unset = unset
 
-    collections.channels.update(req.channelId, query)
+    collection.channels.update(req.channelId, query)
 
     if (req.name !== undefined) {
       Meteor.users.update({'profile.channels._id': req.channelId}, {

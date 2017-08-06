@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 import utils from '/lib/imports/utils'
 
 Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
@@ -38,11 +38,11 @@ Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
 
   const _namespace = namespace ? 'posts.' + namespace : 'posts'
 
-  const cursor = collections.posts.find(selector, options)
+  const cursor = collection.posts.find(selector, options)
   .observe({
     addedAt: (model) => {
       if (namespace !== 'thread' && model.replyId) {
-        const reply = collections.posts.findOne(model.replyId, replyOptions)
+        const reply = collection.posts.findOne(model.replyId, replyOptions)
         if (reply) {
           model.reply = reply
         } else {
@@ -64,7 +64,7 @@ Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
     },
     changed: (model) => {
       if (model.replyId) {
-        const reply = collections.posts.findOne(model.replyId, replyOptions)
+        const reply = collection.posts.findOne(model.replyId, replyOptions)
         if (reply) {
           model.reply = reply
         } else {

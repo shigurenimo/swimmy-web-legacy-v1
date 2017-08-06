@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { Accounts } from 'meteor/accounts-base'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 
 Meteor.methods({
   'users.updateUsername' (req) {
@@ -30,12 +30,12 @@ Meteor.methods({
       throw new Meteor.Error('not', 'そのユーザネームは既に存在します')
     }
     Accounts.setUsername(this.userId, req.username)
-    collections.posts.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
+    collection.posts.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
       $set: {
         'public.username': req.username
       }
     }, {multi: true})
-    collections.artworks.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
+    collection.artworks.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
       $set: {
         'public.username': req.username
       }

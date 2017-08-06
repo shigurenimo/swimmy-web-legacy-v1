@@ -5,7 +5,7 @@ import { unlink, writeFileSync } from 'fs'
 import { join } from 'path'
 import Jimp from 'jimp'
 import upload from '/lib/imports/utils/server/google/upload'
-import collections from '/lib/collections'
+import collection from '/lib/collection'
 import extendWeb from '/server/packages/extendWeb'
 
 Meteor.methods({
@@ -60,7 +60,7 @@ Meteor.methods({
 
     if (req.replyId) {
       check(req.replyId, String)
-      const reply = collections.posts.findOne(req.replyId)
+      const reply = collection.posts.findOne(req.replyId)
       if (reply) {
         data.replyId = reply._id
       } else {
@@ -71,10 +71,10 @@ Meteor.methods({
       }
     }
 
-    const postId = collections.posts.insert(data)
+    const postId = collection.posts.insert(data)
 
     if (data.replyId) {
-      collections.posts.update(data.replyId, {
+      collection.posts.update(data.replyId, {
         $push: {replies: postId},
         $set: {updatedAt: date}
       })
