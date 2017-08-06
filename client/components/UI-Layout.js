@@ -4,7 +4,11 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 const styleSheet = createStyleSheet('UILayout', theme => {
   return {
     root: {
-      paddingBottom: 20
+      paddingBottom: 20,
+      [theme.breakpoints.up('sm')]: {
+        paddingLeft: 10,
+        paddingRight: 10
+      }
     }
   }
 })

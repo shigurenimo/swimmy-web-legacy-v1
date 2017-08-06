@@ -18,14 +18,12 @@ export default class Explore extends Component {
   render () {
     return (
       <Layout>
-        <div className={this.props.classes.root}>
-          <Grid container spacing={24}>
-            <Grid item xs={12}>
-              <CardNewBucket />
-            </Grid>
-            {this.forEach()}
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <CardNewBucket />
           </Grid>
-        </div>
+          {this.forEach()}
+        </Grid>
       </Layout>
     )
   }
