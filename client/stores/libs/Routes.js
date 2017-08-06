@@ -32,8 +32,20 @@ Routes.setRoute('/explore', {
         content: '/' + query.word + '/'
       })
     }
-    // stores.timeline.setCurrent({channelId: null, unique: unique})
     stores.routes.setRoute('explore')
+    stores.drawer.close()
+    stores.info.close()
+    document.title = documentTitle
+    if (Meteor.isProduction) {
+      window.ga('send', 'pageview', {page: path, title: document.title})
+    }
+  }
+})
+
+Routes.setRoute('/bucket', {
+  action (stores, {path, query}) {
+    stores.routes.setRoute('bucket-list')
+    stores.buckets.subscribe({}, {})
     stores.drawer.close()
     stores.info.close()
     document.title = documentTitle

@@ -44,12 +44,12 @@ const MethodModel = types.model('MethodModel', {
           let models = []
           let ref = null
           resolve()
-          const cursor = this.collections.get(collectionName).find({}).observe({
+          const cursor = this.collections.get(collectionName).find({})
+          .observe({
             added: (model) => {
               models.push(model)
               if (ref !== null) clearTimeout(ref)
               ref = setTimeout(() => {
-                models = models.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 this._added(models)
                 models = []
                 ref = null
@@ -115,7 +115,7 @@ const MethodModel = types.model('MethodModel', {
   },
   remove (modelId) {
     return new Promise((resolve, reject) => {
-      Meteor.call(this.publish + '.remove', {_id: modelId}, (err, res) => {
+      Meteor.call(this.publish + '.remove', modelId, (err, res) => {
         if (err) { reject(err) } else { resolve(res) }
       })
     })

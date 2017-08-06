@@ -1,9 +1,9 @@
 import createPalette from 'material-ui/styles/palette'
-import { lightBlue, cyan } from 'material-ui/colors'
+import { blue, red } from 'material-ui/colors'
 
 const palette = createPalette({
-  primary: lightBlue,
-  accent: cyan,
+  primary: blue,
+  accent: red,
   type: 'light'
 })
 

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Admin from '../Admin'
+import BucketList from '../BucketList'
 import ConfigAccount from '../ConfigAccount'
 import ChannelEdit from '../ChannelEdit'
 import ChannelList from '../ChannelList'
@@ -57,56 +58,58 @@ export default class Content extends Component {
 
   router () {
     if (this.props.accounts.isLoggingIn) {
-      return <Loading key='loading' />
+      return <Loading />
     }
     if (this.props.routes.page === null) {
-      return <Loading key='loading' />
+      return <Loading />
     }
     switch (this.props.routes.page) {
       case 'channel-list':
-        return <ChannelList key='channel-list' />
+        return <ChannelList />
       case 'release':
-        return <Release key='release' />
+        return <Release />
       case 'not-found':
-        return <NotFound key='not-found' />
+        return <NotFound />
       case 'report':
-        return <Report key='report' />
+        return <Report />
     }
     switch (this.props.routes.page) {
       case 'explore':
-        return <Explore key='explore' />
+        return <Explore />
       case 'profile':
-        return <Profile key='profile' />
+        return <Profile />
       case 'timeline':
-        return <Timeline key={'timeline'} />
+        return <Timeline />
       case 'thread':
-        return <Thread key='thread' />
+        return <Thread />
       case 'thread-list':
-        return <ThreadList key='thread-list' />
+        return <ThreadList />
       case 'storage':
         return <Storage />
     }
     if (this.props.accounts.isNotLoggedIn) {
-      return <Login key='login' />
+      return <Login />
     }
     switch (this.props.routes.page) {
       case 'admin':
-        return <Admin key='admin' />
+        return <Admin />
+      case 'bucket-list':
+        return <BucketList />
       case 'config':
-        return <ConfigAccount key='config-account' />
+        return <ConfigAccount />
       case 'channel-edit':
-        return <ChannelEdit key='channel-edit' />
+        return <ChannelEdit />
       case 'channel-new':
-        return <ChannelNew key='channel-new' />
+        return <ChannelNew />
       case 'twitter':
         if (this.props.accounts.one.services) {
           if (this.props.accounts.one.services.twitter) {
-            return <Twitter key='twitter' />
+            return <Twitter />
           } else {
-            return <TwitterLogin key='twitter' />
+            return <TwitterLogin />
           }
         } else {
-          return <Loading key='loading' />
+          return <Loading />
         }
     }
     return null

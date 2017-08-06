@@ -1,4 +1,5 @@
 import Accounts from './domain/Accounts'
+import Buckets from './domain/Buckets'
 import Channels from './domain/Channels'
 import Posts from './domain/Posts'
 import Reports from './domain/Reports'
@@ -14,6 +15,7 @@ import Timeline from './ui/Timeline'
 
 const stores = {
   accounts: Accounts.create(),
+  buckets: Buckets.create({publish: 'buckets'}),
   drawer: Drawer.create(),
   explore: Explore.create(),
   info: Info.create(),

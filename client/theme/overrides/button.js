@@ -10,5 +10,8 @@ export default {
     textTransform: 'default',
     letterSpacing: '1px'
   },
+  raised: {
+    boxShadow: 'none'
+  },
   dense: {}
 }

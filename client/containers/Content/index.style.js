@@ -19,7 +19,7 @@ export default createStyleSheet('Content', theme => {
       },
       [theme.breakpoints.up('sm')]: {
         right: '-20px',
-        paddingRight: (10 + 20) + 'px',
+        paddingRight: (0 + 20) + 'px',
         paddingLeft: 0,
         width: 'calc(100% - 250px + 20px)'
       }
