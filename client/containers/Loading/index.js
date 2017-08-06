@@ -10,7 +10,7 @@ export default class Loading extends Component {
   render () {
     const {classes} = this.props
     return (
-      <div className={classes.container}>
+      <div className={classes.root}>
         <div className={classes.squares}>
           {Array.from(new Array(25).keys())
           .map(() => (Math.random() < 0.1) ? 2 : (Math.random() < 0.5) ? 1 : 0)

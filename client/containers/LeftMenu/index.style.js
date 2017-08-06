@@ -2,13 +2,13 @@ import { createStyleSheet } from 'material-ui/styles'
 
 export default createStyleSheet('LeftMenu', theme => {
   return {
-    container: {
+    root: {
       position: 'absolute',
       top: 0,
       right: '-5%',
       paddingTop: '20px',
       paddingLeft: '10px',
-      paddingRight: 'calc(105% - 240px)',
+      paddingRight: 'calc(105% - 250px)',
       width: 'calc(105%)',
       height: '100%',
       overflowY: 'scroll',

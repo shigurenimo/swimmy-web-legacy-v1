@@ -2,7 +2,7 @@ import { createStyleSheet } from 'material-ui/styles'
 
 export default createStyleSheet('Loading', theme => {
   return {
-    container: {
+    root: {
       position: 'relative'
     },
     squares: {

@@ -18,7 +18,7 @@ export default class LeftMenu extends Component {
     }
     return (
       <div
-        className={classes.container}>
+        className={classes.root}>
         <LeftMenuDefault />
       </div>
     )

@@ -4,7 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 const styleSheet = createStyleSheet('UIImage', theme => {
   return {
-    container: {
+    root: {
       display: 'block',
       width: '100%',
       height: 'auto',
@@ -25,7 +25,7 @@ export default class UIImage extends Component {
     return (
       <img
         {...other}
-        className={classNames(classes.container, {
+        className={classNames(classes.root, {
           [className]: className
         })}
         src={src} />

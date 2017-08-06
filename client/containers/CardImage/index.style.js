@@ -3,7 +3,7 @@ import { createStyleSheet } from 'material-ui/styles'
 
 export default createStyleSheet('CardImage', theme => {
   return {
-    container: {
+    root: {
       overflow: 'hidden'
     },
     content: {

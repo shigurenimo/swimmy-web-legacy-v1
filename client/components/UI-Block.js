@@ -3,7 +3,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 const styleSheet = createStyleSheet('UIBlock', theme => {
   return {
-    container: {
+    root: {
       display: 'block',
       width: '100%',
       borderBottom: 'none',
@@ -31,7 +31,7 @@ export default class UIBlock extends Component {
     return (
       <Component
         {...other}
-        className={classes.container}
+        className={classes.root}
         href={href}>
         <div
           className={classes.inner}

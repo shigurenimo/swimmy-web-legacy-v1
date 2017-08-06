@@ -3,7 +3,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles'
 
 export const styleSheet = createStyleSheet('FlexGrow', theme => {
   return {
-    container: {
+    root: {
       flex: '1 1 auto'
     }
   }
@@ -13,7 +13,7 @@ export const styleSheet = createStyleSheet('FlexGrow', theme => {
 export default class UIFlexGrow extends Component {
   render () {
     return (
-      <div className={this.props.classes.container} />
+      <div className={this.props.classes.root} />
     )
   }
 }

@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography'
 
 export const styleSheet = createStyleSheet('UIInlineTypograhy', theme => {
   return {
-    container: {
+    root: {
       display: 'inline-block',
       verticalAlign: 'top',
       lineHeight: '36px'
@@ -24,7 +24,7 @@ export default class extends Component {
     return (
       <Typography
         {...other}
-        className={classNames(classes.container, className)}>
+        className={classNames(classes.root, className)}>
         {this.props.children}
       </Typography>
     )
