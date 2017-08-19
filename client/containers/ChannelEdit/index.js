@@ -7,53 +7,47 @@ import Layout from '/client/components/UI-Layout'
 import Sheet from '/client/components/UI-Sheet'
 import SheetActions from '/client/components/UI-SheetActions'
 import SheetContent from '/client/components/UI-SheetContent'
-import Typograhy from '/client/components/Typography'
 
 @inject('accounts', 'channels', 'snackbar', 'routes')
 @observer
 export default class ChannelEdit extends Component {
   render () {
     const {channels: {one: channel}} = this.props
-    try {
-      return (
-        <Layout>
-          {/* name */}
-          <Sheet>
-            <SheetContent>
-              <TextField fullWidth
-                label='チャンネルの名前'
-                value={this.state.name}
-                maxLength={50}
-                onChange={this.onChangeName}
-                onBlur={this.onSubmitName} />
-            </SheetContent>
-          </Sheet>
-          {/* description */}
-          <Sheet>
-            <SheetActions>
-              <TextField fullWidth multiline
-                label='チャンネルの説明'
-                value={this.state.description}
-                maxLength='100'
-                onChange={this.onInputDescription}
-                onBlur={this.onSubmitDescription} />
-            </SheetActions>
-          </Sheet>
-          {this.props.accounts.isLogged &&
-          this.props.accounts.one._id === channel.ownerId &&
-          <Sheet>
-            <SheetActions align='right'>
-              <Button onClick={this.onRemove}>
-                このチャンネルを削除する
-              </Button>
-            </SheetActions>
-          </Sheet>}
-        </Layout>
-      )
-    } catch (err) {
-      console.error(err)
-      return <Typograhy>エラーが発生しました</Typograhy>
-    }
+    return (
+      <Layout>
+        {/* name */}
+        <Sheet>
+          <SheetContent>
+            <TextField fullWidth
+              label='チャンネルの名前'
+              value={this.state.name}
+              maxLength={50}
+              onChange={this.onChangeName}
+              onBlur={this.onSubmitName} />
+          </SheetContent>
+        </Sheet>
+        {/* description */}
+        <Sheet>
+          <SheetActions>
+            <TextField fullWidth multiline
+              label='チャンネルの説明'
+              value={this.state.description}
+              maxLength='100'
+              onChange={this.onInputDescription}
+              onBlur={this.onSubmitDescription} />
+          </SheetActions>
+        </Sheet>
+        {this.props.accounts.isLogged &&
+        this.props.accounts._id === channel.ownerId &&
+        <Sheet>
+          <SheetActions align='right'>
+            <Button onClick={this.onRemove}>
+              このチャンネルを削除する
+            </Button>
+          </SheetActions>
+        </Sheet>}
+      </Layout>
+    )
   }
 
   state = {
@@ -132,18 +126,12 @@ export default class ChannelEdit extends Component {
       this.props.routes.go('/ch')
       this.props.snackbar.show('チャンネルを削除しました')
     })
-    .catch(err => this.props.snackbar.error(err.reason))
+    .catch(err => { this.props.snackbar.error(err.reason) })
   }
 
   onRemove = ::this.onRemove
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

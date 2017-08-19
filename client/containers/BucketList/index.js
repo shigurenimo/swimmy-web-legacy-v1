@@ -22,25 +22,27 @@ export default class Explore extends Component {
           <Grid item xs={12}>
             <CardNewBucket />
           </Grid>
-          {this.forEach()}
+          {this.forBuckets}
         </Grid>
       </Layout>
     )
   }
 
-  forEach () {
-    if (this.props.buckets.index.length === 0) {
+  get buckets () { return this.props.buckets.model.get('root') }
+
+  get forBuckets () {
+    if (this.buckets.isEmpty) {
       return (
         <Sheet>
           <SheetContent>
             <Typography>
-              {this.props.buckets.fetchState ? '読み込み中 ..' : ''}
+              {this.buckets.fetchState ? '読み込み中 ..' : ''}
             </Typography>
           </SheetContent>
         </Sheet>
       )
     }
-    return this.props.buckets.index.map(item => {
+    return this.buckets.index.map(item => {
       return (
         <Grid item key={item._id} xs={12}>
           <CardBucket {...item} />
@@ -49,13 +51,7 @@ export default class Explore extends Component {
     })
   }
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

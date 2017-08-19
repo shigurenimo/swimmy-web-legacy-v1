@@ -20,7 +20,7 @@ export default class LeftMenuChannels extends Component {
             [classes.select]: this.props.routes.page === 'channel'
           })}
           component='a'
-          href={'/ch/default'}>
+          href={'/ch'}>
           <ListItemText primary={'channels'} />
         </ListItem>
         {this.props.accounts.isLogged &&
@@ -43,9 +43,7 @@ export default class LeftMenuChannels extends Component {
 
   state = {isExpand: false}
 
-  onExpand () {
-    this.setState({isExpand: !this.state.isExpand})
-  }
+  onExpand () { this.setState({isExpand: !this.state.isExpand}) }
 
   onExpand = ::this.onExpand
 }

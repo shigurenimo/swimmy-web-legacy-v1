@@ -1,8 +1,12 @@
 import { Meteor } from 'meteor/meteor'
 import collection from '/lib/collection'
 
-Meteor.publish('buckets', function (selector, options, namespace) {
-  const target = namespace ? 'buckets.' + namespace : 'buckets'
+Meteor.publish('buckets', function (selector, options, target) {
+  const firstModel = collection.buckets.findOne(selector, options)
+
+  if (firstModel) {
+    this.added(target, firstModel._id, firstModel)
+  }
 
   const cursor = collection.buckets.find(selector, options)
   .observe({

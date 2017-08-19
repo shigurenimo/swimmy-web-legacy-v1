@@ -102,11 +102,11 @@ export default class Post extends Component {
                   key={name}
                   className={classNames(classes.chip, {
                     [classes.colorChip]: !!this.props.accounts.isLogged &&
-                    ownerIds.includes(this.props.accounts.one._id)
+                    ownerIds.includes(this.props.accounts._id)
                   })}
                   label={name + ' ' + (ownerIds.length > 0 ? ownerIds.length : '')}
                   onRequestDelete={
-                    (!!this.props.accounts.isLogged && ownerIds.includes(this.props.accounts.one._id))
+                    (!!this.props.accounts.isLogged && ownerIds.includes(this.props.accounts._id))
                       ? this.onUpdateReaction.bind(this, this.props._id, name)
                       : null
                   }
@@ -136,7 +136,7 @@ export default class Post extends Component {
             </SheetActions>
             {this.props.accounts.isLogged && (
               <SheetActions dense align='right'>
-                {this.props.ownerId === this.props.accounts.one._id && (
+                {this.props.ownerId === this.props.accounts._id && (
                   <Button onClick={this.onRemovePost.bind(this, this.props._id)}>delete post</Button>
                 )}
                 <Button onClick={this.onSubmitNewReactionLike}>like!</Button>

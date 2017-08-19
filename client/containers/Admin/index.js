@@ -14,20 +14,20 @@ import styleSheet from './index.style'
 @observer
 export default class Admin extends Component {
   render () {
-    const {accounts: {one: account}, classes} = this.props
+    const {accounts, classes} = this.props
     return (
       <Layout>
         {/* icon */}
         <Sheet>
-          {(account.config && account.config.twitter && account.config.twitter.useIcon) ? (
+          {(accounts.config && accounts.config.twitter && accounts.config.twitter.useIcon) ? (
             <div className=''>
               <img
                 className={classes.icon}
-                src={account.services.twitter.profile_image_url_https.replace('_normal', '')} />
+                src={accounts.services.twitter.profile_image_url_https.replace('_normal', '')} />
             </div>
           ) : (
             <div className={classes.squares}>
-              {account.profile.code.map((i, index) =>
+              {accounts.profile.code.map((i, index) =>
                 <div
                   className={classes.square}
                   key={index + '-' + i}
@@ -43,12 +43,12 @@ export default class Admin extends Component {
         <Sheet>
           <SheetContent>
             <Typography align='center'>
-              {account.profile.name}
+              {accounts.profile.name}
             </Typography>
           </SheetContent>
           <SheetContent>
             <Typography type='display1' align='center'>
-              @{account.username}
+              @{accounts.username}
             </Typography>
           </SheetContent>
         </Sheet>
@@ -58,7 +58,7 @@ export default class Admin extends Component {
   }
 
   forFollows () {
-    const index = this.props.accounts.one.profile.follows
+    const index = this.props.accounts.profile.follows
     if (index.length < 1) {
       return null
     }

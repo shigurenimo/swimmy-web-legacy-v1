@@ -12,36 +12,32 @@ import PostRes from '../CardPost/CardRes'
 @observer
 export default class Thread extends Component {
   render () {
-    if (!this.props.posts.thread.index.length === 0) {
-      return (
-        <Layout>
-          <Sheet>
-            <SheetContent>
-              <Typography>
-                {this.props.thread.fetchState ? '読み込み中 ..' : 'データが見つかりませんでした、'}
-              </Typography>
-            </SheetContent>
-          </Sheet>
-        </Layout>
-      )
-    }
     return (
       <Layout>
         {this.props.info.channel && <ChannelInfo />}
-        {this.props.posts.thread.index.map(item => {
-          return <PostRes key={item._id} {...item} />
-        })}
+        {this.forPosts}
       </Layout>
     )
   }
 
-  componentDidMount () {
-    this.context.onScrollTop()
+  get posts () { return this.props.posts.model.get('thread') }
+
+  get forPosts () {
+    if (this.posts.isEmpty) {
+      return (
+        <Sheet>
+          <SheetContent>
+            <Typography>
+              {this.posts.fetchState ? '読み込み中 ..' : ''}
+            </Typography>
+          </SheetContent>
+        </Sheet>
+      )
+    }
+    return this.posts.index.map(item => <PostRes key={item._id} {...item} />)
   }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  componentDidMount () { this.context.onScrollTop() }
+
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

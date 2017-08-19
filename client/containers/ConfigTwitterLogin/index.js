@@ -20,9 +20,7 @@ export default class TwitterLogin extends Component {
     )
   }
 
-  onLinkWithTwitter () {
-    Meteor.linkWithTwitter()
-  }
+  onLinkWithTwitter () { Meteor.linkWithTwitter() }
 
   onLinkWithTwitter = ::this.onLinkWithTwitter
 }

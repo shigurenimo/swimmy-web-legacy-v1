@@ -10,12 +10,8 @@ import styleSheet from './index.style'
 export default class LeftMenu extends Component {
   render () {
     const {classes, routes, accounts} = this.props
-    if (accounts.isLoggingIn) {
-      return null
-    }
-    if (!routes.page) {
-      return null
-    }
+    if (accounts.isLoggingIn) { return null }
+    if (!routes.page) { return null }
     return (
       <div
         className={classes.root}>

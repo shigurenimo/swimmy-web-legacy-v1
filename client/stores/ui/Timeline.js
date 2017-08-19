@@ -19,7 +19,7 @@ export default types.model('Timeline', {
       case 'follows':
         this.name = 'ユーザの書き込み'
         break
-      case 'default':
+      case 'root':
         this.name = 'チャット'
         break
       default:

@@ -52,7 +52,7 @@ export default class LeftMenuTimeline extends Component {
             })}
             component='a'
             href={'/self'}>
-            <ListItemText inset primary={accounts.one.username || 'self'} />
+            <ListItemText inset primary={accounts.username || 'self'} />
           </ListItem>}
         </Collapse>
         {/* threads */}
@@ -92,7 +92,7 @@ export default class LeftMenuTimeline extends Component {
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
-        {accounts.isLogged && accounts.one.profile.channels.map(item =>
+        {accounts.isLogged && accounts.profile.channels.map(item =>
           <ListItem button dense
             key={item._id}
             className={classNames({

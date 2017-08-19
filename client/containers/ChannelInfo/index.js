@@ -31,10 +31,10 @@ export default class ChannelInfo extends Component {
           </SheetContent>
           {this.props.accounts.isLogged &&
           <SheetActions align='right'>{
-            channel.member.includes(this.props.accounts.one._id)
+            channel.member.includes(this.props.accounts._id)
               ? <Button onClick={this.onLeaveChannel}>checkout</Button>
               : <Button onClick={this.onJoinChannel}>checkin</Button>}
-            {channel.member.includes(this.props.accounts.one._id) &&
+            {channel.member.includes(this.props.accounts._id) &&
             <Button component='a' href={'/ch/' + channel._id + '/edit'}>update</Button>}
           </SheetActions>}
         </Sheet>
@@ -45,9 +45,7 @@ export default class ChannelInfo extends Component {
   onJoinChannel () {
     const {_id: channelId} = this.props.channels.one
     this.props.channels.updateMember(channelId)
-    .then(data => {
-      this.props.snackbar.show('チャンネルを追加しました')
-    })
+    .then(data => { this.props.snackbar.show('チャンネルを追加しました') })
   }
 
   onJoinChannel = ::this.onJoinChannel
@@ -55,20 +53,12 @@ export default class ChannelInfo extends Component {
   onLeaveChannel () {
     const {_id: channelId} = this.props.channels.one
     this.props.channels.updateMember(channelId)
-    .then(data => {
-      this.props.snackbar.show('チャンネルを外しました')
-    })
+    .then(data => { this.props.snackbar.show('チャンネルを外しました') })
   }
 
   onLeaveChannel = ::this.onLeaveChannel
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

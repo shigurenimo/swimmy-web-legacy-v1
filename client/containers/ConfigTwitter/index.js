@@ -17,18 +17,18 @@ import styleSheet from './index.style'
 @observer
 export default class Twitter extends Component {
   render () {
-    const {accounts: {one: {config, services: {twitter}}}, classes} = this.props
+    const {accounts, classes} = this.props
     return (
       <Layout>
         <Sheet>
           <SheetContent>
             <img
               className={classes.icon}
-              src={twitter.profile_image_url_https.replace('_normal', '')} />
+              src={accounts.twitter.profile_image_url_https.replace('_normal', '')} />
           </SheetContent>
           <SheetContent>
             <Typography type='title' align='center'>
-              {twitter.screenName}
+              {accounts.twitter.screenName}
             </Typography>
           </SheetContent>
           <SheetActions>
@@ -36,18 +36,18 @@ export default class Twitter extends Component {
               <FormGroup>
                 <LabelCheckbox
                   checked={
-                    config &&
-                    config.twitter &&
-                    config.twitter.useIcon
+                    accounts.config &&
+                    accounts.config.twitter &&
+                    accounts.config.twitter.useIcon
                   }
                   label='アイコンを使用する'
                   value='useIcon'
                   onChange={this.onSelectOption} />
                 <LabelCheckbox
                   checked={
-                    config &&
-                    config.twitter &&
-                    config.twitter.publicAccount
+                    accounts.config &&
+                    accounts.config.twitter &&
+                    accounts.config.twitter.publicAccount
                   }
                   label='アカウントを表示する'
                   value='publicAccount'
@@ -80,9 +80,7 @@ export default class Twitter extends Component {
 
   onUpdateTwitter () {
     this.props.accounts.updateServicesTwitter()
-    .then(() => {
-      this.props.snackbar.show('アップデートに成功しました')
-    })
+    .then(() => { this.props.snackbar.show('アップデートに成功しました') })
     .catch(this.props.snackbar.error)
   }
 
@@ -91,9 +89,7 @@ export default class Twitter extends Component {
   onUpdateRemoveTwitter () {
     if (!window.confirm('解除してもいいですか？')) return
     this.props.accounts.updateRemoveServicesTwitter()
-    .then(() => {
-      this.props.snackbar.show('関連付けを解除しました')
-    })
+    .then(() => { this.props.snackbar.show('関連付けを解除しました') })
     .catch(this.props.snackbar.error)
   }
 

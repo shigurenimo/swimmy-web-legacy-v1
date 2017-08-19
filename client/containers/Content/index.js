@@ -102,8 +102,8 @@ export default class Content extends Component {
       case 'channel-new':
         return <ChannelNew />
       case 'twitter':
-        if (this.props.accounts.one.services) {
-          if (this.props.accounts.one.services.twitter) {
+        if (this.props.accounts.services) {
+          if (this.props.accounts.services.twitter) {
             return <Twitter />
           } else {
             return <TwitterLogin />

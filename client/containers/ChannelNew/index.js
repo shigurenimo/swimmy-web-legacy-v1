@@ -120,13 +120,7 @@ export default class ChannelNew extends Component {
 
   onSubmit = ::this.onSubmit
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

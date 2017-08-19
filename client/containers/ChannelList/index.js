@@ -16,25 +16,27 @@ export default class ChannelList extends Component {
   render () {
     return (
       <Layout>
-        {this.forChannels()}
+        {this.forChannels}
       </Layout>
     )
   }
 
-  forChannels () {
+  get channels () { return this.props.channels.model.get('root') }
+
+  get forChannels () {
     const {classes} = this.props
-    if (this.props.channels.index.length === 0) {
+    if (this.channels.isEmpty) {
       return (
         <Sheet>
           <SheetContent>
             <Typography>
-              {this.props.channels.fetchState ? '読み込み中 ..' : 'データが見つかりませんでした'}
+              {this.channels.fetchState ? '読み込み中 ..' : 'データが見つかりませんでした'}
             </Typography>
           </SheetContent>
         </Sheet>
       )
     }
-    return this.props.channels.index.map(item =>
+    return this.channels.index.map(item =>
       <Sheet hover key={item._id} href={'/ch/' + item._id + '/?preview=true'}>
         <SheetContent>
           <Typography type='subheading'>
@@ -51,13 +53,7 @@ export default class ChannelList extends Component {
       </Sheet>)
   }
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

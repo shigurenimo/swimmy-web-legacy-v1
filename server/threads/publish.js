@@ -1,26 +1,31 @@
 import { Meteor } from 'meteor/meteor'
 import collection from '/lib/collection'
 
-Meteor.publish('threads', function (selector = {}, options = {}, namespace) {
+Meteor.publish('threads', function (selector = {}, options = {}, target) {
   selector.content = {$ne: ''}
   selector['replies.0'] = {$exists: true}
 
   options.limit = 50
 
-  const _namespace = namespace ? 'threads.' + namespace : 'threads'
+  const firstModel = collection.posts.findOne(selector, options)
+
+  if (firstModel) {
+    if (this.userId !== firstModel.ownerId) { delete firstModel.ownerId }
+    this.added(target, firstModel._id, firstModel)
+  }
 
   const cursor = collection.posts.find(selector, options).observe({
     addedAt: (model) => {
       if (this.userId !== model.ownerId) { delete model.ownerId }
-      this.added(_namespace, model._id, model)
+      this.added(target, model._id, model)
     },
     changed: (model) => {
       if (this.userId !== model.ownerId) { delete model.ownerId }
-      this.changed(_namespace, model._id, model)
+      this.changed(target, model._id, model)
     },
     removed: (model) => {
       if (this.userId !== model.ownerId) { delete model.ownerId }
-      this.removed(_namespace, model._id)
+      this.removed(target, model._id)
     }
   })
 

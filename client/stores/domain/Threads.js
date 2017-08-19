@@ -1,14 +1,7 @@
 import { types } from 'mobx-state-tree'
+import { createModel } from '/client/packages/Sub'
 import Thread from '/lib/models/Thread'
-import { IndexModel, Model } from './Subscription'
 
-const ThreadIndex = types.compose('ThreadIndex', IndexModel, {
-  one: types.maybe(Thread),
-  index: types.optional(types.array(Thread), [])
-})
-
-export default types.compose('Thread', Model, {
-  map: types.maybe(types.map(ThreadIndex)),
-  one: types.maybe(Thread),
-  index: types.optional(types.array(Thread), [])
+export default types.model('Thread', {
+  model: createModel(Thread)
 })

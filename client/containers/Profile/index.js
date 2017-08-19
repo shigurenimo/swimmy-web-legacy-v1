@@ -53,7 +53,7 @@ export default class Profile extends Component {
           </SheetContent>
         </Sheet>
         {accounts.isLogged &&
-        user.username !== accounts.one.username &&
+        user.username !== accounts.username &&
         <Sheet>
           <SheetActions align='center'>
             <Button onClick={this.onFollow}>

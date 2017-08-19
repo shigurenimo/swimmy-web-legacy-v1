@@ -58,7 +58,7 @@ export default class InputPost extends Component {
             className={classes.spacing}
             selected={this.state.inputIsPublic}
             onClick={this.onChangePublic.bind(this, true)}>
-            {this.props.accounts.one.username}
+            {this.props.accounts.username}
           </Button>}
           {this.props.accounts.isLogged &&
           <Button dense
@@ -201,12 +201,8 @@ export default class InputPost extends Component {
         this.ref.style.height = 'auto'
         return this.props.posts.insert(data)
       })
-      .then(post => {
-        this.props.snackbar.show('投稿が完了しました')
-      })
-      .catch(err => {
-        this.props.snackbar.error(err.reason)
-      })
+      .then(post => { this.props.snackbar.show('投稿が完了しました') })
+      .catch(err => { this.props.snackbar.error(err.reason) })
     } else {
       if (this.props.inputPost.postContent === '') {
         this.process = false
@@ -222,9 +218,7 @@ export default class InputPost extends Component {
       this.ref.style.height = 'auto'
       await this.props.posts.insert(data)
       .then(post => {})
-      .catch(err => {
-        this.props.snackbar.error(err.reason)
-      })
+      .catch(err => { this.props.snackbar.error(err.reason) })
     }
     this.process = false
   }
@@ -232,12 +226,12 @@ export default class InputPost extends Component {
   async onSubmitReply () {
     if (this.process) return
     this.process = true
+    const replyId = this.props.posts.one._id
     if (this.state.inputImage) {
       const file = this.state.inputImage
       await utils.createBase64(file)
       .then(base64 => {
         this.props.snackbar.show('サーバーで画像を圧縮しています')
-        const replyId = this.props.posts.thread.one._id
         const data = {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
@@ -249,18 +243,13 @@ export default class InputPost extends Component {
         this.ref.style.height = 'auto'
         return this.props.posts.insert(data)
       })
-      .then(post => {
-        this.props.snackbar.show('投稿が完了しました')
-      })
-      .catch(err => {
-        this.props.snackbar.error(err)
-      })
+      .then(post => { this.props.snackbar.show('投稿が完了しました') })
+      .catch(err => { this.props.snackbar.error(err) })
     } else {
       if (this.props.inputPost.postContent === '') {
         this.process = false
         return
       }
-      const replyId = this.props.posts.thread.one._id
       const data = {
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
@@ -270,9 +259,7 @@ export default class InputPost extends Component {
       this.setState({errorImage: null, inputImage: null})
       this.ref.style.height = 'auto'
       await this.props.posts.insert(data)
-      .catch(err => {
-        this.props.snackbar.error(err)
-      })
+      .catch(err => { this.props.snackbar.error(err) })
     }
     this.process = false
   }

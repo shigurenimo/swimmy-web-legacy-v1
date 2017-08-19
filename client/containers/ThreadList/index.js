@@ -16,25 +16,27 @@ export default class ThreadList extends Component {
   render () {
     return (
       <Layout>
-        {this.forThreads()}
+        {this.forThreads}
       </Layout>
     )
   }
 
-  forThreads () {
+  get threads () { return this.props.threads.model.get('root') }
+
+  get forThreads () {
     const {classes} = this.props
-    if (this.props.threads.isEmpty) {
+    if (this.threads.isEmpty) {
       return (
         <Sheet>
           <SheetContent>
             <Typography>
-              {this.props.threads.fetchState ? '読み込み中 ..' : ''}
+              {this.threads.fetchState ? '読み込み中 ..' : ''}
             </Typography>
           </SheetContent>
         </Sheet>
       )
     }
-    return this.props.threads.index.map(item =>
+    return this.threads.index.map(item =>
       <Sheet hover key={item._id} href={'/thread/' + item._id} className={classes.sheet}>
         <SheetContent>
           <Typography className={classes.content}>
@@ -51,13 +53,7 @@ export default class ThreadList extends Component {
     )
   }
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

@@ -2,8 +2,10 @@ import { Meteor } from 'meteor/meteor'
 import collection from '/lib/collection'
 import utils from '/lib/imports/utils'
 
-Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
-  switch (namespace) {
+Meteor.publish('posts', function (selector = {}, options = {}, target) {
+  const unique = target.replace('posts', '')
+
+  switch (unique) {
     case 'self':
       selector.ownerId = this.userId
       break
@@ -36,12 +38,35 @@ Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
     }
   }
 
-  const _namespace = namespace ? 'posts.' + namespace : 'posts'
+  const firstModel = collection.posts.findOne(selector, options)
+
+  if (firstModel) {
+    if (unique !== 'thread' && firstModel.replyId) {
+      const reply = collection.posts.findOne(firstModel.replyId, replyOptions)
+      if (reply) {
+        firstModel.reply = reply
+      } else {
+        firstModel.reply = {
+          _id: firstModel.replyId,
+          content: 'この投稿は既に削除されています'
+        }
+      }
+    }
+    if (firstModel.images) {
+      firstModel.imagePath =
+        'https://storage.googleapis.com/' +
+        Meteor.settings.private.googleCloud.bucket + '/' +
+        utils.createPathFromDate(firstModel.createdAt)
+    }
+    if (firstModel.link) { firstModel.content = utils.replace.link(firstModel.content) }
+    if (this.userId !== firstModel.ownerId) { delete firstModel.ownerId }
+    this.added(target, firstModel._id, firstModel)
+  }
 
   const cursor = collection.posts.find(selector, options)
   .observe({
     addedAt: (model) => {
-      if (namespace !== 'thread' && model.replyId) {
+      if (unique !== 'thread' && model.replyId) {
         const reply = collection.posts.findOne(model.replyId, replyOptions)
         if (reply) {
           model.reply = reply
@@ -60,7 +85,7 @@ Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
       }
       if (model.link) { model.content = utils.replace.link(model.content) }
       if (this.userId !== model.ownerId) { delete model.ownerId }
-      this.added(_namespace, model._id, model)
+      this.added(target, model._id, model)
     },
     changed: (model) => {
       if (model.replyId) {
@@ -76,10 +101,10 @@ Meteor.publish('posts', function (selector = {}, options = {}, namespace) {
       }
       if (model.link) { model.content = utils.replace.link(model.content) }
       if (this.userId !== model.ownerId) { delete model.ownerId }
-      this.changed(_namespace, model._id, model)
+      this.changed(target, model._id, model)
     },
     removed: (model) => {
-      this.removed(_namespace, model._id)
+      this.removed(target, model._id)
     }
   })
 

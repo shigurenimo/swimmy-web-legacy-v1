@@ -23,7 +23,8 @@ export default class Loading extends Component {
                 backgroundColor: i === 1
                   ? Meteor.settings.public.color.primary
                   : i === 2 ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
-              }} />)}
+              }} />
+          )}
         </div>
       </div>
     )
@@ -40,7 +41,5 @@ export default class Loading extends Component {
     }, 300)
   }
 
-  componentWillUnmount () {
-    clearInterval(this.animation)
-  }
+  componentWillUnmount () { clearInterval(this.animation) }
 }

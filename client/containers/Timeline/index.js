@@ -5,8 +5,8 @@ import Typography from 'material-ui/Typography'
 import Layout from '/client/components/UI-Layout'
 import Sheet from '/client/components/UI-Sheet'
 import SheetContent from '/client/components/UI-SheetContent'
-import ChannelInfo from '../ChannelInfo'
-import Post from '../CardPost'
+import ChannelInfo from '/client/containers/ChannelInfo'
+import CardPost from '/client/containers/CardPost'
 
 @inject('posts', 'timeline', 'info')
 @observer
@@ -15,36 +15,29 @@ export default class Timeline extends Component {
     return (
       <Layout>
         {this.props.info.isOpen && <ChannelInfo />}
-        {this.forPosts()}
+        {this.forPosts}
       </Layout>
     )
   }
 
-  forPosts () {
-    const unique = this.props.timeline.unique
-    if (this.props.posts[unique].index.length === 0) {
+  get posts () { return this.props.posts.model.get(this.props.timeline.unique) }
+
+  get forPosts () {
+    if (this.posts.isEmpty) {
       return (
         <Sheet>
           <SheetContent>
             <Typography>
-              {this.props.posts[unique].fetchState ? '読み込み中 ..' : ''}
+              {this.posts.fetchState ? '読み込み中 ..' : ''}
             </Typography>
           </SheetContent>
         </Sheet>
       )
     }
-    return this.props.posts[unique].index.map(item => {
-      return <Post key={item._id} {...item} />
-    })
+    return this.posts.index.map(item => <CardPost key={item._id} {...item} />)
   }
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

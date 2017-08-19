@@ -21,7 +21,7 @@ export default class LeftMenuChannels extends Component {
           })}
           component='a'
           href='/admin'>
-          <ListItemText primary={this.props.accounts.isLogged ? accounts.one.username : 'login'} />
+          <ListItemText primary={this.props.accounts.isLogged ? accounts.username : 'login'} />
           {this.props.accounts.isLogged &&
           <ListItemSecondaryAction>
             <IconButtonMoreExpand isExpand={this.state.isExpand} onClick={this.onExpand} />
@@ -52,17 +52,13 @@ export default class LeftMenuChannels extends Component {
 
   state = {isExpand: false}
 
-  onExpand () {
-    this.setState({isExpand: !this.state.isExpand})
-  }
+  onExpand () { this.setState({isExpand: !this.state.isExpand}) }
 
   onExpand = ::this.onExpand
 
   onLogout () {
     this.props.accounts.logout()
-    .then(() => {
-      this.props.snackbar.show('ログアウトしました')
-    })
+    .then(() => { this.props.snackbar.show('ログアウトしました') })
     .catch(err => this.props.snackbar.error(err.reason))
   }
 

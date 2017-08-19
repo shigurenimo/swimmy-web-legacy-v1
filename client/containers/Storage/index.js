@@ -13,36 +13,29 @@ export default class Storage extends Component {
   render () {
     return (
       <Layout>
-        {this.forPosts()}
+        {this.forPosts}
       </Layout>
     )
   }
 
-  forPosts () {
-    const unique = this.props.timeline.unique
-    if (this.props.posts[unique].index.length === 0) {
+  get posts () { return this.props.posts.model.get('storage') }
+
+  get forPosts () {
+    if (this.posts.isEmpty) {
       return (
         <Sheet>
           <SheetContent>
             <Typography>
-              {this.props.posts[unique].fetchState ? '読み込み中 ..' : ''}
+              {this.posts.fetchState ? '読み込み中 ..' : ''}
             </Typography>
           </SheetContent>
         </Sheet>
       )
     }
-    return this.props.posts[unique].index.map(item => {
-      return <CardImage key={item._id} {...item} />
-    })
+    return this.posts.index.map(item => <CardImage key={item._id} {...item} />)
   }
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

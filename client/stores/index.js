@@ -1,3 +1,4 @@
+import { types } from 'mobx-state-tree'
 import Accounts from './domain/Accounts'
 import Buckets from './domain/Buckets'
 import Channels from './domain/Channels'
@@ -15,16 +16,16 @@ import Timeline from './ui/Timeline'
 
 const stores = {
   accounts: Accounts.create(),
-  buckets: Buckets.create({publish: 'buckets'}),
+  buckets: Buckets.create({model: {target: 'buckets'}}),
   drawer: Drawer.create(),
   explore: Explore.create(),
   info: Info.create(),
   inputPost: InputPost.create(),
-  channels: Channels.create({publish: 'channels'}),
-  posts: Posts.create({publish: 'posts'}),
+  channels: Channels.create({model: {target: 'channels'}}),
+  posts: Posts.create({model: {target: 'posts'}}),
   reports: Reports.create(),
   snackbar: Snackbar.create(),
-  threads: Threads.create({publish: 'threads'}),
+  threads: Threads.create({model: {target: 'threads'}}),
   timeline: Timeline.create(),
   users: Users.create()
 }

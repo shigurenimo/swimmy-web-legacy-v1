@@ -35,9 +35,7 @@ export default class ConfigAccount extends Component {
               </Typography>
             </SheetContent>}
             <SheetActions align='right'>
-              <Button onClick={this.onSubmitUsername}>
-                update
-              </Button>
+              <Button onClick={this.onSubmitUsername}>update</Button>
             </SheetActions>
           </Sheet>
           {/* display name */}
@@ -58,9 +56,7 @@ export default class ConfigAccount extends Component {
               </Typography>
             </SheetActions>}
             <SheetActions align='right'>
-              <Button onClick={this.onSubmitName}>
-                update
-              </Button>
+              <Button onClick={this.onSubmitName}>update</Button>
             </SheetActions>
           </Sheet>
           {/* password */}
@@ -78,9 +74,7 @@ export default class ConfigAccount extends Component {
                 onChange={this.onInputNewPassword} />
             </SheetActions>
             <SheetActions align='right'>
-              <Button onClick={this.onSubmitPassword}>
-                update
-              </Button>
+              <Button onClick={this.onSubmitPassword}>update</Button>
             </SheetActions>
           </Sheet>
         </Block>
@@ -89,9 +83,9 @@ export default class ConfigAccount extends Component {
   }
 
   state = {
-    name: this.props.accounts.one.profile.name,
+    name: this.props.accounts.profile.name,
     nameError: '',
-    username: this.props.accounts.one.username,
+    username: this.props.accounts.username,
     usernameError: '',
     inputNewEmail: '',
     inputNewEmailError: '',
@@ -114,12 +108,12 @@ export default class ConfigAccount extends Component {
   // ディスプレイネームをチェックする
   onCheckName () {
     const name = this.state.name
-    if (name === this.props.accounts.one.profile.name) {
+    if (name === this.props.accounts.profile.name) {
       this.setState({nameError: ''})
       return
     }
     if (name.length === 0) {
-      this.setState({name: this.props.accounts.one.profile.name, usernameError: ''})
+      this.setState({name: this.props.accounts.profile.name, usernameError: ''})
     }
     if (name.length < 1) {
       this.setState({nameError: '！ ちょっと短すぎます'})
@@ -162,12 +156,12 @@ export default class ConfigAccount extends Component {
   // ユーザネームをチェックする
   onCheckUsername () {
     const username = this.state.username
-    if (username === this.props.accounts.one.username) {
+    if (username === this.props.accounts.username) {
       this.setState({usernameError: ''})
       return
     }
     if (username.length === 0) {
-      this.setState({username: this.props.accounts.one.username, usernameError: ''})
+      this.setState({username: this.props.accounts.username, usernameError: ''})
       return
     }
     if (username.length < 2) {
@@ -205,7 +199,7 @@ export default class ConfigAccount extends Component {
       this.props.snackbar.show('ユーザネームを変更しました')
       this.setState({usernameError: '', username: username})
     })
-    .catch(err => this.props.snackbar.error(err.reason))
+    .catch(err => { this.props.snackbar.error(err.reason) })
     this.process = false
   }
 
@@ -251,7 +245,7 @@ export default class ConfigAccount extends Component {
       this.setState({oldPassword: '', newPassword: ''})
       this.props.snackbar.show('パスワードを変更しました')
     })
-    .catch(err => this.props.snackbar.error(err.reason))
+    .catch(err => { this.props.snackbar.error(err.reason) })
   }
 
   onSubmitPassword = ::this.onSubmitPassword
@@ -261,10 +255,8 @@ export default class ConfigAccount extends Component {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
     this.props.accounts.updatePullEmail(email)
-    .then(() => {
-      this.props.snackbar.show('メールアドレスを削除しました')
-    })
-    .catch(err => this.props.snackbar.error(err.reason))
+    .then(() => { this.props.snackbar.show('メールアドレスを削除しました') })
+    .catch(err => { this.props.snackbar.error(err.reason) })
   }
 
   onRemoveEmail = ::this.onRemoveEmail
@@ -294,13 +286,7 @@ export default class ConfigAccount extends Component {
 
   onSubmitNewEmail = ::this.onSubmitNewEmail
 
-  componentDidMount () {
-    this.context.onScrollTop()
-  }
+  componentDidMount () { this.context.onScrollTop() }
 
-  static get contextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
+  static get contextTypes () { return {onScrollTop: propTypes.any} }
 }

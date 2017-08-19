@@ -6,12 +6,28 @@ const documentTitleShort = 'swimmy'
 
 const Routes = Router.create()
 
-Routes.setRoute('/(default|self|follows)?', {
-  action (stores, {path, params}) {
-    const unique = params[0] || 'default'
-    stores.posts.define(unique)
-    stores.posts[unique].subscribeFrom(unique)
-    stores.timeline.setCurrent({channelId: null, unique: unique})
+Routes.setRoute('/(default)?', {
+  action (stores, {path}) {
+    stores.posts.model.set('root')
+    stores.posts.model.get('root').find({}, {limit: 50})
+    stores.timeline.setCurrent({channelId: null, unique: 'root'})
+    stores.routes.setRoute('timeline')
+    stores.drawer.close()
+    stores.info.close()
+    document.title = documentTitle
+    if (Meteor.isProduction) {
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
+    }
+  }
+})
+
+Routes.setRoute('/self', {
+  action (stores, {path}) {
+    stores.posts.model.set('self')
+    stores.posts.model.get('self').find({ownerId: Meteor.userId()}, {limit: 50})
+    stores.timeline.setCurrent({channelId: null, unique: 'self'})
     stores.routes.setRoute('timeline')
     stores.drawer.close()
     stores.info.close()
@@ -26,11 +42,9 @@ Routes.setRoute('/(default|self|follows)?', {
 
 Routes.setRoute('/explore', {
   action (stores, {path, query}) {
-    stores.posts.define('explore')
+    stores.posts.model.set('explore')
     if (query.word) {
-      stores.posts['explore'].subscribe({
-        content: '/' + query.word + '/'
-      })
+      stores.posts.model.get('explore').find({content: '/' + query.word + '/'})
     }
     stores.routes.setRoute('explore')
     stores.drawer.close()
@@ -45,7 +59,7 @@ Routes.setRoute('/explore', {
 Routes.setRoute('/bucket', {
   action (stores, {path, query}) {
     stores.routes.setRoute('bucket-list')
-    stores.buckets.subscribe({}, {})
+    stores.buckets.model.get('root').find({}, {})
     stores.drawer.close()
     stores.info.close()
     document.title = documentTitle
@@ -57,24 +71,26 @@ Routes.setRoute('/bucket', {
 
 Routes.setRoute('/thread', {
   action (stores, {path}) {
-    stores.threads.subscribe({}, {sort: {createdAt: -1}})
-    document.title = 'thread | ' + documentTitle
-    stores.routes.setRoute('thread-list')
-    stores.drawer.close()
-    if (Meteor.isProduction) {
+    try {
+      stores.threads.model.get('root').find({}, {sort: {createdAt: -1}})
+      document.title = 'thread | ' + documentTitle
+      stores.routes.setRoute('thread-list')
+      stores.drawer.close()
       if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
+        if (Meteor.isProduction) {
+          window.ga('send', 'pageview', {page: path, title: document.title})
+        }
       }
-    }
+    } catch (e) { console.info(e) }
   }
 })
 
 Routes.setRoute('/thread/:_id', {
   action (stores, {path, params}) {
-    stores.posts.define('thread')
-    stores.posts.thread.findOne({_id: params._id}, {})
+    stores.posts.findOne({_id: params._id}, {})
     .then(model => {
-      stores.posts.thread.subscribe({
+      stores.posts.model.set('thread')
+      stores.posts.model.get('thread').find({
         $or: [
           {_id: params._id},
           {replyId: params._id}
@@ -87,21 +103,20 @@ Routes.setRoute('/thread/:_id', {
         ? model.content.substr(0, 15) + '..'
         : model.content
       document.title = content + ' | ' + documentTitleShort
-      if (Meteor.isProduction) {
-        if (Meteor.isProduction) {
-          window.ga('send', 'pageview', {page: path, title: document.title})
-        }
-      }
     })
-    .catch(err => { notFound(stores, err) })
+    if (Meteor.isProduction) {
+      if (Meteor.isProduction) {
+        window.ga('send', 'pageview', {page: path, title: document.title})
+      }
+    }
   }
 })
 
 Routes.setRoute('/storage', {
   action (stores, {path, params}) {
     const unique = 'storage'
-    stores.posts.define(unique)
-    stores.posts[unique].subscribeFrom(unique)
+    stores.posts.model.set(unique)
+    stores.posts.model.get(unique).find({'images': {$exists: true}}, {limit: 50})
     stores.timeline.setCurrent({unique: unique})
     stores.routes.setRoute('storage')
     stores.drawer.close()
@@ -115,24 +130,17 @@ Routes.setRoute('/storage', {
   }
 })
 
-Routes.setRoute('/ch/(default|net|univ)?', {
+Routes.setRoute('/ch', {
   action (stores, {path, params}) {
-    const unique = params[0] || 'default'
     stores.drawer.close()
     stores.routes.setRoute('channel-list')
-    stores.channels.findFromUnique(unique)
-    .then(model => {
-      document.title = 'channel | ' + documentTitle
+    stores.channels.model.get('root').find({}, {})
+    document.title = 'channel | ' + documentTitle
+    if (Meteor.isProduction) {
       if (Meteor.isProduction) {
-        if (Meteor.isProduction) {
-          window.ga('send', 'pageview', {page: path, title: document.title})
-        }
+        window.ga('send', 'pageview', {page: path, title: document.title})
       }
-    })
-    .catch(err => {
-      notFound(stores, err)
-      this.props.snackbar.error(err.reason)
-    })
+    }
   }
 })
 
@@ -152,11 +160,12 @@ Routes.setRoute('/ch/new', {
 Routes.setRoute('/ch/:channelId', {
   action (stores, {path, params, query}) {
     const channelId = params.channelId
-    stores.channels.findOne({_id: channelId})
-    .then(model => {
+    stores.channels.findOne({_id: channelId}, {})
+    .then((model) => {
+      console.log(model)
       if (!model) { return notFound(stores) }
-      stores.posts.define(channelId)
-      stores.posts[channelId].subscribe({channelId})
+      stores.posts.model.set(channelId)
+      stores.posts.model.get(channelId).find({channelId}, {})
       stores.timeline.setCurrent({
         channelId: channelId,
         unique: channelId,

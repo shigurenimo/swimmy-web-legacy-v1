@@ -3,69 +3,34 @@ import { Accounts } from 'meteor/accounts-base'
 import { types } from 'mobx-state-tree'
 import User from '/lib/models/User'
 
-export default types.model('Accounts', {
-  one: types.maybe(User),
+export default types.compose('Accounts', User, {
   loginState: types.maybe(types.string),
   get isNotLoggedIn () { return this.loginState === 'isNotLoggedIn' },
   get isLoggingIn () { return this.loginState === 'isLoggingIn' },
-  get isLogged () { return this.loginState === 'isLoggedIn' }
-}, {
-  afterCreate () {
-    this.followsIds = []
-    this.cursor = null
-    if (Meteor.loggingIn()) {
-      this.loginState = 'isLoggingIn'
-    } else {
-      this.loginState = 'isNotLoggedIn'
-    }
-    // if (Meteor.userId()) { this.subscribe() }
-    Accounts.onLogin(this.onLogin.bind(this))
-    Accounts.onLogout(this.onLogout.bind(this))
-  },
-  added (model) {
-    model.profile.code = model.profile.code.split('')
-    this.one = model
-    this.followsIds = model.profile.follows.map(item => item._id)
-    if (model.config) { this.loginState = 'isLoggedIn' }
-  },
-  changed (model) {
-    model.profile.code = model.profile.code.split('')
-    this.one = model
-    this.followsIds = model.profile.follows.map(item => item._id)
-    if (model.config) { this.loginState = 'isLoggedIn' }
-  },
-  onLogin () {
-    Meteor.subscribe('users')
-    if (this.cursor) {
-      this.cursor.stop()
-      this.cursor = null
-    }
-    const userId = Meteor.userId()
-    this.cursor = Meteor.users.find(userId).observe({
-      added: model => {
-        this.added(model)
-      },
-      changed: model => {
-        this.changed(model)
-      }
+  get isLogged () { return this.loginState === 'isLoggedIn' },
+  login (email, password) {
+    return new Promise((resolve, reject) => {
+      Meteor.loginWithPassword(email, password, error => {
+        if (error) { reject(error) } else { resolve() }
+      })
     })
   },
-  onLogout () {
-    this.loginState = 'isNotLoggedIn'
+  logout () {
+    return new Promise((resolve, reject) => {
+      Meteor.logout(err => {
+        if (err) { reject(err) } else { resolve() }
+      })
+    })
   },
   insert ({username, password}) {
     return new Promise((resolve, reject) => {
       Meteor.call('users.insert', {username, password}, (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
+        if (err) { reject(err) } else { resolve(res) }
       })
     })
   },
-  // フォローを更新する
   updateFollow (userId) {
+    // フォローを更新する
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateFollow', {userId}, err => {
         if (err) {
@@ -76,8 +41,8 @@ export default types.model('Accounts', {
       })
     })
   },
-  // ネームを更新する
   updateName (name) {
+    // ネームを更新する
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateName', {name}, err => {
         if (err) {
@@ -88,8 +53,8 @@ export default types.model('Accounts', {
       })
     })
   },
-  // ユーザネームを更新する
   updateUsername (username) {
+    // ユーザネームを更新する
     return new Promise((resolve, reject) => {
       Meteor.call('users.updateUsername', {username}, (err, res) => {
         if (err) {
@@ -189,17 +154,68 @@ export default types.model('Accounts', {
         }
       })
     })
+  }
+}, {
+  afterCreate () {
+    this.followsIds = []
+    this.cursor = null
+    if (Meteor.loggingIn()) {
+      this.loginState = 'isLoggingIn'
+    } else {
+      this.loginState = 'isNotLoggedIn'
+    }
+    // if (Meteor.userId()) { this.subscribe() }
+    Accounts.onLogin(this.onLogin.bind(this))
+    Accounts.onLogout(this.onLogout.bind(this))
   },
-  // ログアウトする
-  logout () {
-    return new Promise((resolve, reject) => {
-      Meteor.logout(err => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve()
-        }
-      })
+  added (model) {
+    try {
+      model.profile.code = model.profile.code.split('')
+      this._id = model._id
+      this.username = model.username
+      this.profile = model.profile
+      if (model.emails && model.emails[0]) {
+        this.emails = model.emails
+      }
+      this.services = model.services
+      this.createdAt = model.createdAt
+      this.followsIds = model.profile.follows.map(item => item._id)
+      if (model.config) { this.loginState = 'isLoggedIn' }
+    } catch (e) {
+      console.info('accounts.addded', e)
+    }
+  },
+  changed (model) {
+    try {
+      model.profile.code = model.profile.code.split('')
+      this._id = model._id
+      this.username = model.username
+      this.profile = model.profile
+      if (model.emails && model.emails[0]) {
+        this.emails = model.emails
+      }
+      this.services = model.services
+      this.createdAt = model.createdAt
+      this.followsIds = model.profile.follows.map(item => item._id)
+      if (model.config) { this.loginState = 'isLoggedIn' }
+    } catch (e) {
+      console.info('accounts.changed', e)
+    }
+  },
+  onLogin () {
+    Meteor.subscribe('users')
+    if (this.cursor) {
+      this.cursor.stop()
+      this.cursor = null
+    }
+    const userId = Meteor.userId()
+    this.cursor = Meteor.users.find(userId)
+    .observe({
+      added: this.added,
+      changed: this.changed
     })
+  },
+  onLogout () {
+    this.loginState = 'isNotLoggedIn'
   }
 })
