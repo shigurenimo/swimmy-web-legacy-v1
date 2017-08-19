@@ -11,7 +11,7 @@ Accounts.onCreateUser(function (options, user) {
   user.profile.follows = []
   user.profile.code = code.join('')
   user.profile.channels = []
-  user.profile.from = 'swimmy'
+  user.profile.from = 'sw'
   user.config = {
     twitter: {
       useIcon: false,
