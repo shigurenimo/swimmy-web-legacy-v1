@@ -8,7 +8,7 @@ import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import IconButtonMoreExpand from '/client/components/UI-IconButtonMoreExpand'
-import styleSheet from './ListDefault.style'
+import styles from './ListDefault.style'
 
 @withStyles(styles)
 @inject('accounts', 'routes', 'posts', 'timeline')
@@ -22,7 +22,7 @@ export default class LeftMenuTimeline extends Component {
         <ListItem button dense
           className={classNames({
             [classes.select]: this.props.routes.page === 'timeline' && (
-              this.props.timeline.unique === 'default' ||
+              this.props.timeline.unique === 'root' ||
               this.props.timeline.unique === 'follows' ||
               this.props.timeline.unique === 'self'
             )

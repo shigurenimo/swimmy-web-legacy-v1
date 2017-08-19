@@ -5,7 +5,7 @@ import Collapse from 'material-ui/transitions/Collapse'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import IconButtonMoreExpand from '/client/components/UI-IconButtonMoreExpand'
-import styleSheet from './ListDefault.style'
+import styles from './ListDefault.style'
 
 @withStyles(styles)
 @inject('routes', 'accounts')

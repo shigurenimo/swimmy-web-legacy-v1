@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
-import styleSheet from './ListDefault.style'
+import styles from './ListDefault.style'
 
 @withStyles(styles)
 @inject('routes', 'posts', 'accounts')

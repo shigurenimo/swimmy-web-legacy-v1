@@ -5,7 +5,7 @@ import AddIcon from 'material-ui-icons/Add'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
-import styleSheet from './ListDefault.style'
+import styles from './ListDefault.style'
 
 @withStyles(styles)
 @inject('routes', 'posts', 'accounts')
