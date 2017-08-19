@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('Layout', theme => {
+export default theme => {
   return {
     root: {
       position: 'fixed',
@@ -25,4 +23,4 @@ export default createStyleSheet('Layout', theme => {
       transform: 'translate3d(0, 0, 0)'
     }
   }
-})
+}

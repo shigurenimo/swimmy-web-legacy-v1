@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('Login', theme => {
+export default theme => {
   return {
     appTitle: {
       color: theme.palette.primary[500]
@@ -18,4 +16,4 @@ export default createStyleSheet('Login', theme => {
       color: theme.palette.primary[500]
     }
   }
-})
+}

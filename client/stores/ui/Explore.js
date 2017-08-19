@@ -1,13 +1,17 @@
 import { types } from 'mobx-state-tree'
 
-export default types.model('Explore', {
+export default types
+.model('Explore', {
   word: '',
   storage: false
-}, {
-  setWord (word) {
-    this.word = word
-  },
-  toggleStorage () {
-    this.storage = !this.storage
+})
+.actions(self => {
+  return {
+    setWord (word) {
+      self.word = word
+    },
+    toggleStorage () {
+      self.storage = !self.storage
+    }
   }
 })

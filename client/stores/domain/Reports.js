@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
 
-export default types.model('Reports', {
+export default types
+.model('Reports', {
   one: types.maybe(
     types.union(
       types.model({
@@ -15,23 +16,26 @@ export default types.model('Reports', {
       })
     )
   )
-}, {
-  setOne (data) {
-    try {
-      this.one = data
-    } catch (err) {
-      console.info('stores/Reports.setOne', err)
-    }
-  },
-  find () {
-    return new Promise((resolve, reject) => {
-      Meteor.call('report:main', (err, res) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(res)
-        }
+})
+.actions(self => {
+  return {
+    setOne (data) {
+      try {
+        self.one = data
+      } catch (err) {
+        console.info('stores/Reports.setOne', err)
+      }
+    },
+    find () {
+      return new Promise((resolve, reject) => {
+        Meteor.call('report:main', (err, res) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(res)
+          }
+        })
       })
-    })
+    }
   }
 })

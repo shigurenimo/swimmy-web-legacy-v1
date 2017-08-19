@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor'
-import { createStyleSheet } from 'material-ui/styles'
 
-export default createStyleSheet('Post', theme => {
+export default theme => {
   return {
     root: {
       overflow: 'hidden'
@@ -82,4 +81,4 @@ export default createStyleSheet('Post', theme => {
       background: theme.palette.primary[100]
     }
   }
-})
+}

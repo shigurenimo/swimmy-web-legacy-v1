@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('UIBlock', theme => {
+const styles = theme => {
   return {
     root: {
       display: 'block',
@@ -14,9 +14,9 @@ const styleSheet = createStyleSheet('UIBlock', theme => {
       margin: '0 auto'
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class UIBlock extends Component {
   render () {
     const {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('UISheetContent', theme => {
+const styles = theme => {
   return {
     root: {
       paddingBottom: '10px',
@@ -12,9 +12,9 @@ const styleSheet = createStyleSheet('UISheetContent', theme => {
       textDecoration: 'none'
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class UISheetContent extends Component {
   render () {
     const {

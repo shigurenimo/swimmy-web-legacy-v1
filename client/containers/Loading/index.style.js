@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('Loading', theme => {
+export default theme => {
   return {
     root: {
       position: 'relative'
@@ -20,4 +18,4 @@ export default createStyleSheet('Loading', theme => {
       transitionDuration: '100ms'
     }
   }
-})
+}

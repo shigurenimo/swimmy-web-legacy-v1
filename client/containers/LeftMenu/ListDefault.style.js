@@ -1,9 +1,7 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('LeftMenuDefault', theme => {
+export default theme => {
   return {
     select: {
       background: 'rgba(0, 0, 0, 0.05)'
     }
   }
-})
+}

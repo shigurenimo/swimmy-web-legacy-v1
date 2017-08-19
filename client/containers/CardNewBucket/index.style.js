@@ -1,9 +1,7 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('CardNewBucket', theme => {
+export default theme => {
   return {
     root: {
       padding: '0 10px'
     }
   }
-})
+}

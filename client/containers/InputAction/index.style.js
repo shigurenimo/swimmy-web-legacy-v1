@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('InputAction', theme => {
+export default theme => {
   return {
     line: {
       position: 'fixed',
@@ -11,4 +9,4 @@ export default createStyleSheet('InputAction', theme => {
       backgroundColor: '#F8F7F8'
     }
   }
-})
+}

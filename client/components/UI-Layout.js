@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('UILayout', theme => {
+const styles = theme => {
   return {
     root: {
       paddingBottom: 20,
@@ -11,9 +11,9 @@ const styleSheet = createStyleSheet('UILayout', theme => {
       }
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class UILayout extends Component {
   render () {
     const {classes} = this.props

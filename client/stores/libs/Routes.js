@@ -16,9 +16,7 @@ Routes.setRoute('/(default)?', {
     stores.info.close()
     document.title = documentTitle
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -33,9 +31,7 @@ Routes.setRoute('/self', {
     stores.info.close()
     document.title = documentTitle
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -77,9 +73,7 @@ Routes.setRoute('/thread', {
       stores.routes.setRoute('thread-list')
       stores.drawer.close()
       if (Meteor.isProduction) {
-        if (Meteor.isProduction) {
-          window.ga('send', 'pageview', {page: path, title: document.title})
-        }
+        window.ga('send', 'pageview', {page: path, title: document.title})
       }
     } catch (e) { console.info(e) }
   }
@@ -105,9 +99,7 @@ Routes.setRoute('/thread/:_id', {
       document.title = content + ' | ' + documentTitleShort
     })
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -123,9 +115,7 @@ Routes.setRoute('/storage', {
     stores.info.close()
     document.title = documentTitle
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -137,9 +127,7 @@ Routes.setRoute('/ch', {
     stores.channels.model.get('root').find({}, {})
     document.title = 'channel | ' + documentTitle
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -150,9 +138,7 @@ Routes.setRoute('/ch/new', {
     stores.drawer.close()
     document.title = 'new channel | ' + documentTitle
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -180,9 +166,7 @@ Routes.setRoute('/ch/:channelId', {
       stores.routes.setRoute('timeline')
       stores.drawer.close()
       if (Meteor.isProduction) {
-        if (Meteor.isProduction) {
-          window.ga('send', 'pageview', {page: path, title: document.title})
-        }
+        window.ga('send', 'pageview', {page: path, title: document.title})
       }
     })
     .catch(err => {
@@ -201,9 +185,7 @@ Routes.setRoute('/ch/:channelId/edit', {
       stores.routes.setRoute('channel-edit')
       document.title = '編集中 - ' + data.name + ' | ' + documentTitle
       if (Meteor.isProduction) {
-        if (Meteor.isProduction) {
-          window.ga('send', 'pageview', {page: path, title: document.title})
-        }
+        window.ga('send', 'pageview', {page: path, title: document.title})
       }
     })
     .catch(err => {
@@ -219,9 +201,7 @@ Routes.setRoute('/admin', {
     stores.drawer.close()
     document.title = 'マイページ | ' + documentTitle
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -232,9 +212,7 @@ Routes.setRoute('/config', {
     stores.drawer.close()
     document.title = '各種設定 | ' + documentTitle
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -245,9 +223,7 @@ Routes.setRoute('/release', {
     stores.drawer.close()
     document.title = 'リリースノート | ' + documentTitle
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })
@@ -261,9 +237,7 @@ Routes.setRoute('/report', {
       stores.drawer.close()
       document.title = '統計データ | ' + documentTitle
       if (Meteor.isProduction) {
-        if (Meteor.isProduction) {
-          window.ga('send', 'pageview', {page: path, title: document.title})
-        }
+        window.ga('send', 'pageview', {page: path, title: document.title})
       }
     })
   }
@@ -275,9 +249,7 @@ Routes.setRoute('/twitter', {
     stores.drawer.close()
     document.title = 'twitter' + ' | ' + documentTitleShort
     if (Meteor.isProduction) {
-      if (Meteor.isProduction) {
-        window.ga('send', 'pageview', {page: path, title: document.title})
-      }
+      window.ga('send', 'pageview', {page: path, title: document.title})
     }
   }
 })

@@ -1,9 +1,7 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('Report', theme => {
+export default theme => {
   return {
     number: {
       color: theme.palette.primary[500]
     }
   }
-})
+}

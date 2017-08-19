@@ -2,74 +2,77 @@ import { Meteor } from 'meteor/meteor'
 import { Mongo } from 'meteor/mongo'
 import { types } from 'mobx-state-tree'
 
-const Instance = types.model('Subscription', {
+const Instance = types
+.model('Subscription', {
   target: types.string,
   namespace: types.string
-}, {
-  selector: null,
-  options: null,
-  subscription: null,
-  cursor: null,
-  ref: null
-}, {
-  createCollection (mongoOption) {
-    if (!this.ref) {
-      const unique = this.target + this.namespace
-      if (!mongoOption) {
-        mongoOption = {defineMutationMethods: true}
-      }
-      this.ref = new Mongo.Collection(unique, mongoOption)
-    }
-    return this.ref
-  },
-  subscribe (selector, options) {
-    this.createCollection()
-    return new Promise((resolve, reject) => {
-      if (this.subscription) {
-        const diff = [
-          JSON.stringify(this.selector) === JSON.stringify(selector),
-          JSON.stringify(this.options) === JSON.stringify(options)
-        ]
-        if (diff[0] && diff[1]) {
-          reject(new Error())
-          return
+})
+.actions(self => {
+  self.selector = null
+  self.options = null
+  self.subscription = null
+  self.cursor = null
+  self.ref = null
+  return {
+    createCollection (mongoOption) {
+      if (!self.ref) {
+        const unique = self.target + self.namespace
+        if (!mongoOption) {
+          mongoOption = {defineMutationMethods: true}
         }
+        self.ref = new Mongo.Collection(unique, mongoOption)
       }
-      this.selector = selector
-      this.options = options
-      const namespace = this.target + this.namespace
-      this.unsubscribe()
-      this.subscription = Meteor.subscribe(this.target, selector, options, namespace, {
-        onReady: () => {
-          console.info('subscribe:' + this.target + '.' + namespace)
-          resolve()
+      return self.ref
+    },
+    subscribe (selector, options) {
+      self.createCollection()
+      return new Promise((resolve, reject) => {
+        if (self.subscription) {
+          const diff = [
+            JSON.stringify(self.selector) === JSON.stringify(selector),
+            JSON.stringify(self.options) === JSON.stringify(options)
+          ]
+          if (diff[0] && diff[1]) {
+            reject(new Error())
+            return
+          }
         }
+        self.selector = selector
+        self.options = options
+        const namespace = self.target + self.namespace
+        self.unsubscribe()
+        self.subscription = Meteor.subscribe(self.target, selector, options, namespace, {
+          onReady: () => {
+            console.info('subscribe:' + self.target + '.' + namespace)
+            resolve()
+          }
+        })
       })
-    })
-  },
-  unsubscribe () {
-    if (this.cursor) {
-      this.cursor.stop()
-      this.cursor = null
+    },
+    unsubscribe () {
+      if (self.cursor) {
+        self.cursor.stop()
+        self.cursor = null
+      }
+      if (self.subscription) {
+        self.subscription.stop()
+        console.info(self.collection + '.unsubscribe')
+      }
+    },
+    observe (callback) {
+      if (self.cursor) {
+        throw new Error('cursor already exists')
+      }
+      const cursor = self.ref.find().observe(callback)
+      self.cursor = cursor
+    },
+    observeChanges (callback) {
+      if (self.cursor) {
+        throw new Error('cursor already exists')
+      }
+      const cursor = self.ref.find().observeChanges(callback)
+      self.cursor = cursor
     }
-    if (this.subscription) {
-      this.subscription.stop()
-      console.info(this.collection + '.unsubscribe')
-    }
-  },
-  observe (callback) {
-    if (this.cursor) {
-      throw new Error('cursor already exists')
-    }
-    const cursor = this.ref.find().observe(callback)
-    this.cursor = cursor
-  },
-  observeChanges (callback) {
-    if (this.cursor) {
-      throw new Error('cursor already exists')
-    }
-    const cursor = this.ref.find().observeChanges(callback)
-    this.cursor = cursor
   }
 })
 
@@ -78,145 +81,156 @@ const Observer = types.model('Observer', {
   target: types.string,
   instance: types.maybe(Instance),
   instanceOne: types.maybe(Instance)
-}, {
-  find (selector = {}, options = {}) {
-    if (!this.instance) {
-      this.instance = {target: this.target, namespace: this.namespace}
-    }
-    this.setFetchState(true)
-    let models = []
-    let ref = null
-    this.instance.subscribe(selector, options)
-    .then(res => {
-      this.reset()
-      this.instance.observe({
-        added: model => {
-          models.push(model)
-          if (ref !== null) clearTimeout(ref)
-          ref = setTimeout(() => {
-            this.added(models)
-            this.setFetchState(false)
-            models = []
-            ref = null
-          }, 10)
-        },
-        changed: model => {
-          this.changed(model)
-        },
-        removed: model => {
-          this.removed(model)
-        }
-      })
-    })
-    .catch(() => {})
-  },
-  reset () {
-    this.index = []
-  },
-  added (models) {
-    this.addedBefore(models)
-    if (Array.isArray(models)) {
-      models.forEach(model => {
-        try {
-          this.index.unshift(model)
-        } catch (err) {
-          console.info('Subscription.' + this.target + '.added', err, model)
-        }
-      })
-    } else {
-      this.index.push(models)
-    }
-    this.addedAfter(models)
-  },
-  addedBefore () {},
-  addedAfter () {
-    this.index = this.index.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-  },
-  changed (model) {
-    const index = this.index.findIndex(item => item._id === model._id)
-    if (index !== -1) {
-      try {
-        this.index[index] = model
-      } catch (err) {
-        console.info('Subscription.' + this.target + '.changed', err, model)
+})
+.actions(self => {
+  return {
+    find (selector = {}, options = {}) {
+      if (!self.instance) {
+        self.instance = {target: self.target, namespace: self.namespace}
       }
-    }
-  },
-  removed (model) {
-    const index = this.index.findIndex(item => item._id === model._id)
-    this.index.splice(index, 1)
-  },
-  findOne (selector = {}, options = {}) {
-    return new Promise((resolve, reject) => {
-      if (!this.instanceOne) {
-        this.instanceOne = {target: this.target, namespace: 'one'}
-      }
-      this.instanceOne.subscribe(selector, options)
+      self.setFetchState(true)
+      let models = []
+      let ref = null
+      self.instance.subscribe(selector, options)
       .then(res => {
-        this.setFetchState(true)
-        this.instanceOne.observe({
+        self.reset()
+        self.instance.observe({
           added: model => {
-            this.setOne(model)
-            this.setFetchState(false)
-            resolve(model)
+            models.push(model)
+            if (ref !== null) clearTimeout(ref)
+            ref = setTimeout(() => {
+              self.added(models)
+              self.setFetchState(false)
+              models = []
+              ref = null
+            }, 10)
           },
           changed: model => {
-            this.setOne(model)
+            self.changed(model)
           },
           removed: model => {
-            this.setOne(null)
+            self.removed(model)
           }
         })
       })
-      .catch(() => { resolve(this.one) })
-      setTimeout(() => {
-        if (!this.one) {
-          const error = new Error('not-found')
-          reject(error)
+      .catch(() => {})
+    },
+    reset () {
+      self.index = []
+    },
+    added (models) {
+      self.addedBefore(models)
+      if (Array.isArray(models)) {
+        models.forEach(model => {
+          try {
+            self.index.unshift(model)
+          } catch (err) {
+            console.info('Subscription.' + self.target + '.added', err, model)
+          }
+        })
+      } else {
+        self.index.push(models)
+      }
+      self.addedAfter(models)
+    },
+    addedBefore () {},
+    addedAfter () {
+      self.index = self.index.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+    },
+    changed (model) {
+      const index = self.index.findIndex(item => item._id === model._id)
+      if (index !== -1) {
+        try {
+          self.index[index] = model
+        } catch (err) {
+          console.info('Subscription.' + self.target + '.changed', err, model)
         }
-      }, 5000)
-    })
-  },
-  setOne (model) {
-    this.one = model
-  },
-  setFetchState (state) {
-    if (this.fetchState !== state) {
-      this.fetchState = state
+      }
+    },
+    removed (model) {
+      const index = self.index.findIndex(item => item._id === model._id)
+      self.index.splice(index, 1)
+    },
+    findOne (selector = {}, options = {}) {
+      return new Promise((resolve, reject) => {
+        if (!self.instanceOne) {
+          self.instanceOne = {target: self.target, namespace: 'one'}
+        }
+        self.instanceOne.subscribe(selector, options)
+        .then(res => {
+          self.setFetchState(true)
+          self.instanceOne.observe({
+            added: model => {
+              self.setOne(model)
+              self.setFetchState(false)
+              resolve(model)
+            },
+            changed: model => {
+              self.setOne(model)
+            },
+            removed: model => {
+              self.setOne(null)
+            }
+          })
+        })
+        .catch(() => { resolve(self.one) })
+        setTimeout(() => {
+          if (!self.one) {
+            const error = new Error('not-found')
+            reject(error)
+          }
+        }, 5000)
+      })
+    },
+    setOne (model) {
+      self.one = model
+    },
+    setFetchState (state) {
+      if (self.fetchState !== state) {
+        self.fetchState = state
+      }
     }
-    console.log(this.fetchState)
-  }
-})
-
-const Subject = types.model('Subject', {
-  target: types.string
-}, {
-  get (namespace) {
-    return this.listener.get(namespace)
-  },
-  set (namespace) {
-    if (!namespace) return
-    if (this.listener.get(namespace)) return
-    this.listener.set(namespace, {namespace, target: this.target})
-    this[namespace] = this.listener.get(namespace)
-  },
-  unset (name) {
-    this.listener.delete(name)
-    delete this[name]
-  },
-  afterCreate () {
-    this.set('root')
   }
 })
 
 const createModel = (_Model, _Observer) => {
-  const Listener = types.compose('Listener', (_Observer || Observer), {
+  const Listener = types
+  .compose('Listener', _Observer || Observer)
+  .props({
     one: types.maybe(_Model),
-    index: types.optional(types.array(_Model), []),
-    get isEmpty () { return this.index.length === 0 }
+    index: types.optional(types.array(_Model), [])
   })
-  return types.compose('Observers', Subject, {
+  .views(self => {
+    return {
+      get isEmpty () {
+        return self.index.length === 0
+      }
+    }
+  })
+  return types
+  .model('Observers', {
+    target: types.string,
     listener: types.optional(types.map(Listener), {})
+  })
+  .actions(self => {
+    return {
+      get (namespace) {
+        return self.listener.get(namespace)
+      },
+      set (namespace) {
+        if (!namespace) return
+        if (self.listener.get(namespace)) return
+        self.listener.set(namespace, {namespace, target: self.target})
+        self[namespace] = self.listener.get(namespace)
+      },
+      unset (name) {
+        self.listener.delete(name)
+        delete self[name]
+      },
+      afterCreate () {
+        self.set('root')
+      }
+    }
   })
 }
 

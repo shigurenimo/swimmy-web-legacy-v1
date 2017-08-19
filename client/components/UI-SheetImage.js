@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 import classNames from 'classnames'
 
-const styleSheet = createStyleSheet('UISheetImage', theme => {
+const styles = theme => {
   return {
     link: {
       display: 'inline-block',
@@ -22,9 +22,9 @@ const styleSheet = createStyleSheet('UISheetImage', theme => {
       }
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class UISheetImage extends Component {
   render () {
     const {

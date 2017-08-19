@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('Content', theme => {
+export default theme => {
   return {
     root: {
       position: 'absolute',
@@ -30,4 +28,4 @@ export default createStyleSheet('Content', theme => {
       height: '101%'
     }
   }
-})
+}

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('UISheetActions', theme => {
+const styles = theme => {
   return {
     root: {
       display: 'block',
@@ -19,9 +19,9 @@ const styleSheet = createStyleSheet('UISheetActions', theme => {
       marginBottom: 0
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class UILayout extends Component {
   render () {
     const {

@@ -1,30 +1,31 @@
 import { types } from 'mobx-state-tree'
 
-export default types.model('Snackbar', {
+export default types
+.model('Snackbar', {
   message: types.optional(types.string, ''),
   isOpen: types.optional(types.boolean, false)
 }, {
   unsetOpen () {
-    this.isOpen = false
+    self.isOpen = false
   },
   show (message) {
-    this.message = message
-    this.isOpen = true
+    self.message = message
+    self.isOpen = true
     setTimeout(() => {
-      this.unsetOpen()
+      self.unsetOpen()
     }, 2000)
   },
   error (reason) {
     if (reason) {
       console.error(reason)
     }
-    this.message = reason || 'エラーが発生しました'
-    this.isOpen = true
+    self.message = reason || 'エラーが発生しました'
+    self.isOpen = true
     setTimeout(() => {
-      this.unsetOpen()
+      self.unsetOpen()
     }, 2000)
   },
   requireLogin () {
-    this.show('ログインが必要です')
+    self.show('ログインが必要です')
   }
 })

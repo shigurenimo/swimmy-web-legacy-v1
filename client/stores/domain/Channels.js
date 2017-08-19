@@ -3,14 +3,16 @@ import { types } from 'mobx-state-tree'
 import { createModel } from '/client/packages/Sub'
 import Channel from '/lib/models/Channel'
 
-export default types.model('Channels', {
+export default types
+.model('Channels', {
   model: createModel(Channel),
-  one: types.maybe(Channel),
+  one: types.maybe(Channel)
+}, {
   findOne (selector = {}, options = {}) {
     return new Promise((resolve, reject) => {
       Meteor.call('channels.findOne', selector, options, (err, res) => {
         if (err) { reject(err) } else {
-          this.setOne(res)
+          self.setOne(res)
           resolve(res)
         }
       })
@@ -31,9 +33,8 @@ export default types.model('Channels', {
         if (err) { reject(err) } else { resolve(res) }
       })
     })
-  }
-}, {
+  },
   setOne (model) {
-    this.one = model
+    self.one = model
   }
 })

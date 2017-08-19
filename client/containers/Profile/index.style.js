@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('Profile', theme => {
+export default theme => {
   return {
     squares: {
       margin: '0 auto',
@@ -21,4 +19,4 @@ export default createStyleSheet('Profile', theme => {
       maxWidth: '280px'
     }
   }
-})
+}

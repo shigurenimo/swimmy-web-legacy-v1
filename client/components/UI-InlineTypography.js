@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 
-export const styleSheet = createStyleSheet('UIInlineTypograhy', theme => {
+export const styles = theme => {
   return {
     root: {
       display: 'inline-block',
@@ -11,9 +11,9 @@ export const styleSheet = createStyleSheet('UIInlineTypograhy', theme => {
       lineHeight: '36px'
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class extends Component {
   render () {
     const {

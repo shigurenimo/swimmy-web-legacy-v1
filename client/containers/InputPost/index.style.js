@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('InputPost', theme => {
+export default theme => {
   return {
     root: {
       position: 'absolute',
@@ -16,7 +14,7 @@ export default createStyleSheet('InputPost', theme => {
         top: 0,
         right: 0,
         width: 'calc(100% - 250px)',
-        padding: '10px 10px 0 0'
+        padding: '10px 10px 0 10px'
       },
       [theme.breakpoints.down('sm')]: {
         top: 0,
@@ -65,7 +63,8 @@ export default createStyleSheet('InputPost', theme => {
       display: 'block',
       marginRight: '0',
       paddingBottom: '10px',
-      textAlign: 'right'
+      textAlign: 'right',
+      borderBottom: '1px solid rgba(0, 0, 0 ,0.1)'
     },
     openImage: {
       display: 'inline-block'
@@ -75,4 +74,4 @@ export default createStyleSheet('InputPost', theme => {
       marginBottom: 0
     }
   }
-})
+}

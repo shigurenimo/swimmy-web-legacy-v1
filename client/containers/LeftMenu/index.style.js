@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('LeftMenu', theme => {
+export default theme => {
   return {
     root: {
       position: 'absolute',
@@ -22,4 +20,4 @@ export default createStyleSheet('LeftMenu', theme => {
       }
     }
   }
-})
+}

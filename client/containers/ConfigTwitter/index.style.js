@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('Twitter', theme => {
+export default theme => {
   return {
     icon: {
       display: 'block',
@@ -9,4 +7,4 @@ export default createStyleSheet('Twitter', theme => {
       maxWidth: '280px'
     }
   }
-})
+}

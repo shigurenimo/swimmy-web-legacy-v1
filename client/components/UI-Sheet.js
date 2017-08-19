@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 
-const styleSheet = createStyleSheet('UISheet', theme => {
+const styles = theme => {
   return {
     root: {
       position: 'relative',
@@ -30,9 +30,9 @@ const styleSheet = createStyleSheet('UISheet', theme => {
       backgroundColor: 'rgba(0, 0, 0, 0.02)'
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class UILayout extends Component {
   render () {
     const {

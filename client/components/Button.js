@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 
-export const styleSheet = createStyleSheet('UIButton', theme => {
+export const styles = theme => {
   return {
     background: {
       backgroundColor: 'rgba(0, 0, 0, 0.03)'
@@ -15,9 +15,9 @@ export const styleSheet = createStyleSheet('UIButton', theme => {
       }
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class extends Component {
   render () {
     const {

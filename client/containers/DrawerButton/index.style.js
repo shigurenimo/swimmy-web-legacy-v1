@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('DrawersButton', theme => {
+export default theme => {
   return {
     root: {
       position: 'fixed',
@@ -16,4 +14,4 @@ export default createStyleSheet('DrawersButton', theme => {
       color: 'white'
     }
   }
-})
+}

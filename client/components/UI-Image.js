@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import { createStyleSheet, withStyles } from 'material-ui/styles'
+import { withStyles } from 'material-ui/styles'
 
-const styleSheet = createStyleSheet('UIImage', theme => {
+const styles = theme => {
   return {
     root: {
       display: 'block',
@@ -11,9 +11,9 @@ const styleSheet = createStyleSheet('UIImage', theme => {
       '-webkit-touch-callout': 'default'
     }
   }
-})
+}
 
-@withStyles(styleSheet)
+@withStyles(styles)
 export default class UIImage extends Component {
   render () {
     const {

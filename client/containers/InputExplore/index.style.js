@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles'
-
-export default createStyleSheet('InputExplore', theme => {
+export default theme => {
   return {
     root: {
       position: 'absolute',
@@ -74,4 +72,4 @@ export default createStyleSheet('InputExplore', theme => {
       marginBottom: 0
     }
   }
-})
+}

@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor'
-import { createStyleSheet } from 'material-ui/styles'
 
-export default createStyleSheet('CardImage', theme => {
+export default theme => {
   return {
     root: {
       overflow: 'hidden'
@@ -79,4 +78,4 @@ export default createStyleSheet('CardImage', theme => {
       background: theme.palette.primary[100]
     }
   }
-})
+}

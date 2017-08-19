@@ -1,7 +1,6 @@
-import { createStyleSheet } from 'material-ui/styles'
 import { red } from 'material-ui/colors'
 
-export default createStyleSheet('ThreadList', theme => {
+export default theme => {
   return {
     sheet: {
       borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
@@ -14,4 +13,4 @@ export default createStyleSheet('ThreadList', theme => {
       color: red['500']
     }
   }
-})
+}

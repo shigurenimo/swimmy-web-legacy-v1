@@ -57,12 +57,8 @@ export default class Content extends Component {
   }
 
   router () {
-    if (this.props.accounts.isLoggingIn) {
-      return <Loading />
-    }
-    if (this.props.routes.page === null) {
-      return <Loading />
-    }
+    if (this.props.accounts.isLoggingIn) { return <Loading /> }
+    if (this.props.routes.page === null) { return <Loading /> }
     switch (this.props.routes.page) {
       case 'channel-list':
         return <ChannelList />
@@ -87,9 +83,7 @@ export default class Content extends Component {
       case 'storage':
         return <Storage />
     }
-    if (this.props.accounts.isNotLoggedIn) {
-      return <Login />
-    }
+    if (this.props.accounts.isNotLoggedIn) { return <Login /> }
     switch (this.props.routes.page) {
       case 'admin':
         return <Admin />
