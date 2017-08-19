@@ -15,7 +15,7 @@ import styles from './index.style'
 @withStyles(styles)
 @inject('snackbar', 'accounts')
 @observer
-export default class Twitter extends Component {
+export default class ConfigTwitter extends Component {
   render () {
     const {accounts, classes} = this.props
     return (

@@ -5,7 +5,7 @@ import Layout from '/client/components/UI-Layout'
 import Sheet from '/client/components/UI-Sheet'
 import SheetActions from '/client/components/UI-SheetActions'
 
-export default class TwitterLogin extends Component {
+export default class ConfigTwitterLogin extends Component {
   render () {
     return (
       <Layout>
