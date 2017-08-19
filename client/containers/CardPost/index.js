@@ -14,9 +14,9 @@ import Sheet from '/client/components/UI-Sheet'
 import SheetActions from '/client/components/UI-SheetActions'
 import SheetContent from '/client/components/UI-SheetContent'
 import Typography from '/client/components/Typography'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('routes', 'accounts', 'posts', 'snackbar')
 @observer
 export default class Post extends Component {

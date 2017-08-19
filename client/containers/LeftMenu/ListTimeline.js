@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton'
 import IconButtonMoreExpand from '/client/components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('accounts', 'routes', 'posts', 'timeline')
 @observer
 export default class LeftMenuTimeline extends Component {

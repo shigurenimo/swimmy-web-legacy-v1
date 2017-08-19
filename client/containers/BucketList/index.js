@@ -9,9 +9,9 @@ import Sheet from '/client/components/UI-Sheet'
 import SheetContent from '/client/components/UI-SheetContent'
 import CardBucket from '../CardBucket'
 import CardNewBucket from '../CardNewBucket'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('buckets')
 @observer
 export default class Explore extends Component {

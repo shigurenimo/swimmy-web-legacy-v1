@@ -4,9 +4,9 @@ import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('buckets')
 @observer
 export default class CardNewBucket extends Component {

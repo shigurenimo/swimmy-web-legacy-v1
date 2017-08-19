@@ -2,9 +2,9 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
 import LeftMenuDefault from './ListDefault'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('routes', 'accounts')
 @observer
 export default class LeftMenu extends Component {

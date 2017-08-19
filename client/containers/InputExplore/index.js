@@ -2,9 +2,9 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject(stores => {
   return {
     routes: stores.routes,

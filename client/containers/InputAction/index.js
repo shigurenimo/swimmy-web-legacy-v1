@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
 import InputExplore from '../InputExplore'
 import InputPost from '../InputPost'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('routes', 'accounts')
 @observer
 export default class InputAction extends Component {

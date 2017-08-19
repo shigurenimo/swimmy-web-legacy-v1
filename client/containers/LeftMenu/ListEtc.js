@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import styleSheet from './ListDefault.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('routes', 'posts', 'accounts')
 @observer
 export default class LeftMenuChannels extends Component {

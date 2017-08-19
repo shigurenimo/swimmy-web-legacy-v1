@@ -9,9 +9,9 @@ import Layout from '/client/components/UI-Layout'
 import Sheet from '/client/components/UI-Sheet'
 import SheetActions from '/client/components/UI-SheetActions'
 import SheetContent from '/client/components/UI-SheetContent'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('snackbar', 'accounts', 'users')
 @observer
 export default class Profile extends Component {

@@ -4,9 +4,9 @@ import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import KeyboardArrowLeftIcon from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('drawer')
 @observer
 export default class Admin extends Component {

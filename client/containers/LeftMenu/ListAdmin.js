@@ -7,7 +7,7 @@ import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-
 import IconButtonMoreExpand from '/client/components/UI-IconButtonMoreExpand'
 import styleSheet from './ListDefault.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('routes', 'accounts')
 @observer
 export default class LeftMenuChannels extends Component {

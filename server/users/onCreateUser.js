@@ -12,5 +12,11 @@ Accounts.onCreateUser(function (options, user) {
   user.profile.code = code.join('')
   user.profile.channels = []
   user.profile.from = 'swimmy'
+  user.config = {
+    twitter: {
+      useIcon: false,
+      publicAccount: false
+    }
+  }
   return user
 })

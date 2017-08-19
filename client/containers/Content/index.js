@@ -22,9 +22,9 @@ import Timeline from '../Timeline'
 import Twitter from '../ConfigTwitter'
 import TwitterLogin from '../ConfigTwitterLogin'
 import utils from '/lib/imports/utils'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('inputPost', 'routes', 'accounts')
 @observer
 export default class Content extends Component {

@@ -172,7 +172,6 @@ export default types
       } else {
         self.loginState = 'isNotLoggedIn'
       }
-      // if (Meteor.userId()) { self.subscribe() }
       Accounts.onLogin(self.onLogin.bind(self))
       Accounts.onLogout(self.onLogout.bind(self))
     },
@@ -188,6 +187,7 @@ export default types
         self.services = model.services
         self.createdAt = model.createdAt
         self.followsIds = model.profile.follows.map(item => item._id)
+        self.config = model.config
         if (model.config) { self.loginState = 'isLoggedIn' }
       } catch (e) {
         console.info('accounts.addded', e)
@@ -205,6 +205,7 @@ export default types
         self.services = model.services
         self.createdAt = model.createdAt
         self.followsIds = model.profile.follows.map(item => item._id)
+        self.config = model.config
         if (model.config) { self.loginState = 'isLoggedIn' }
       } catch (e) {
         console.info('accounts.changed', e)

@@ -2,9 +2,9 @@ import { observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @observer
 export default class NotFound extends Component {
   render () {

@@ -5,9 +5,9 @@ import utils from '/lib/imports/utils'
 import { withStyles } from 'material-ui/styles'
 import Button from '/client/components/Button'
 import Image from '/client/components/UI-Image'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject(stores => {
   return {
     inputPost: stores.inputPost,

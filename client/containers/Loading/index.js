@@ -2,9 +2,9 @@ import { Meteor } from 'meteor/meteor'
 import { observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @observer
 export default class Loading extends Component {
   render () {

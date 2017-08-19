@@ -6,9 +6,9 @@ import { withStyles } from 'material-ui/styles'
 import Content from '../Content'
 import InputAction from '../InputAction'
 import LeftMenu from '../LeftMenu'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('drawer')
 @observer
 export default class Layout extends Component {

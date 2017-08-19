@@ -14,9 +14,9 @@ import SheetContent from '/client/components/UI-SheetContent'
 import SheetActions from '/client/components/UI-SheetActions'
 import Block from '/client/components/UI-Block'
 import InlineTypography from '/client/components/UI-InlineTypography'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('accounts')
 @observer
 export default class Login extends Component {

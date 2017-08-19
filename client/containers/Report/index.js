@@ -6,9 +6,9 @@ import Typography from 'material-ui/Typography'
 import Layout from '/client/components/UI-Layout'
 import Sheet from '/client/components/UI-Sheet'
 import SheetContent from '/client/components/UI-SheetContent'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('reports')
 @observer
 export default class Report extends Component {

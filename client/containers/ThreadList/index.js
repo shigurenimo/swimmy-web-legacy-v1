@@ -7,9 +7,9 @@ import Layout from '/client/components/UI-Layout'
 import Sheet from '/client/components/UI-Sheet'
 import SheetContent from '/client/components/UI-SheetContent'
 import utils from '/lib/imports/utils'
-import styleSheet from './index.style'
+import styles from './index.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('threads')
 @observer
 export default class ThreadList extends Component {

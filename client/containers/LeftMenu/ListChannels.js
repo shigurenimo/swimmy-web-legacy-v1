@@ -7,7 +7,7 @@ import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-
 import IconButton from 'material-ui/IconButton'
 import styleSheet from './ListDefault.style'
 
-@withStyles(styleSheet)
+@withStyles(styles)
 @inject('routes', 'posts', 'accounts')
 @observer
 export default class LeftMenuChannels extends Component {
