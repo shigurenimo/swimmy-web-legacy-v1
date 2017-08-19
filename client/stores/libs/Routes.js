@@ -148,7 +148,6 @@ Routes.setRoute('/ch/:channelId', {
     const channelId = params.channelId
     stores.channels.findOne({_id: channelId}, {})
     .then((model) => {
-      console.log(model)
       if (!model) { return notFound(stores) }
       stores.posts.model.set(channelId)
       stores.posts.model.get(channelId).find({channelId}, {})
