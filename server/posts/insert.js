@@ -4,7 +4,7 @@ import { Random } from 'meteor/random'
 import { unlink, writeFileSync } from 'fs'
 import { join } from 'path'
 import Jimp from 'jimp'
-import upload from '/lib/imports/utils/server/google/upload'
+import upload from '/lib/imports/utils/google/upload'
 import collection from '/lib/collection'
 import extendWeb from '/server/packages/extendWeb'
 
@@ -104,8 +104,8 @@ async function uploadImage (date, base64) {
 
   const datePath = [
     date.getFullYear(),
-    ('00' + (date.getMonth() + 1)).slice(-2),
-    ('00' + date.getDate()).slice(-2)
+    ('00' + (date.getUTCMonth() + 1)).slice(-2),
+    ('00' + date.getUTCDate()).slice(-2)
   ].join('/')
 
   const filePath = {
@@ -120,7 +120,8 @@ async function uploadImage (date, base64) {
   // x256
   const x256 = join(process.env.PWD, '.temp', fileName.x256)
   const x256Ref = await Jimp.read(temp)
-  x256Ref.resize(512, Jimp.AUTO)
+  x256Ref
+  .resize(512, Jimp.AUTO)
   .exifRotate()
   .write(x256)
 
@@ -131,7 +132,8 @@ async function uploadImage (date, base64) {
   // x512
   const x512 = join(process.env.PWD, '.temp', fileName.x512)
   const x512Ref = await Jimp.read(temp)
-  x512Ref.resize(512, Jimp.AUTO)
+  x512Ref
+  .resize(512, Jimp.AUTO)
   .exifRotate()
   .write(x512)
 
@@ -142,7 +144,8 @@ async function uploadImage (date, base64) {
   // x1024
   const x1024 = join(process.env.PWD, '.temp', fileName.x512)
   const x1024Ref = await Jimp.read(temp)
-  x1024Ref.resize(1024, Jimp.AUTO)
+  x1024Ref
+  .resize(1024, Jimp.AUTO)
   .exifRotate()
   .write(x512)
 
