@@ -43,7 +43,7 @@ export default types
     },
     remove (_id) {
       return new Promise((resolve, reject) => {
-        Meteor.call('posts.insert', {_id}, (err, res) => {
+        Meteor.call('posts.remove', {_id}, (err, res) => {
           if (err) { reject(err) } else { resolve(res) }
         })
       })

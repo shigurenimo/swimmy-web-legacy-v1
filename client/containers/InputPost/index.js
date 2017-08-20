@@ -68,10 +68,10 @@ export default class InputPost extends Component {
             secret
           </Button>}
           {/* image */}
-          <Dropzone
-            className={classes.openImage}
-            onDrop={this.onDropImage}>
-            <Button dense className={classes.spacing}>image</Button>
+          <Dropzone className={classes.openImage} onDrop={this.onDropImage}>
+            <Button dense className={classes.spacing}>
+              image
+            </Button>
           </Dropzone>
           {/* send */}
           {!this.state.errorImage &&

@@ -1,6 +1,7 @@
 import { types } from 'mobx-state-tree'
 
-export default types.model('InputPost', {
+export default types
+.model('InputPost', {
   postContent: types.optional(types.string, ''),
   postImage: types.optional(types.boolean, false),
   postContentHeight: types.optional(types.number, 40)
