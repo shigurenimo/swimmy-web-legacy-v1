@@ -3,6 +3,7 @@ accounts-oauth@1.1.15
 accounts-password@1.5.0-beta.26
 accounts-twitter@1.4.0-beta.26
 allow-deny@1.1.0-beta.26
+apollo@1.0.0
 autoupdate@1.3.12
 babel-compiler@6.21.1-beta.26
 babel-runtime@1.1.0-beta.26
@@ -65,6 +66,7 @@ spacebars-compiler@1.1.2
 srp@1.0.10
 standard-minifiers-js@1.0.3-modules.8
 static-html@1.2.2
+swydo:graphql@0.3.0
 templating-tools@1.1.2
 tracker@1.1.3
 twitter-oauth@1.2.0
