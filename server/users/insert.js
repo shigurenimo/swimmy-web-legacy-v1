@@ -7,6 +7,7 @@ Meteor.methods({
   'users.insert' (req) {
     check(req.username, String)
     check(req.password, String)
+
     if (req.username.length === 0) {
       throw new Meteor.Error('username', 'ユーザネームが必要です')
     }
@@ -31,6 +32,7 @@ Meteor.methods({
     if (req.password.length < 4) {
       throw new Meteor.Error('password', 'パスワードが短すぎます')
     }
+
     return Accounts.createUser({
       username: req.username,
       password: req.password
