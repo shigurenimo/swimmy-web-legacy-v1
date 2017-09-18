@@ -1,4 +1,10 @@
 export default [{
+  version: '1.4.11',
+  date: '2017.9.19',
+  content: [
+    'meteor 1.6-beta.26'
+  ]
+}, {
   version: '1.4.10',
   date: '2017.8.7',
   content: [
