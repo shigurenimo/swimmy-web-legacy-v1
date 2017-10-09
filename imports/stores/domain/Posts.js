@@ -8,7 +8,7 @@ const CustomObserver = types
 .actions(self => {
   return {
     addedAfter () {
-      this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      // this.index = this.index.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     }
   }
 })

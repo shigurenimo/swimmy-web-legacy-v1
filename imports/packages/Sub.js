@@ -135,7 +135,7 @@ const Observer = types.model('Observer', {
     },
     addedBefore () {},
     addedAfter () {
-      self.index = self.index.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+      // self.index = self.index.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
     },
     changed (model) {
       const index = self.index.findIndex(item => item._id === model._id)
