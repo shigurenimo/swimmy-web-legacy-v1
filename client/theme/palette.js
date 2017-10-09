@@ -1,13 +1,10 @@
-import createPalette from 'material-ui/styles/palette'
-import { blue, red } from 'material-ui/colors'
+import blue from 'material-ui/colors/blue'
+import red from 'material-ui/colors/red'
 
-const palette = createPalette({
+const palette = {
   primary: blue,
   accent: red,
-  type: 'light'
-})
-
-palette.text.secondary = 'rgba(0, 0, 0, 0.6)'
-palette.text.primary = 'rgba(0, 0, 0, 0.7)'
+  error: red
+}
 
 export default palette
