@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
 import { createModel } from '/client/packages/Sub'
-import Channel from '/lib/models/Channel'
+import Channel from '/imports/models/Channel'
 
 export default types
 .model('Channels', {

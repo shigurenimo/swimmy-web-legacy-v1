@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
-import User from '/lib/models/User'
+import User from '/imports/models/User'
 
 export default types
 .model('Users', {

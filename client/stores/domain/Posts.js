@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { types } from 'mobx-state-tree'
 import { createModel, Observer } from '/client/packages/Sub'
-import Post from '/lib/models/Post'
+import Post from '/imports/models/Post'
 
 const CustomObserver = types
 .compose('Observer', Observer)

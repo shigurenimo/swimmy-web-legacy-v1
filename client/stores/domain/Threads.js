@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree'
 import { createModel } from '/client/packages/Sub'
-import Thread from '/lib/models/Thread'
+import Thread from '/imports/models/Thread'
 
 export default types
 .model('Thread', {

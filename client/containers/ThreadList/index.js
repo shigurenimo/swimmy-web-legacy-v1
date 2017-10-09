@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography'
 import Layout from '/client/components/UI-Layout'
 import Sheet from '/client/components/UI-Sheet'
 import SheetContent from '/client/components/UI-SheetContent'
-import utils from '/lib/imports/utils'
+import utils from '/imports/utils'
 import styles from './index.style'
 
 @withStyles(styles)

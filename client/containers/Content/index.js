@@ -21,7 +21,7 @@ import ThreadList from '../ThreadList'
 import Timeline from '../Timeline'
 import Twitter from '../ConfigTwitter'
 import TwitterLogin from '../ConfigTwitterLogin'
-import utils from '/lib/imports/utils'
+import utils from '/imports/utils'
 import styles from './index.style'
 
 @withStyles(styles)

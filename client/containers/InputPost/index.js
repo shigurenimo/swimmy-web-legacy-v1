@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
-import utils from '/lib/imports/utils'
+import utils from '/imports/utils'
 import { withStyles } from 'material-ui/styles'
 import Button from '/client/components/Button'
 import Image from '/client/components/UI-Image'

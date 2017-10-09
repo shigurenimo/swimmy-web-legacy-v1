@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import classNames from 'classnames'
-import utils from '/lib/imports/utils'
+import utils from '/imports/utils'
 import { withStyles } from 'material-ui/styles'
 import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
