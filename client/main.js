@@ -2,11 +2,12 @@ import { Provider } from 'mobx-react'
 import React from 'react'
 import { render } from 'react-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import Snackbar from './containers/Snackbar'
-import DrawerButton from './containers/DrawerButton'
-import Layout from './containers/Layout'
-import stores from './stores'
-import theme from './theme'
+
+import Snackbar from '/imports/ui/containers/Snackbar'
+import DrawerButton from '/imports/ui/containers/DrawerButton'
+import Layout from '/imports/ui/containers/Layout'
+import stores from '/imports/stores'
+import theme from '/imports/theme'
 
 render(
   <Provider {...stores}>
