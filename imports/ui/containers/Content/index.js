@@ -1,7 +1,10 @@
+import compose from 'ramda/src/compose'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+
+import withCurrentUser from '/imports/ui/hocs/withCurrentUser'
 import Admin from '../Admin'
 import BucketList from '../BucketList'
 import ConfigAccount from '../ConfigAccount'
@@ -24,10 +27,7 @@ import TwitterLogin from '../ConfigTwitterLogin'
 import utils from '/imports/utils'
 import styles from './index.style'
 
-@withStyles(styles)
-@inject('inputPost', 'routes', 'accounts')
-@observer
-export default class Content extends Component {
+class Content extends Component {
   render () {
     const {classes} = this.props
     return (
@@ -57,8 +57,12 @@ export default class Content extends Component {
   }
 
   router () {
-    if (this.props.accounts.isLoggingIn) { return <Loading /> }
+    if (this.props.loggingIn) { return <Loading /> }
+
+    if (this.props.loggingOut) { return <Loading /> }
+
     if (this.props.routes.page === null) { return <Loading /> }
+
     switch (this.props.routes.page) {
       case 'channel-list':
         return <ChannelList />
@@ -69,6 +73,7 @@ export default class Content extends Component {
       case 'report':
         return <Report />
     }
+
     switch (this.props.routes.page) {
       case 'explore':
         return <Explore />
@@ -83,7 +88,9 @@ export default class Content extends Component {
       case 'storage':
         return <Storage />
     }
-    if (this.props.accounts.isNotLoggedIn) { return <Login /> }
+
+    if (!this.props.currentUser) { return <Login /> }
+
     switch (this.props.routes.page) {
       case 'admin':
         return <Admin />
@@ -106,6 +113,7 @@ export default class Content extends Component {
           return <Loading />
         }
     }
+
     return null
   }
 
@@ -174,3 +182,10 @@ export default class Content extends Component {
     }
   }
 }
+
+export default compose(
+  withStyles(styles),
+  inject('inputPost', 'routes', 'accounts'),
+  withCurrentUser,
+  observer
+)(Content)
