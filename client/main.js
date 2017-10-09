@@ -1,13 +1,15 @@
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { Provider } from 'mobx-react'
 import React from 'react'
 import { render } from 'react-dom'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-import Snackbar from '/imports/ui/containers/Snackbar'
 import DrawerButton from '/imports/ui/containers/DrawerButton'
 import Layout from '/imports/ui/containers/Layout'
+import Snackbar from '/imports/ui/containers/Snackbar'
 import stores from '/imports/stores'
 import theme from '/imports/theme'
+
+export const root = document.querySelector('div')
 
 render(
   <Provider {...stores}>
@@ -19,5 +21,5 @@ render(
       </div>
     </MuiThemeProvider>
   </Provider>,
-  document.querySelector('div')
+  root
 )

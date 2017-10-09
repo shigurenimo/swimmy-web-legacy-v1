@@ -1,9 +1,11 @@
-import { Meteor } from 'meteor/meteor'
-import { Accounts } from 'meteor/accounts-base'
-import { createApolloServer } from 'meteor/apollo'
-import { makeExecutableSchema } from 'graphql-tools'
 import { mkdir } from 'fs'
 import { join } from 'path'
+
+import { Accounts } from 'meteor/accounts-base'
+import { createApolloServer } from 'meteor/apollo'
+import { Meteor } from 'meteor/meteor'
+
+import { makeExecutableSchema } from 'graphql-tools'
 
 import '/imports/api/buckets'
 import '/imports/api/channels'
