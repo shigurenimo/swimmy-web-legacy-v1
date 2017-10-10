@@ -17,7 +17,7 @@ export default class LeftMenuChannels extends Component {
       <List>
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.routes.page === 'channel'
+            // [classes.select]: this.props.routes.page === 'channel'
           })}
           component='a'
           href={'/ch'}>
@@ -26,7 +26,7 @@ export default class LeftMenuChannels extends Component {
         {this.props.accounts.isLogged &&
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.routes.page.includes('channel-new')
+            // [classes.select]: this.props.routes.page.includes('channel-new')
           })}
           component={'a'}
           href={'/ch/new'}>

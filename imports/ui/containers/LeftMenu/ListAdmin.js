@@ -52,15 +52,11 @@ export default class LeftMenuChannels extends Component {
 
   state = {isExpand: false}
 
-  onExpand () { this.setState({isExpand: !this.state.isExpand}) }
+  onExpand = () => { this.setState({isExpand: !this.state.isExpand}) }
 
-  onExpand = ::this.onExpand
-
-  onLogout () {
+  onLogout = () => {
     this.props.accounts.logout()
     .then(() => { this.props.snackbar.show('ログアウトしました') })
     .catch(err => this.props.snackbar.error(err.reason))
   }
-
-  onLogout = ::this.onLogout
 }
