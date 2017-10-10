@@ -7,9 +7,11 @@ import Sheet from '/imports/ui/components/UI-Sheet'
 import SheetContent from '/imports/ui/components/UI-SheetContent'
 import ChannelInfo from '/imports/ui/containers/ChannelInfo'
 import CardPost from '/imports/ui/containers/CardPost'
+import withPosts from '/imports/ui/hocs/withPosts'
 
 @inject('posts', 'timeline', 'info')
 @observer
+@withPosts({scope: ''})
 export default class Timeline extends Component {
   render () {
     return (
@@ -20,21 +22,19 @@ export default class Timeline extends Component {
     )
   }
 
-  get posts () { return this.props.posts.model.get(this.props.timeline.unique) }
-
   get forPosts () {
-    if (this.posts.isEmpty) {
+    if (this.props.posts.data.length === 0) {
       return (
         <Sheet>
           <SheetContent>
             <Typography>
-              {this.posts.fetchState ? '読み込み中 ..' : ''}
+              {this.props.posts.loading ? '読み込み中 ..' : ''}
             </Typography>
           </SheetContent>
         </Sheet>
       )
     }
-    return this.posts.index.map(item => <CardPost key={item._id} {...item} />)
+    return this.props.posts.data.map(item => <CardPost key={item._id} {...item} />)
   }
 
   componentDidMount () { this.context.onScrollTop() }

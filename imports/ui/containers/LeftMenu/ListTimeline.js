@@ -21,11 +21,13 @@ export default class LeftMenuTimeline extends Component {
         {/* timelines */}
         <ListItem button dense
           className={classNames({
+            /*
             [classes.select]: this.props.routes.page === 'timeline' && (
               this.props.timeline.unique === 'root' ||
               this.props.timeline.unique === 'follows' ||
               this.props.timeline.unique === 'self'
             )
+            */
           })}
           component='a'
           href={'/'}>
@@ -38,7 +40,7 @@ export default class LeftMenuTimeline extends Component {
           {/* default */}
           <ListItem button dense
             className={classNames({
-              [classes.select]: this.props.timeline.unique === 'default'
+              // [classes.select]: this.props.timeline.unique === 'default'
             })}
             component='a'
             href={'/'}>
@@ -48,7 +50,7 @@ export default class LeftMenuTimeline extends Component {
           {accounts.isLogged &&
           <ListItem button dense
             className={classNames({
-              [classes.select]: this.props.timeline.unique === 'self'
+              // [classes.select]: this.props.timeline.unique === 'self'
             })}
             component='a'
             href={'/self'}>
@@ -58,7 +60,7 @@ export default class LeftMenuTimeline extends Component {
         {/* threads */}
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.routes.page.includes('thread')
+            // [classes.select]: this.props.routes.page.includes('thread')
           })}
           component='a'
           href='/thread'>
@@ -72,7 +74,7 @@ export default class LeftMenuTimeline extends Component {
         {/* storage */}
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.routes.page.includes('storage')
+            // [classes.select]: this.props.routes.page.includes('storage')
           })}
           component='a'
           href='/storage'>
@@ -81,7 +83,7 @@ export default class LeftMenuTimeline extends Component {
         {/* explore */}
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.routes.page.includes('explore')
+            // [classes.select]: this.props.routes.page.includes('explore')
           })}
           component='a'
           href='/explore'>
@@ -96,7 +98,7 @@ export default class LeftMenuTimeline extends Component {
           <ListItem button dense
             key={item._id}
             className={classNames({
-              [classes.select]: this.props.timeline.channelId === item._id
+              // [classes.select]: this.props.timeline.channelId === item._id
             })}
             component='a'
             href={'/ch/' + item._id}>

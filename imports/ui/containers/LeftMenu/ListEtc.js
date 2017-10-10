@@ -15,7 +15,7 @@ export default class LeftMenuChannels extends Component {
       <List>
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.routes.page.includes('release')
+            // [classes.select]: this.props.routes.page.includes('release')
           })}
           component='a'
           href='/release'>
@@ -23,7 +23,7 @@ export default class LeftMenuChannels extends Component {
         </ListItem>
         <ListItem button dense
           className={classNames({
-            [classes.select]: this.props.routes.page.includes('report')
+            // [classes.select]: this.props.routes.page.includes('report')
           })}
           component='a'
           href='/report'>

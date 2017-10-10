@@ -4,5 +4,5 @@ import Bucket from '/imports/models/Bucket'
 
 export default types
 .model('Buckets', {
-  model: createModel(Bucket)
+  // model: createModel(Bucket)
 })

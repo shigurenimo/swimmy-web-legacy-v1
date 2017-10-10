@@ -6,6 +6,7 @@ const documentTitleShort = 'swimmy'
 
 const Routes = Router.create()
 
+/*
 Routes.setRoute('/(default)?', {
   action (stores, {path}) {
     stores.posts.model.set('root')
@@ -277,5 +278,6 @@ function notFound (stores, error) {
     window.ga('send', 'pageview', {page: '/404', title: document.title})
   }
 }
+*/
 
 export default Routes

@@ -2,10 +2,8 @@ import { Meteor } from 'meteor/meteor'
 import collection from '/imports/collection'
 import utils from '/imports/utils'
 
-Meteor.publish('posts', function (selector = {}, options = {}, target) {
-  const unique = target.replace('posts', '')
-
-  switch (unique) {
+Meteor.publish('posts', function (selector = {}, options = {}, scope) {
+  switch (scope) {
     case 'self':
       selector.ownerId = this.userId
       break
@@ -40,8 +38,10 @@ Meteor.publish('posts', function (selector = {}, options = {}, target) {
 
   const firstModel = collection.posts.findOne(selector, options)
 
+  const target = scope ? 'posts.' + scope : 'posts'
+
   if (firstModel) {
-    if (unique !== 'thread' && firstModel.replyId) {
+    if (scope !== 'thread' && firstModel.replyId) {
       const reply = collection.posts.findOne(firstModel.replyId, replyOptions)
       if (reply) {
         firstModel.reply = reply
@@ -66,7 +66,7 @@ Meteor.publish('posts', function (selector = {}, options = {}, target) {
   const cursor = collection.posts.find(selector, options)
   .observe({
     addedAt: (model) => {
-      if (unique !== 'thread' && model.replyId) {
+      if (scope !== 'thread' && model.replyId) {
         const reply = collection.posts.findOne(model.replyId, replyOptions)
         if (reply) {
           model.reply = reply

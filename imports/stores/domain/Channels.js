@@ -5,7 +5,7 @@ import Channel from '/imports/models/Channel'
 
 export default types
 .model('Channels', {
-  model: createModel(Channel),
+  // model: createModel(Channel),
   one: types.maybe(Channel)
 })
 .actions(self => {

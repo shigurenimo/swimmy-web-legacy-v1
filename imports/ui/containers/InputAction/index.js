@@ -6,18 +6,16 @@ import InputPost from '../InputPost'
 import styles from './index.style'
 
 @withStyles(styles)
-@inject('routes', 'accounts')
+@inject('router', 'accounts')
 @observer
 export default class InputAction extends Component {
   render () {
     const {classes} = this.props
-    if (this.props.routes.page === null) {
-      return null
-    }
     if (this.props.accounts.isLoggingIn) {
       return null
     }
-    switch (this.props.routes.page) {
+    switch (this.props.router.location.pathname) {
+      case '/':
       case 'timeline':
       case 'timemachine':
       case 'thread':

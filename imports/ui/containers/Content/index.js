@@ -1,9 +1,12 @@
 import compose from 'ramda/src/compose'
 import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import Route from 'react-router-dom/Route'
+import Router from 'react-router-dom/Router'
+import Switch from 'react-router-dom/Switch'
 
+import ContentPadding from '/imports/ui/components/ContentPadding'
+import withRouterHistory from '/imports/ui/hocs/withRouterHistory'
 import withCurrentUser from '/imports/ui/hocs/withCurrentUser'
 import Admin from '../Admin'
 import BucketList from '../BucketList'
@@ -24,36 +27,18 @@ import ThreadList from '../ThreadList'
 import Timeline from '../Timeline'
 import Twitter from '../ConfigTwitter'
 import TwitterLogin from '../ConfigTwitterLogin'
-import utils from '/imports/utils'
-import styles from './index.style'
 
 class Content extends Component {
   render () {
-    const {classes} = this.props
     return (
-      <div
-        className={classes.root}
-        style={{paddingTop: this.paddingTop}}
-        ref={self => { this.ref = self }}>
-        <div className={classes.fixHeight}>
-          {this.router()}
-        </div>
-      </div>
+      <ContentPadding>
+        <Router history={this.props.history}>
+          <Switch>
+            <Route exact path='/' component={Timeline} />
+          </Switch>
+        </Router>
+      </ContentPadding>
     )
-  }
-
-  get paddingTop () {
-    switch (this.props.routes.page) {
-      case 'timeline':
-      case 'logs':
-      case 'thread':
-      case 'channel-info':
-        return this.props.inputPost.paddingTop
-      case 'explore':
-        return 58
-      default:
-        return 10
-    }
   }
 
   router () {
@@ -116,76 +101,11 @@ class Content extends Component {
 
     return null
   }
-
-  componentDidMount () {
-    // ↓ iOSのスクロールに対する処置
-    const isSmartphone = utils.isSmartphone
-    const element = this.ref
-    // ↓ 初回時の修正
-    setTimeout(() => {
-      if (element.scrollTop === 0) {
-        element.scrollTop = 1
-      }
-    }, 1000)
-    if (isSmartphone) {
-      setInterval(() => {
-        if (element.scrollTop === 0) {
-          element.scrollTop = 1
-        }
-      }, 1000)
-    }
-    const scrollEvent = () => {
-      if (isSmartphone) {
-        if (element.scrollTop === 0) {
-          // スクロール上端のバグ補正
-          element.scrollTop = 1
-        } else if (element.scrollHeight - element.clientHeight > 2 &&
-          element.scrollHeight - element.scrollTop - element.clientHeight === 0) {
-          // スクロール下端のバグ補正
-          element.scrollTop = element.scrollHeight - element.clientHeight - 1
-        }
-      }
-    }
-    try { // ↓ IE9+
-      scrollEvent()
-      element.addEventListener('scroll', scrollEvent, false)
-    } catch (err) { // ↓ for IE8-
-      console.error(err)
-      scrollEvent()
-      element.attachEvent('onscroll', scrollEvent)
-    }
-  }
-
-  static get childContextTypes () {
-    return {
-      onScrollTop: propTypes.any
-    }
-  }
-
-  getChildContext () {
-    const self = this
-    return {
-      onScrollTop () {
-        let scroll = 1
-        switch (self.props.routes.pageCache) {
-          case 'channel-info':
-          case 'profile':
-          case 'thread':
-          case 'artwork-info':
-            scroll = self.props.routes.scrollCache
-        }
-        setTimeout(() => {
-          const element = self.ref
-          element.scrollTop = scroll
-        }, 150)
-      }
-    }
-  }
 }
 
 export default compose(
-  withStyles(styles),
   inject('inputPost', 'routes', 'accounts'),
+  withRouterHistory,
   withCurrentUser,
   observer
 )(Content)

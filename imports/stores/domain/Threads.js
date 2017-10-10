@@ -4,5 +4,5 @@ import Thread from '/imports/models/Thread'
 
 export default types
 .model('Thread', {
-  model: createModel(Thread)
+  // model: createModel(Thread)
 })
