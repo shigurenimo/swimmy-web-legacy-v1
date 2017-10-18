@@ -1,20 +1,21 @@
 import { types } from 'mobx-state-tree'
 
-export default types
-.model('InputPost', {
+export const model = {
   postContent: types.optional(types.string, ''),
   postImage: types.optional(types.boolean, false),
   postContentHeight: types.optional(types.number, 40)
-})
-.views(self => {
+}
+
+export const views = self => {
   return {
     get paddingTop () {
       const image = self.postImage ? 210 : 0
       return 97 + image + self.postContentHeight
     }
   }
-})
-.actions(self => {
+}
+
+export const actions = self => {
   return {
     setPostContent (value) {
       self.postContent = value
@@ -31,4 +32,6 @@ export default types
       self.postImage = false
     }
   }
-})
+}
+
+export default types.model('InputPost', model).views(views).actions(actions)

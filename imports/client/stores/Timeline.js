@@ -1,12 +1,12 @@
 import { types } from 'mobx-state-tree'
 
-export default types
-.model('Timeline', {
+export const model = {
   name: types.maybe(types.string),
   channelId: types.maybe(types.string),
   unique: types.maybe(types.string)
-})
-.actions(self => {
+}
+
+export const actions = self => {
   return {
     setCurrent ({channelId = null, unique = '', name = ''}) {
       if (channelId) {
@@ -32,4 +32,6 @@ export default types
       }
     }
   }
-})
+}
+
+export default types.model('Timeline', model).actions(actions)

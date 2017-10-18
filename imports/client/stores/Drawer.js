@@ -1,10 +1,8 @@
 import { types } from 'mobx-state-tree'
 
-export default types
-.model('Drawer', {
-  isOpen: false
-})
-.actions(self => {
+export const model = {isOpen: false}
+
+export const actions = self => {
   return {
     toggle () {
       self.isOpen = !self.isOpen
@@ -16,4 +14,6 @@ export default types
       self.isOpen = false
     }
   }
-})
+}
+
+export default types.model('Drawer', model).actions(actions)

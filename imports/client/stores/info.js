@@ -1,10 +1,10 @@
 import { types } from 'mobx-state-tree'
 
-export default types
-.model('Info', {
+export const model = {
   isOpen: types.optional(types.boolean, false)
-})
-.actions(self => {
+}
+
+export const actions = self => {
   return {
     open () {
       self.isOpen = true
@@ -13,4 +13,6 @@ export default types
       self.isOpen = false
     }
   }
-})
+}
+
+export default types.model('Info', model).actions(actions)
