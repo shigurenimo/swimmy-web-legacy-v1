@@ -1,4 +1,10 @@
 export default [{
+  version: '1.5.0-beta.0',
+  date: '2017.10.19',
+  content: [
+    'UIの再構築'
+  ]
+}, {
   version: '1.4.11',
   date: '2017.9.19',
   content: [
