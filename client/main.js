@@ -6,20 +6,25 @@ import Route from 'react-router-dom/Route'
 import Router from 'react-router-dom/Router'
 import Switch from 'react-router-dom/Switch'
 
-import DrawerButton from '/imports/ui/containers/DrawerButton'
-import InputAction from '/imports/ui/containers/InputAction'
-import LeftMenu from '/imports/ui/containers/LeftMenu'
-import ContentPadding from '/imports/ui/components/ContentPadding'
-import SplitView from '/imports/ui/components/SplitView'
-import Swipeable from '/imports/ui/components/Swipeable'
-import withCurrentUser from '/imports/ui/hocs/withCurrentUser'
-import withMuiThemeProvider from '/imports/ui/hocs/withMuiThemeProvider'
-import withProvider from '/imports/ui/hocs/withProvider'
-import withRouterHistory from '/imports/ui/hocs/withRouterHistory'
-import Timeline from '/imports/ui/containers/Timeline'
-import Snackbar from '/imports/ui/containers/Snackbar'
-import stores from '/imports/stores'
-import theme from '/imports/theme'
+import ContentPadding from '/imports/client/ui/containers/ContentPadding'
+import DrawerButton from '/imports/client/ui/containers/DrawerButton'
+import InputAction from '/imports/client/ui/containers/InputAction'
+import LeftMenu from '/imports/client/ui/containers/LeftMenu'
+import Snackbar from '/imports/client/ui/containers/Snackbar'
+import SplitView from '/imports/client/ui/containers/SplitView'
+import Swipeable from '/imports/client/ui/containers/SwipeableView'
+import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
+import withMuiThemeProvider from '/imports/client/ui/hocs/withMuiThemeProvider'
+import withProvider from '/imports/client/ui/hocs/withProvider'
+import withRouterHistory from '/imports/client/ui/hocs/withRouterHistory'
+import Admin from '/imports/client/ui/pages/Admin'
+import Note from '/imports/client/ui/pages/Note'
+import Login from '/imports/client/ui/pages/Login'
+import Thread from '/imports/client/ui/pages/Thread'
+import ThreadIndex from '/imports/client/ui/pages/ThreadIndex'
+import Timeline from '/imports/client/ui/pages/Timeline'
+import stores from '/imports/client/stores'
+import theme from '/imports/client/theme'
 
 export const App = props =>
   <div>
@@ -27,12 +32,24 @@ export const App = props =>
     <Snackbar />
     <SplitView>
       <Swipeable>
-        <LeftMenu />
+        <Router history={props.history}>
+          <LeftMenu />
+        </Router>
         <ContentPadding>
           <Router history={props.history}>
-            <Switch>
+            {props.isLogged ? <Switch>
               <Route exact path='/' component={Timeline} />
-            </Switch>
+              <Route exact path='/note' component={Note} />
+              <Route exact path='/thread' component={ThreadIndex} />
+              <Route exact path='/thread/:postId' component={Thread} />
+              <Route exact path='/admin' component={Admin} />
+            </Switch> : <Switch>
+              <Route exact path='/' component={Timeline} />
+              <Route exact path='/note' component={Note} />
+              <Route exact path='/thread' component={ThreadIndex} />
+              <Route exact path='/thread/:postId' component={Thread} />
+              <Route exact path='/admin' component={Login} />
+            </Switch>}
           </Router>
         </ContentPadding>
       </Swipeable>
