@@ -37,7 +37,8 @@ class Login extends Component {
         <Sheet key='login'>
           <Block width={400} align='center'>
             <SheetActions>
-              <TextFiled fullWidth
+              <TextFiled
+                fullWidth
                 name='username'
                 label={this.state.error === 'username' ? this.state.errorMessage : 'username'}
                 onChange={this.onInputUsername}
@@ -47,7 +48,8 @@ class Login extends Component {
                 maxLength='40' />
             </SheetActions>
             <SheetActions>
-              <TextFiled fullWidth
+              <TextFiled
+                fullWidth
                 type='password'
                 name='password'
                 label={this.state.error === 'password' ? this.state.errorMessage : 'password'}
