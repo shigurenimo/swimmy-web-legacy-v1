@@ -2,9 +2,12 @@ import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
 
 export default withTracker(() => {
+  Meteor.subscribe('userData')
+
   return {
-    loggingIn: Meteor.loggingIn(),
-    loggingOut: Meteor.loggingOut(),
+    isLogged: !!Meteor.user(),
+    isLoggingIn: Meteor.loggingIn(),
+    isLoggingOut: Meteor.loggingOut(),
     userId: Meteor.userId(),
     currentUser: Meteor.user()
   }
