@@ -1,38 +1,31 @@
+import classNames from 'classnames'
+import withStyles from 'material-ui/styles/withStyles'
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
 
-const styles = theme => {
-  return {
-    root: {
-      display: 'block',
-      width: '100%',
-      borderBottom: 'none',
-      transitionDuration: '200ms'
-    },
-    inner: {
-      position: 'relative',
-      margin: '0 auto'
-    }
+const styles = {
+  root: {
+    display: 'block',
+    width: '100%',
+    borderBottom: 'none',
+    transitionDuration: '200ms'
+  },
+  inner: {
+    position: 'relative',
+    margin: '0 auto'
   }
 }
 
-@withStyles(styles)
-export default class UIBlock extends Component {
+class Block extends Component {
   render () {
     const {
       classes,
-      href,
-      center,
+      className,
       align = 'left',
       width,
       ...other
     } = this.props
-    const Component = href ? 'a' : 'div'
     return (
-      <Component
-        {...other}
-        className={classes.root}
-        href={href}>
+      <Component {...other} className={classNames(className, classes.root)}>
         <div
           className={classes.inner}
           style={{
@@ -49,8 +42,12 @@ export default class UIBlock extends Component {
     switch (align) {
       case 'left':
         return '0 auto 0 0'
+      case 'right':
+        return '0 0 0 auto'
       case 'center':
         return '0 auto'
     }
   }
 }
+
+export default withStyles(styles)(Block)
