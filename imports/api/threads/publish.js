@@ -1,13 +1,16 @@
 import { Meteor } from 'meteor/meteor'
 import collection from '/imports/collection'
 
-Meteor.publish('threads', function (selector = {}, options = {}, target) {
+Meteor.publish('threads', function (selector = {}, options = {}, scope) {
   selector.content = {$ne: ''}
   selector['replies.0'] = {$exists: true}
 
+  options.sort = {createdAt: -1}
   options.limit = 50
 
   const firstModel = collection.posts.findOne(selector, options)
+
+  const target = scope ? 'threads.' + scope : 'threads'
 
   if (firstModel) {
     if (this.userId !== firstModel.ownerId) { delete firstModel.ownerId }
