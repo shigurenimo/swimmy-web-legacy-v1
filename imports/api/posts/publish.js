@@ -23,6 +23,7 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
   options.fields = {
     replies: 0
   }
+  options.limit = 40
 
   const replyOptions = {
     fields: {
@@ -64,7 +65,8 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
   }
 
   const cursor = collection.posts.find(selector, options)
-  .observe({
+
+  const observeHandle = cursor.observe({
     addedAt: (model) => {
       if (scope !== 'thread' && model.replyId) {
         const reply = collection.posts.findOne(model.replyId, replyOptions)
@@ -110,5 +112,5 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
 
   this.ready()
 
-  this.onStop(() => { cursor.stop() })
+  this.onStop(() => { observeHandle.stop() })
 })

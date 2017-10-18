@@ -4,7 +4,7 @@ import Storage from '@google-cloud/storage'
 import collection from '/imports/collection'
 
 Meteor.methods({
-  'posts.remove' (req) {
+  'removePost' (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
 
     const model = collection.posts.findOne(req._id)

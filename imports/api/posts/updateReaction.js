@@ -3,21 +3,21 @@ import { check } from 'meteor/check'
 import collection from '/imports/collection'
 
 Meteor.methods({
-  'posts.updateReaction' (req) {
+  'updatePostReaction' (postId, req) {
     if (!this.userId) throw new Meteor.Error('not-authorized', 'ログインが必要です')
 
-    check(req.postId, String)
+    check(postId, String)
     check(req.name, String)
 
     if (req.name === '') return
 
-    const post = collection.posts.findOne(req.postId)
+    const post = collection.posts.findOne(postId)
 
     const index = post.reactions.findIndex(item => item.name === req.name)
     const reaction = index !== -1 ? post.reactions[index] : null
 
     if (!reaction) {
-      collection.posts.update(req.postId, {
+      collection.posts.update(postId, {
         $push: {
           reactions: {
             name: req.name,
@@ -30,14 +30,14 @@ Meteor.methods({
     if (reaction && reaction.ownerIds.length <= 1) {
       const hasOwner = reaction.ownerIds.find(item => item === this.userId)
       if (!hasOwner) {
-        collection.posts.update(req.postId, {
+        collection.posts.update(postId, {
           $push: {
             ['reactions.' + index + '.ownerIds']: this.userId
           }
         })
       }
       if (hasOwner) {
-        collection.posts.update(req.postId, {
+        collection.posts.update(postId, {
           $pull: {
             reactions: {name: req.name}
           }
@@ -48,14 +48,14 @@ Meteor.methods({
     if (reaction && reaction.ownerIds.length > 1) {
       const hasOwner = reaction.ownerIds.find(item => item === this.userId)
       if (!hasOwner) {
-        collection.posts.update(req.postId, {
+        collection.posts.update(postId, {
           $push: {
             ['reactions.' + index + '.ownerIds']: this.userId
           }
         })
       }
       if (hasOwner) {
-        collection.posts.update(req.postId, {
+        collection.posts.update(postId, {
           $pull: {
             ['reactions.' + index + '.ownerIds']: this.userId
           }
@@ -63,7 +63,7 @@ Meteor.methods({
       }
     }
 
-    const next = collection.posts.findOne(req.postId, {
+    const next = collection.posts.findOne(postId, {
       fields: {
         ownerId: 0
       }

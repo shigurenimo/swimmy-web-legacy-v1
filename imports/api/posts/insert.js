@@ -10,7 +10,7 @@ import collection from '/imports/collection'
 import extendWeb from '../packages/extendWeb'
 
 Meteor.methods({
-  async 'posts.insert' (req) {
+  async 'insertPost' (req) {
     check(req.isPublic, Boolean)
     check(req.content, String)
 
@@ -30,7 +30,6 @@ Meteor.methods({
       content: req.content,
       reactions: [],
       replies: [],
-      channelId: req.channelId || '',
       extension: {},
       createdAt: date,
       updatedAt: date,
