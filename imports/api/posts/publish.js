@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor'
+
 import collection from '/imports/collection'
-import utils from '/imports/utils'
+import createPathFromDate from '/imports/utils/createPathFromDate'
+import replaceLink from '/imports/utils/replaceLink'
 
 Meteor.publish('posts', function (selector = {}, options = {}, scope) {
   switch (scope) {
@@ -57,9 +59,9 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
       firstModel.imagePath =
         'https://storage.googleapis.com/' +
         Meteor.settings.private.googleCloud.bucket + '/' +
-        utils.createPathFromDate(firstModel.createdAt)
+        createPathFromDate(firstModel.createdAt)
     }
-    if (firstModel.link) { firstModel.content = utils.replace.link(firstModel.content) }
+    if (firstModel.link) { firstModel.content = replaceLink(firstModel.content) }
     if (this.userId !== firstModel.ownerId) { delete firstModel.ownerId }
     this.added(target, firstModel._id, firstModel)
   }
@@ -83,9 +85,9 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
         model.imagePath =
           'https://storage.googleapis.com/' +
           Meteor.settings.private.googleCloud.bucket + '/' +
-          utils.createPathFromDate(model.createdAt)
+          createPathFromDate(model.createdAt)
       }
-      if (model.link) { model.content = utils.replace.link(model.content) }
+      if (model.link) { model.content = replaceLink(model.content) }
       if (this.userId !== model.ownerId) { delete model.ownerId }
       this.added(target, model._id, model)
     },
@@ -101,7 +103,7 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
           }
         }
       }
-      if (model.link) { model.content = utils.replace.link(model.content) }
+      if (model.link) { model.content = replaceLink(model.content) }
       if (this.userId !== model.ownerId) { delete model.ownerId }
       this.changed(target, model._id, model)
     },

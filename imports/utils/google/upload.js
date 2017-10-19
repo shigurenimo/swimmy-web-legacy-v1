@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor'
+
 import Storage from '@google-cloud/storage'
 
-export default function (bucketName, srcPath, distPath) {
+export default (bucketName, srcPath, distPath) => {
   return new Promise((resolve, reject) => {
     if (this.userId) {
       const error = new Error('server only')

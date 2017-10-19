@@ -16,7 +16,8 @@ import Typography from '/imports/client/ui/components/Typography'
 import withRouter from '/imports/client/ui/hocs/withRouter'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withMethod from '/imports/client/ui/hocs/withMethod'
-import utils from '/imports/utils'
+import toSince from '/imports/utils/date/toSince'
+
 import styles from './index.style'
 
 class PostRes extends Component {
@@ -42,7 +43,7 @@ class PostRes extends Component {
               inline
               className={classes.content}
               dangerouslySetInnerHTML={{__html: this.props.content}} />
-            <Typography inline type='caption' component='span'> - {utils.date.since(this.props.createdAt)}</Typography>
+            <Typography inline type='caption' component='span'> - {toSince(this.props.createdAt)}</Typography>
           </SheetContent>
           {/* photo */}
           {this.props.imagePath &&

@@ -9,7 +9,8 @@ import SheetContent from '/imports/client/ui/components/UI-SheetContent'
 import withRouter from '/imports/client/ui/hocs/withRouter'
 import withScrollTop from '/imports/client/ui/hocs/withScrollTop'
 import withThreads from '/imports/client/ui/hocs/withThreads'
-import utils from '/imports/utils'
+import toCreatedAt from '/imports/utils/date/toCreatedAt'
+import toSince from '/imports/utils/date/toSince'
 
 import styles from './index.style'
 
@@ -49,7 +50,7 @@ class ThreadIndex extends Component {
         </SheetContent>
         <SheetContent>
           <Typography type='caption'>
-            {utils.date.createdAt(item.updatedAt)} - {utils.date.since(item.updatedAt)}
+            {toCreatedAt(item.updatedAt)} - {toSince(item.updatedAt)}
           </Typography>
         </SheetContent>
       </Sheet>

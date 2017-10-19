@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor'
 import { HTTP } from 'meteor/http'
-import cheerio from 'cheerio'
-import utils from '/imports/utils'
 
-export default function (content, date) {
-  const url = utils.match.url(content)
+import cheerio from 'cheerio'
+
+import matchUrl from '/imports/utils/matchUrl'
+
+export default function (content) {
+  const url = matchUrl(content)
 
   let service = null
 

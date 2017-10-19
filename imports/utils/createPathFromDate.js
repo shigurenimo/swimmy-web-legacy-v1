@@ -1,4 +1,4 @@
-export default (date) => {
+export default date => {
   return [
     date.getUTCFullYear(),
     ('00' + (date.getUTCMonth() + 1)).slice(-2),

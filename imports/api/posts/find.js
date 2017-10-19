@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor'
+
 import collection from '/imports/collection'
-import utils from '/imports/utils'
+import createPathFromDate from '/imports/utils/createPathFromDate'
+import replaceLink from '/imports/utils/replaceLink'
 
 Meteor.methods({
   'posts.find' (selector, options) {
@@ -38,10 +40,10 @@ Meteor.methods({
         post.imagePath =
           'https://storage.googleapis.com/' +
           Meteor.settings.private.googleCloud.bucket + '/' +
-          utils.createPathFromDate(post.createdAt)
+          createPathFromDate(post.createdAt)
       }
 
-      if (post.link) post.content = utils.replace.link(post.content)
+      if (post.link) post.content = replaceLink(post.content)
 
       if (this.userId !== post.ownerId) { delete post.ownerId }
 

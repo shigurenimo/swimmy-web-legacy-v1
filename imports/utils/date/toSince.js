@@ -1,7 +1,7 @@
-function since (dateStr) {
+export default dateStr => {
   const date = new Date(dateStr)
-  var diff = new Date().getTime() - date.getTime()
-  var d = new Date(diff)
+  const diff = new Date().getTime() - date.getTime()
+  const d = new Date(diff)
   if (d.getUTCFullYear() - 1970) {
     return d.getUTCFullYear() - 1970 + '年前'
   } else if (d.getUTCMonth()) {
@@ -16,13 +16,3 @@ function since (dateStr) {
     return d.getUTCSeconds() + '秒前'
   }
 }
-
-function createdAt (dateStr) {
-  var d = new Date(dateStr)
-  const year = d.getUTCFullYear()
-  const month = d.getUTCMonth() + 1
-  const day = d.getUTCDate()
-  return [year, month, day].join('.')
-}
-
-export default {since, createdAt}

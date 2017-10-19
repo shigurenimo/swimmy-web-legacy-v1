@@ -6,12 +6,12 @@ import compose from 'ramda/src/compose'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 
-import utils from '/imports/utils'
 import Button from '/imports/client/ui/components/Button'
 import Image from '/imports/client/ui/components/UI-Image'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withMethod from '/imports/client/ui/hocs/withMethod'
 import withRouter from '/imports/client/ui/hocs/withRouter'
+import createBase64 from '/imports/utils/createBase64'
 
 import styles from './index.style'
 
@@ -150,7 +150,7 @@ class InputPost extends Component {
     this.process = true
     if (this.state.inputImage) {
       const file = this.state.inputImage
-      await utils.createBase64(file)
+      await createBase64(file)
       .then(base64 => {
         this.props.snackbar.show('サーバーで画像を圧縮しています')
         const data = {
@@ -190,7 +190,7 @@ class InputPost extends Component {
     const replyId = pathToRegexp('/thread/:postId').exec(this.props.router.location.pathname)[1]
     if (this.state.inputImage) {
       const file = this.state.inputImage
-      await utils.createBase64(file)
+      await createBase64(file)
       .then(base64 => {
         this.props.snackbar.show('サーバーで画像を圧縮しています')
         const data = {

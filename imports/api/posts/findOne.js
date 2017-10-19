@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import collection from '/imports/collection'
-import utils from '/imports/utils'
+import createPathFromDate from '/imports/utils/createPathFromDate'
+import replaceLink from '/imports/utils/replaceLink'
 
 Meteor.methods({
   'posts.findOne' (selector, options) {
@@ -39,9 +40,9 @@ Meteor.methods({
           reply.imagePath =
             'https://storage.googleapis.com/' +
             Meteor.settings.private.googleCloud.bucket + '/' +
-            utils.createPathFromDate(reply.createdAt)
+            createPathFromDate(reply.createdAt)
         }
-        reply.content = utils.replace.link(reply.content)
+        reply.content = replaceLink(reply.content)
         if (this.userId !== reply.ownerId) {
           delete reply.ownerId
         }
@@ -53,14 +54,14 @@ Meteor.methods({
       post.imagePath =
         'https://storage.googleapis.com/' +
         Meteor.settings.private.googleCloud.bucket + '/' +
-        utils.createPathFromDate(post.createdAt)
+        createPathFromDate(post.createdAt)
     }
 
     if (post.channelId) {
       post.channel = collection.channels.findOne(post.channelId, {fields: {name: 1}})
     }
 
-    post.content = utils.replace.link(post.content)
+    post.content = replaceLink(post.content)
 
     if (this.userId !== post.ownerId) {
       delete post.ownerId
