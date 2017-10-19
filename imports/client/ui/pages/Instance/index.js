@@ -4,9 +4,9 @@ import compose from 'ramda/src/compose'
 import React from 'react'
 import lifecycle from 'recompose/lifecycle'
 
-import Layout from '/imports/client/ui/components/UI-Layout'
-import Sheet from '/imports/client/ui/components/UI-Sheet'
-import SheetContent from '/imports/client/ui/components/UI-SheetContent'
+import Layout from '/imports/client/ui/components/Layout'
+import Sheet from '/imports/client/ui/components/Sheet'
+import SheetContent from '/imports/client/ui/components/SheetContent'
 import withMethod from '/imports/client/ui/hocs/withMethod'
 import withScrollTop from '/imports/client/ui/hocs/withScrollTop'
 

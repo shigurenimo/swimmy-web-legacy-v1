@@ -3,10 +3,10 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
-import Layout from '/imports/client/ui/components/UI-Layout'
-import Sheet from '/imports/client/ui/components/UI-Sheet'
-import SheetActions from '/imports/client/ui/components/UI-SheetActions'
-import SheetContent from '/imports/client/ui/components/UI-SheetContent'
+import Layout from '/imports/client/ui/components/Layout'
+import Sheet from '/imports/client/ui/components/Sheet'
+import SheetActions from '/imports/client/ui/components/SheetActions'
+import SheetContent from '/imports/client/ui/components/SheetContent'
 
 @inject('accounts', 'channels', 'snackbar', 'routes')
 @observer

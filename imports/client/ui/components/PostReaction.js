@@ -4,8 +4,8 @@ import compose from 'ramda/src/compose'
 import React, { Component } from 'react'
 
 import Button from '/imports/client/ui/components/Button'
-import Sheet from '/imports/client/ui/components/UI-Sheet'
-import SheetActions from '/imports/client/ui/components/UI-SheetActions'
+import Sheet from '/imports/client/ui/components/Sheet'
+import SheetActions from '/imports/client/ui/components/SheetActions'
 import withMethod from '/imports/client/ui/hocs/withMethod'
 import withRouter from '/imports/client/ui/hocs/withRouter'
 

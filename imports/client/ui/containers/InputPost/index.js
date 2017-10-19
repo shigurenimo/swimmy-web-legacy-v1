@@ -7,7 +7,7 @@ import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 
 import Button from '/imports/client/ui/components/Button'
-import Image from '/imports/client/ui/components/UI-Image'
+import Image from '/imports/client/ui/components/Image'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withMethod from '/imports/client/ui/hocs/withMethod'
 import withRouter from '/imports/client/ui/hocs/withRouter'

@@ -2,9 +2,9 @@ import { inject, observer } from 'mobx-react'
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 import Typography from 'material-ui/Typography'
-import Layout from '/imports/client/ui/components/UI-Layout'
-import Sheet from '/imports/client/ui/components/UI-Sheet'
-import SheetContent from '/imports/client/ui/components/UI-SheetContent'
+import Layout from '/imports/client/ui/components/Layout'
+import Sheet from '/imports/client/ui/components/Sheet'
+import SheetContent from '/imports/client/ui/components/SheetContent'
 import CardPost from '../../containers/CardPost/index'
 
 @inject('posts', 'timeline', 'info')

@@ -4,10 +4,10 @@ import propTypes from 'prop-types'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
-import Block from '/imports/client/ui/components/UI-Block'
-import Layout from '/imports/client/ui/components/UI-Layout'
-import Sheet from '/imports/client/ui/components/UI-Sheet'
-import SheetContent from '/imports/client/ui/components/UI-SheetContent'
+import Block from '/imports/client/ui/components/Block'
+import Layout from '/imports/client/ui/components/Layout'
+import Sheet from '/imports/client/ui/components/Sheet'
+import SheetContent from '/imports/client/ui/components/SheetContent'
 
 @inject('channels', 'routes', 'snackbar')
 @observer

@@ -8,8 +8,8 @@ import React from 'react'
 
 import withHandlers from 'recompose/withHandlers'
 import withState from 'recompose/withState'
-import Sheet from '/imports/client/ui/components/UI-Sheet'
-import SheetContent from '/imports/client/ui/components/UI-SheetContent'
+import Sheet from '/imports/client/ui/components/Sheet'
+import SheetContent from '/imports/client/ui/components/SheetContent'
 import withRouter from '/imports/client/ui/hocs/withRouter'
 
 import ListItemLogin from './ListItemLogin'

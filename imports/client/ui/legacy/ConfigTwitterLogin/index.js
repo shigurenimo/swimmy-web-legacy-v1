@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 import Button from '/imports/client/ui/components/Button'
-import Layout from '/imports/client/ui/components/UI-Layout'
-import Sheet from '/imports/client/ui/components/UI-Sheet'
-import SheetActions from '/imports/client/ui/components/UI-SheetActions'
+import Layout from '/imports/client/ui/components/Layout'
+import Sheet from '/imports/client/ui/components/Sheet'
+import SheetActions from '/imports/client/ui/components/SheetActions'
 
 export default class ConfigTwitterLogin extends Component {
   render () {
