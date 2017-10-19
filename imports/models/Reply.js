@@ -1,7 +1,6 @@
 import { types } from 'mobx-state-tree'
 
-export default types
-.model('Reply', {
+export const model = {
   _id: types.maybe(types.string),
   content: types.string,
   owner: types.maybe(
@@ -22,4 +21,6 @@ export default types
   tags: types.maybe(types.array(types.string)),
   createdAt: types.maybe(types.Date),
   updatedAt: types.maybe(types.Date)
-})
+}
+
+export default types.model('Reply', model)

@@ -1,7 +1,20 @@
 import { types } from 'mobx-state-tree'
 
-export default types
-.model('User', {
+export const ServiceTwitter = types
+.model('Twitter', {
+  id: types.string,
+  screenName: types.string,
+  profile_image_url: types.string,
+  profile_image_url_https: types.string
+})
+
+export const ConfigTwitter = types
+.model('Twitter', {
+  useIcon: types.optional(types.boolean, false),
+  publicAccount: types.optional(types.boolean, false)
+})
+
+export const model = {
   _id: types.maybe(types.string),
   username: types.maybe(types.string),
   profile: types.maybe(types.model('Profile', {
@@ -29,18 +42,12 @@ export default types
     })
   )),
   config: types.maybe(types.model('Config', {
-    twitter: types.model('Twitter', {
-      useIcon: types.optional(types.boolean, false),
-      publicAccount: types.optional(types.boolean, false)
-    })
+    twitter: ConfigTwitter
   })),
   createdAt: types.maybe(types.Date),
   services: types.maybe(types.model({
-    twitter: types.maybe(types.model('Twitter', {
-      id: types.string,
-      screenName: types.string,
-      profile_image_url: types.string,
-      profile_image_url_https: types.string
-    }))
+    twitter: types.maybe(ServiceTwitter)
   }))
-})
+}
+
+export default types.model('User', model)

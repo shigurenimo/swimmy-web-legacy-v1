@@ -1,8 +1,7 @@
 import { types } from 'mobx-state-tree'
 
-export default types
-.model('Channel', {
-  _id: types.identifier(types.string),
+export const model = {
+  _id: types.maybe(types.string),
   ownerId: types.string,
   name: types.string,
   description: types.string,
@@ -10,4 +9,6 @@ export default types
   region: types.string,
   createdAt: types.Date,
   updatedAt: types.Date
-})
+}
+
+export default types.model('Channel', model)

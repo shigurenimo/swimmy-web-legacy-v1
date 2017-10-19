@@ -1,8 +1,7 @@
 import { types } from 'mobx-state-tree'
 
-export default types
-.model('Bucket', {
-  _id: types.identifier(types.string),
+export const model = {
+  _id: types.maybe(types.string),
   ownerId: types.maybe(types.string),
   owner: types.maybe(types.model('Owner', {
     username: types.maybe(types.string)
@@ -16,4 +15,6 @@ export default types
   ), []),
   createdAt: types.maybe(types.Date),
   updatedAt: types.maybe(types.Date)
-}, {})
+}
+
+export default types.model('Bucket', model)

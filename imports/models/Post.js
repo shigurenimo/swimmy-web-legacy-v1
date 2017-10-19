@@ -1,9 +1,9 @@
 import { types } from 'mobx-state-tree'
+
 import Reply from './Reply'
 
-export default types
-.model('Post', {
-  _id: types.identifier(types.string),
+export const model = {
+  _id: types.maybe(types.string),
   content: types.string,
   ownerId: types.maybe(types.string),
   owner: types.maybe(types.model('Owner', {
@@ -54,8 +54,9 @@ export default types
   reply: types.maybe(Reply),
   replies: types.maybe(types.array(types.union(Reply, types.string))),
   createdAt: types.maybe(types.Date)
-})
-.preProcessSnapshot(snapshot => {
+}
+
+export const preProcessSnapshot = snapshot => {
   if (!snapshot) return
   if (snapshot.reactions && snapshot.reactions.length !== 0) {
     if (snapshot.reactions[0].owners) {
@@ -68,4 +69,6 @@ export default types
     }
   }
   return snapshot
-})
+}
+
+export default types.model('Post', model).preProcessSnapshot(preProcessSnapshot)
