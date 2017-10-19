@@ -3868,6 +3868,10 @@ twit@^2.2.9:
     mime "^1.3.4"
     request "^2.68.0"
 
+twitter-text@^1.14.7:
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/twitter-text/-/twitter-text-1.14.7.tgz#77877342ec61bb0c5397b8163f4d5d31478a40e4"
+
 type-check@~0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"

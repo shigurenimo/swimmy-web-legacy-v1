@@ -48,6 +48,7 @@
     "recompose": "^0.26.0",
     "remotedev": "^0.2.7",
     "twit": "^2.2.9",
+    "twitter-text": "^1.14.7",
     "validator": "^9.0.0"
   },
   "devDependencies": {
