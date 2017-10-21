@@ -2,49 +2,50 @@ import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { Accounts } from 'meteor/accounts-base'
 import collection from '/imports/collection'
+import reservedWord from '/imports/config/reservedWord'
 
 Meteor.methods({
-  updateUserUsername (req) {
+  updateUserUsername (username) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
-    check(req.username, String)
+
+    check(username, String)
+
     const user = Meteor.users.findOne(this.userId)
-    if (req.username.length === 0) {
-      throw new Meteor.Error('not', '入力がありません')
-    }
-    if (req.username === user.username) {
+
+    if (username.length === 0) { return }
+    if (username === user.username) {
       throw new Meteor.Error('not', 'ユーザネームが変わっていません')
     }
-    if (req.username.length < 1) {
+    if (username.length < 1) {
       throw new Meteor.Error('not', 'ユーザネームが短すぎます')
     }
-    if (req.username.length > 20) {
+    if (username.length > 20) {
       throw new Meteor.Error('not', 'ユーザネームが長すぎます')
     }
-    if (req.username.length > 0 && req.username.match(new RegExp('[^A-Za-z0-9]+'))) {
+    if (username.length > 0 && username.match(new RegExp('[^A-Za-z0-9]+'))) {
       throw new Meteor.Error('not', 'ユーザネームは英数字のみです')
     }
-    if (Meteor.settings.public.reservedWord.includes(req.username)) {
+    if (reservedWord.includes(username)) {
       throw new Meteor.Error('not', 'そのワードは予約されています')
     }
-    if (Meteor.users.findOne({username: req.username})) {
+    if (Meteor.users.findOne({username: username})) {
       throw new Meteor.Error('not', 'そのユーザネームは既に存在します')
     }
-    Accounts.setUsername(this.userId, req.username)
+
+    Accounts.setUsername(this.userId, username)
+
     collection.posts.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
       $set: {
-        'public.username': req.username
+        'public.username': username
       }
     }, {multi: true})
-    collection.artworks.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
-      $set: {
-        'public.username': req.username
-      }
-    }, {multi: true})
+
     Meteor.users.update({'profile.follows._id': this.userId}, {
       $set: {
-        'profile.follows.$.username': req.username
+        'profile.follows.$.username': username
       }
     }, {multi: true})
-    return 200
+
+    return {message: 'ユーザネームを更新しました'}
   }
 })

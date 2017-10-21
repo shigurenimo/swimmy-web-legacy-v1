@@ -1,5 +1,7 @@
 import './addEmail'
+import './createUser'
 import './onCreateUser'
 import './removeEmail'
 import './sendVerificationEmail'
 import './setPassword'
+import './setUsername'

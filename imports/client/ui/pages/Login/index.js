@@ -197,7 +197,7 @@ class Login extends Component {
     if (event) event.preventDefault()
     if (this.process) return
     this.process = true
-    this.props.insertUser({
+    this.props.createUser({
       username: this.state.username,
       password: this.state.password
     })
@@ -223,7 +223,7 @@ class Login extends Component {
 export default compose(
   withStyles(styles),
   withLoginWithPassword,
-  withMethod('insertUser'),
+  withMethod('createUser'),
   withCurrentUser,
   observer
 )(Login)
