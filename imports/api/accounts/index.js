@@ -1,4 +1,5 @@
+import './addEmail'
 import './onCreateUser'
-import './sendVerificationLink'
-import './updateUserEmailPull'
-import './updateUserEmailPush'
+import './removeEmail'
+import './sendVerificationEmail'
+import './setPassword'
