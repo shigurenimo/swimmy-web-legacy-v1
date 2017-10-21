@@ -1,17 +1,20 @@
 import compose from 'ramda/src/compose'
 import Divider from 'material-ui/Divider'
 import withStyles from 'material-ui/styles/withStyles'
+import Collapse from 'material-ui/transitions/Collapse'
 import Typography from 'material-ui/Typography'
 import List from 'material-ui/List'
 import { observer } from 'mobx-react'
 import React from 'react'
-
 import withHandlers from 'recompose/withHandlers'
 import withState from 'recompose/withState'
+
 import Sheet from '/imports/client/ui/components/Sheet'
 import SheetContent from '/imports/client/ui/components/SheetContent'
 import withRouter from '/imports/client/ui/hocs/withRouter'
 
+import ListItemConfigUsername from './ListItemConfigUsername'
+import ListItemConfigPassword from './ListItemConfigPassword'
 import ListItemLogin from './ListItemLogin'
 import ListItemNote from './ListItemNote'
 import ListItemRepository from './ListItemRepository'
@@ -23,7 +26,15 @@ import styles from './index.style'
 export const Component = props =>
   <div className={props.classes.root}>
     <List>
-      <ListItemLogin />
+      <ListItemLogin
+        isExpand={props.isExpandAccount}
+        onExpand={props.onExpandAccount} />
+      <Collapse in={props.isExpandAccount} transitionDuration='auto' unmountOnExit>
+        <ListItemConfigUsername
+          pathname={props.router.location.pathname} />
+        <ListItemConfigPassword
+          pathname={props.router.location.pathname} />
+      </Collapse>
     </List>
     <Divider light />
     <List>
@@ -59,13 +70,13 @@ export const Component = props =>
 
 export const onExpandChat = props => () => { props.setIsExpandChat(!props.isExpandChat) }
 
-export const onExpandUser = props => () => { props.setIsExpandUser(!props.isExpandUser) }
+export const onExpandAccount = props => () => { props.setIsExpandAccount(!props.isExpandAccount) }
 
 export default compose(
   withStyles(styles),
+  withState('isExpandAccount', 'setIsExpandAccount', false),
   withState('isExpandChat', 'setIsExpandChat', false),
-  withState('isExpandUser', 'setIsExpandUser', false),
-  withHandlers({onExpandChat, onExpandUser}),
+  withHandlers({onExpandChat, onExpandAccount}),
   withRouter,
   observer
 )(Component)
