@@ -50,6 +50,6 @@ Meteor.methods({
       }
     }, {multi: true})
 
-    return 200
+    return {message: 'ハンドルネームを更新しました'}
   }
 })
