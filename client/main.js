@@ -19,6 +19,7 @@ import withProvider from '/imports/client/ui/hocs/withProvider'
 import withRouterHistory from '/imports/client/ui/hocs/withRouterHistory'
 import Admin from '/imports/client/ui/pages/Admin'
 import Note from '/imports/client/ui/pages/Note'
+import NotFound from '/imports/client/ui/pages/NotFound'
 import Login from '/imports/client/ui/pages/Login'
 import Thread from '/imports/client/ui/pages/Thread'
 import ThreadIndex from '/imports/client/ui/pages/ThreadIndex'
@@ -37,18 +38,20 @@ export const App = props =>
         </Router>
         <ContentPadding>
           <Router history={props.history}>
-            {props.isLogged ? <Switch>
+            {props.userId ? <Switch>
               <Route exact path='/' component={Timeline} />
               <Route exact path='/note' component={Note} />
               <Route exact path='/thread' component={ThreadIndex} />
               <Route exact path='/thread/:postId' component={Thread} />
               <Route exact path='/admin' component={Admin} />
+              <Route component={NotFound} />
             </Switch> : <Switch>
               <Route exact path='/' component={Timeline} />
               <Route exact path='/note' component={Note} />
               <Route exact path='/thread' component={ThreadIndex} />
               <Route exact path='/thread/:postId' component={Thread} />
               <Route exact path='/admin' component={Login} />
+              <Route component={NotFound} />
             </Switch>}
           </Router>
         </ContentPadding>
