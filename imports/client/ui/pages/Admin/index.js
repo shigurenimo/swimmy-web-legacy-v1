@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor'
 
 import withStyles from 'material-ui/styles/withStyles'
 import Typography from 'material-ui/Typography'
-import { observer } from 'mobx-react'
 import compose from 'ramda/src/compose'
 import React, { Component } from 'react'
 
@@ -16,6 +15,7 @@ import styles from './index.style'
 class Admin extends Component {
   render () {
     const {classes, currentUser} = this.props
+    console.log(this.props)
     if (this.props.isLoggingIn) return <div>loading...</div>
     return (
       <Layout>
@@ -77,6 +77,5 @@ class Admin extends Component {
 export default compose(
   withStyles(styles),
   withCurrentUser,
-  withScrollTop,
-  observer
+  withScrollTop
 )(Admin)
