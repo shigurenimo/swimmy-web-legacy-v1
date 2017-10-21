@@ -7,8 +7,8 @@ import React from 'react'
 
 import withRouter from '/imports/client/ui/hocs/withRouter'
 
-export const Component = props => {
-  return <ListItem
+export const Component = props =>
+  <ListItem
     button
     dense
     className={classNames({
@@ -17,7 +17,6 @@ export const Component = props => {
     onClick={() => {props.router.push('/note')}}>
     <ListItemText primary='開発ノート' />
   </ListItem>
-}
 
 export const styles = {
   select: {
