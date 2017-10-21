@@ -4,6 +4,7 @@ import compose from 'ramda/src/compose'
 import React, { Component } from 'react'
 
 import Layout from '/imports/client/ui/components/Layout'
+import NowLoading from '/imports/client/ui/components/NowLoading'
 import Sheet from '/imports/client/ui/components/Sheet'
 import SheetContent from '/imports/client/ui/components/SheetContent'
 import withRouter from '/imports/client/ui/hocs/withRouter'
@@ -29,9 +30,7 @@ class ThreadIndex extends Component {
       return (
         <Sheet>
           <SheetContent>
-            <Typography>
-              {this.props.threads.loading ? '読み込み中 ..' : 'スレッドはありません'}
-            </Typography>
+            {this.props.posts.loading && <NowLoading />}
           </SheetContent>
         </Sheet>
       )

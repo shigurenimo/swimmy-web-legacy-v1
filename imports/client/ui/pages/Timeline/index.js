@@ -1,9 +1,9 @@
-import Typography from 'material-ui/Typography'
 import { inject, observer } from 'mobx-react'
 import compose from 'ramda/src/compose'
 import React, { Component } from 'react'
 
 import Layout from '/imports/client/ui/components/Layout'
+import NowLoading from '/imports/client/ui/components/NowLoading'
 import Sheet from '/imports/client/ui/components/Sheet'
 import SheetContent from '/imports/client/ui/components/SheetContent'
 import ChannelInfo from '/imports/client/ui/containers/ChannelInfo'
@@ -27,9 +27,7 @@ class Timeline extends Component {
       return (
         <Sheet>
           <SheetContent>
-            <Typography>
-              {this.props.posts.loading ? '読み込み中 ..' : ''}
-            </Typography>
+            {this.props.posts.loading && <NowLoading />}
           </SheetContent>
         </Sheet>
       )

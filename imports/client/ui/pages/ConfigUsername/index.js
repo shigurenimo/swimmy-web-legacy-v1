@@ -10,6 +10,7 @@ import compose from 'ramda/src/compose'
 import React, { Component } from 'react'
 
 import Layout from '/imports/client/ui/components/Layout'
+import NowLoading from '/imports/client/ui/components/NowLoading'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withScrollTop from '/imports/client/ui/hocs/withScrollTop'
 import styles from './index.style'
@@ -18,7 +19,7 @@ import withMethod from '../../hocs/withMethod'
 class Admin extends Component {
   render () {
     const {classes, currentUser} = this.props
-    if (this.props.isLoggingIn) return <div>loading...</div>
+    if (this.props.isLoggingIn) { return <NowLoading /> }
     return (
       <Layout>
         <Grid container>
