@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor'
 
 import { makeExecutableSchema } from 'graphql-tools'
 
-import '/imports/api/accounts'
+import '/imports/api/account'
 import '/imports/api/buckets'
 import '/imports/api/channels'
 import '/imports/api/logs'
