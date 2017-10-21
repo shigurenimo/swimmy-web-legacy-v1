@@ -1,13 +1,13 @@
 import { Meteor } from 'meteor/meteor'
 
 import withStyles from 'material-ui/styles/withStyles'
+import Grid from 'material-ui/Grid'
+import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
 import compose from 'ramda/src/compose'
 import React, { Component } from 'react'
 
 import Layout from '/imports/client/ui/components/Layout'
-import Sheet from '/imports/client/ui/components/Sheet'
-import SheetContent from '/imports/client/ui/components/SheetContent'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withScrollTop from '/imports/client/ui/hocs/withScrollTop'
 import styles from './index.style'
@@ -19,59 +19,56 @@ class Admin extends Component {
     if (this.props.isLoggingIn) return <div>loading...</div>
     return (
       <Layout>
-        {/* icon */}
-        <Sheet>
-          {(currentUser.config &&
-            currentUser.config.twitter &&
-            currentUser.config.twitter.useIcon) ? (
-            <div className=''>
-              <img
-                className={classes.icon}
-                src={currentUser.services.twitter.profile_image_url_https.replace('_normal', '')} />
-            </div>
-          ) : (
-            <div className={classes.squares}>
-              {currentUser.profile.code.split('').map((i, index) =>
-                <div
-                  className={classes.square}
-                  key={index + '-' + i}
-                  style={{
-                    backgroundColor: i === '1'
-                      ? Meteor.settings.public.color.primary
-                      : i === '2' ? Meteor.settings.public.color.secondary : 'rgb(0 0 0)'
-                  }} />)}
-            </div>
-          )}
-        </Sheet>
-        {/* name */}
-        <Sheet>
-          <SheetContent>
-            <Typography align='center'>
-              {currentUser.profile.name}
-            </Typography>
-          </SheetContent>
-          <SheetContent>
-            <Typography type='display1' align='center'>
-              @{currentUser.username}
-            </Typography>
-          </SheetContent>
-        </Sheet>
-        {this.forFollows()}
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography type='display1'>Account</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              value={this.state.username}
+              label='ユーザネーム'
+              maxLength={10}
+              onChange={this.onInputUsername}
+              onBlur={this.onCheckUsername} />
+          </Grid>
+        </Grid>
       </Layout>
     )
   }
 
-  forFollows () {
-    const index = this.props.currentUser.profile.follows
-    if (index.length < 1) { return null }
-    return index.map(user =>
-      <Sheet hover key={user._id} href={'/' + user.username}>
-        <SheetContent>
-          <Typography>{user.name}@{user.username}</Typography>
-        </SheetContent>
-      </Sheet>
-    )
+  state = {
+    name: '',
+    nameError: '',
+    username: '',
+    usernameError: '',
+    inputNewEmail: '',
+    inputNewEmailError: '',
+    oldPassword: '',
+    newPassword: ''
   }
+
+  onInputUsername = (event) => {
+    event.persist()
+    const value = event.target.value
+    if (value.length > 20) return
+    this.setState({username: value})
+  }
+
+  onCheckUsername = () => {
+    const username = this.state.username
+    this.props.checkExistUsername(username)
+    .then(res => {
+      if (res) {
+        this.setState({usernameError: 'そのユーザネームは既に存在します'})
+      } else {
+        this.setState({usernameError: ''})
+      }
+    })
+    .catch(err => this.props.snackbar.setError(err))
+  }
+
+  // ユーザネームの更新を送信する
+  onSubmitUsername = () => {}
 }
 
 export default compose(
