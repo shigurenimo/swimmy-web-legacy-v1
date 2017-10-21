@@ -4,7 +4,7 @@ import { Accounts } from 'meteor/accounts-base'
 import isAlpha from 'validator/lib/isAlpha'
 
 Meteor.methods({
-  'insertUser' (req) {
+  insertUser (req) {
     check(req.username, String)
     check(req.password, String)
 

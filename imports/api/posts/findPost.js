@@ -4,7 +4,7 @@ import createPathFromDate from '/imports/utils/createPathFromDate'
 import replaceLink from '/imports/utils/replaceLink'
 
 Meteor.methods({
-  'posts.findOne' (selector, options) {
+  findPost (selector, options) {
     const post = collection.posts.findOne(selector, options)
 
     if (!post) { throw new Meteor.Error('not-found') }

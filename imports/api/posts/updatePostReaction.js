@@ -3,7 +3,7 @@ import { check } from 'meteor/check'
 import collection from '/imports/collection'
 
 Meteor.methods({
-  'updatePostReaction' (postId, req) {
+  updatePostReaction (postId, req) {
     if (!this.userId) throw new Meteor.Error('not-authorized', 'ログインが必要です')
 
     check(postId, String)

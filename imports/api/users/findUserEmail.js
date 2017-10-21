@@ -3,7 +3,7 @@ import { check } from 'meteor/check'
 import { Accounts } from 'meteor/accounts-base'
 
 Meteor.methods({
-  'users.checkEmail' (req) {
+  checkUserEmail (req) {
     check(req.email, String)
     if (Accounts.findUserByEmail(req.email)) {
       return true

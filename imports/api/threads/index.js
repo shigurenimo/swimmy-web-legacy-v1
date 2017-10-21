@@ -1,1 +1,1 @@
-import './publish'
+import './publishThreads'

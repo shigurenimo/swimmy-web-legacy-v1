@@ -5,7 +5,7 @@ import createPathFromDate from '/imports/utils/createPathFromDate'
 import replaceLink from '/imports/utils/replaceLink'
 
 Meteor.methods({
-  'posts.find' (selector, options) {
+  findPosts (selector, options) {
     if (selector.ownerId) {
       // then profile
       selector.owner = {$exists: true}

@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 
 Meteor.methods({
-  'users.findProfile' (selector, options) {
+  findUserProfile (selector, options) {
     const user = Meteor.users.findOne(selector, options, {
       fields: {
         'services': 0,

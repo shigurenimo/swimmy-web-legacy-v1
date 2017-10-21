@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import collection from '/imports/collection'
 
 Meteor.methods({
-  'channels.updateMember' (req) {
+  updateChannelMember (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
 
     const channelId = req.channelId

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 
 Meteor.methods({
-  'users.updateFollow' (req) {
+  updateUserFollow (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
 
     check(req.userId, String)

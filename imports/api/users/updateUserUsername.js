@@ -4,7 +4,7 @@ import { Accounts } from 'meteor/accounts-base'
 import collection from '/imports/collection'
 
 Meteor.methods({
-  'users.updateUsername' (req) {
+  updateUserUsername (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
     check(req.username, String)
     const user = Meteor.users.findOne(this.userId)

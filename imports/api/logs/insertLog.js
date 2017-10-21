@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import collection from '/imports/collection'
 
 Meteor.methods({
-  'logs.insert' (req) {
+  insertLog (req) {
     if (!req.type) return
     if (!req.content) return
 

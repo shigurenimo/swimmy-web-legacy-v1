@@ -1,1 +1,1 @@
-import './insert'
+import './insertLog'

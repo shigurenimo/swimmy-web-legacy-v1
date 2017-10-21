@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import Twit from 'twit'
 
 Meteor.methods({
-  async 'users.updateServicesTwitter' () {
+  async updateUserServicesTwitter () {
     if (!Meteor.settings.private.twitter) {
       throw new Meteor.Error('not found consumerKey')
     }

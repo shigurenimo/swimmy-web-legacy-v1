@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import collection from '/imports/collection'
 
 Meteor.methods({
-  'findReport' () {
+  findReport () {
     const report = {
       total: {
         posts: collection.posts.find().count(),

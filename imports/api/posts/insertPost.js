@@ -10,7 +10,7 @@ import collection from '/imports/collection'
 import extendWeb from '../packages/extendWeb'
 
 Meteor.methods({
-  async 'insertPost' (req) {
+  async insertPost (req) {
     check(req.isPublic, Boolean)
     check(req.content, String)
 

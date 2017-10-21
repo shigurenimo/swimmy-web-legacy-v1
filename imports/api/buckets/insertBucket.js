@@ -3,7 +3,7 @@ import { check } from 'meteor/check'
 import collection from '/imports/collection'
 
 Meteor.methods({
-  'buckets.insert' (req) {
+  insertBucket (req) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized')
     }
