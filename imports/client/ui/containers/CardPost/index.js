@@ -31,9 +31,7 @@ class Post extends Component {
           <SheetContent>
             <Typography
               inline
-              className={classes.username}
-              component='a'
-              href={'/' + this.props.owner.username}>
+              className={classes.username}>
               @{this.props.owner.username}
             </Typography>
           </SheetContent>}
