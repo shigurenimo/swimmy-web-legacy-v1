@@ -1,6 +1,3 @@
-import { mkdir } from 'fs'
-import { join } from 'path'
-
 import { Accounts } from 'meteor/accounts-base'
 import { createApolloServer } from 'meteor/apollo'
 import { Meteor } from 'meteor/meteor'
@@ -27,11 +24,6 @@ Meteor.startup(() => {
     consumerKey: Meteor.settings.private.twitter.consumerKey,
     secret: Meteor.settings.private.twitter.secret
   })
-})
-
-Meteor.startup(() => {
-  const temp = join(process.env.PWD, '.temp')
-  mkdir(temp, () => {})
 })
 
 const schema = makeExecutableSchema({typeDefs, resolvers})

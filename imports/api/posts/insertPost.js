@@ -51,6 +51,8 @@ Meteor.methods({
       if (projectId) {
         const image = await uploadImage(date, req.images[0])
         data.images = [image]
+      } else {
+        throw new Meteor.Error('reject', '画像の投稿はできません')
       }
     }
 
@@ -79,6 +81,8 @@ Meteor.methods({
         $set: {updatedAt: date}
       })
     }
+
+    return {reason: '投稿が完了しました'}
   }
 })
 
@@ -88,7 +92,7 @@ async function uploadImage (date, base64) {
   const ext = '.jpg'
   const name = Random.id()
 
-  const temp = join(process.env.PWD, '.temp', name + ext)
+  const temp = join('/tmp', name + ext)
 
   writeFileSync(temp, buf)
 
@@ -118,7 +122,7 @@ async function uploadImage (date, base64) {
   await upload(bucketName, temp, filePath.full)
 
   // x256
-  const x256 = join(process.env.PWD, '.temp', fileName.x256)
+  const x256 = join(process.env.PWD, '/tmp', fileName.x256)
   const x256Ref = await Jimp.read(temp)
   x256Ref
   .resize(512, Jimp.AUTO)
@@ -130,7 +134,7 @@ async function uploadImage (date, base64) {
   unlink(x256, err => err)
 
   // x512
-  const x512 = join(process.env.PWD, '.temp', fileName.x512)
+  const x512 = join(process.env.PWD, '/tmp', fileName.x512)
   const x512Ref = await Jimp.read(temp)
   x512Ref
   .resize(512, Jimp.AUTO)
@@ -142,7 +146,7 @@ async function uploadImage (date, base64) {
   unlink(x512, err => err)
 
   // x1024
-  const x1024 = join(process.env.PWD, '.temp', fileName.x512)
+  const x1024 = join(process.env.PWD, '/tmp', fileName.x512)
   const x1024Ref = await Jimp.read(temp)
   x1024Ref
   .resize(1024, Jimp.AUTO)
