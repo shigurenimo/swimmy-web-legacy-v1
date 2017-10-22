@@ -43,13 +43,13 @@ class Login extends Component {
                   <TextFiled
                     fullWidth
                     name='username'
-                    label={this.state.error === 'username' ? this.state.errorMessage : 'username'}
+                    label={this.state.errorType === 'username' ? this.state.errorMessage : 'username'}
                     onChange={this.onInputUsername}
                     onKeyDown={this.onPressEnter}
                     value={this.state.username}
                     helperText='ローマ字のみ'
                     margin='normal'
-                    error={this.state.error === 'username'}
+                    error={this.state.errorType === 'username'}
                     maxLength='40' />
                 </Grid>
                 <Grid item xs={12}>
@@ -57,15 +57,19 @@ class Login extends Component {
                     fullWidth
                     type='password'
                     name='password'
-                    label={this.state.error === 'password' ? this.state.errorMessage : 'password'}
+                    label={this.state.errorType === 'password' ? this.state.errorMessage : 'password'}
                     onChange={this.onInputPassword}
                     onKeyDown={this.onPressEnter}
                     value={this.state.password}
                     helperText='4文字以上20文字以内'
                     margin='normal'
-                    error={this.state.error === 'password'}
+                    error={this.state.errorType === 'password'}
                     maxLength='20' />
                 </Grid>
+                {this.state.errorType === 'auth' &&
+                <Grid item xs={12}>
+                  <Typography color='accent'>{this.state.errorMessage}</Typography>
+                </Grid>}
               </Grid>
             </Block>
           </Grid>
@@ -126,7 +130,7 @@ class Login extends Component {
     displayName: '',
     channel: 'tokyo',
     password: '',
-    error: null,
+    errorType: null,
     errorMessage: ''
   }
 
@@ -137,11 +141,7 @@ class Login extends Component {
     event.preventDefault()
     event.persist()
     const value = event.target.value
-    if (this.state.error) {
-      this.setState({username: value, error: null})
-    } else {
-      this.setState({username: value})
-    }
+    this.setState({username: value, errorType: null})
   }
 
   // パスワードを入力する
@@ -149,11 +149,7 @@ class Login extends Component {
     event.preventDefault()
     event.persist()
     const value = event.target.value
-    if (this.state.error) {
-      this.setState({password: value, error: null})
-    } else {
-      this.setState({password: value})
-    }
+    this.setState({password: value, errorType: null})
   }
 
   // ログインする
@@ -163,39 +159,39 @@ class Login extends Component {
     this.process = true
     const username = this.state.username
     if (username.length === 0) {
-      this.setState({error: 'username', errorMessage: 'ユーザネームを入力してください'})
+      this.setState({errorType: 'username', errorMessage: 'ユーザネームを入力してください'})
       this.process = false
       return
     }
     const isNotUsername = username.indexOf('@') !== -1
     if (isNotUsername) {
       if (!isEmail(username)) {
-        this.setState({error: 'email', errorMessage: 'メールアドレスの形式がちがいます'})
+        this.setState({errorType: 'email', errorMessage: 'メールアドレスの形式がちがいます'})
         this.process = false
         return
       }
     } else {
       if (username.match(new RegExp('[^A-Za-z0-9]+'))) {
-        this.setState({error: 'email', errorMessage: 'ユーザネームは英数字のみです'})
+        this.setState({errorType: 'email', errorMessage: 'ユーザネームは英数字のみです'})
         this.process = false
         return
       }
     }
     const password = this.state.password
     if (password.length === 0) {
-      this.setState({error: 'password', errorMessage: 'パスワードを入力してください'})
+      this.setState({errorType: 'password', errorMessage: 'パスワードを入力してください'})
       this.process = false
       return
     }
     if (isAlpha(password)) {
-      this.setState({error: 'password', errorMessage: 'パスワードは数字を含みます'})
+      this.setState({errorType: 'password', errorMessage: 'パスワードは数字を含みます'})
       this.process = false
       return
     }
     this.props.loginWithPassword(username, password)
     .catch(error => {
       if (error) {
-        this.setState({error: 'password', errorMessage: 'ログインに失敗しました'})
+        this.setState({errorType: 'auth', errorMessage: 'ログインに失敗しました'})
       }
       this.process = false
     })
@@ -214,7 +210,7 @@ class Login extends Component {
       this.props.loginWithPassword(this.state.username, this.state.password)
     })
     .catch(err => {
-      this.setState({error: err.error, errorMessage: err.reason})
+      this.setState({errorType: 'auth', errorMessage: err.reason})
       this.process = false
     })
   }
