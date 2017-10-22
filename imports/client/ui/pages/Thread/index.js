@@ -13,7 +13,7 @@ import withScrollTop from '/imports/client/ui/hocs/withScrollTop'
 class Thread extends Component {
   render () {
     return (
-      <Layout>
+      <Layout dense>
         {this.props.info.channel && <ChannelInfo />}
         {this.forPosts}
       </Layout>

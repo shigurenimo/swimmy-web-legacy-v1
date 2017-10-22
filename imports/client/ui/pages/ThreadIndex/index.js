@@ -18,7 +18,7 @@ import styles from './index.style'
 class ThreadIndex extends Component {
   render () {
     return (
-      <Layout>
+      <Layout dense>
         {this.forThreads}
       </Layout>
     )

@@ -11,7 +11,7 @@ import withScrollTop from '/imports/client/ui/hocs/withScrollTop'
 class Timeline extends Component {
   render () {
     return (
-      <Layout>
+      <Layout dense>
         {this.forPosts}
       </Layout>
     )

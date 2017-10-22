@@ -1,11 +1,12 @@
+import classNames from 'classnames'
 import withStyles from 'material-ui/styles/withStyles'
 import React, { Component } from 'react'
 
 class Layout extends Component {
   render () {
-    const {classes} = this.props
+    const {classes, dense} = this.props
     return (
-      <div className={classes.root}>
+      <div className={classNames(classes.root, {[classes.dense]: dense})}>
         {this.props.children}
       </div>
     )
@@ -15,16 +16,18 @@ class Layout extends Component {
 export const styles = theme => {
   return {
     root: {
-      [theme.breakpoints.up('sm')]: {
-        paddingLeft: 10,
-        paddingRight: 10
-      },
+      paddingLeft: 10,
+      paddingRight: 10,
       [theme.breakpoints.up('md')]: {
-        paddingBottom: 20,
+        paddingBottom: 20
       },
       [theme.breakpoints.down('md')]: {
-        paddingBottom: 100,
+        paddingBottom: 100
       }
+    },
+    dense: {
+      paddingLeft: 0,
+      paddingRight: 0
     }
   }
 }
