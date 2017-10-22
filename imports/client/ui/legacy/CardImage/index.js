@@ -75,9 +75,7 @@ export default class CardImage extends Component {
       .then(post => {
         this.setState({isInputReaction: false, inputNewReaction: ''})
       })
-      .catch(err => {
-        this.props.snackbar.setError(err)
-      })
+      .catch(this.props.snackbar.setError)
       return
     }
     this.props.posts.updateReaction(postId, name)

@@ -67,10 +67,8 @@ export default class Profile extends Component {
 
   onFollow () {
     this.props.account.updateFollow(this.props.users.one._id)
-    .then(() => {
-      this.props.snackbar.show('フォローを更新しました')
-    })
-    .catch(err => this.props.snackbar.setError(err))
+    .then(this.props.snackbar.setMessage)
+    .catch(this.props.snackbar.setError)
   }
 
   onFollow = ::this.onFollow

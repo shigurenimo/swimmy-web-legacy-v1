@@ -202,14 +202,14 @@ class Post extends Component {
       .then(() => {
         this.setState({isInputReaction: false, inputNewReaction: ''})
       })
-      .catch(err => { this.props.snackbar.setError(err) })
+      .catch(this.props.snackbar.setError)
       return
     }
     this.props.updatePostReaction(postId, {name})
     .then(() => {
       this.setState({isOpenActions: false, isInputReaction: false, inputNewReaction: ''})
     })
-    .catch(err => { this.props.snackbar.setError(err) })
+    .catch(this.props.snackbar.setError)
   }
 
   componentWillMount () {

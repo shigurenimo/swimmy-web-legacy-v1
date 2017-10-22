@@ -10,13 +10,6 @@ export const actions = self => {
     unsetOpen () {
       self.isOpen = false
     },
-    show (message) {
-      self.message = message
-      self.isOpen = true
-      setTimeout(() => {
-        self.unsetOpen()
-      }, 2000)
-    },
     setMessage (res) {
       console.info(res)
       const message = typeof res === 'string'

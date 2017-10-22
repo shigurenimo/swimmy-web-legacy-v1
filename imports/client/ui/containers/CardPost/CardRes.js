@@ -193,7 +193,7 @@ class PostRes extends Component {
     .then(() => {
       this.setState({isOpenActions: false, isInputReaction: false, inputNewReaction: ''})
     })
-    .catch(err => { this.props.snackbar.setError(err) })
+    .catch(this.props.snackbar.setError)
   }
 }
 

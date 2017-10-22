@@ -44,13 +44,13 @@ class ChannelInfo extends Component {
   onJoinChannel = () => {
     const {_id: channelId} = this.props.channels.one
     this.props.channels.updateMember(channelId)
-    .then(() => { this.props.snackbar.show('チャンネルを追加しました') })
+    .then(this.props.snackbar.setMessage)
   }
 
   onLeaveChannel = () => {
     const {_id: channelId} = this.props.channels.one
     this.props.channels.updateMember(channelId)
-    .then(() => { this.props.snackbar.show('チャンネルを外しました') })
+    .then(this.props.snackbar.setMessage)
   }
 }
 

@@ -75,7 +75,7 @@ class Admin extends Component {
     this.props.updateUserUsername(username)
     .then(res => {
       this.setState({username: ''})
-      this.props.snackbar.show(res.message)
+      this.props.snackbar.setMessage(res)
     })
     .catch(err => {
       if (err.message) {

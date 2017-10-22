@@ -84,7 +84,7 @@ class Admin extends Component {
     this.setPassword(currentPassword, password)
     .then(res => {
       this.setState({currentPassword: '', password: ''})
-      this.props.snackbar.show(res.message)
+      this.props.snackbar.setMessage(res)
     })
     .catch(err => {
       if (err.message) {

@@ -152,7 +152,7 @@ class InputPost extends Component {
       const file = this.state.inputImage
       await createBase64(file)
       .then(base64 => {
-        this.props.snackbar.show('サーバーで画像を圧縮しています')
+        this.props.snackbar.setMessage('サーバーで画像を圧縮しています')
         const data = {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
@@ -191,7 +191,7 @@ class InputPost extends Component {
       const file = this.state.inputImage
       await createBase64(file)
       .then(base64 => {
-        this.props.snackbar.show('サーバーで画像を圧縮しています')
+        this.props.snackbar.setMessage('サーバーで画像を圧縮しています')
         const data = {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,

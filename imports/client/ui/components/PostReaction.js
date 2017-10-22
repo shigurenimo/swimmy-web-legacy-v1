@@ -95,14 +95,14 @@ class PostReaction extends Component {
       .then(() => {
         this.setState({isInputReaction: false, inputNewReaction: ''})
       })
-      .catch(err => { this.props.snackbar.setError(err) })
+      .catch(this.props.snackbar.setError)
       return
     }
     this.props.updatePostReaction(postId, {name})
     .then(() => {
       this.setState({isInputReaction: false, inputNewReaction: ''})
     })
-    .catch(err => { this.props.snackbar.setError(err) })
+    .catch(this.props.snackbar.setError)
   }
 
   // 投稿を削除する
@@ -110,7 +110,7 @@ class PostReaction extends Component {
     const confirm = window.confirm('削除してもいいですか？')
     if (!confirm) return
     this.props.removePost({_id: this.props.postId})
-    .catch(err => this.props.snackbar.setError(err))
+    .catch(this.props.snackbar.setError)
   }
 }
 

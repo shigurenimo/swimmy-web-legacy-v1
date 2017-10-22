@@ -78,7 +78,7 @@ export default class ConfigTwitter extends Component {
 
   onUpdateTwitter () {
     this.props.accounts.updateServicesTwitter()
-    .then(() => { this.props.snackbar.show('アップデートに成功しました') })
+    .then(this.props.snackbar.setMessage)
     .catch(this.props.snackbar.setError)
   }
 
@@ -87,7 +87,7 @@ export default class ConfigTwitter extends Component {
   onUpdateRemoveTwitter () {
     if (!window.confirm('解除してもいいですか？')) return
     this.props.accounts.updateRemoveServicesTwitter()
-    .then(() => { this.props.snackbar.show('関連付けを解除しました') })
+    .then(this.props.snackbar.setMessage)
     .catch(this.props.snackbar.setError)
   }
 

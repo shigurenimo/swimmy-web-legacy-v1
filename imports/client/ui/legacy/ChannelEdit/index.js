@@ -75,10 +75,8 @@ export default class ChannelEdit extends Component {
     const channelId = this.props.channels.one._id
     const next = this.state.name
     this.props.channels.updateBasic(channelId, 'name', next)
-    .then(data => {
-      this.props.snackbar.show('更新しました')
-    })
-    .catch(err => this.props.snackbar.setError(err))
+    .then(this.props.snackbar.setMessage)
+    .catch(this.props.snackbar.setError)
   }
 
   onSubmitName = ::this.onSubmitName
@@ -100,10 +98,8 @@ export default class ChannelEdit extends Component {
     const next = this.state.description
     if (this.props.channels.one.description === this.state.description) return
     this.props.channels.updateBasic(channelId, 'description', next)
-    .then(data => {
-      this.props.snackbar.show('更新しました')
-    })
-    .catch(err => this.props.snackbar.setError(err))
+    .then(this.props.snackbar.setMessage)
+    .catch(this.props.snackbar.setError)
   }
 
   onSubmitDescription = ::this.onSubmitDescription
@@ -122,11 +118,11 @@ export default class ChannelEdit extends Component {
     if (!confirm) return
     const channelId = this.props.channels.one._id
     this.props.channels.remove(channelId)
-    .then(() => {
+    .then(res => {
       this.props.routes.go('/ch')
-      this.props.snackbar.show('チャンネルを削除しました')
+      this.props.snackbar.setMessage(res)
     })
-    .catch(err => { this.props.snackbar.setError(err) })
+    .catch(this.props.snackbar.setError)
   }
 
   onRemove = ::this.onRemove

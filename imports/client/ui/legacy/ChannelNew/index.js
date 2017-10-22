@@ -107,9 +107,9 @@ export default class ChannelNew extends Component {
       tags: this.state.tags
     }
     this.props.channels.insert(next)
-    .then(data => {
+    .then(res => {
       this.props.routes.go('/ch')
-      this.props.snackbar.show('新しいチャンネルを作成しました')
+      this.props.snackbar.setMessage(res)
       this.process = false
     })
     .catch(err => {
