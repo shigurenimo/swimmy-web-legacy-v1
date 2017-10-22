@@ -46,6 +46,6 @@ Meteor.methods({
       }
     }, {multi: true})
 
-    return {message: 'ユーザネームを更新しました'}
+    return {reason: 'ユーザネームを更新しました'}
   }
 })

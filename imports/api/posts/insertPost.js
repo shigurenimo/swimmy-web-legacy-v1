@@ -1,13 +1,15 @@
+import { unlink, writeFileSync } from 'fs'
+import { join } from 'path'
+
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { Random } from 'meteor/random'
-import { unlink, writeFileSync } from 'fs'
-import { join } from 'path'
+
 import Jimp from 'jimp'
 
-import upload from '/imports/utils/google/upload'
 import collection from '/imports/collection'
-import extendWeb from '../packages/extendWeb'
+import extendWeb from '/imports/api/packages/extendWeb'
+import upload from '/imports/utils/google/upload'
 
 Meteor.methods({
   async insertPost (req) {

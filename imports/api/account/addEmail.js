@@ -11,5 +11,7 @@ Meteor.methods({
     }
     Accounts.addEmail(this.userId, req.email, false)
     // Accounts.sendVerificationEmail(userId, req.email)
+
+    return {reason: 'メールアドレスを追加しました'}
   }
 })

@@ -48,6 +48,6 @@ Meteor.methods({
       })
     }
 
-    return {message: 200}
+    return {reason: '投稿を削除しました'}
   }
 })

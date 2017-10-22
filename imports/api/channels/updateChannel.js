@@ -45,5 +45,7 @@ Meteor.methods({
         }
       }, {multi: true})
     }
+
+    return {reason: 'チャンネルを更新しました'}
   }
 })

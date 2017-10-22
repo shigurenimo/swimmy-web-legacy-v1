@@ -33,6 +33,11 @@ Meteor.methods({
         }
       })
     }
-    return 200
+
+    if (isExist) {
+      return {reason: 'フォローを外しました'}
+    } else {
+      return {reason: 'フォローしました'}
+    }
   }
 })

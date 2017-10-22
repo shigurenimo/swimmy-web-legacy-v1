@@ -20,5 +20,7 @@ Meteor.methods({
         ['config.twitter.' + name]: value
       }
     })
+    
+    return {reason: '設定を更新しました'}
   }
 })

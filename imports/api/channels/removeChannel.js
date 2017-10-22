@@ -23,5 +23,7 @@ Meteor.methods({
         }
       }
     })
+
+    return {reason: 'チャンネルを削除しました'}
   }
 })

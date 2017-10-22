@@ -6,5 +6,7 @@ Meteor.methods({
     if (!this.userId) throw new Meteor.Error('not-authorized')
 
     Accounts.sendVerificationEmail(this.userId)
+    
+    return {reason: 'リンクを送信しました'}
   }
 })

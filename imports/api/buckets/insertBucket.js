@@ -20,5 +20,7 @@ Meteor.methods({
     }
 
     collection.buckets.insert(data)
+    
+    return {reason: 'バケットを追加しました'}
   }
 })

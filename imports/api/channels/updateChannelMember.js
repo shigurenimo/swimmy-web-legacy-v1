@@ -34,6 +34,8 @@ Meteor.methods({
           }
         }
       })
+
+      return {reason: 'チャンネルを更新しました'}
     }
   }
 })

@@ -41,5 +41,7 @@ Meteor.methods({
         'services.twitter.profile_image_url_https': TwitterData.profile_image_url_https
       }
     })
+
+    return {reason: '接続しました'}
   }
 })

@@ -36,5 +36,7 @@ Meteor.methods({
         }
       }
     })
+
+    return {reason: 'チャンネルを追加しました'}
   }
 })

@@ -6,5 +6,7 @@ Meteor.methods({
     if (!this.userId) throw new Meteor.Error('not-authorized')
 
     collection.buckets.remove(_id)
+
+    return {reason: 'バケットを削除しました'}
   }
 })

@@ -83,6 +83,8 @@ Meteor.methods({
           content: 'この投稿は既に削除されています'
         }
       }
+
+      return {reason: 'タグを更新しました'}
     }
   }
 })

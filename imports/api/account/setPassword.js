@@ -15,6 +15,6 @@ Meteor.methods({
 
     Accounts.setPassword(this.userId, newPassword)
 
-    return {message: 'パスワードを更新しました'}
+    return {reason: 'パスワードを更新しました'}
   }
 })
