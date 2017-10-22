@@ -32,7 +32,7 @@ export const actions = self => {
       }, 2000)
     },
     requireLogin () {
-      self.show('ログインが必要です')
+      self.setMessage('ログインが必要です')
     }
   }
 }
