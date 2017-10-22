@@ -80,7 +80,6 @@ export const onExpandChat = props => () => { props.setIsExpandChat(!props.isExpa
 export const onExpandAccount = props => () => { props.setIsExpandAccount(!props.isExpandAccount) }
 
 export const onChangeRoute = props => route => () => {
-  console.log('onChangeRoute')
   props.router.push(route)
   props.drawer.close()
 }
