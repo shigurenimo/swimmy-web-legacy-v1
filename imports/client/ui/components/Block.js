@@ -1,6 +1,43 @@
 import classNames from 'classnames'
 import withStyles from 'material-ui/styles/withStyles'
-import React, { Component } from 'react'
+import React from 'react'
+
+export const Component = props => {
+  const {
+    classes,
+    className,
+    align = 'left',
+    width,
+    ...other
+  } = props
+  return (
+    <div
+      {...other}
+      className={classNames(classes.root, {
+        [className]: className
+      })}>
+      <div
+        className={classes.inner}
+        style={{
+          margin: margin(align),
+          maxWidth: width ? (width + 'px') : '600px'
+        }}>
+        {props.children}
+      </div>
+    </div>
+  )
+}
+
+const margin = (align) => {
+  switch (align) {
+    case 'left':
+      return '0 auto 0 0'
+    case 'right':
+      return '0 0 0 auto'
+    case 'center':
+      return '0 auto'
+  }
+}
 
 const styles = {
   root: {
@@ -15,39 +52,4 @@ const styles = {
   }
 }
 
-class Block extends Component {
-  render () {
-    const {
-      classes,
-      className,
-      align = 'left',
-      width,
-      ...other
-    } = this.props
-    return (
-      <Component {...other} className={classNames(className, classes.root)}>
-        <div
-          className={classes.inner}
-          style={{
-            margin: this.margin(align),
-            maxWidth: width ? (width + 'px') : '600px'
-          }}>
-          {this.props.children}
-        </div>
-      </Component>
-    )
-  }
-
-  margin (align) {
-    switch (align) {
-      case 'left':
-        return '0 auto 0 0'
-      case 'right':
-        return '0 0 0 auto'
-      case 'center':
-        return '0 auto'
-    }
-  }
-}
-
-export default withStyles(styles)(Block)
+export default withStyles(styles)(Component)
