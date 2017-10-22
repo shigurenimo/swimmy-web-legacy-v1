@@ -4,8 +4,6 @@ import { ListItem, ListItemText } from 'material-ui/List'
 import withStyles from 'material-ui/styles/withStyles'
 import React from 'react'
 
-import withRouter from '/imports/client/ui/hocs/withRouter'
-
 export const Component = props =>
   <ListItem
     button
@@ -23,4 +21,4 @@ export const styles = {
   }
 }
 
-export default compose(withStyles(styles), withRouter)(Component)
+export default compose(withStyles(styles))(Component)

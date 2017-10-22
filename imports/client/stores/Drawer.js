@@ -8,10 +8,14 @@ export const actions = self => {
       self.isOpen = !self.isOpen
     },
     open () {
-      self.isOpen = true
+      if (!self.isOpen) {
+        self.isOpen = true
+      }
     },
     close () {
-      self.isOpen = false
+      if (self.isOpen) {
+        self.isOpen = false
+      }
     }
   }
 }

@@ -6,14 +6,13 @@ import ListItemText from 'material-ui/List/ListItemText'
 import React from 'react'
 
 import IconButtonMoreExpand from '/imports/client/ui/components/IconButtonMoreExpand'
-import withRouter from '/imports/client/ui/hocs/withRouter'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 
 export const Component = props =>
   <ListItem
     button
     dense
-    onClick={() => { props.router.push('/admin') }}>
+    onClick={props.onChangeRoute}>
     {props.isLoggingIn
       ? <ListItemText primary={'async...'} />
       : <ListItemText primary={props.isLogged ? 'アカウント' : 'ログイン'} />}
@@ -29,8 +28,4 @@ export const styles = {
   }
 }
 
-export default compose(
-  withStyles(styles),
-  withRouter,
-  withCurrentUser
-)(Component)
+export default compose(withStyles(styles), withCurrentUser)(Component)

@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import compose from 'ramda/src/compose'
 import withStyles from 'material-ui/styles/withStyles'
 import IconButton from 'material-ui/IconButton'
 import ListItem from 'material-ui/List/ListItem'
@@ -8,8 +7,6 @@ import ListItemText from 'material-ui/List/ListItemText'
 import BookmarkBorderIcon from 'material-ui-icons/BookmarkBorder'
 import React from 'react'
 
-import withRouter from '/imports/client/ui/hocs/withRouter'
-
 export const Component = props =>
   <ListItem
     button
@@ -17,7 +14,7 @@ export const Component = props =>
     className={classNames({
       [props.classes.select]: props.pathname.includes('/thread')
     })}
-    onClick={() => { props.router.push('/thread') }}>
+    onClick={props.onChangeRoute}>
     <ListItemText primary='スレッド' />
     <ListItemSecondaryAction>
       <IconButton component='a' href='/thread'>
@@ -32,4 +29,4 @@ export const styles = {
   }
 }
 
-export default compose(withStyles(styles), withRouter)(Component)
+export default withStyles(styles)(Component)

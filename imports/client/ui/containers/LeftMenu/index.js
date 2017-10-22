@@ -4,7 +4,7 @@ import withStyles from 'material-ui/styles/withStyles'
 import Collapse from 'material-ui/transitions/Collapse'
 import Typography from 'material-ui/Typography'
 import List from 'material-ui/List'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import React from 'react'
 import withHandlers from 'recompose/withHandlers'
 import withState from 'recompose/withState'
@@ -27,24 +27,30 @@ export const Component = props =>
   <div className={props.classes.root}>
     <List>
       <ListItemLogin
+        onChangeRoute={props.onChangeRoute('/admin')}
         isExpand={props.isExpandAccount}
         onExpand={props.onExpandAccount} />
       <Collapse in={props.isExpandAccount} transitionDuration='auto' unmountOnExit>
         <ListItemConfigUsername
+          onChangeRoute={props.onChangeRoute('/config/password')}
           pathname={props.router.location.pathname} />
         <ListItemConfigPassword
+          onChangeRoute={props.onChangeRoute('/config/username')}
           pathname={props.router.location.pathname} />
       </Collapse>
     </List>
     <Divider light />
     <List>
       <ListItemTimeline
+        onChangeRoute={props.onChangeRoute('/')}
         isExpand={props.isExpandChat}
         onExpand={props.onExpandChat}
         pathname={props.router.location.pathname} />
       <ListItemThread
+        onChangeRoute={props.onChangeRoute('/thread')}
         pathname={props.router.location.pathname} />
       <ListItemMedia
+        onChangeRoute={props.onChangeRoute('/media')}
         pathname={props.router.location.pathname} />
       {/*
         props.isLogged &&
@@ -55,6 +61,7 @@ export const Component = props =>
     <Divider light />
     <List>
       <ListItemNote
+        onChangeRoute={props.onChangeRoute('/note')}
         pathname={props.router.location.pathname} />
       <ListItemRepository
         pathname={props.router.location.pathname} />
@@ -72,11 +79,18 @@ export const onExpandChat = props => () => { props.setIsExpandChat(!props.isExpa
 
 export const onExpandAccount = props => () => { props.setIsExpandAccount(!props.isExpandAccount) }
 
+export const onChangeRoute = props => route => () => {
+  console.log('onChangeRoute')
+  props.router.push(route)
+  props.drawer.close()
+}
+
 export default compose(
   withStyles(styles),
+  inject(stores => ({drawer: stores.drawer})),
+  withRouter,
   withState('isExpandAccount', 'setIsExpandAccount', false),
   withState('isExpandChat', 'setIsExpandChat', false),
-  withHandlers({onExpandChat, onExpandAccount}),
-  withRouter,
+  withHandlers({onExpandChat, onExpandAccount, onChangeRoute}),
   observer
 )(Component)

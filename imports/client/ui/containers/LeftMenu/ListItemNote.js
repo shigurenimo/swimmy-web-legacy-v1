@@ -1,11 +1,8 @@
 import classNames from 'classnames'
-import compose from 'ramda/src/compose'
 import ListItem from 'material-ui/List/ListItem'
 import ListItemText from 'material-ui/List/ListItemText'
 import withStyles from 'material-ui/styles/withStyles'
 import React from 'react'
-
-import withRouter from '/imports/client/ui/hocs/withRouter'
 
 export const Component = props =>
   <ListItem
@@ -14,7 +11,7 @@ export const Component = props =>
     className={classNames({
       [props.classes.select]: props.pathname.includes('note')
     })}
-    onClick={() => {props.router.push('/note')}}>
+    onClick={props.onChangeRoute}>
     <ListItemText primary='開発ノート' />
   </ListItem>
 
@@ -24,4 +21,4 @@ export const styles = {
   }
 }
 
-export default compose(withStyles(styles), withRouter)(Component)
+export default withStyles(styles)(Component)
