@@ -25,7 +25,7 @@ Meteor.publish('mediaPosts', function (selector = {}, options = {}, scope) {
   options.fields = {
     replies: 0
   }
-  options.limit = 40
+  options.limit = 60
 
   const replyOptions = {
     fields: {
