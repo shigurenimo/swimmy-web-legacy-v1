@@ -17,11 +17,22 @@ export const actions = self => {
         self.unsetOpen()
       }, 2000)
     },
-    setError (reason) {
-      if (reason) {
-        console.error(reason)
-      }
-      self.message = reason || 'エラーが発生しました'
+    setMessage (res) {
+      console.info(res)
+      const message = typeof res === 'string'
+        ? res
+        : res.reason
+      self.message = message
+      self.isOpen = true
+      setTimeout(() => {
+        self.unsetOpen()
+      }, 2000)
+    },
+    setError (err) {
+      const message = typeof err === 'string'
+        ? err
+        : err.reason
+      self.message = message || 'エラーが発生しました'
       self.isOpen = true
       setTimeout(() => {
         self.unsetOpen()

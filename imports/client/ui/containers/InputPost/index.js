@@ -163,8 +163,8 @@ class InputPost extends Component {
         this.ref.style.height = 'auto'
         return this.props.insertPost(data)
       })
-      .then(() => { this.props.snackbar.show('投稿が完了しました') })
-      .catch(err => { this.props.snackbar.setError(err) })
+      .then(this.props.snackbar.setMessage)
+      .catch(this.props.snackbar.setError)
     } else {
       if (this.props.inputPost.postContent === '') {
         this.process = false
@@ -178,8 +178,7 @@ class InputPost extends Component {
       this.props.inputPost.reset()
       this.ref.style.height = 'auto'
       await this.props.insertPost(data)
-      .then(() => {})
-      .catch(err => { this.props.snackbar.setError(err) })
+      .catch(this.props.snackbar.setError)
     }
     this.process = false
   }
@@ -204,8 +203,7 @@ class InputPost extends Component {
         this.ref.style.height = 'auto'
         return this.props.insertPost(data)
       })
-      .then(post => { this.props.snackbar.show('投稿が完了しました') })
-      .catch(err => { this.props.snackbar.setError(err) })
+      .catch(this.props.snackbar.setError)
     } else {
       if (this.props.inputPost.postContent === '') {
         this.process = false
@@ -220,7 +218,7 @@ class InputPost extends Component {
       this.setState({errorImage: null, inputImage: null})
       this.ref.style.height = 'auto'
       await this.props.insertPost(data)
-      .catch(err => { this.props.snackbar.setError(err) })
+      .catch(this.props.snackbar.setError)
     }
     this.process = false
   }
