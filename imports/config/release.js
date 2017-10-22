@@ -1,8 +1,14 @@
 export default [{
+  version: '1.5.0-beta.1',
+  date: '2017.10.22',
+  content: [
+    'APIの再構成'
+  ]
+}, {
   version: '1.5.0-beta.0',
   date: '2017.10.19',
   content: [
-    'UIの再構築'
+    'UIの再構成'
   ]
 }, {
   version: '1.4.11',

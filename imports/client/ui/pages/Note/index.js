@@ -8,7 +8,7 @@ import Layout from '/imports/client/ui/components/Layout'
 import Sheet from '/imports/client/ui/components/Sheet'
 import SheetContent from '/imports/client/ui/components/SheetContent'
 import withScrollTop from '/imports/client/ui/hocs/withScrollTop'
-import releases from '/imports/helpers/release'
+import releases from '/imports/config/release'
 
 import styles from './index.style'
 
