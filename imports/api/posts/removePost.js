@@ -15,8 +15,8 @@ Meteor.methods({
 
     collection.posts.remove(model._id)
 
-    if (model.reply) {
-      collection.posts.update(model.reply, {
+    if (model.replyId) {
+      collection.posts.update(model.replyId, {
         $pull: {replies: model._id}
       })
     }
