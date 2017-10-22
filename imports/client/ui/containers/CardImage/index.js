@@ -8,17 +8,18 @@ import React, { Component } from 'react'
 import Button from '/imports/client/ui/components/Button'
 import ChipPostReaction from '/imports/client/ui/components/ChipPostReaction'
 import Image from '/imports/client/ui/components/Image'
-import PostReaction from '/imports/client/ui/components/PostReaction'
+import PostReaction from '/imports/client/ui/containers/CardPost/Actions'
 import Sheet from '/imports/client/ui/components/Sheet'
 import SheetActions from '/imports/client/ui/components/SheetActions'
 import SheetContent from '/imports/client/ui/components/SheetContent'
+import SheetImage from '/imports/client/ui/components/SheetImage'
 import Typography from '/imports/client/ui/components/Typography'
 import withRouter from '/imports/client/ui/hocs/withRouter'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withMethod from '/imports/client/ui/hocs/withMethod'
 import toSince from '/imports/utils/date/toSince'
 
-import styles from './index.style'
+import styles from '/imports/client/ui/containers/CardPost/index.style'
 
 class CardImage extends Component {
   render () {
@@ -26,8 +27,8 @@ class CardImage extends Component {
     return (
       <div>
         <Sheet hover onClick={this.onOpenActions}>
-          {/* username */}
-          <SheetContent>
+          <div className={classes.textContent}>
+            {/* username */}
             {this.props.owner && this.props.owner.username &&
             <Typography
               gutterBottom
@@ -40,10 +41,10 @@ class CardImage extends Component {
               className={classes.content}
               dangerouslySetInnerHTML={{__html: this.props.content}} />
             <Typography inline type='caption' component='span'> - {toSince(this.props.createdAt)}</Typography>
-          </SheetContent>
+          </div>
           {/* photo */}
           {this.props.imagePath &&
-          <SheetContent dense>
+          <div className={classes.imageContent}>
             <div
               className={classNames(classes.photoImage, {
                 [classes.photoImageOpen]: this.state.selectImage
@@ -51,10 +52,10 @@ class CardImage extends Component {
               onClick={this.onSelectImage}>
               <Image src={this.props.imagePath + this.props.images.slice()[0].x256} />
             </div>
-          </SheetContent>}
+          </div>}
           {/* reaction */}
           {this.props.reactions.slice()[0] &&
-          <SheetActions>
+          <div className={classes.tagAction}>
             <div className={classes.reactionList}>
               {this.props.reactions.map(({name, ownerIds}) =>
                 <ChipPostReaction
@@ -66,7 +67,7 @@ class CardImage extends Component {
                   onUpdateReaction={() => this.onUpdateReaction(this.props._id, name)} />
               )}
             </div>
-          </SheetActions>}
+          </div>}
         </Sheet>
         {/* reaction */}
         {this.state.isOpenActions &&

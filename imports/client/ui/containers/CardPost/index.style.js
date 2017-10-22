@@ -1,11 +1,29 @@
 import { Meteor } from 'meteor/meteor'
 
 export default theme => ({
-  root: {
-    overflow: 'hidden'
-  },
   content: {
     color: 'rgba(0, 0, 0, 0.8)'
+  },
+  textContent: {
+    padding: '15px 10px 15px'
+  },
+  imageContent: {
+    padding: '10px 10px'
+  },
+  embedContent: {
+    padding: '10px 10px'
+  },
+  embedTitleContent: {
+    padding: '10px 10px'
+  },
+  replyContent: {
+    padding: '10px 10px'
+  },
+  tagAction: {
+    padding: '5px 5px'
+  },
+  replyInnerContent: {
+    padding: '5px 5px'
   },
   more: {
     position: 'absolute',
@@ -54,7 +72,6 @@ export default theme => ({
     }
   },
   reactionList: {
-    width: 'calc(100% - 50px)',
     display: 'flex',
     flexWrap: 'wrap'
   },
@@ -65,8 +82,5 @@ export default theme => ({
     width: '30px',
     height: '30px',
     color: Meteor.settings.public.color.primary
-  },
-  reply: {
-    width: 'calc(100% - 30px)'
   }
 })

@@ -1,28 +1,31 @@
 import TextField from 'material-ui/TextField'
 import { inject, observer } from 'mobx-react'
+import withStyles from 'material-ui/styles/withStyles'
 import compose from 'ramda/src/compose'
 import React, { Component } from 'react'
 
 import Button from '/imports/client/ui/components/Button'
 import Sheet from '/imports/client/ui/components/Sheet'
-import SheetActions from '/imports/client/ui/components/SheetActions'
 import withMethod from '/imports/client/ui/hocs/withMethod'
 import withRouter from '/imports/client/ui/hocs/withRouter'
+import FlexGrow from '/imports/client/ui/components/FlexGrow'
 
-import FlexGrow from './FlexGrow'
+import styles from './Actions.style'
 
 class PostReaction extends Component {
   render () {
     return (
       <Sheet>
-        <SheetActions>
+        {this.props.isOwner || !this.props.isThread &&
+        <div className={this.props.classes.threadAction}>
           <FlexGrow />
           {this.props.isOwner &&
           <Button dense color='accent' onClick={this.onRemovePost}>削除する</Button>}
-          <Button dense raised color='primary' onClick={this.onOpenThread}>スレッドを開く</Button>
-        </SheetActions>
+          {!this.props.isThread &&
+          <Button dense raised color='primary' onClick={this.onOpenThread}>スレッドを開く</Button>}
+        </div>}
         {this.props.isLogged &&
-        <SheetActions>
+        <div className={this.props.classes.inputAction}>
           <TextField
             fullWidth
             value={this.state.inputNewReaction}
@@ -30,13 +33,13 @@ class PostReaction extends Component {
             InputProps={{placeholder: this.reactionPlaceholder}}
             maxLength='10'
             onChange={this.onInputNewReaction} />
-        </SheetActions>}
+        </div>}
         {this.props.isLogged &&
-        <SheetActions>
+        <div className={this.props.classes.submitAction}>
           <FlexGrow />
           <Button dense onClick={this.onSubmitNewReactionLike}>スキ</Button>
           <Button dense onClick={this.onSubmitNewReaction}>貼り付ける</Button>
-        </SheetActions>}
+        </div>}
       </Sheet>
     )
   }
@@ -117,6 +120,7 @@ class PostReaction extends Component {
 }
 
 export default compose(
+  withStyles(styles),
   withRouter,
   withMethod('updatePostReaction'),
   withMethod('removePost'),
