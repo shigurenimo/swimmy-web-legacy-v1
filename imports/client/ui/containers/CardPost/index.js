@@ -27,16 +27,14 @@ class Post extends Component {
       <div>
         <Sheet hover onClick={this.onOpenActions}>
           {/* username */}
-          {this.props.owner && this.props.owner.username &&
           <SheetContent>
+            {this.props.owner && this.props.owner.username &&
             <Typography
-              inline
+              gutterBottom
               className={classes.username}>
               @{this.props.owner.username}
-            </Typography>
-          </SheetContent>}
-          {/* content */}
-          <SheetContent>
+            </Typography>}
+            {/* content */}
             <Typography
               inline
               className={classes.content}
@@ -140,7 +138,7 @@ class Post extends Component {
     const {classes} = this.props
     if (!this.state.iframe) {
       return (
-        <Sheet dense background>
+        <Sheet background>
           <SheetActions>
             <Typography type='subheading'>{data.title}</Typography>
             <Button onClick={this.onOpenIframe}>
