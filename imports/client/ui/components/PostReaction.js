@@ -17,6 +17,8 @@ class PostReaction extends Component {
       <Sheet>
         <SheetActions>
           <FlexGrow />
+          {this.props.isOwner &&
+          <Button dense color='accent' onClick={this.onRemovePost}>削除する</Button>}
           <Button dense raised color='primary' onClick={this.onOpenThread}>スレッドを開く</Button>
         </SheetActions>
         {this.props.isLogged &&
