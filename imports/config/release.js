@@ -1,4 +1,10 @@
 export default [{
+  version: '1.5.0-beta.2',
+  date: '2017.10.22',
+  content: [
+    'メニューが閉じないバグ'
+  ]
+}, {
   version: '1.5.0-beta.1',
   date: '2017.10.22',
   content: [
