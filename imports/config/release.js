@@ -2,7 +2,8 @@ export default [{
   version: '1.5.0-beta.2',
   date: '2017.10.22',
   content: [
-    'メニューが閉じないバグ'
+    'メニューが閉じないバグ',
+    'タグが重なるバグ'
   ]
 }, {
   version: '1.5.0-beta.1',
