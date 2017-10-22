@@ -32,10 +32,10 @@ export const Component = props =>
         onExpand={props.onExpandAccount} />
       <Collapse in={props.isExpandAccount} transitionDuration='auto' unmountOnExit>
         <ListItemConfigUsername
-          onChangeRoute={props.onChangeRoute('/config/password')}
+          onChangeRoute={props.onChangeRoute('/config/username')}
           pathname={props.router.location.pathname} />
         <ListItemConfigPassword
-          onChangeRoute={props.onChangeRoute('/config/username')}
+          onChangeRoute={props.onChangeRoute('/config/password')}
           pathname={props.router.location.pathname} />
       </Collapse>
     </List>
