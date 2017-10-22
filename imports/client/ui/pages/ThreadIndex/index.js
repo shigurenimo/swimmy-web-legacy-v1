@@ -27,13 +27,7 @@ class ThreadIndex extends Component {
   get forThreads () {
     const {classes} = this.props
     if (this.props.threads.data.length === 0) {
-      return (
-        <Sheet>
-          <SheetContent>
-            {this.props.threads.loading && <NowLoading />}
-          </SheetContent>
-        </Sheet>
-      )
+      return this.props.threads.loading && <NowLoading />
     }
     return this.props.threads.data.map(item =>
       <Sheet

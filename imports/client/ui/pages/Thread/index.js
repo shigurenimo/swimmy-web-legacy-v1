@@ -4,8 +4,6 @@ import React, { Component } from 'react'
 
 import Layout from '/imports/client/ui/components/Layout'
 import NowLoading from '/imports/client/ui/components/NowLoading'
-import Sheet from '/imports/client/ui/components/Sheet'
-import SheetContent from '/imports/client/ui/components/SheetContent'
 import ChannelInfo from '/imports/client/ui/containers/ChannelInfo'
 import PostRes from '/imports/client/ui/containers/CardRes/index'
 import withPosts from '/imports/client/ui/hocs/withThreadPosts'
@@ -24,13 +22,7 @@ class Thread extends Component {
 
   get forPosts () {
     if (this.props.posts.data.length === 0) {
-      return (
-        <Sheet>
-          <SheetContent>
-            {this.props.posts.loading && <NowLoading />}
-          </SheetContent>
-        </Sheet>
-      )
+      return this.props.posts.loading && <NowLoading />
     }
     return this.props.posts.data.map(item => <PostRes key={item._id} {...item} />)
   }
