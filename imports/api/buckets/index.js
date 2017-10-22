@@ -1,3 +1,3 @@
-import './insertBucket'
-import './publishBuckets'
-import './removeBucket'
+import './method/insertBucket'
+import './method/removeBucket'
+import './publish/publishBuckets'

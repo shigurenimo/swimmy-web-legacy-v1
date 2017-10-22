@@ -1,1 +1,1 @@
-import './findReport'
+import './method/findReport'

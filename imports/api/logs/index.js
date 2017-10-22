@@ -1,1 +1,1 @@
-import './insertLog'
+import './method/insertLog'
