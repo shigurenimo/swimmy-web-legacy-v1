@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import collection from '/imports/collection'
+import { Channels } from '/imports/collection'
 
 Meteor.methods({
   updateChannelMember (req) {
@@ -7,10 +7,10 @@ Meteor.methods({
 
     const channelId = req.channelId
 
-    const channel = collection.channels.findOne(channelId)
+    const channel = Channels.findOne(channelId)
 
     if (channel.member.includes(this.userId)) {
-      collection.channels.update(channelId, {
+      Channels.update(channelId, {
         $pull: {
           'member': this.userId
         }
@@ -21,7 +21,7 @@ Meteor.methods({
         }
       })
     } else {
-      collection.channels.update(channelId, {
+      Channels.update(channelId, {
         $push: {
           'member': this.userId
         }
@@ -30,7 +30,7 @@ Meteor.methods({
         $push: {
           'profile.channels': {
             _id: channelId,
-            name: collection.channels.findOne(channelId).name
+            name: Channels.findOne(channelId).name
           }
         }
       })

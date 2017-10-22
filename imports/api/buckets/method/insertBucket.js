@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import collection from '/imports/collection'
+
+import { Buckets } from '/imports/collection'
 
 Meteor.methods({
   insertBucket (req) {
@@ -19,8 +20,8 @@ Meteor.methods({
       updatedAt: new Date()
     }
 
-    collection.buckets.insert(data)
-    
+    Buckets.insert(data)
+
     return {reason: 'バケットを追加しました'}
   }
 })

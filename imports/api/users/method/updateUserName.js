@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import collection from '/imports/collection'
+import { Posts } from '/imports/collection'
 
 Meteor.methods({
   updateUserName (req) {
@@ -32,7 +32,7 @@ Meteor.methods({
       }
     })
 
-    collection.posts.update({'owner': this.userId, 'public': {$exists: true}}, {
+    Posts.update({'owner': this.userId, 'public': {$exists: true}}, {
       $set: {
         'public.name': req.name
       }

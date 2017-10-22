@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor'
-import collection from '/imports/collection'
+
+import { Posts } from '/imports/collection'
 
 Meteor.publish('threads', function (selector = {}, options = {}, scope) {
   selector.content = {$ne: ''}
@@ -8,7 +9,7 @@ Meteor.publish('threads', function (selector = {}, options = {}, scope) {
   options.sort = {createdAt: -1}
   options.limit = 50
 
-  const firstModel = collection.posts.findOne(selector, options)
+  const firstModel = Posts.findOne(selector, options)
 
   const target = scope ? 'threads.' + scope : 'threads'
 
@@ -17,7 +18,7 @@ Meteor.publish('threads', function (selector = {}, options = {}, scope) {
     this.added(target, firstModel._id, firstModel)
   }
 
-  const cursor = collection.posts.find(selector, options).observe({
+  const cursor = Posts.find(selector, options).observe({
     addedAt: (model) => {
       if (this.userId !== model.ownerId) { delete model.ownerId }
       this.added(target, model._id, model)

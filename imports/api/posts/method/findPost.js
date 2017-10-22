@@ -1,16 +1,16 @@
 import { Meteor } from 'meteor/meteor'
-import collection from '/imports/collection'
+import { Posts, Channels } from '/imports/collection'
 import createPathFromDate from '/imports/utils/createPathFromDate'
 import replaceLink from '/imports/utils/replaceLink'
 
 Meteor.methods({
   findPost (selector, options) {
-    const post = collection.posts.findOne(selector, options)
+    const post = Posts.findOne(selector, options)
 
     if (!post) { throw new Meteor.Error('not-found') }
 
     if (post.replyId) {
-      const reply = collection.posts.findOne(post.reply)
+      const reply = Posts.findOne(post.reply)
       if (reply) {
         post.reply = reply
       } else {
@@ -21,7 +21,7 @@ Meteor.methods({
     }
 
     if (post.replies && post.replies[0]) {
-      post.replies = collection.posts.find({
+      post.replies = Posts.find({
         _id: {$in: post.replies}
       }, {
         fields: {
@@ -58,7 +58,7 @@ Meteor.methods({
     }
 
     if (post.channelId) {
-      post.channel = collection.channels.findOne(post.channelId, {fields: {name: 1}})
+      post.channel = Channels.findOne(post.channelId, {fields: {name: 1}})
     }
 
     post.content = replaceLink(post.content)

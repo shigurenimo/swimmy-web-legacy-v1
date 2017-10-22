@@ -1,14 +1,14 @@
 import { Meteor } from 'meteor/meteor'
-import collection from '/imports/collection'
+import { Channels } from '/imports/collection'
 
 Meteor.publish('channels', function (selector = {}, options = {}, target) {
-  const firstModel = collection.channels.findOne(selector, options)
+  const firstModel = Channels.findOne(selector, options)
 
   if (firstModel) {
     this.added(target, firstModel._id, firstModel)
   }
 
-  const cursor = collection.channels.find(selector, options)
+  const cursor = Channels.find(selector, options)
   .observe({
     addedAt: (model) => {
       this.added(target, model._id, model)

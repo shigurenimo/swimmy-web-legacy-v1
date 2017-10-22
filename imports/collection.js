@@ -1,9 +1,8 @@
 import { Mongo } from 'meteor/mongo'
 
-export default {
-  buckets: new Mongo.Collection('buckets'),
-  channels: new Mongo.Collection('channels'),
-  posts: new Mongo.Collection('posts'),
-  reports: new Mongo.Collection('reports'),
-  logs: new Mongo.Collection('logs')
-}
+export const Buckets = new Mongo.Collection('buckets')
+export const Channels = new Mongo.Collection('channels')
+export const Posts = new Mongo.Collection('posts')
+export const Reports = new Mongo.Collection('reports')
+export const Logs = new Mongo.Collection('logs')
+

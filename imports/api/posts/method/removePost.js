@@ -1,22 +1,23 @@
 import { join } from 'path'
 import { Meteor } from 'meteor/meteor'
 import Storage from '@google-cloud/storage'
-import collection from '/imports/collection'
+
+import { Posts } from '/imports/collection'
 
 Meteor.methods({
   removePost (req) {
     if (!this.userId) throw new Meteor.Error('not-authorized')
 
-    const model = collection.posts.findOne(req._id)
+    const model = Posts.findOne(req._id)
 
     if (!model) return 200
 
     if (model.ownerId !== this.userId) return 409
 
-    collection.posts.remove(model._id)
+    Posts.remove(model._id)
 
     if (model.replyId) {
-      collection.posts.update(model.replyId, {
+      Posts.update(model.replyId, {
         $pull: {replies: model._id}
       })
     }

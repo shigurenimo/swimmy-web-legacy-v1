@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 
-import collection from '/imports/collection'
+import { Posts } from '/imports/collection'
 import createPathFromDate from '/imports/utils/createPathFromDate'
 import replaceLink from '/imports/utils/replaceLink'
 
@@ -13,7 +13,7 @@ Meteor.methods({
 
     options.sort = {createdAt: -1}
 
-    return collection.posts.find(selector, options).fetch()
+    return Posts.find(selector, options).fetch()
     .map(post => {
       if (post.replyId) {
         const options = {
@@ -27,7 +27,7 @@ Meteor.methods({
             updatedAt: 1
           }
         }
-        const reply = collection.posts.findOne(post.replyId, options)
+        const reply = Posts.findOne(post.replyId, options)
         if (reply) {
           post.reply = reply
         } else {

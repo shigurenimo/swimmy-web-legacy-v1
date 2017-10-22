@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
-import collection from '/imports/collection'
+import { Channels } from '/imports/collection'
 
 Meteor.methods({
   insertChannel (req) {
@@ -22,7 +22,7 @@ Meteor.methods({
       updatedAt: new Date()
     }
 
-    const channelId = collection.channels.insert(data)
+    const channelId = Channels.insert(data)
 
     if (!channelId) {
       throw new Meteor.Error('failure-insert', 'チャンネルの作成に失敗しました')

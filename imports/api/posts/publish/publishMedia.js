@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 
-import collection from '/imports/collection'
+import { Posts } from '/imports/collection'
 import createPathFromDate from '/imports/utils/createPathFromDate'
 import replaceLink from '/imports/utils/replaceLink'
 
@@ -39,13 +39,13 @@ Meteor.publish('mediaPosts', function (selector = {}, options = {}, scope) {
     }
   }
 
-  const firstModel = collection.posts.findOne(selector, options)
+  const firstModel = Posts.findOne(selector, options)
 
   const target = scope ? 'mediaPosts.' + scope : 'mediaPosts'
 
   if (firstModel) {
     if (scope !== 'thread' && firstModel.replyId) {
-      const reply = collection.posts.findOne(firstModel.replyId, replyOptions)
+      const reply = Posts.findOne(firstModel.replyId, replyOptions)
       if (reply) {
         firstModel.reply = reply
       } else {
@@ -66,12 +66,12 @@ Meteor.publish('mediaPosts', function (selector = {}, options = {}, scope) {
     this.added(target, firstModel._id, firstModel)
   }
 
-  const cursor = collection.posts.find(selector, options)
+  const cursor = Posts.find(selector, options)
 
   const observeHandle = cursor.observe({
     addedAt: (model) => {
       if (scope !== 'thread' && model.replyId) {
-        const reply = collection.posts.findOne(model.replyId, replyOptions)
+        const reply = Posts.findOne(model.replyId, replyOptions)
         if (reply) {
           model.reply = reply
         } else {
@@ -93,7 +93,7 @@ Meteor.publish('mediaPosts', function (selector = {}, options = {}, scope) {
     },
     changed: (model) => {
       if (model.replyId) {
-        const reply = collection.posts.findOne(model.replyId, replyOptions)
+        const reply = Posts.findOne(model.replyId, replyOptions)
         if (reply) {
           model.reply = reply
         } else {

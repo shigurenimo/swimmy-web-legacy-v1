@@ -7,8 +7,8 @@ import { Random } from 'meteor/random'
 
 import Jimp from 'jimp'
 
-import collection from '/imports/collection'
 import extendWeb from '/imports/api/packages/extendWeb'
+import { Posts } from '/imports/collection'
 import upload from '/imports/utils/google/upload'
 
 Meteor.methods({
@@ -64,7 +64,7 @@ Meteor.methods({
 
     if (req.replyId) {
       check(req.replyId, String)
-      const reply = collection.posts.findOne(req.replyId)
+      const reply = Posts.findOne(req.replyId)
       if (reply) {
         data.replyId = reply._id
       } else {
@@ -75,10 +75,10 @@ Meteor.methods({
       }
     }
 
-    const postId = collection.posts.insert(data)
+    const postId = Posts.insert(data)
 
     if (data.replyId) {
-      collection.posts.update(data.replyId, {
+      Posts.update(data.replyId, {
         $push: {replies: postId},
         $set: {updatedAt: date}
       })

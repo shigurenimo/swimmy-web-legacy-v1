@@ -1,14 +1,15 @@
 import { Meteor } from 'meteor/meteor'
-import collection from '/imports/collection'
+
+import { Buckets } from '/imports/collection'
 
 Meteor.publish('buckets', function (selector, options, target) {
-  const firstModel = collection.buckets.findOne(selector, options)
+  const firstModel = Buckets.findOne(selector, options)
 
   if (firstModel) {
     this.added(target, firstModel._id, firstModel)
   }
 
-  const cursor = collection.buckets.find(selector, options)
+  const cursor = Buckets.find(selector, options)
   .observe({
     addedAt: (model) => {
       this.added(target, model._id, model)

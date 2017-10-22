@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import collection from '/imports/collection'
+import { Logs } from '/imports/collection'
 
 Meteor.methods({
   insertLog (req) {
@@ -8,7 +8,7 @@ Meteor.methods({
 
     console.log(req.type, req.content)
 
-    collection.logs.insert({
+    Logs.insert({
       type: req.type,
       content: req.content,
       createdAt: new Date()

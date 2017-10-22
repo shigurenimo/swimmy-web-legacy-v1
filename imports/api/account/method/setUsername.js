@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 import { Accounts } from 'meteor/accounts-base'
-import collection from '/imports/collection'
+
+import { Posts } from '/imports/collection'
 import reservedWord from '/imports/config/reservedWord'
 
 Meteor.methods({
@@ -34,7 +35,7 @@ Meteor.methods({
 
     Accounts.setUsername(this.userId, username)
 
-    collection.posts.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
+    Posts.update({'ownerId': this.userId, 'owner': {$exists: true}}, {
       $set: {
         'public.username': username
       }
