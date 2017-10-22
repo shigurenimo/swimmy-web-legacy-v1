@@ -34,6 +34,7 @@ class Admin extends Component {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              className={this.props.classes.textField}
               value={this.state.username}
               label={currentUser.username}
               maxLength={10}

@@ -38,12 +38,6 @@ Meteor.methods({
       }
     }, {multi: true})
 
-    collection.artworks.update({'owner': this.userId, 'public': {$exists: true}}, {
-      $set: {
-        'public.name': req.name
-      }
-    }, {multi: true})
-
     Meteor.users.update({'profile.follows._id': this.userId}, {
       $set: {
         'profile.follows.$.name': req.name

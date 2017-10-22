@@ -13,8 +13,9 @@ import Layout from '/imports/client/ui/components/Layout'
 import NowLoading from '/imports/client/ui/components/NowLoading'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withScrollTop from '/imports/client/ui/hocs/withScrollTop'
+import withMethod from '/imports/client/ui/hocs/withMethod'
+
 import styles from './index.style'
-import withMethod from '../../hocs/withMethod'
 
 class Admin extends Component {
   render () {
@@ -37,6 +38,7 @@ class Admin extends Component {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              className={this.props.classes.textField}
               value={this.state.currentPassword}
               type='password'
               label='新しいパスワード'
@@ -46,6 +48,7 @@ class Admin extends Component {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              className={this.props.classes.textField}
               value={this.state.password}
               type='password'
               label='新しいパスワード（確認）'
