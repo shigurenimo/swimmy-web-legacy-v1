@@ -15,10 +15,15 @@ class Layout extends Component {
 export const styles = theme => {
   return {
     root: {
-      paddingBottom: 20,
       [theme.breakpoints.up('sm')]: {
         paddingLeft: 10,
         paddingRight: 10
+      },
+      [theme.breakpoints.up('md')]: {
+        paddingBottom: 20,
+      },
+      [theme.breakpoints.down('md')]: {
+        paddingBottom: 100,
       }
     }
   }

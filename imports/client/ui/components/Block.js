@@ -2,19 +2,21 @@ import classNames from 'classnames'
 import withStyles from 'material-ui/styles/withStyles'
 import React from 'react'
 
-export const Component = props => {
+export const Block = props => {
   const {
     classes,
     className,
     align = 'left',
     width,
+    padding,
     ...other
   } = props
   return (
     <div
       {...other}
       className={classNames(classes.root, {
-        [className]: className
+        [className]: className,
+        [classes.padding]: padding
       })}>
       <div
         className={classes.inner}
@@ -44,7 +46,9 @@ const styles = {
     display: 'block',
     width: '100%',
     borderBottom: 'none',
-    transitionDuration: '200ms'
+    transitionDuration: '200ms',
+    padding: '10px',
+    boxSizing: 'border-box'
   },
   inner: {
     position: 'relative',
@@ -52,4 +56,4 @@ const styles = {
   }
 }
 
-export default withStyles(styles)(Component)
+export default withStyles(styles)(Block)

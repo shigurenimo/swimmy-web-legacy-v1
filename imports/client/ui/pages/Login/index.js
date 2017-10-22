@@ -15,7 +15,6 @@ import isEmail from 'validator/lib/isEmail'
 
 import FlexGrow from '/imports/client/ui/components/FlexGrow'
 import Layout from '/imports/client/ui/components/Layout'
-import SheetContent from '/imports/client/ui/components/SheetContent'
 import Block from '/imports/client/ui/components/Block'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withMethod from '/imports/client/ui/hocs/withMethod'
@@ -34,7 +33,7 @@ class Login extends Component {
               <img className={classes.appLogoImage} src='/images/logo.png' />
               <Typography className={classes.appVersion} align='center'>
                 {Meteor.settings.public.version}
-                </Typography>
+              </Typography>
             </Block>
           </Grid>
           <Grid item xs={12}>
@@ -85,29 +84,25 @@ class Login extends Component {
           </Grid>
           <Grid item xs={12}>
             <Block width={500} align='center'>
-              <SheetContent>
+              <div>
                 <LightbulbOutlineIcon {...this.iconStyle} />
                 <Typography className={classes.AppPointTitle}>シンプル</Typography>
-              </SheetContent>
-              <SheetContent>
-                <Typography>
-                  とてもシンプルな完全匿名のチャットです。<br />
-                  ログインしてもユーザ名を伏せて書き込みできます。
-                </Typography>
-              </SheetContent>
+              </div>
+              <Typography>
+                とてもシンプルな完全匿名のチャットです。<br />
+                ログインしてもユーザ名を伏せて書き込みできます。
+              </Typography>
             </Block>
           </Grid>
           <Grid item xs={12}>
             <Block width={500} align='center'>
-              <SheetContent>
+              <div>
                 <WhatshotIcon {...this.iconStyle} />
                 <Typography className={classes.AppPointTitle}>Meteor</Typography>
-              </SheetContent>
-              <SheetContent>
-                <Typography>
-                  Meteorで開発しているオープンソースのプロジェクトです。
-                </Typography>
-              </SheetContent>
+              </div>
+              <Typography>
+                Meteorで開発しているオープンソースのプロジェクトです。
+              </Typography>
             </Block>
           </Grid>
         </Grid>
