@@ -43,7 +43,7 @@ class Post extends Component {
           </SheetContent>
           {/* photo */}
           {this.props.imagePath &&
-          <SheetContent>
+          <SheetContent dense>
             <div
               className={classNames(classes.photoImage, {
                 [classes.photoImageOpen]: this.state.selectImage
