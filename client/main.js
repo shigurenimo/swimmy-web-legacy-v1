@@ -20,6 +20,7 @@ import withRouterHistory from '/imports/client/ui/hocs/withRouterHistory'
 import Admin from '/imports/client/ui/pages/Admin'
 import ConfigPassword from '/imports/client/ui/pages/ConfigPassword'
 import ConfigUsername from '/imports/client/ui/pages/ConfigUsername'
+import MediaIndex from '/imports/client/ui/pages/MediaIndex'
 import Note from '/imports/client/ui/pages/Note'
 import NotFound from '/imports/client/ui/pages/NotFound'
 import Login from '/imports/client/ui/pages/Login'
@@ -42,19 +43,21 @@ export const App = props =>
           <Router history={props.history}>
             {props.userId ? <Switch>
               <Route exact path='/' component={Timeline} />
+              <Route exact path='/admin' component={Admin} />
+              <Route exact path='/media' component={MediaIndex} />
+              <Route exact path='/config/password' component={ConfigPassword} />
+              <Route exact path='/config/username' component={ConfigUsername} />
               <Route exact path='/note' component={Note} />
               <Route exact path='/thread' component={ThreadIndex} />
               <Route exact path='/thread/:postId' component={Thread} />
-              <Route exact path='/admin' component={Admin} />
-              <Route exact path='/config/password' component={ConfigPassword} />
-              <Route exact path='/config/username' component={ConfigUsername} />
               <Route component={NotFound} />
             </Switch> : <Switch>
               <Route exact path='/' component={Timeline} />
+              <Route exact path='/admin' component={Login} />
+              <Route exact path='/media' component={MediaIndex} />
               <Route exact path='/note' component={Note} />
               <Route exact path='/thread' component={ThreadIndex} />
               <Route exact path='/thread/:postId' component={Thread} />
-              <Route exact path='/admin' component={Login} />
               <Route component={NotFound} />
             </Switch>}
           </Router>
