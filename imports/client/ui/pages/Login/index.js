@@ -1,21 +1,21 @@
 import { Meteor } from 'meteor/meteor'
-import { observer } from 'mobx-react'
-import compose from 'ramda/src/compose'
-import React, { Component } from 'react'
+
 import withStyles from 'material-ui/styles/withStyles'
 import Button from 'material-ui/Button'
+import Grid from 'material-ui/Grid'
 import TextFiled from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
 import LightbulbOutlineIcon from 'material-ui-icons/LightbulbOutline'
 import WhatshotIcon from 'material-ui-icons/Whatshot'
+import { observer } from 'mobx-react'
+import compose from 'ramda/src/compose'
+import React, { Component } from 'react'
 import isAlpha from 'validator/lib/isAlpha'
 import isEmail from 'validator/lib/isEmail'
 
 import FlexGrow from '/imports/client/ui/components/FlexGrow'
 import Layout from '/imports/client/ui/components/Layout'
-import Sheet from '/imports/client/ui/components/Sheet'
 import SheetContent from '/imports/client/ui/components/SheetContent'
-import SheetActions from '/imports/client/ui/components/SheetActions'
 import Block from '/imports/client/ui/components/Block'
 import withCurrentUser from '/imports/client/ui/hocs/withCurrentUser'
 import withMethod from '/imports/client/ui/hocs/withMethod'
@@ -28,75 +28,89 @@ class Login extends Component {
     const {classes} = this.props
     return (
       <Layout>
-        <Sheet>
-          <Block align='center'>
-            <img className={classes.appLogoImage} src='/images/logo.png' />
-            <Typography className={classes.appVersion} align='center'>{Meteor.settings.public.version}</Typography>
-          </Block>
-        </Sheet>
-        <Sheet key='login'>
-          <Block width={400} align='center'>
-            <SheetActions>
-              <TextFiled
-                fullWidth
-                name='username'
-                label={this.state.error === 'username' ? this.state.errorMessage : 'username'}
-                onChange={this.onInputUsername}
-                onKeyDown={this.onPressEnter}
-                value={this.state.username}
-                error={this.state.error === 'username'}
-                maxLength='40' />
-            </SheetActions>
-            <SheetActions>
-              <TextFiled
-                fullWidth
-                type='password'
-                name='password'
-                label={this.state.error === 'password' ? this.state.errorMessage : 'password'}
-                onChange={this.onInputPassword}
-                onKeyDown={this.onPressEnter}
-                value={this.state.password}
-                error={this.state.error === 'password'}
-                maxLength='20' />
-            </SheetActions>
-            <SheetActions>
-              <FlexGrow />
-              <Button onClick={this.onRegister}>
-                登録
-              </Button>
-              <Button onClick={this.onLogin}>
-                ログイン
-              </Button>
-            </SheetActions>
-          </Block>
-        </Sheet>
-        <Sheet>
-          <Block width={500} align='center'>
-            <SheetContent>
-              <LightbulbOutlineIcon {...this.iconStyle} />
-              <Typography className={classes.AppPointTitle}>シンプル</Typography>
-            </SheetContent>
-            <SheetContent>
-              <Typography>
-                とてもシンプルな完全匿名のチャットです。<br />
-                ログインしてもユーザ名を伏せて書き込みできます。
-              </Typography>
-            </SheetContent>
-          </Block>
-        </Sheet>
-        <Sheet>
-          <Block width={500} align='center'>
-            <SheetContent>
-              <WhatshotIcon {...this.iconStyle} />
-              <Typography className={classes.AppPointTitle}>Meteor</Typography>
-            </SheetContent>
-            <SheetContent>
-              <Typography>
-                Meteorで開発しているオープンソースのプロジェクトです。
-              </Typography>
-            </SheetContent>
-          </Block>
-        </Sheet>
+        <Grid container>
+          <Grid item xs={12}>
+            <Block align='center'>
+              <img className={classes.appLogoImage} src='/images/logo.png' />
+              <Typography className={classes.appVersion} align='center'>
+                {Meteor.settings.public.version}
+                </Typography>
+            </Block>
+          </Grid>
+          <Grid item xs={12}>
+            <Block width={400} align='center'>
+              <Grid container>
+                <Grid item xs={12}>
+                  <TextFiled
+                    fullWidth
+                    name='username'
+                    label={this.state.error === 'username' ? this.state.errorMessage : 'username'}
+                    onChange={this.onInputUsername}
+                    onKeyDown={this.onPressEnter}
+                    value={this.state.username}
+                    helperText='ローマ字のみ'
+                    margin='normal'
+                    error={this.state.error === 'username'}
+                    maxLength='40' />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextFiled
+                    fullWidth
+                    type='password'
+                    name='password'
+                    label={this.state.error === 'password' ? this.state.errorMessage : 'password'}
+                    onChange={this.onInputPassword}
+                    onKeyDown={this.onPressEnter}
+                    value={this.state.password}
+                    helperText='4文字以上20文字以内'
+                    margin='normal'
+                    error={this.state.error === 'password'}
+                    maxLength='20' />
+                </Grid>
+              </Grid>
+            </Block>
+          </Grid>
+          <Grid item xs={12}>
+            <Block width={400} align='center'>
+              <Grid container>
+                <FlexGrow />
+                <Button raised onClick={this.onRegister}>
+                  新規登録
+                </Button>
+                <Button raised color='primary' onClick={this.onLogin}>
+                  ログイン
+                </Button>
+              </Grid>
+            </Block>
+          </Grid>
+          <Grid item xs={12}>
+            <Block width={500} align='center'>
+              <SheetContent>
+                <LightbulbOutlineIcon {...this.iconStyle} />
+                <Typography className={classes.AppPointTitle}>シンプル</Typography>
+              </SheetContent>
+              <SheetContent>
+                <Typography>
+                  とてもシンプルな完全匿名のチャットです。<br />
+                  ログインしてもユーザ名を伏せて書き込みできます。
+                </Typography>
+              </SheetContent>
+            </Block>
+          </Grid>
+          <Grid item xs={12}>
+            <Block width={500} align='center'>
+              <SheetContent>
+                <WhatshotIcon {...this.iconStyle} />
+                <Typography className={classes.AppPointTitle}>Meteor</Typography>
+              </SheetContent>
+              <SheetContent>
+                <Typography>
+                  Meteorで開発しているオープンソースのプロジェクトです。
+                </Typography>
+              </SheetContent>
+            </Block>
+          </Grid>
+        </Grid>
       </Layout>
     )
   }
