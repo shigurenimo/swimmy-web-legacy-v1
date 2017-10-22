@@ -21,7 +21,9 @@ class SheetActions extends Component {
 }
 
 export const styles = {
-  root: {}
+  root: {
+    height: 'auto'
+  }
 }
 
 export default withStyles(styles)(SheetActions)

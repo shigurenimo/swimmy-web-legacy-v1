@@ -1,43 +1,31 @@
 import classNames from 'classnames'
-import withStyles  from 'material-ui/styles/withStyles'
+import withStyles from 'material-ui/styles/withStyles'
+import { CardContent } from 'material-ui/Card'
 import React, { Component } from 'react'
 
-class SheetImage extends Component {
+class SheetContent extends Component {
   render () {
     const {
       classes,
       className,
-      src,
       ...other
     } = this.props
     return (
-      <img
+      <CardContent
         {...other}
-        className={classNames(classes.image, {
+        className={classNames(classes.root, {
           [className]: className
-        })} src={src} />
+        })}>
+        {this.props.children}
+      </CardContent>
     )
   }
 }
 
 export const styles = {
-  link: {
-    display: 'inline-block',
-    border: 'none'
-  },
-  image: {
-    display: 'block',
-    width: '100%',
-    maxWidth: '600px',
-    minHeight: '100px',
-    paddingTop: '10px',
-    borderRadius: '1px'
-  },
-  hover: {
-    '&:hover': {
-      opacity: 0.8
-    }
+  root: {
+    paddingTop: 0
   }
 }
 
-export default withStyles(styles)(SheetImage)
+export default withStyles(styles)(SheetContent)

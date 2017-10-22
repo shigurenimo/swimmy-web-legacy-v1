@@ -8,15 +8,13 @@ class SheetContent extends Component {
     const {
       classes,
       className,
-      dense,
       ...other
     } = this.props
     return (
       <CardContent
         {...other}
         className={classNames(classes.root, {
-          [className]: className,
-          [classes.dense]: dense
+          [className]: className
         })}>
         {this.props.children}
       </CardContent>
@@ -25,10 +23,7 @@ class SheetContent extends Component {
 }
 
 export const styles = {
-  root: {},
-  dense: {
-    paddingTop: 0,
-    paddingBottom: 0
+  root: {
   }
 }
 
