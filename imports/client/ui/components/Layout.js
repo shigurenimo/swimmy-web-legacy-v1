@@ -26,8 +26,10 @@ export const styles = theme => {
       }
     },
     dense: {
-      paddingLeft: 0,
-      paddingRight: 0
+      [theme.breakpoints.down('sm')]: {
+        paddingLeft: 0,
+        paddingRight: 0
+      }
     }
   }
 }
