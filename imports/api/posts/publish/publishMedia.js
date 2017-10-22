@@ -4,7 +4,7 @@ import collection from '/imports/collection'
 import createPathFromDate from '/imports/utils/createPathFromDate'
 import replaceLink from '/imports/utils/replaceLink'
 
-Meteor.publish('posts', function (selector = {}, options = {}, scope) {
+Meteor.publish('mediaPosts', function (selector = {}, options = {}, scope) {
   switch (scope) {
     case 'self':
       selector.ownerId = this.userId
@@ -41,7 +41,7 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
 
   const firstModel = collection.posts.findOne(selector, options)
 
-  const target = scope ? 'posts.' + scope : 'posts'
+  const target = scope ? 'mediaPosts.' + scope : 'mediaPosts'
 
   if (firstModel) {
     if (scope !== 'thread' && firstModel.replyId) {
