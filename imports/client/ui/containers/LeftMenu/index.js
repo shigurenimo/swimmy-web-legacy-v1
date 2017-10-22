@@ -16,9 +16,9 @@ import withRouter from '/imports/client/ui/hocs/withRouter'
 import ListItemConfigUsername from './ListItemConfigUsername'
 import ListItemConfigPassword from './ListItemConfigPassword'
 import ListItemLogin from './ListItemLogin'
+import ListItemMedia from './ListItemMedia'
 import ListItemNote from './ListItemNote'
 import ListItemRepository from './ListItemRepository'
-import ListItemStorage from './ListItemStorage'
 import ListItemThread from './ListItemThread'
 import ListItemTimeline from './ListItemTimeline'
 import styles from './index.style'
@@ -44,7 +44,7 @@ export const Component = props =>
         pathname={props.router.location.pathname} />
       <ListItemThread
         pathname={props.router.location.pathname} />
-      <ListItemStorage
+      <ListItemMedia
         pathname={props.router.location.pathname} />
       {/*
         props.isLogged &&
