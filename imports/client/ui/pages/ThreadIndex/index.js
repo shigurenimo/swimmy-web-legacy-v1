@@ -30,7 +30,7 @@ class ThreadIndex extends Component {
       return (
         <Sheet>
           <SheetContent>
-            {this.props.posts.loading && <NowLoading />}
+            {this.props.threads.loading && <NowLoading />}
           </SheetContent>
         </Sheet>
       )

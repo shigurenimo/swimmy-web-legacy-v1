@@ -104,7 +104,7 @@ class PostRes extends Component {
         {this.state.isOpenActions &&
         <PostReaction
           isLogged={this.props.isLogged}
-          isOwner={this.props.isLogged === this.props.ownerId}
+          isOwner={this.props.userId === this.props.ownerId}
           postId={this.props._id}
           replyId={this.props.replyId} />}
         <Divider />
