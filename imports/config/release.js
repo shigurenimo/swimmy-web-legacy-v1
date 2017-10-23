@@ -1,4 +1,10 @@
 export default [{
+  version: '1.5.0-beta.3',
+  date: '2017.10.23',
+  content: [
+    '投稿が削除できないバグ (報告thanks)'
+  ]
+}, {
   version: '1.5.0-beta.2',
   date: '2017.10.22',
   content: [
