@@ -16,7 +16,7 @@ class PostReaction extends Component {
   render () {
     return (
       <Sheet>
-        {this.props.isOwner || !this.props.isThread &&
+        {(this.props.isOwner || !this.props.isThread) &&
         <div className={this.props.classes.threadAction}>
           <FlexGrow />
           {this.props.isOwner &&
