@@ -72,7 +72,7 @@ class PostRes extends Component {
           !this.props.extension.web.oEmbed &&
           this.props.extension.web.html &&
           this.props.extension.web.html.title &&
-          <div className={this.embedTitleContent}>
+          <div className={classes.embedTitleContent}>
             <Typography
               type='subheading'
               component='a'
