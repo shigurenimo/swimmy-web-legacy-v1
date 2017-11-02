@@ -21,6 +21,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "graphql": "^0.11.7",
     "graphql-server-express": "^1.2.0",
@@ -48,6 +49,7 @@
     "react-transition-group": "^2.2.1",
     "recompose": "^0.26.0",
     "remotedev": "^0.2.7",
+    "subscriptions-transport-ws": "^0.9.1",
     "twit": "^2.2.9",
     "twitter-text": "^1.14.7",
     "validator": "^9.1.1"
