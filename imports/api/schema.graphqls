@@ -1,7 +1,39 @@
+scalar DateTime
+scalar JSON
+
+type Reaction {
+  id: String
+}
+
 type Test {
   hello: String
 }
 
+type Post {
+  _id: String
+  id: String
+  content: String
+  createdAt: DateTime
+  from: String
+  isPublic: Boolean
+  owner: [User]
+  ownerId: String
+  updatedAt: DateTime
+}
+
+type PostConnection {
+  nodes: [Post]
+}
+
+type User {
+  _id: String
+  id: String
+  username: String
+}
+
 type Query {
-  Test: Test
+  test: Test
+  post: Post
+  posts: PostConnection
+  user: User
 }
