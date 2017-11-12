@@ -1,4 +1,10 @@
 export default [{
+  version: '1.5.0-beta.4',
+  date: '2017.11.11',
+  content: [
+    'oEmbedの画像が表示されないバグ'
+  ]
+}, {
   version: '1.5.0-beta.3',
   date: '2017.10.23',
   content: [
