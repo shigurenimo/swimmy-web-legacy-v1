@@ -186,7 +186,7 @@ class InputPost extends Component {
   async onSubmitReply () {
     if (this.process) return
     this.process = true
-    const replyId = pathToRegexp('/thread/:postId').exec(this.props.router.location.pathname)[1]
+    const replyPostId = pathToRegexp('/thread/:postId').exec(this.props.router.location.pathname)[1]
     if (this.state.inputImage) {
       const file = this.state.inputImage
       await createBase64(file)
@@ -196,7 +196,7 @@ class InputPost extends Component {
           isPublic: this.state.inputIsPublic,
           content: this.props.inputPost.postContent,
           images: [base64],
-          reply: replyId
+          replyPostId: replyPostId
         }
         this.props.inputPost.reset()
         this.setState({errorImage: null, inputImage: null})
@@ -212,7 +212,7 @@ class InputPost extends Component {
       const data = {
         isPublic: this.state.inputIsPublic,
         content: this.props.inputPost.postContent,
-        replyId
+        replyPostId
       }
       this.props.inputPost.reset()
       this.setState({errorImage: null, inputImage: null})

@@ -68,18 +68,18 @@ Meteor.methods({
         ownerId: 0
       }
     })
-    if (next.replyId) {
-      const reply = Posts.findOne(post.replyId, {
+    if (next.replyPostId) {
+      const replyPost = Posts.findOne(post.replyPostId, {
         fields: {
           _id: 1,
           content: 1
         }
       })
-      if (reply) {
-        next.reply = reply
+      if (replyPost) {
+        next.replyPost = replyPost
       } else {
-        next.reply = {
-          _id: next.replyId,
+        next.replyPost = {
+          _id: next.replyPostId,
           content: 'この投稿は既に削除されています'
         }
       }

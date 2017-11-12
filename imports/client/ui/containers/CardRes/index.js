@@ -52,33 +52,33 @@ class PostRes extends Component {
             </div>
           </div>}
           {/* oEmbed */}
-          {this.props.extension.web &&
-          this.props.extension.web.oEmbed &&
+          {this.props.web &&
+          this.props.web.oEmbed &&
           <div className={classes.embedContent}>
-            {this.embed(this.props.extension.web.oEmbed)}
+            {this.embed(this.props.web.oEmbed)}
           </div>}
           {/* web html */}
-          {this.props.extension.web &&
-          !this.props.extension.web.oEmbed &&
-          this.props.extension.web.html &&
-          this.props.extension.web.html['og:image'] &&
+          {this.props.web &&
+          !this.props.web.oEmbed &&
+          this.props.web.html &&
+          this.props.web.html['og:image'] &&
           <div className={classes.imageContent}>
-            <a href={this.props.extension.web.url} target='_blank'>
-              <Image src={this.props.extension.web.html['og:image']} />
+            <a href={this.props.web.url} target='_blank'>
+              <Image src={this.props.web.html['og:image']} />
             </a>
           </div>}
           {/* web title */}
-          {this.props.extension.web &&
-          !this.props.extension.web.oEmbed &&
-          this.props.extension.web.html &&
-          this.props.extension.web.html.title &&
+          {this.props.web &&
+          !this.props.web.oEmbed &&
+          this.props.web.html &&
+          this.props.web.html.title &&
           <div className={classes.embedTitleContent}>
             <Typography
               type='subheading'
               component='a'
-              href={this.props.extension.web.url}
+              href={this.props.web.url}
               target='_blank'>
-              {this.props.extension.web.html.title}
+              {this.props.web.html.title}
             </Typography>
           </div>}
           {/* reaction */}
@@ -104,7 +104,7 @@ class PostRes extends Component {
           isLogged={this.props.isLogged}
           isOwner={this.props.userId === this.props.ownerId}
           postId={this.props._id}
-          replyId={this.props.replyId} />}
+          replyPostId={this.props.replyPostId} />}
         <Divider />
       </div>
     )

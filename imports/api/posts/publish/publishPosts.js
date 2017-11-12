@@ -23,7 +23,7 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
 
   options.sort = {createdAt: -1}
   options.fields = {
-    replies: 0
+    repliedPostIds: 0
   }
   options.limit = 80
 
@@ -44,13 +44,13 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
   const target = scope ? 'posts.' + scope : 'posts'
 
   if (firstModel) {
-    if (scope !== 'thread' && firstModel.replyId) {
-      const reply = Posts.findOne(firstModel.replyId, replyOptions)
-      if (reply) {
-        firstModel.reply = reply
+    if (scope !== 'thread' && firstModel.replyPostId) {
+      const replyPost = Posts.findOne(firstModel.replyPostId, replyOptions)
+      if (replyPost) {
+        firstModel.replyPost = replyPost
       } else {
-        firstModel.reply = {
-          _id: firstModel.replyId,
+        firstModel.replyPost = {
+          _id: firstModel.replyPostId,
           content: 'この投稿は既に削除されています'
         }
       }
@@ -70,13 +70,13 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
 
   const observeHandle = cursor.observe({
     addedAt: (model) => {
-      if (scope !== 'thread' && model.replyId) {
-        const reply = Posts.findOne(model.replyId, replyOptions)
-        if (reply) {
-          model.reply = reply
+      if (scope !== 'thread' && model.replyPostId) {
+        const replyPost = Posts.findOne(model.replyPostId, replyOptions)
+        if (replyPost) {
+          model.replyPost = replyPost
         } else {
-          model.reply = {
-            _id: model.replyId,
+          model.replyPost = {
+            _id: model.replyPostId,
             content: 'この投稿は既に削除されています'
           }
         }
@@ -92,13 +92,13 @@ Meteor.publish('posts', function (selector = {}, options = {}, scope) {
       this.added(target, model._id, model)
     },
     changed: (model) => {
-      if (model.replyId) {
-        const reply = Posts.findOne(model.replyId, replyOptions)
-        if (reply) {
-          model.reply = reply
+      if (model.replyPostId) {
+        const replyPost = Posts.findOne(model.replyPostId, replyOptions)
+        if (replyPost) {
+          model.replyPost = replyPost
         } else {
-          model.reply = {
-            _id: model.replyId,
+          model.replyPost = {
+            _id: model.replyPostId,
             content: 'この投稿は既に削除されています'
           }
         }

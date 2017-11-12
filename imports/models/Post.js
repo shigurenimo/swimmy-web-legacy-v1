@@ -50,9 +50,9 @@ export const model = {
     })
   )),
   imagePath: types.maybe(types.string),
-  replyId: types.maybe(types.string),
-  reply: types.maybe(Reply),
-  replies: types.maybe(types.array(types.union(Reply, types.string))),
+  replyPostId: types.maybe(types.string),
+  replyPost: types.maybe(Reply),
+  repliedPostIds: types.maybe(types.array(types.union(Reply, types.string))),
   createdAt: types.maybe(types.Date)
 }
 

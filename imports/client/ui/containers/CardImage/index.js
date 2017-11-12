@@ -75,7 +75,7 @@ class CardImage extends Component {
           isLogged={this.props.isLogged}
           isOwner={this.props.userId === this.props.ownerId}
           postId={this.props._id}
-          replyId={this.props.replyId} />}
+          replyPostId={this.props.replyPostId} />}
         <Divider />
       </div>
     )

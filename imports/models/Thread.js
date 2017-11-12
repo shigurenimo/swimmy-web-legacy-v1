@@ -15,7 +15,7 @@ export const model = {
   artwork: types.maybe(types.model('Artwork', {})),
   imagePath: types.maybe(types.string),
   tags: types.maybe(types.array(types.string)),
-  replies: types.maybe(types.array(types.union(Reply, types.string))),
+  repliedPostIds: types.maybe(types.array(types.union(Reply, types.string))),
   createdAt: types.maybe(types.Date),
   updatedAt: types.maybe(types.Date)
 }

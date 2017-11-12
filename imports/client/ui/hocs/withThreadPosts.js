@@ -9,7 +9,7 @@ export default (selectors = {}, options = {}, scope = '') => withTracker(props =
 
   selectors.$or = [
     {_id: props.match.params.postId},
-    {replyId: props.match.params.postId}
+    {replyPostId: props.match.params.postId}
   ]
 
   if (!mongo.get(name)) {

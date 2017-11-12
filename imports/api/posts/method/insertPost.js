@@ -31,7 +31,7 @@ Meteor.methods({
     const data = {
       content: req.content,
       reactions: [],
-      replies: [],
+      repliedPostIds: [],
       extension: {},
       createdAt: date,
       updatedAt: date,
@@ -60,26 +60,26 @@ Meteor.methods({
 
     const web = extendWeb(req.content, date)
 
-    if (web) { data.extension.web = web }
+    if (web) { data.web = web }
 
-    if (req.replyId) {
-      check(req.replyId, String)
-      const reply = Posts.findOne(req.replyId)
-      if (reply) {
-        data.replyId = reply._id
+    if (req.replyPostId) {
+      check(req.replyPostId, String)
+      const replyPost = Posts.findOne(req.replyPostId)
+      if (replyPost) {
+        data.replyPostId = replyPost._id
       } else {
-        data.replyId = req.replyId
+        data.replyPostId = req.replyPostId
       }
-      if (reply.channelId) {
-        data.channelId = reply.channelId
+      if (replyPost.channelId) {
+        data.channelId = replyPost.channelId
       }
     }
 
     const postId = Posts.insert(data)
 
-    if (data.replyId) {
-      Posts.update(data.replyId, {
-        $push: {replies: postId},
+    if (data.replyPostId) {
+      Posts.update(data.replyPostId, {
+        $push: {repliedPostIds: postId},
         $set: {updatedAt: date}
       })
     }

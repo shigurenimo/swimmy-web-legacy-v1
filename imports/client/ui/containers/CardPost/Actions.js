@@ -62,8 +62,8 @@ class PostReaction extends Component {
 
   // スレッドを開く
   onOpenThread = () => {
-    if (this.props.replyId) {
-      this.props.router.push('/thread/' + this.props.replyId)
+    if (this.props.replyPostId) {
+      this.props.router.push('/thread/' + this.props.replyPostId)
     } else {
       this.props.router.push('/thread/' + this.props.postId)
     }

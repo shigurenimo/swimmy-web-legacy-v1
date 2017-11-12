@@ -49,6 +49,9 @@ export default theme => ({
   photoImageOpen: {
     maxHeight: '100%'
   },
+  image: {
+    maxWidth: '500px'
+  },
   oEmbed: {
     maxWidth: '500px',
     '& iframe': {

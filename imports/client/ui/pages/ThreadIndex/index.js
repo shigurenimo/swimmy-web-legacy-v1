@@ -38,7 +38,7 @@ class ThreadIndex extends Component {
         <SheetContent>
           <Typography className={classes.content}>
             {item.content}
-            <span className={classes.count}> +{item.replies.length}</span>
+            <span className={classes.count}> +{item.repliedPostIds.length}</span>
           </Typography>
         </SheetContent>
         <SheetContent>

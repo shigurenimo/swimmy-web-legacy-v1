@@ -9,20 +9,20 @@ Meteor.methods({
 
     if (!post) { throw new Meteor.Error('not-found') }
 
-    if (post.replyId) {
-      const reply = Posts.findOne(post.reply)
-      if (reply) {
-        post.reply = reply
+    if (post.replyPostId) {
+      const replyPost = Posts.findOne(post.replyPostId)
+      if (replyPost) {
+        post.replyPost = replyPost
       } else {
-        post.reply = {
+        post.replyPost = {
           content: 'この投稿は既に削除されています'
         }
       }
     }
 
-    if (post.replies && post.replies[0]) {
-      post.replies = Posts.find({
-        _id: {$in: post.replies}
+    if (post.repliedPostIds && post.repliedPostIds[0]) {
+      post.repliedPosts = Posts.find({
+        _id: {$in: post.repliedPostIds}
       }, {
         fields: {
           _id: 1,
@@ -35,18 +35,18 @@ Meteor.methods({
         },
         sort: {createdAt: -1}
       }).fetch()
-      .map(reply => {
-        if (reply.images) {
-          reply.imagePath =
+      .map(replyPost => {
+        if (replyPost.images) {
+          replyPost.imagePath =
             'https://storage.googleapis.com/' +
             Meteor.settings.private.googleCloud.bucket + '/' +
-            createPathFromDate(reply.createdAt)
+            createPathFromDate(replyPost.createdAt)
         }
-        reply.content = replaceLink(reply.content)
-        if (this.userId !== reply.ownerId) {
-          delete reply.ownerId
+        replyPost.content = replaceLink(replyPost.content)
+        if (this.userId !== replyPost.ownerId) {
+          delete replyPost.ownerId
         }
-        return reply
+        return replyPost
       })
     }
 

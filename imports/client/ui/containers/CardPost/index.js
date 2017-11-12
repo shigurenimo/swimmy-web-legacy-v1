@@ -52,42 +52,43 @@ class Post extends Component {
             </div>
           </div>}
           {/* oEmbed */}
-          {this.props.extension.web &&
-          this.props.extension.web.oEmbed &&
+          {this.props.web &&
+          this.props.web.oEmbed &&
           <div className={classes.embedContent}>
-            {this.embed(this.props.extension.web.oEmbed)}
+            {this.embed(this.props.web.oEmbed)}
           </div>}
           {/* web html */}
-          {this.props.extension.web &&
-          this.props.extension.web.html &&
-          this.props.extension.web.html['og:image'] &&
+          {this.props.web &&
+          this.props.web.html &&
+          this.props.web.html.meta &&
+          this.props.web.html.meta['og:image'] &&
           <div className={classes.imageContent}>
-            <a href={this.props.extension.web.url} target='_blank'>
-              <Image src={this.props.extension.web.html['og:image']} />
+            <a href={this.props.web.url} target='_blank'>
+              <Image className={this.props.classes.image} src={this.props.web.html.meta['og:image']} />
             </a>
           </div>}
           {/* web title */}
-          {this.props.extension.web &&
-          !this.props.extension.web.oEmbed &&
-          this.props.extension.web.html &&
-          this.props.extension.web.html.title &&
+          {this.props.web &&
+          !this.props.web.oEmbed &&
+          this.props.web.html &&
+          this.props.web.html.title &&
           <div className={classes.embedTitleContent}>
             <Typography
               type='subheading'
               component='a'
-              href={this.props.extension.web.url}
+              href={this.props.web.url}
               target='_blank'>
-              {this.props.extension.web.html.title}
+              {this.props.web.html.title}
             </Typography>
           </div>}
           {/* reply */}
-          {this.props.replyId &&
+          {this.props.replyPostId &&
           <div className={classes.replyContent}>
             <Sheet background>
               <div className={classes.replyInnerContent}>
                 <Typography
                   className={classes.content}
-                  dangerouslySetInnerHTML={{__html: this.props.reply.content}} />
+                  dangerouslySetInnerHTML={{__html: this.props.replyPost.content}} />
               </div>
             </Sheet>
           </div>}
@@ -113,7 +114,7 @@ class Post extends Component {
           isLogged={this.props.isLogged}
           isOwner={this.props.userId === this.props.ownerId}
           postId={this.props._id}
-          replyId={this.props.replyId} />}
+          replyPostId={this.props.replyPostId} />}
         <Divider />
       </div>
     )

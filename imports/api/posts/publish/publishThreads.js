@@ -4,7 +4,7 @@ import { Posts } from '/imports/collection'
 
 Meteor.publish('threads', function (selector = {}, options = {}, scope) {
   selector.content = {$ne: ''}
-  selector['replies.0'] = {$exists: true}
+  selector['repliedPostIds.0'] = {$exists: true}
 
   options.sort = {createdAt: -1}
   options.limit = 50

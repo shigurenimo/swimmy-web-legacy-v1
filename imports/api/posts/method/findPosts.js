@@ -15,7 +15,7 @@ Meteor.methods({
 
     return Posts.find(selector, options).fetch()
     .map(post => {
-      if (post.replyId) {
+      if (post.replyPostId) {
         const options = {
           fields: {
             _id: 1,
@@ -27,11 +27,11 @@ Meteor.methods({
             updatedAt: 1
           }
         }
-        const reply = Posts.findOne(post.replyId, options)
-        if (reply) {
-          post.reply = reply
+        const replyPost = Posts.findOne(post.replyPostId, options)
+        if (replyPost) {
+          post.replyPost = replyPost
         } else {
-          post.reply = {
+          post.replyPost = {
             content: 'この投稿は既に削除されています'
           }
         }

@@ -55,8 +55,8 @@ export default class CardImage extends Component {
 
   onOpenThread () {
     if (this.props.routes.page === 'thread') return
-    if (this.props.replyId) {
-      this.props.routes.go('/thread/' + this.props.replyId)
+    if (this.props.replyPostId) {
+      this.props.routes.go('/thread/' + this.props.replyPostId)
     } else {
       this.props.routes.go('/thread/' + this.props._id)
     }
